@@ -2,36 +2,36 @@
  "schema": 1,
  "region": "ap-northeast-2",
  "stats": {
-  "primary_models": 31,
-  "primary_bases": 30,
+  "primary_models": 34,
+  "primary_bases": 33,
   "reference": {
    "us-east-1": {
-    "models": 115,
-    "bases": 104,
-    "shared_bases": 27,
-    "coverage_pct": 26.0
+    "models": 118,
+    "bases": 107,
+    "shared_bases": 30,
+    "coverage_pct": 28.0
    },
    "us-west-2": {
-    "models": 109,
-    "bases": 103,
-    "shared_bases": 25,
-    "coverage_pct": 24.3
+    "models": 112,
+    "bases": 106,
+    "shared_bases": 28,
+    "coverage_pct": 26.4
    },
    "us-east-2": {
-    "models": 86,
-    "bases": 84,
-    "shared_bases": 25,
-    "coverage_pct": 29.8
+    "models": 89,
+    "bases": 87,
+    "shared_bases": 28,
+    "coverage_pct": 32.2
    },
    "ap-northeast-1": {
-    "models": 69,
-    "bases": 68,
-    "shared_bases": 25,
-    "coverage_pct": 36.8
+    "models": 72,
+    "bases": 71,
+    "shared_bases": 28,
+    "coverage_pct": 39.4
    }
   },
   "on_demand": 5,
-  "cris_only": 25,
+  "cris_only": 28,
   "no_access_path": 1,
   "providers": [
    "Amazon",
@@ -500,6 +500,33 @@
    ]
   },
   {
+   "id": "anthropic.claude-opus-5-5",
+   "base": "anthropic.claude-opus-5-5",
+   "name": "Claude Opus 5.5",
+   "provider": "Anthropic",
+   "input": [
+    "IMAGE",
+    "TEXT"
+   ],
+   "output": [
+    "TEXT"
+   ],
+   "streaming": true,
+   "inference": [
+    "INFERENCE_PROFILE"
+   ],
+   "customization": [],
+   "status": "ACTIVE",
+   "since": "2026-09-22",
+   "eol": null,
+   "profiles": [
+    "global.anthropic.claude-opus-5-5"
+   ],
+   "access": [
+    "cris"
+   ]
+  },
+  {
    "id": "anthropic.claude-sonnet-4-20250514-v1:0",
    "base": "anthropic.claude-sonnet-4-20250514-v1:0",
    "name": "Claude Sonnet 4",
@@ -764,6 +791,60 @@
    "eol": null,
    "profiles": [
     "global.openai.gpt-6-astra"
+   ],
+   "access": [
+    "cris"
+   ]
+  },
+  {
+   "id": "openai.gpt-6-luna",
+   "base": "openai.gpt-6-luna",
+   "name": "GPT-6 Luna",
+   "provider": "OpenAI",
+   "input": [
+    "IMAGE",
+    "TEXT"
+   ],
+   "output": [
+    "TEXT"
+   ],
+   "streaming": true,
+   "inference": [
+    "INFERENCE_PROFILE"
+   ],
+   "customization": [],
+   "status": "ACTIVE",
+   "since": "2026-09-22",
+   "eol": null,
+   "profiles": [
+    "global.openai.gpt-6-luna"
+   ],
+   "access": [
+    "cris"
+   ]
+  },
+  {
+   "id": "openai.gpt-6-sol",
+   "base": "openai.gpt-6-sol",
+   "name": "GPT-6 Sol",
+   "provider": "OpenAI",
+   "input": [
+    "IMAGE",
+    "TEXT"
+   ],
+   "output": [
+    "TEXT"
+   ],
+   "streaming": true,
+   "inference": [
+    "INFERENCE_PROFILE"
+   ],
+   "customization": [],
+   "status": "ACTIVE",
+   "since": "2026-09-22",
+   "eol": null,
+   "profiles": [
+    "global.openai.gpt-6-sol"
    ],
    "access": [
     "cris"

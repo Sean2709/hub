@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "region": "ap-northeast-2",
- "count": 30,
+ "count": 33,
  "profiles": [
   {
    "id": "apac.amazon.nova-lite-v1:0",
@@ -305,6 +305,19 @@
    "updated": "2026-08-03"
   },
   {
+   "id": "global.anthropic.claude-opus-5-5",
+   "name": "Global Anthropic Claude Opus 5.5",
+   "scope": "global",
+   "model": "anthropic.claude-opus-5-5",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-09-22",
+   "updated": "2026-09-22"
+  },
+  {
    "id": "global.anthropic.claude-sonnet-4-5-20250929-v1:0",
    "name": "Global Claude Sonnet 4.5",
    "scope": "global",
@@ -420,6 +433,32 @@
    "status": "ACTIVE",
    "created": "2026-09-08",
    "updated": "2026-09-08"
+  },
+  {
+   "id": "global.openai.gpt-6-luna",
+   "name": "Global OpenAI GPT-6 Luna",
+   "scope": "global",
+   "model": "openai.gpt-6-luna",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-09-21",
+   "updated": "2026-09-21"
+  },
+  {
+   "id": "global.openai.gpt-6-sol",
+   "name": "Global OpenAI GPT-6 Sol",
+   "scope": "global",
+   "model": "openai.gpt-6-sol",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-09-21",
+   "updated": "2026-09-21"
   },
   {
    "id": "global.twelvelabs.pegasus-1-2-v1:0",

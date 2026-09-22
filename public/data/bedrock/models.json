@@ -3,7 +3,7 @@
  "primary_region": "ap-northeast-2",
  "regions": {
   "ap-northeast-2": {
-   "count": 31,
+   "count": 34,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -362,6 +362,27 @@
      "eol": null
     },
     {
+     "id": "anthropic.claude-opus-5-5",
+     "base": "anthropic.claude-opus-5-5",
+     "name": "Claude Opus 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
+     "eol": null
+    },
+    {
      "id": "anthropic.claude-sonnet-4-20250514-v1:0",
      "base": "anthropic.claude-sonnet-4-20250514-v1:0",
      "name": "Claude Sonnet 4",
@@ -572,6 +593,48 @@
      "eol": null
     },
     {
+     "id": "openai.gpt-6-luna",
+     "base": "openai.gpt-6-luna",
+     "name": "GPT-6 Luna",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-6-sol",
+     "base": "openai.gpt-6-sol",
+     "name": "GPT-6 Sol",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
+     "eol": null
+    },
+    {
      "id": "twelvelabs.marengo-embed-3-0-v1:0",
      "base": "twelvelabs.marengo-embed-3-0-v1:0",
      "name": "Marengo Embed 3.0",
@@ -663,7 +726,7 @@
    ]
   },
   "us-east-1": {
-   "count": 115,
+   "count": 118,
    "models": [
     {
      "id": "ai21.jamba-1-5-large-v1:0",
@@ -1395,6 +1458,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-07-23",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-5-5",
+     "base": "anthropic.claude-opus-5-5",
+     "name": "Claude Opus 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
      "eol": null
     },
     {
@@ -2444,6 +2528,48 @@
      "eol": null
     },
     {
+     "id": "openai.gpt-6-luna",
+     "base": "openai.gpt-6-luna",
+     "name": "GPT-6 Luna",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-6-sol",
+     "base": "openai.gpt-6-sol",
+     "name": "GPT-6 Sol",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
+     "eol": null
+    },
+    {
      "id": "openai.gpt-oss-120b-1:0",
      "base": "openai.gpt-oss-120b-1:0",
      "name": "gpt-oss-120b",
@@ -3071,7 +3197,7 @@
    ]
   },
   "us-west-2": {
-   "count": 109,
+   "count": 112,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -3512,6 +3638,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-07-23",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-5-5",
+     "base": "anthropic.claude-opus-5-5",
+     "name": "Claude Opus 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
      "eol": null
     },
     {
@@ -4669,6 +4816,48 @@
      "eol": null
     },
     {
+     "id": "openai.gpt-6-luna",
+     "base": "openai.gpt-6-luna",
+     "name": "GPT-6 Luna",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-6-sol",
+     "base": "openai.gpt-6-sol",
+     "name": "GPT-6 Sol",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
+     "eol": null
+    },
+    {
      "id": "openai.gpt-oss-120b-1:0",
      "base": "openai.gpt-oss-120b-1:0",
      "name": "gpt-oss-120b",
@@ -5329,7 +5518,7 @@
    ]
   },
   "us-east-2": {
-   "count": 86,
+   "count": 89,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -5625,6 +5814,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-07-23",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-5-5",
+     "base": "anthropic.claude-opus-5-5",
+     "name": "Claude Opus 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
      "eol": null
     },
     {
@@ -6510,6 +6720,48 @@
      "eol": null
     },
     {
+     "id": "openai.gpt-6-luna",
+     "base": "openai.gpt-6-luna",
+     "name": "GPT-6 Luna",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-6-sol",
+     "base": "openai.gpt-6-sol",
+     "name": "GPT-6 Sol",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
+     "eol": null
+    },
+    {
      "id": "openai.gpt-oss-120b-1:0",
      "base": "openai.gpt-oss-120b-1:0",
      "name": "gpt-oss-120b",
@@ -7109,7 +7361,7 @@
    ]
   },
   "ap-northeast-1": {
-   "count": 69,
+   "count": 72,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -7505,6 +7757,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-07-23",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-5-5",
+     "base": "anthropic.claude-opus-5-5",
+     "name": "Claude Opus 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
      "eol": null
     },
     {
@@ -8268,6 +8541,48 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-09-08",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-6-luna",
+     "base": "openai.gpt-6-luna",
+     "name": "GPT-6 Luna",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-6-sol",
+     "base": "openai.gpt-6-sol",
+     "name": "GPT-6 Sol",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-22",
      "eol": null
     },
     {
