@@ -1,0 +1,32 @@
+[
+ {
+  "date": "2026-09-22",
+  "type": "baseline",
+  "region": "ap-northeast-2",
+  "count": 31
+ },
+ {
+  "date": "2026-09-22",
+  "type": "baseline",
+  "region": "us-east-1",
+  "count": 115
+ },
+ {
+  "date": "2026-09-22",
+  "type": "baseline",
+  "region": "us-west-2",
+  "count": 109
+ },
+ {
+  "date": "2026-09-22",
+  "type": "baseline",
+  "region": "us-east-2",
+  "count": 86
+ },
+ {
+  "date": "2026-09-22",
+  "type": "baseline",
+  "region": "ap-northeast-1",
+  "count": 69
+ }
+]

@@ -1,6 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import { profile, certs, apps, posts, focus } from '../data/site';
+import bedrock from '../../public/data/bedrock/seoul.json';
+import bedrockMeta from '../../public/data/bedrock/meta.json';
+
+const bStats = bedrock.stats;
+const bUse1 = (bStats.reference as Record<string, { coverage_pct: number }>)['us-east-1'];
+const bChecked = new Date(bedrockMeta.checked_at).toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit' });
 
 const fmtMonth = (ym: string) => {
   const [y, m] = ym.split('-');
@@ -27,6 +33,29 @@ const initials = profile.name.slice(0, 1);
         <a class="btn" href={profile.links.velog} target="_blank" rel="noopener me">velog</a>
       </div>
     </div>
+  </section>
+
+  <section id="tools">
+    <h2>Tools <span class="count">1</span></h2>
+    <ul class="grid tools">
+      <li class="card tool">
+        <div class="app-head">
+          <strong><a href="/bedrock/">Amazon Bedrock 서울 리전 모델 현황</a></strong>
+          <span class="pill">매일 갱신</span>
+        </div>
+        <p class="sub">ap-northeast-2에 지금 있는 것 · 없는 것 · 바뀐 것 — API 응답을 매일 다시 조회해 JSON·RSS로 공개</p>
+        <div class="nums">
+          <div><b>{bStats.primary_models}</b><span>서울 모델</span></div>
+          <div><b>{bStats.on_demand}</b><span>on-demand</span></div>
+          <div><b>{bUse1.coverage_pct}%</b><span>us-east-1 대비</span></div>
+          <div><b>{bStats.missing_bases}</b><span>서울에 없음</span></div>
+        </div>
+        <div class="app-foot">
+          <span class="meta">확인 {bChecked} · <a class="link" href="/data/bedrock/seoul.json">JSON</a> · <a class="link" href="/data/bedrock/feed.xml">RSS</a></span>
+          <a class="link" href="/bedrock/">보기 →</a>
+        </div>
+      </li>
+    </ul>
   </section>
 
   <section id="apps">

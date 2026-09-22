@@ -1,0 +1,451 @@
+{
+ "schema": 1,
+ "region": "ap-northeast-2",
+ "count": 30,
+ "profiles": [
+  {
+   "id": "apac.amazon.nova-lite-v1:0",
+   "name": "APAC Nova Lite",
+   "scope": "apac",
+   "model": "amazon.nova-lite-v1:0",
+   "regions": [
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-northeast-3",
+    "ap-south-1",
+    "ap-southeast-1",
+    "ap-southeast-2"
+   ],
+   "global_endpoint": false,
+   "status": "ACTIVE",
+   "created": "2025-02-17",
+   "updated": "2025-07-07"
+  },
+  {
+   "id": "apac.amazon.nova-micro-v1:0",
+   "name": "APAC Nova Micro",
+   "scope": "apac",
+   "model": "amazon.nova-micro-v1:0",
+   "regions": [
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-northeast-3",
+    "ap-south-1",
+    "ap-southeast-1",
+    "ap-southeast-2"
+   ],
+   "global_endpoint": false,
+   "status": "ACTIVE",
+   "created": "2025-02-17",
+   "updated": "2025-07-07"
+  },
+  {
+   "id": "apac.amazon.nova-pro-v1:0",
+   "name": "APAC Nova Pro",
+   "scope": "apac",
+   "model": "amazon.nova-pro-v1:0",
+   "regions": [
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-northeast-3",
+    "ap-south-1",
+    "ap-southeast-1",
+    "ap-southeast-2"
+   ],
+   "global_endpoint": false,
+   "status": "ACTIVE",
+   "created": "2025-02-17",
+   "updated": "2025-07-08"
+  },
+  {
+   "id": "apac.anthropic.claude-3-5-sonnet-20240620-v1:0",
+   "name": "APAC Anthropic Claude 3.5 Sonnet",
+   "scope": "apac",
+   "model": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+   "regions": [
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-south-1",
+    "ap-southeast-1",
+    "ap-southeast-2"
+   ],
+   "global_endpoint": false,
+   "status": "ACTIVE",
+   "created": "2024-11-01",
+   "updated": "2024-11-04"
+  },
+  {
+   "id": "apac.anthropic.claude-3-5-sonnet-20241022-v2:0",
+   "name": "APAC Anthropic Claude 3.5 Sonnet v2",
+   "scope": "apac",
+   "model": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+   "regions": [
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-northeast-3",
+    "ap-south-1",
+    "ap-southeast-1",
+    "ap-southeast-2"
+   ],
+   "global_endpoint": false,
+   "status": "ACTIVE",
+   "created": "2025-02-17",
+   "updated": "2025-02-21"
+  },
+  {
+   "id": "apac.anthropic.claude-3-haiku-20240307-v1:0",
+   "name": "APAC Anthropic Claude 3 Haiku",
+   "scope": "apac",
+   "model": "anthropic.claude-3-haiku-20240307-v1:0",
+   "regions": [
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-south-1",
+    "ap-southeast-1",
+    "ap-southeast-2"
+   ],
+   "global_endpoint": false,
+   "status": "ACTIVE",
+   "created": "2024-11-01",
+   "updated": "2025-02-05"
+  },
+  {
+   "id": "apac.anthropic.claude-3-sonnet-20240229-v1:0",
+   "name": "APAC Anthropic Claude 3 Sonnet",
+   "scope": "apac",
+   "model": "anthropic.claude-3-sonnet-20240229-v1:0",
+   "regions": [
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-south-1",
+    "ap-southeast-1",
+    "ap-southeast-2"
+   ],
+   "global_endpoint": false,
+   "status": "ACTIVE",
+   "created": "2024-11-01",
+   "updated": "2024-11-04"
+  },
+  {
+   "id": "apac.anthropic.claude-sonnet-4-20250514-v1:0",
+   "name": "APAC Claude Sonnet 4",
+   "scope": "apac",
+   "model": "anthropic.claude-sonnet-4-20250514-v1:0",
+   "regions": [
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-northeast-3",
+    "ap-south-1",
+    "ap-south-2",
+    "ap-southeast-1",
+    "ap-southeast-2",
+    "ap-southeast-4"
+   ],
+   "global_endpoint": false,
+   "status": "ACTIVE",
+   "created": "2025-05-20",
+   "updated": "2025-08-05"
+  },
+  {
+   "id": "apac.twelvelabs.marengo-embed-2-7-v1:0",
+   "name": "APAC TwelveLabs Marengo Embed v2.7",
+   "scope": "apac",
+   "model": "twelvelabs.marengo-embed-2-7-v1:0",
+   "regions": [
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-northeast-3",
+    "ap-south-1",
+    "ap-south-2",
+    "ap-southeast-1",
+    "ap-southeast-2",
+    "ap-southeast-3",
+    "ap-southeast-4"
+   ],
+   "global_endpoint": false,
+   "status": "ACTIVE",
+   "created": "2025-08-28",
+   "updated": "2025-08-28"
+  },
+  {
+   "id": "apac.twelvelabs.pegasus-1-2-v1:0",
+   "name": "APAC Pegasus v1.2",
+   "scope": "apac",
+   "model": "twelvelabs.pegasus-1-2-v1:0",
+   "regions": [
+    "ap-northeast-1",
+    "ap-northeast-2",
+    "ap-northeast-3",
+    "ap-south-1",
+    "ap-south-2",
+    "ap-southeast-1",
+    "ap-southeast-2",
+    "ap-southeast-4"
+   ],
+   "global_endpoint": false,
+   "status": "ACTIVE",
+   "created": "2025-08-13",
+   "updated": "2025-08-15"
+  },
+  {
+   "id": "global.amazon.nova-2-lite-v1:0",
+   "name": "GLOBAL Amazon Nova 2 Lite",
+   "scope": "global",
+   "model": "amazon.nova-2-lite-v1:0",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2025-11-04",
+   "updated": "2025-11-22"
+  },
+  {
+   "id": "global.anthropic.claude-fable-5",
+   "name": "Global Anthropic Claude Fable 5",
+   "scope": "global",
+   "model": "anthropic.claude-fable-5",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-06-09",
+   "updated": "2026-07-01"
+  },
+  {
+   "id": "global.anthropic.claude-fable-5-1",
+   "name": "Global Anthropic Claude Fable 5.1",
+   "scope": "global",
+   "model": "anthropic.claude-fable-5-1",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-08-28",
+   "updated": "2026-09-01"
+  },
+  {
+   "id": "global.anthropic.claude-haiku-4-5-20251001-v1:0",
+   "name": "Global Anthropic Claude Haiku 4.5",
+   "scope": "global",
+   "model": "anthropic.claude-haiku-4-5-20251001-v1:0",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2025-10-14",
+   "updated": "2026-08-29"
+  },
+  {
+   "id": "global.anthropic.claude-opus-4-5-20251101-v1:0",
+   "name": "GLOBAL Anthropic Claude Opus 4.5",
+   "scope": "global",
+   "model": "anthropic.claude-opus-4-5-20251101-v1:0",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2025-11-22",
+   "updated": "2025-12-09"
+  },
+  {
+   "id": "global.anthropic.claude-opus-4-6-v1",
+   "name": "Global Anthropic Claude Opus 4.6",
+   "scope": "global",
+   "model": "anthropic.claude-opus-4-6-v1",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-02-05",
+   "updated": "2026-04-21"
+  },
+  {
+   "id": "global.anthropic.claude-opus-4-7",
+   "name": "Global Anthropic Claude Opus 4.7",
+   "scope": "global",
+   "model": "anthropic.claude-opus-4-7",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-04-15",
+   "updated": "2026-05-15"
+  },
+  {
+   "id": "global.anthropic.claude-opus-4-8",
+   "name": "Global Anthropic Claude Opus 4.8",
+   "scope": "global",
+   "model": "anthropic.claude-opus-4-8",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-05-27",
+   "updated": "2026-05-27"
+  },
+  {
+   "id": "global.anthropic.claude-opus-5",
+   "name": "Global Anthropic Claude Opus 5",
+   "scope": "global",
+   "model": "anthropic.claude-opus-5",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-07-21",
+   "updated": "2026-08-03"
+  },
+  {
+   "id": "global.anthropic.claude-sonnet-4-5-20250929-v1:0",
+   "name": "Global Claude Sonnet 4.5",
+   "scope": "global",
+   "model": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2025-09-27",
+   "updated": "2026-04-21"
+  },
+  {
+   "id": "global.anthropic.claude-sonnet-4-6",
+   "name": "Global Anthropic Claude Sonnet 4.6",
+   "scope": "global",
+   "model": "anthropic.claude-sonnet-4-6",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-02-13",
+   "updated": "2026-04-02"
+  },
+  {
+   "id": "global.anthropic.claude-sonnet-5",
+   "name": "Global Anthropic Claude Sonnet 5",
+   "scope": "global",
+   "model": "anthropic.claude-sonnet-5",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-06-30",
+   "updated": "2026-08-03"
+  },
+  {
+   "id": "global.cohere.embed-v4:0",
+   "name": "Global Cohere Embed v4",
+   "scope": "global",
+   "model": "cohere.embed-v4:0",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2025-10-01",
+   "updated": "2025-10-01"
+  },
+  {
+   "id": "global.moonshotai.kimi-k3",
+   "name": "Global Moonshot AI Kimi K3",
+   "scope": "global",
+   "model": "moonshotai.kimi-k3",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-09-10",
+   "updated": "2026-09-10"
+  },
+  {
+   "id": "global.openai.gpt-5.6-luna",
+   "name": "Global OpenAI GPT-5.6 Luna",
+   "scope": "global",
+   "model": "openai.gpt-5.6-luna",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-08-13",
+   "updated": "2026-08-13"
+  },
+  {
+   "id": "global.openai.gpt-5.6-sol",
+   "name": "Global OpenAI GPT-5.6 Sol",
+   "scope": "global",
+   "model": "openai.gpt-5.6-sol",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-08-13",
+   "updated": "2026-08-13"
+  },
+  {
+   "id": "global.openai.gpt-5.6-terra",
+   "name": "Global OpenAI GPT-5.6 Terra",
+   "scope": "global",
+   "model": "openai.gpt-5.6-terra",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-08-13",
+   "updated": "2026-08-13"
+  },
+  {
+   "id": "global.openai.gpt-6-astra",
+   "name": "Global OpenAI GPT-6 Astra",
+   "scope": "global",
+   "model": "openai.gpt-6-astra",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-09-08",
+   "updated": "2026-09-08"
+  },
+  {
+   "id": "global.twelvelabs.pegasus-1-2-v1:0",
+   "name": "GLOBAL TwelveLabs Pegasus v1.2",
+   "scope": "global",
+   "model": "twelvelabs.pegasus-1-2-v1:0",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2025-11-20",
+   "updated": "2025-11-20"
+  },
+  {
+   "id": "global.xai.grok-4.6",
+   "name": "Global xAI Grok 4.6",
+   "scope": "global",
+   "model": "xai.grok-4.6",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-08-18",
+   "updated": "2026-08-18"
+  }
+ ]
+}

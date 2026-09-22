@@ -5,11 +5,13 @@ import { profile } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
+  wide?: boolean; // data-heavy pages (/bedrock/) get a wider column
 }
 
 const {
   title = `${profile.name} — ${profile.role}`,
   description = profile.tagline,
+  wide = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -35,10 +37,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:card" content="summary" />
     <meta name="color-scheme" content="light dark" />
   </head>
-  <body>
+  <body class:list={[{ wide }]}>
     <header class="site-header">
       <a class="brand" href="/">hub.sean-chloe.com</a>
       <nav aria-label="주요">
+        <a href="/#tools">Tools</a>
         <a href="/#apps">Apps</a>
         <a href="/#writing">Writing</a>
         <a href="/#certs">Certs</a>

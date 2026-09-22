@@ -1,0 +1,8539 @@
+{
+ "schema": 1,
+ "primary_region": "ap-northeast-2",
+ "regions": {
+  "ap-northeast-2": {
+   "count": 31,
+   "models": [
+    {
+     "id": "amazon.nova-2-lite-v1:0",
+     "base": "amazon.nova-2-lite-v1:0",
+     "name": "Nova 2 Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-lite-v1:0",
+     "base": "amazon.nova-lite-v1:0",
+     "name": "Nova Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-micro-v1:0",
+     "base": "amazon.nova-micro-v1:0",
+     "name": "Nova Micro",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-pro-v1:0",
+     "base": "amazon.nova-pro-v1:0",
+     "name": "Nova Pro",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-text-v2:0",
+     "base": "amazon.titan-embed-text-v2:0",
+     "name": "Titan Embeddings G2 - Text",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-30",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-3-haiku-20240307-v1:0",
+     "base": "anthropic.claude-3-haiku-20240307-v1:0",
+     "name": "Claude 3 Haiku",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-03-13",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-3-haiku-20240307-v1:0:200k",
+     "base": "anthropic.claude-3-haiku-20240307-v1:0",
+     "name": "Claude 3 Haiku",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-03-13",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+     "base": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+     "name": "Claude 3.5 Sonnet",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-06-20",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+     "base": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+     "name": "Claude 3.5 Sonnet v2",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-10-22",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5",
+     "base": "anthropic.claude-fable-5",
+     "name": "Claude Fable 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-06-09",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5-1",
+     "base": "anthropic.claude-fable-5-1",
+     "name": "Claude Fable 5.1",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-31",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-haiku-4-5-20251001-v1:0",
+     "base": "anthropic.claude-haiku-4-5-20251001-v1:0",
+     "name": "Claude Haiku 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-15",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-5-20251101-v1:0",
+     "base": "anthropic.claude-opus-4-5-20251101-v1:0",
+     "name": "Claude Opus 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-11-24",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-6-v1",
+     "base": "anthropic.claude-opus-4-6-v1",
+     "name": "Claude Opus 4.6",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-05",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-7",
+     "base": "anthropic.claude-opus-4-7",
+     "name": "Claude Opus 4.7",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-04-16",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-8",
+     "base": "anthropic.claude-opus-4-8",
+     "name": "Claude Opus 4.8",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-05-28",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-5",
+     "base": "anthropic.claude-opus-5",
+     "name": "Claude Opus 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-07-23",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-20250514-v1:0",
+     "base": "anthropic.claude-sonnet-4-20250514-v1:0",
+     "name": "Claude Sonnet 4",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2025-05-22",
+     "eol": "2026-10-14"
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+     "base": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+     "name": "Claude Sonnet 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-29",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-6",
+     "base": "anthropic.claude-sonnet-4-6",
+     "name": "Claude Sonnet 4.6",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-17",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-5",
+     "base": "anthropic.claude-sonnet-5",
+     "name": "Claude Sonnet 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-06-30",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-v4:0",
+     "base": "cohere.embed-v4:0",
+     "name": "Embed v4",
+     "provider": "Cohere",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-02",
+     "eol": null
+    },
+    {
+     "id": "moonshotai.kimi-k3",
+     "base": "moonshotai.kimi-k3",
+     "name": "Kimi K3",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-27",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-luna",
+     "base": "openai.gpt-5.6-luna",
+     "name": "GPT-5.6 Luna",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-sol",
+     "base": "openai.gpt-5.6-sol",
+     "name": "GPT-5.6 Sol",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-terra",
+     "base": "openai.gpt-5.6-terra",
+     "name": "GPT-5.6 Terra",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-6-astra",
+     "base": "openai.gpt-6-astra",
+     "name": "GPT-6 Astra",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-08",
+     "eol": null
+    },
+    {
+     "id": "twelvelabs.marengo-embed-3-0-v1:0",
+     "base": "twelvelabs.marengo-embed-3-0-v1:0",
+     "name": "Marengo Embed 3.0",
+     "provider": "TwelveLabs",
+     "input": [
+      "IMAGE",
+      "SPEECH",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-28",
+     "eol": null
+    },
+    {
+     "id": "twelvelabs.marengo-embed-2-7-v1:0",
+     "base": "twelvelabs.marengo-embed-2-7-v1:0",
+     "name": "Marengo Embed v2.7",
+     "provider": "TwelveLabs",
+     "input": [
+      "IMAGE",
+      "SPEECH",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2025-07-15",
+     "eol": "2026-11-30"
+    },
+    {
+     "id": "twelvelabs.pegasus-1-2-v1:0",
+     "base": "twelvelabs.pegasus-1-2-v1:0",
+     "name": "Pegasus v1.2",
+     "provider": "TwelveLabs",
+     "input": [
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-16",
+     "eol": null
+    },
+    {
+     "id": "xai.grok-4.6",
+     "base": "xai.grok-4.6",
+     "name": "Grok 4.6",
+     "provider": "xAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-19",
+     "eol": null
+    }
+   ]
+  },
+  "us-east-1": {
+   "count": 115,
+   "models": [
+    {
+     "id": "ai21.jamba-1-5-large-v1:0",
+     "base": "ai21.jamba-1-5-large-v1:0",
+     "name": "Jamba 1.5 Large",
+     "provider": "AI21 Labs",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2024-09-23",
+     "eol": "2026-11-26"
+    },
+    {
+     "id": "ai21.jamba-1-5-mini-v1:0",
+     "base": "ai21.jamba-1-5-mini-v1:0",
+     "name": "Jamba 1.5 Mini",
+     "provider": "AI21 Labs",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2024-09-23",
+     "eol": "2026-11-26"
+    },
+    {
+     "id": "amazon.nova-2-multimodal-embeddings-v1:0",
+     "base": "amazon.nova-2-multimodal-embeddings-v1:0",
+     "name": "Amazon Nova Multimodal Embeddings",
+     "provider": "Amazon",
+     "input": [
+      "AUDIO",
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-28",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-2-lite-v1:0",
+     "base": "amazon.nova-2-lite-v1:0",
+     "name": "Nova 2 Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-2-lite-v1:0:256k",
+     "base": "amazon.nova-2-lite-v1:0",
+     "name": "Nova 2 Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [
+      "FINE_TUNING"
+     ],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-2-sonic-v1:0",
+     "base": "amazon.nova-2-sonic-v1:0",
+     "name": "Nova 2 Sonic",
+     "provider": "Amazon",
+     "input": [
+      "SPEECH"
+     ],
+     "output": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-canvas-v1:0",
+     "base": "amazon.nova-canvas-v1:0",
+     "name": "Nova Canvas",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND",
+      "PROVISIONED"
+     ],
+     "customization": [
+      "FINE_TUNING"
+     ],
+     "status": "LEGACY",
+     "since": "2025-02-18",
+     "eol": "2026-09-30"
+    },
+    {
+     "id": "amazon.nova-lite-v1:0",
+     "base": "amazon.nova-lite-v1:0",
+     "name": "Nova Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-lite-v1:0:24k",
+     "base": "amazon.nova-lite-v1:0",
+     "name": "Nova Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-lite-v1:0:300k",
+     "base": "amazon.nova-lite-v1:0",
+     "name": "Nova Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [
+      "DISTILLATION",
+      "FINE_TUNING"
+     ],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-micro-v1:0",
+     "base": "amazon.nova-micro-v1:0",
+     "name": "Nova Micro",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-micro-v1:0:128k",
+     "base": "amazon.nova-micro-v1:0",
+     "name": "Nova Micro",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [
+      "DISTILLATION",
+      "FINE_TUNING"
+     ],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-micro-v1:0:24k",
+     "base": "amazon.nova-micro-v1:0",
+     "name": "Nova Micro",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-pro-v1:0",
+     "base": "amazon.nova-pro-v1:0",
+     "name": "Nova Pro",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-pro-v1:0:24k",
+     "base": "amazon.nova-pro-v1:0",
+     "name": "Nova Pro",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-pro-v1:0:300k",
+     "base": "amazon.nova-pro-v1:0",
+     "name": "Nova Pro",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [
+      "DISTILLATION",
+      "FINE_TUNING",
+      "PREFERENCE_FINE_TUNING"
+     ],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-reel-v1:0",
+     "base": "amazon.nova-reel-v1:0",
+     "name": "Nova Reel",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "VIDEO"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2024-12-03",
+     "eol": "2026-09-30"
+    },
+    {
+     "id": "amazon.nova-reel-v1:1",
+     "base": "amazon.nova-reel-v1:1",
+     "name": "Nova Reel",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "VIDEO"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2024-12-03",
+     "eol": "2026-09-30"
+    },
+    {
+     "id": "amazon.titan-embed-text-v1",
+     "base": "amazon.titan-embed-text-v1",
+     "name": "Titan Embeddings G1 - Text",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-text-v1:2:8k",
+     "base": "amazon.titan-embed-text-v1",
+     "name": "Titan Embeddings G1 - Text",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-image-v1",
+     "base": "amazon.titan-embed-image-v1",
+     "name": "Titan Multimodal Embeddings G1",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2023-11-29",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-image-v1:0",
+     "base": "amazon.titan-embed-image-v1:0",
+     "name": "Titan Multimodal Embeddings G1",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [
+      "FINE_TUNING"
+     ],
+     "status": "ACTIVE",
+     "since": "2023-11-29",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-g1-text-02",
+     "base": "amazon.titan-embed-g1-text-02",
+     "name": "Titan Text Embeddings v2",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2023-11-29",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-text-v2:0",
+     "base": "amazon.titan-embed-text-v2:0",
+     "name": "Titan Text Embeddings V2",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-30",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-text-v2:0:8k",
+     "base": "amazon.titan-embed-text-v2:0",
+     "name": "Titan Text Embeddings V2",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-30",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5",
+     "base": "anthropic.claude-fable-5",
+     "name": "Claude Fable 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-06-09",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5-1",
+     "base": "anthropic.claude-fable-5-1",
+     "name": "Claude Fable 5.1",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-31",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-haiku-4-5-20251001-v1:0",
+     "base": "anthropic.claude-haiku-4-5-20251001-v1:0",
+     "name": "Claude Haiku 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-15",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-1-20250805-v1:0",
+     "base": "anthropic.claude-opus-4-1-20250805-v1:0",
+     "name": "Claude Opus 4.1",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2025-08-05",
+     "eol": "2027-01-08"
+    },
+    {
+     "id": "anthropic.claude-opus-4-5-20251101-v1:0",
+     "base": "anthropic.claude-opus-4-5-20251101-v1:0",
+     "name": "Claude Opus 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-11-24",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-6-v1",
+     "base": "anthropic.claude-opus-4-6-v1",
+     "name": "Claude Opus 4.6",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-05",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-7",
+     "base": "anthropic.claude-opus-4-7",
+     "name": "Claude Opus 4.7",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-04-16",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-8",
+     "base": "anthropic.claude-opus-4-8",
+     "name": "Claude Opus 4.8",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-05-28",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-5",
+     "base": "anthropic.claude-opus-5",
+     "name": "Claude Opus 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-07-23",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-20250514-v1:0",
+     "base": "anthropic.claude-sonnet-4-20250514-v1:0",
+     "name": "Claude Sonnet 4",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2025-05-22",
+     "eol": "2026-10-14"
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+     "base": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+     "name": "Claude Sonnet 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-29",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-6",
+     "base": "anthropic.claude-sonnet-4-6",
+     "name": "Claude Sonnet 4.6",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-17",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-5",
+     "base": "anthropic.claude-sonnet-5",
+     "name": "Claude Sonnet 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-06-30",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-english-v3",
+     "base": "cohere.embed-english-v3",
+     "name": "Embed English",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-01-24",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-english-v3:0:512",
+     "base": "cohere.embed-english-v3",
+     "name": "Embed English",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-01-24",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-multilingual-v3",
+     "base": "cohere.embed-multilingual-v3",
+     "name": "Embed Multilingual",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-01-24",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-multilingual-v3:0:512",
+     "base": "cohere.embed-multilingual-v3",
+     "name": "Embed Multilingual",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-01-24",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-v4:0",
+     "base": "cohere.embed-v4:0",
+     "name": "Embed v4",
+     "provider": "Cohere",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-02",
+     "eol": null
+    },
+    {
+     "id": "cohere.rerank-v3-5:0",
+     "base": "cohere.rerank-v3-5:0",
+     "name": "Rerank 3.5",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-01",
+     "eol": null
+    },
+    {
+     "id": "deepseek.v3.2",
+     "base": "deepseek.v3.2",
+     "name": "DeepSeek V3.2",
+     "provider": "DeepSeek",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "deepseek.r1-v1:0",
+     "base": "deepseek.r1-v1:0",
+     "name": "DeepSeek-R1",
+     "provider": "DeepSeek",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-03-10",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-12b-it",
+     "base": "google.gemma-3-12b-it",
+     "name": "Gemma 3 12B IT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-27b-it",
+     "base": "google.gemma-3-27b-it",
+     "name": "Gemma 3 27B PT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-4b-it",
+     "base": "google.gemma-3-4b-it",
+     "name": "Gemma 3 4B IT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-70b-instruct-v1:0",
+     "base": "meta.llama3-70b-instruct-v1:0",
+     "name": "Llama 3 70B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-8b-instruct-v1:0",
+     "base": "meta.llama3-8b-instruct-v1:0",
+     "name": "Llama 3 8B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-1-70b-instruct-v1:0",
+     "base": "meta.llama3-1-70b-instruct-v1:0",
+     "name": "Llama 3.1 70B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-07-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-1-8b-instruct-v1:0",
+     "base": "meta.llama3-1-8b-instruct-v1:0",
+     "name": "Llama 3.1 8B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-07-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-3-70b-instruct-v1:0",
+     "base": "meta.llama3-3-70b-instruct-v1:0",
+     "name": "Llama 3.3 70B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-19",
+     "eol": null
+    },
+    {
+     "id": "meta.llama4-maverick-17b-instruct-v1:0",
+     "base": "meta.llama4-maverick-17b-instruct-v1:0",
+     "name": "Llama 4 Maverick 17B Instruct",
+     "provider": "Meta",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-28",
+     "eol": null
+    },
+    {
+     "id": "meta.llama4-scout-17b-instruct-v1:0",
+     "base": "meta.llama4-scout-17b-instruct-v1:0",
+     "name": "Llama 4 Scout 17B Instruct",
+     "provider": "Meta",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-28",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2",
+     "base": "minimax.minimax-m2",
+     "name": "MiniMax M2",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2.1",
+     "base": "minimax.minimax-m2.1",
+     "name": "MiniMax M2.1",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2.5",
+     "base": "minimax.minimax-m2.5",
+     "name": "MiniMax M2.5",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    },
+    {
+     "id": "mistral.devstral-2-123b",
+     "base": "mistral.devstral-2-123b",
+     "name": "Devstral 2 123B",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-17",
+     "eol": null
+    },
+    {
+     "id": "mistral.magistral-small-2509",
+     "base": "mistral.magistral-small-2509",
+     "name": "Magistral Small 2509",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-14b-instruct",
+     "base": "mistral.ministral-3-14b-instruct",
+     "name": "Ministral 14B 3.0",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-8b-instruct",
+     "base": "mistral.ministral-3-8b-instruct",
+     "name": "Ministral 3 8B",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-3b-instruct",
+     "base": "mistral.ministral-3-3b-instruct",
+     "name": "Ministral 3B",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.mistral-7b-instruct-v0:2",
+     "base": "mistral.mistral-7b-instruct-v0:2",
+     "name": "Mistral 7B Instruct",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-03-01",
+     "eol": null
+    },
+    {
+     "id": "mistral.mistral-large-2402-v1:0",
+     "base": "mistral.mistral-large-2402-v1:0",
+     "name": "Mistral Large (24.02)",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-03",
+     "eol": null
+    },
+    {
+     "id": "mistral.mistral-large-3-675b-instruct",
+     "base": "mistral.mistral-large-3-675b-instruct",
+     "name": "Mistral Large 3",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.mistral-small-2402-v1:0",
+     "base": "mistral.mistral-small-2402-v1:0",
+     "name": "Mistral Small (24.02)",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-05-24",
+     "eol": null
+    },
+    {
+     "id": "mistral.mixtral-8x7b-instruct-v0:1",
+     "base": "mistral.mixtral-8x7b-instruct-v0:1",
+     "name": "Mixtral 8x7B Instruct",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-03-01",
+     "eol": null
+    },
+    {
+     "id": "mistral.pixtral-large-2502-v1:0",
+     "base": "mistral.pixtral-large-2502-v1:0",
+     "name": "Pixtral Large (25.02)",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-08",
+     "eol": null
+    },
+    {
+     "id": "mistral.voxtral-mini-3b-2507",
+     "base": "mistral.voxtral-mini-3b-2507",
+     "name": "Voxtral Mini 3B 2507",
+     "provider": "Mistral AI",
+     "input": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.voxtral-small-24b-2507",
+     "base": "mistral.voxtral-small-24b-2507",
+     "name": "Voxtral Small 24B 2507",
+     "provider": "Mistral AI",
+     "input": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "moonshot.kimi-k2-thinking",
+     "base": "moonshot.kimi-k2-thinking",
+     "name": "Kimi K2 Thinking",
+     "provider": "Moonshot AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "moonshotai.kimi-k2.5",
+     "base": "moonshotai.kimi-k2.5",
+     "name": "Kimi K2.5",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "moonshotai.kimi-k3",
+     "base": "moonshotai.kimi-k3",
+     "name": "Kimi K3",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-27",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-3-30b",
+     "base": "nvidia.nemotron-nano-3-30b",
+     "name": "Nemotron Nano 3 30B",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-23",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-super-3-120b",
+     "base": "nvidia.nemotron-super-3-120b",
+     "name": "NVIDIA Nemotron 3 Super 120B A12B",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-12b-v2",
+     "base": "nvidia.nemotron-nano-12b-v2",
+     "name": "NVIDIA Nemotron Nano 12B v2 VL BF16",
+     "provider": "NVIDIA",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-9b-v2",
+     "base": "nvidia.nemotron-nano-9b-v2",
+     "name": "NVIDIA Nemotron Nano 9B v2",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-safeguard-120b",
+     "base": "openai.gpt-oss-safeguard-120b",
+     "name": "GPT OSS Safeguard 120B",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-safeguard-20b",
+     "base": "openai.gpt-oss-safeguard-20b",
+     "name": "GPT OSS Safeguard 20B",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-luna",
+     "base": "openai.gpt-5.6-luna",
+     "name": "GPT-5.6 Luna",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-sol",
+     "base": "openai.gpt-5.6-sol",
+     "name": "GPT-5.6 Sol",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-terra",
+     "base": "openai.gpt-5.6-terra",
+     "name": "GPT-5.6 Terra",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-6-astra",
+     "base": "openai.gpt-6-astra",
+     "name": "GPT-6 Astra",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-08",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-120b-1:0",
+     "base": "openai.gpt-oss-120b-1:0",
+     "name": "gpt-oss-120b",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-08-06",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-20b-1:0",
+     "base": "openai.gpt-oss-20b-1:0",
+     "name": "gpt-oss-20b",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-08-06",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-32b-v1:0",
+     "base": "qwen.qwen3-32b-v1:0",
+     "name": "Qwen3 32B (dense)",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-coder-next",
+     "base": "qwen.qwen3-coder-next",
+     "name": "Qwen3 Coder Next",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-next-80b-a3b",
+     "base": "qwen.qwen3-next-80b-a3b",
+     "name": "Qwen3 Next 80B A3B",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-vl-235b-a22b",
+     "base": "qwen.qwen3-vl-235b-a22b",
+     "name": "Qwen3 VL 235B A22B",
+     "provider": "Qwen",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-coder-30b-a3b-v1:0",
+     "base": "qwen.qwen3-coder-30b-a3b-v1:0",
+     "name": "Qwen3-Coder-30B-A3B-Instruct",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-conservative-upscale-v1:0",
+     "base": "stability.stable-conservative-upscale-v1:0",
+     "name": "Stable Image Conservative Upscale",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-control-sketch-v1:0",
+     "base": "stability.stable-image-control-sketch-v1:0",
+     "name": "Stable Image Control Sketch",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-control-structure-v1:0",
+     "base": "stability.stable-image-control-structure-v1:0",
+     "name": "Stable Image Control Structure",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-creative-upscale-v1:0",
+     "base": "stability.stable-creative-upscale-v1:0",
+     "name": "Stable Image Creative Upscale",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-erase-object-v1:0",
+     "base": "stability.stable-image-erase-object-v1:0",
+     "name": "Stable Image Erase Object",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-fast-upscale-v1:0",
+     "base": "stability.stable-fast-upscale-v1:0",
+     "name": "Stable Image Fast Upscale",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-inpaint-v1:0",
+     "base": "stability.stable-image-inpaint-v1:0",
+     "name": "Stable Image Inpaint",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-outpaint-v1:0",
+     "base": "stability.stable-outpaint-v1:0",
+     "name": "Stable Image Outpaint",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-remove-background-v1:0",
+     "base": "stability.stable-image-remove-background-v1:0",
+     "name": "Stable Image Remove Background",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-search-recolor-v1:0",
+     "base": "stability.stable-image-search-recolor-v1:0",
+     "name": "Stable Image Search and Recolor",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-search-replace-v1:0",
+     "base": "stability.stable-image-search-replace-v1:0",
+     "name": "Stable Image Search and Replace",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-style-guide-v1:0",
+     "base": "stability.stable-image-style-guide-v1:0",
+     "name": "Stable Image Style Guide",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-style-transfer-v1:0",
+     "base": "stability.stable-style-transfer-v1:0",
+     "name": "Stable Image Style Transfer",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "twelvelabs.marengo-embed-3-0-v1:0",
+     "base": "twelvelabs.marengo-embed-3-0-v1:0",
+     "name": "Marengo Embed 3.0",
+     "provider": "TwelveLabs",
+     "input": [
+      "IMAGE",
+      "SPEECH",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-28",
+     "eol": null
+    },
+    {
+     "id": "twelvelabs.marengo-embed-2-7-v1:0",
+     "base": "twelvelabs.marengo-embed-2-7-v1:0",
+     "name": "Marengo Embed v2.7",
+     "provider": "TwelveLabs",
+     "input": [
+      "IMAGE",
+      "SPEECH",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2025-07-15",
+     "eol": "2026-11-30"
+    },
+    {
+     "id": "twelvelabs.pegasus-1-2-v1:0",
+     "base": "twelvelabs.pegasus-1-2-v1:0",
+     "name": "Pegasus v1.2",
+     "provider": "TwelveLabs",
+     "input": [
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-16",
+     "eol": null
+    },
+    {
+     "id": "writer.palmyra-x4-v1:0",
+     "base": "writer.palmyra-x4-v1:0",
+     "name": "Palmyra X4",
+     "provider": "Writer",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-11-21",
+     "eol": null
+    },
+    {
+     "id": "writer.palmyra-x5-v1:0",
+     "base": "writer.palmyra-x5-v1:0",
+     "name": "Palmyra X5",
+     "provider": "Writer",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-11-21",
+     "eol": null
+    },
+    {
+     "id": "writer.palmyra-vision-7b",
+     "base": "writer.palmyra-vision-7b",
+     "name": "Writer Palmyra Vision 7B",
+     "provider": "Writer",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-20",
+     "eol": null
+    },
+    {
+     "id": "xai.grok-4.6",
+     "base": "xai.grok-4.6",
+     "name": "Grok 4.6",
+     "provider": "xAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-19",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-4.7",
+     "base": "zai.glm-4.7",
+     "name": "GLM 4.7",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-4.7-flash",
+     "base": "zai.glm-4.7-flash",
+     "name": "GLM 4.7 Flash",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-5",
+     "base": "zai.glm-5",
+     "name": "GLM 5",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    }
+   ]
+  },
+  "us-west-2": {
+   "count": 109,
+   "models": [
+    {
+     "id": "amazon.nova-2-lite-v1:0",
+     "base": "amazon.nova-2-lite-v1:0",
+     "name": "Nova 2 Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-2-sonic-v1:0",
+     "base": "amazon.nova-2-sonic-v1:0",
+     "name": "Nova 2 Sonic",
+     "provider": "Amazon",
+     "input": [
+      "SPEECH"
+     ],
+     "output": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-lite-v1:0",
+     "base": "amazon.nova-lite-v1:0",
+     "name": "Nova Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-micro-v1:0",
+     "base": "amazon.nova-micro-v1:0",
+     "name": "Nova Micro",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-pro-v1:0",
+     "base": "amazon.nova-pro-v1:0",
+     "name": "Nova Pro",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.rerank-v1:0",
+     "base": "amazon.rerank-v1:0",
+     "name": "Rerank 1.0",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-text-v1",
+     "base": "amazon.titan-embed-text-v1",
+     "name": "Titan Embeddings G1 - Text",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-text-v1:2:8k",
+     "base": "amazon.titan-embed-text-v1",
+     "name": "Titan Embeddings G1 - Text",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-image-v1",
+     "base": "amazon.titan-embed-image-v1",
+     "name": "Titan Multimodal Embeddings G1",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2023-11-29",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-image-v1:0",
+     "base": "amazon.titan-embed-image-v1:0",
+     "name": "Titan Multimodal Embeddings G1",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [
+      "FINE_TUNING"
+     ],
+     "status": "ACTIVE",
+     "since": "2023-11-29",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-g1-text-02",
+     "base": "amazon.titan-embed-g1-text-02",
+     "name": "Titan Text Embeddings v2",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2023-11-29",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-text-v2:0",
+     "base": "amazon.titan-embed-text-v2:0",
+     "name": "Titan Text Embeddings V2",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-30",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5",
+     "base": "anthropic.claude-fable-5",
+     "name": "Claude Fable 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-06-09",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5-1",
+     "base": "anthropic.claude-fable-5-1",
+     "name": "Claude Fable 5.1",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-31",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-haiku-4-5-20251001-v1:0",
+     "base": "anthropic.claude-haiku-4-5-20251001-v1:0",
+     "name": "Claude Haiku 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-15",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-1-20250805-v1:0",
+     "base": "anthropic.claude-opus-4-1-20250805-v1:0",
+     "name": "Claude Opus 4.1",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2025-08-05",
+     "eol": "2027-01-08"
+    },
+    {
+     "id": "anthropic.claude-opus-4-5-20251101-v1:0",
+     "base": "anthropic.claude-opus-4-5-20251101-v1:0",
+     "name": "Claude Opus 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-11-24",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-6-v1",
+     "base": "anthropic.claude-opus-4-6-v1",
+     "name": "Claude Opus 4.6",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-05",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-7",
+     "base": "anthropic.claude-opus-4-7",
+     "name": "Claude Opus 4.7",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-04-16",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-8",
+     "base": "anthropic.claude-opus-4-8",
+     "name": "Claude Opus 4.8",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-05-28",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-5",
+     "base": "anthropic.claude-opus-5",
+     "name": "Claude Opus 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-07-23",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-20250514-v1:0",
+     "base": "anthropic.claude-sonnet-4-20250514-v1:0",
+     "name": "Claude Sonnet 4",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2025-05-22",
+     "eol": "2026-10-14"
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+     "base": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+     "name": "Claude Sonnet 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-29",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-6",
+     "base": "anthropic.claude-sonnet-4-6",
+     "name": "Claude Sonnet 4.6",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-17",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-5",
+     "base": "anthropic.claude-sonnet-5",
+     "name": "Claude Sonnet 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-06-30",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-english-v3",
+     "base": "cohere.embed-english-v3",
+     "name": "Embed English",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-01-24",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-english-v3:0:512",
+     "base": "cohere.embed-english-v3",
+     "name": "Embed English",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-01-24",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-multilingual-v3",
+     "base": "cohere.embed-multilingual-v3",
+     "name": "Embed Multilingual",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-01-24",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-multilingual-v3:0:512",
+     "base": "cohere.embed-multilingual-v3",
+     "name": "Embed Multilingual",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-01-24",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-v4:0",
+     "base": "cohere.embed-v4:0",
+     "name": "Embed v4",
+     "provider": "Cohere",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-02",
+     "eol": null
+    },
+    {
+     "id": "cohere.rerank-v3-5:0",
+     "base": "cohere.rerank-v3-5:0",
+     "name": "Rerank 3.5",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-01",
+     "eol": null
+    },
+    {
+     "id": "deepseek.v3.2",
+     "base": "deepseek.v3.2",
+     "name": "DeepSeek V3.2",
+     "provider": "DeepSeek",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "deepseek.r1-v1:0",
+     "base": "deepseek.r1-v1:0",
+     "name": "DeepSeek-R1",
+     "provider": "DeepSeek",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-03-10",
+     "eol": null
+    },
+    {
+     "id": "deepseek.v3-v1:0",
+     "base": "deepseek.v3-v1:0",
+     "name": "DeepSeek-V3.1",
+     "provider": "DeepSeek",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-12b-it",
+     "base": "google.gemma-3-12b-it",
+     "name": "Gemma 3 12B IT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-27b-it",
+     "base": "google.gemma-3-27b-it",
+     "name": "Gemma 3 27B PT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-4b-it",
+     "base": "google.gemma-3-4b-it",
+     "name": "Gemma 3 4B IT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "luma.ray-v2:0",
+     "base": "luma.ray-v2:0",
+     "name": "Ray v2",
+     "provider": "Luma AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "VIDEO"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-01-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-70b-instruct-v1:0",
+     "base": "meta.llama3-70b-instruct-v1:0",
+     "name": "Llama 3 70B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-8b-instruct-v1:0",
+     "base": "meta.llama3-8b-instruct-v1:0",
+     "name": "Llama 3 8B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-1-70b-instruct-v1:0",
+     "base": "meta.llama3-1-70b-instruct-v1:0",
+     "name": "Llama 3.1 70B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-07-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-1-70b-instruct-v1:0:128k",
+     "base": "meta.llama3-1-70b-instruct-v1:0",
+     "name": "Llama 3.1 70B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [
+      "DISTILLATION",
+      "FINE_TUNING"
+     ],
+     "status": "ACTIVE",
+     "since": "2024-07-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-1-8b-instruct-v1:0",
+     "base": "meta.llama3-1-8b-instruct-v1:0",
+     "name": "Llama 3.1 8B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-07-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-1-8b-instruct-v1:0:128k",
+     "base": "meta.llama3-1-8b-instruct-v1:0",
+     "name": "Llama 3.1 8B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "PROVISIONED"
+     ],
+     "customization": [
+      "DISTILLATION",
+      "FINE_TUNING"
+     ],
+     "status": "ACTIVE",
+     "since": "2024-07-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-3-70b-instruct-v1:0",
+     "base": "meta.llama3-3-70b-instruct-v1:0",
+     "name": "Llama 3.3 70B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-19",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-3-70b-instruct-v1:0:128k",
+     "base": "meta.llama3-3-70b-instruct-v1:0",
+     "name": "Llama 3.3 70B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [],
+     "customization": [
+      "DISTILLATION",
+      "FINE_TUNING"
+     ],
+     "status": "ACTIVE",
+     "since": "2024-12-19",
+     "eol": null
+    },
+    {
+     "id": "meta.llama4-maverick-17b-instruct-v1:0",
+     "base": "meta.llama4-maverick-17b-instruct-v1:0",
+     "name": "Llama 4 Maverick 17B Instruct",
+     "provider": "Meta",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-28",
+     "eol": null
+    },
+    {
+     "id": "meta.llama4-scout-17b-instruct-v1:0",
+     "base": "meta.llama4-scout-17b-instruct-v1:0",
+     "name": "Llama 4 Scout 17B Instruct",
+     "provider": "Meta",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-28",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2",
+     "base": "minimax.minimax-m2",
+     "name": "MiniMax M2",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2.1",
+     "base": "minimax.minimax-m2.1",
+     "name": "MiniMax M2.1",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2.5",
+     "base": "minimax.minimax-m2.5",
+     "name": "MiniMax M2.5",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    },
+    {
+     "id": "mistral.devstral-2-123b",
+     "base": "mistral.devstral-2-123b",
+     "name": "Devstral 2 123B",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-17",
+     "eol": null
+    },
+    {
+     "id": "mistral.magistral-small-2509",
+     "base": "mistral.magistral-small-2509",
+     "name": "Magistral Small 2509",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-14b-instruct",
+     "base": "mistral.ministral-3-14b-instruct",
+     "name": "Ministral 14B 3.0",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-8b-instruct",
+     "base": "mistral.ministral-3-8b-instruct",
+     "name": "Ministral 3 8B",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-3b-instruct",
+     "base": "mistral.ministral-3-3b-instruct",
+     "name": "Ministral 3B",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.mistral-7b-instruct-v0:2",
+     "base": "mistral.mistral-7b-instruct-v0:2",
+     "name": "Mistral 7B Instruct",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-03-01",
+     "eol": null
+    },
+    {
+     "id": "mistral.mistral-large-2402-v1:0",
+     "base": "mistral.mistral-large-2402-v1:0",
+     "name": "Mistral Large (24.02)",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-03",
+     "eol": null
+    },
+    {
+     "id": "mistral.mistral-large-2407-v1:0",
+     "base": "mistral.mistral-large-2407-v1:0",
+     "name": "Mistral Large (24.07)",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-07-24",
+     "eol": null
+    },
+    {
+     "id": "mistral.mistral-large-3-675b-instruct",
+     "base": "mistral.mistral-large-3-675b-instruct",
+     "name": "Mistral Large 3",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.mixtral-8x7b-instruct-v0:1",
+     "base": "mistral.mixtral-8x7b-instruct-v0:1",
+     "name": "Mixtral 8x7B Instruct",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-03-01",
+     "eol": null
+    },
+    {
+     "id": "mistral.pixtral-large-2502-v1:0",
+     "base": "mistral.pixtral-large-2502-v1:0",
+     "name": "Pixtral Large (25.02)",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-08",
+     "eol": null
+    },
+    {
+     "id": "mistral.voxtral-mini-3b-2507",
+     "base": "mistral.voxtral-mini-3b-2507",
+     "name": "Voxtral Mini 3B 2507",
+     "provider": "Mistral AI",
+     "input": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.voxtral-small-24b-2507",
+     "base": "mistral.voxtral-small-24b-2507",
+     "name": "Voxtral Small 24B 2507",
+     "provider": "Mistral AI",
+     "input": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "moonshot.kimi-k2-thinking",
+     "base": "moonshot.kimi-k2-thinking",
+     "name": "Kimi K2 Thinking",
+     "provider": "Moonshot AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "moonshotai.kimi-k2.5",
+     "base": "moonshotai.kimi-k2.5",
+     "name": "Kimi K2.5",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "moonshotai.kimi-k3",
+     "base": "moonshotai.kimi-k3",
+     "name": "Kimi K3",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-27",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-3-30b",
+     "base": "nvidia.nemotron-nano-3-30b",
+     "name": "Nemotron Nano 3 30B",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-23",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-super-3-120b",
+     "base": "nvidia.nemotron-super-3-120b",
+     "name": "NVIDIA Nemotron 3 Super 120B A12B",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-12b-v2",
+     "base": "nvidia.nemotron-nano-12b-v2",
+     "name": "NVIDIA Nemotron Nano 12B v2 VL BF16",
+     "provider": "NVIDIA",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-9b-v2",
+     "base": "nvidia.nemotron-nano-9b-v2",
+     "name": "NVIDIA Nemotron Nano 9B v2",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-safeguard-120b",
+     "base": "openai.gpt-oss-safeguard-120b",
+     "name": "GPT OSS Safeguard 120B",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-safeguard-20b",
+     "base": "openai.gpt-oss-safeguard-20b",
+     "name": "GPT OSS Safeguard 20B",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-luna",
+     "base": "openai.gpt-5.6-luna",
+     "name": "GPT-5.6 Luna",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-sol",
+     "base": "openai.gpt-5.6-sol",
+     "name": "GPT-5.6 Sol",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-terra",
+     "base": "openai.gpt-5.6-terra",
+     "name": "GPT-5.6 Terra",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-6-astra",
+     "base": "openai.gpt-6-astra",
+     "name": "GPT-6 Astra",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-08",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-120b-1:0",
+     "base": "openai.gpt-oss-120b-1:0",
+     "name": "gpt-oss-120b",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-08-06",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-20b-1:0",
+     "base": "openai.gpt-oss-20b-1:0",
+     "name": "gpt-oss-20b",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-08-06",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-235b-a22b-2507-v1:0",
+     "base": "qwen.qwen3-235b-a22b-2507-v1:0",
+     "name": "Qwen3 235B A22B 2507",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-32b-v1:0",
+     "base": "qwen.qwen3-32b-v1:0",
+     "name": "Qwen3 32B (dense)",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-coder-480b-a35b-v1:0",
+     "base": "qwen.qwen3-coder-480b-a35b-v1:0",
+     "name": "Qwen3 Coder 480B A35B Instruct",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-next-80b-a3b",
+     "base": "qwen.qwen3-next-80b-a3b",
+     "name": "Qwen3 Next 80B A3B",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-vl-235b-a22b",
+     "base": "qwen.qwen3-vl-235b-a22b",
+     "name": "Qwen3 VL 235B A22B",
+     "provider": "Qwen",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-coder-30b-a3b-v1:0",
+     "base": "qwen.qwen3-coder-30b-a3b-v1:0",
+     "name": "Qwen3-Coder-30B-A3B-Instruct",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "stability.sd3-5-large-v1:0",
+     "base": "stability.sd3-5-large-v1:0",
+     "name": "Stable Diffusion 3.5 Large",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-12",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-conservative-upscale-v1:0",
+     "base": "stability.stable-conservative-upscale-v1:0",
+     "name": "Stable Image Conservative Upscale",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-control-sketch-v1:0",
+     "base": "stability.stable-image-control-sketch-v1:0",
+     "name": "Stable Image Control Sketch",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-control-structure-v1:0",
+     "base": "stability.stable-image-control-structure-v1:0",
+     "name": "Stable Image Control Structure",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-core-v1:1",
+     "base": "stability.stable-image-core-v1:1",
+     "name": "Stable Image Core 1.0",
+     "provider": "Stability AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-12",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-creative-upscale-v1:0",
+     "base": "stability.stable-creative-upscale-v1:0",
+     "name": "Stable Image Creative Upscale",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-erase-object-v1:0",
+     "base": "stability.stable-image-erase-object-v1:0",
+     "name": "Stable Image Erase Object",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-fast-upscale-v1:0",
+     "base": "stability.stable-fast-upscale-v1:0",
+     "name": "Stable Image Fast Upscale",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-inpaint-v1:0",
+     "base": "stability.stable-image-inpaint-v1:0",
+     "name": "Stable Image Inpaint",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-outpaint-v1:0",
+     "base": "stability.stable-outpaint-v1:0",
+     "name": "Stable Image Outpaint",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-remove-background-v1:0",
+     "base": "stability.stable-image-remove-background-v1:0",
+     "name": "Stable Image Remove Background",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-search-recolor-v1:0",
+     "base": "stability.stable-image-search-recolor-v1:0",
+     "name": "Stable Image Search and Recolor",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-search-replace-v1:0",
+     "base": "stability.stable-image-search-replace-v1:0",
+     "name": "Stable Image Search and Replace",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-style-guide-v1:0",
+     "base": "stability.stable-image-style-guide-v1:0",
+     "name": "Stable Image Style Guide",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-style-transfer-v1:0",
+     "base": "stability.stable-style-transfer-v1:0",
+     "name": "Stable Image Style Transfer",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-ultra-v1:1",
+     "base": "stability.stable-image-ultra-v1:1",
+     "name": "Stable Image Ultra 1.0",
+     "provider": "Stability AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-02-22",
+     "eol": null
+    },
+    {
+     "id": "twelvelabs.pegasus-1-2-v1:0",
+     "base": "twelvelabs.pegasus-1-2-v1:0",
+     "name": "Pegasus v1.2",
+     "provider": "TwelveLabs",
+     "input": [
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-31",
+     "eol": null
+    },
+    {
+     "id": "writer.palmyra-x4-v1:0",
+     "base": "writer.palmyra-x4-v1:0",
+     "name": "Palmyra X4",
+     "provider": "Writer",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-28",
+     "eol": null
+    },
+    {
+     "id": "writer.palmyra-x5-v1:0",
+     "base": "writer.palmyra-x5-v1:0",
+     "name": "Palmyra X5",
+     "provider": "Writer",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-28",
+     "eol": null
+    },
+    {
+     "id": "writer.palmyra-vision-7b",
+     "base": "writer.palmyra-vision-7b",
+     "name": "Writer Palmyra Vision 7B",
+     "provider": "Writer",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-20",
+     "eol": null
+    },
+    {
+     "id": "xai.grok-4.6",
+     "base": "xai.grok-4.6",
+     "name": "Grok 4.6",
+     "provider": "xAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-19",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-4.7",
+     "base": "zai.glm-4.7",
+     "name": "GLM 4.7",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-4.7-flash",
+     "base": "zai.glm-4.7-flash",
+     "name": "GLM 4.7 Flash",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-5",
+     "base": "zai.glm-5",
+     "name": "GLM 5",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    }
+   ]
+  },
+  "us-east-2": {
+   "count": 86,
+   "models": [
+    {
+     "id": "amazon.nova-2-lite-v1:0",
+     "base": "amazon.nova-2-lite-v1:0",
+     "name": "Nova 2 Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-lite-v1:0",
+     "base": "amazon.nova-lite-v1:0",
+     "name": "Nova Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-micro-v1:0",
+     "base": "amazon.nova-micro-v1:0",
+     "name": "Nova Micro",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-pro-v1:0",
+     "base": "amazon.nova-pro-v1:0",
+     "name": "Nova Pro",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-text-v2:0",
+     "base": "amazon.titan-embed-text-v2:0",
+     "name": "Titan Text Embeddings V2",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-30",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5",
+     "base": "anthropic.claude-fable-5",
+     "name": "Claude Fable 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-06-09",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5-1",
+     "base": "anthropic.claude-fable-5-1",
+     "name": "Claude Fable 5.1",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-31",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-haiku-4-5-20251001-v1:0",
+     "base": "anthropic.claude-haiku-4-5-20251001-v1:0",
+     "name": "Claude Haiku 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-15",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-1-20250805-v1:0",
+     "base": "anthropic.claude-opus-4-1-20250805-v1:0",
+     "name": "Claude Opus 4.1",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2025-08-05",
+     "eol": "2027-01-08"
+    },
+    {
+     "id": "anthropic.claude-opus-4-5-20251101-v1:0",
+     "base": "anthropic.claude-opus-4-5-20251101-v1:0",
+     "name": "Claude Opus 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-11-24",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-6-v1",
+     "base": "anthropic.claude-opus-4-6-v1",
+     "name": "Claude Opus 4.6",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-04",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-7",
+     "base": "anthropic.claude-opus-4-7",
+     "name": "Claude Opus 4.7",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-04-16",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-8",
+     "base": "anthropic.claude-opus-4-8",
+     "name": "Claude Opus 4.8",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-05-28",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-5",
+     "base": "anthropic.claude-opus-5",
+     "name": "Claude Opus 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-07-23",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-20250514-v1:0",
+     "base": "anthropic.claude-sonnet-4-20250514-v1:0",
+     "name": "Claude Sonnet 4",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2025-05-22",
+     "eol": "2026-10-14"
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+     "base": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+     "name": "Claude Sonnet 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-29",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-6",
+     "base": "anthropic.claude-sonnet-4-6",
+     "name": "Claude Sonnet 4.6",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-17",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-5",
+     "base": "anthropic.claude-sonnet-5",
+     "name": "Claude Sonnet 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-06-30",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-v4:0",
+     "base": "cohere.embed-v4:0",
+     "name": "Embed v4",
+     "provider": "Cohere",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-02",
+     "eol": null
+    },
+    {
+     "id": "deepseek.v3.2",
+     "base": "deepseek.v3.2",
+     "name": "DeepSeek V3.2",
+     "provider": "DeepSeek",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "deepseek.r1-v1:0",
+     "base": "deepseek.r1-v1:0",
+     "name": "DeepSeek-R1",
+     "provider": "DeepSeek",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-03-10",
+     "eol": null
+    },
+    {
+     "id": "deepseek.v3-v1:0",
+     "base": "deepseek.v3-v1:0",
+     "name": "DeepSeek-V3.1",
+     "provider": "DeepSeek",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-12b-it",
+     "base": "google.gemma-3-12b-it",
+     "name": "Gemma 3 12B IT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-27b-it",
+     "base": "google.gemma-3-27b-it",
+     "name": "Gemma 3 27B PT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-4b-it",
+     "base": "google.gemma-3-4b-it",
+     "name": "Gemma 3 4B IT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-1-70b-instruct-v1:0",
+     "base": "meta.llama3-1-70b-instruct-v1:0",
+     "name": "Llama 3.1 70B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-07-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-1-70b-instruct-v1:0:128k",
+     "base": "meta.llama3-1-70b-instruct-v1:0",
+     "name": "Llama 3.1 70B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-07-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-1-8b-instruct-v1:0",
+     "base": "meta.llama3-1-8b-instruct-v1:0",
+     "name": "Llama 3.1 8B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-07-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-1-8b-instruct-v1:0:128k",
+     "base": "meta.llama3-1-8b-instruct-v1:0",
+     "name": "Llama 3.1 8B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-07-23",
+     "eol": null
+    },
+    {
+     "id": "meta.llama3-3-70b-instruct-v1:0",
+     "base": "meta.llama3-3-70b-instruct-v1:0",
+     "name": "Llama 3.3 70B Instruct",
+     "provider": "Meta",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-19",
+     "eol": null
+    },
+    {
+     "id": "meta.llama4-maverick-17b-instruct-v1:0",
+     "base": "meta.llama4-maverick-17b-instruct-v1:0",
+     "name": "Llama 4 Maverick 17B Instruct",
+     "provider": "Meta",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-28",
+     "eol": null
+    },
+    {
+     "id": "meta.llama4-scout-17b-instruct-v1:0",
+     "base": "meta.llama4-scout-17b-instruct-v1:0",
+     "name": "Llama 4 Scout 17B Instruct",
+     "provider": "Meta",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-28",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2",
+     "base": "minimax.minimax-m2",
+     "name": "MiniMax M2",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2.1",
+     "base": "minimax.minimax-m2.1",
+     "name": "MiniMax M2.1",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2.5",
+     "base": "minimax.minimax-m2.5",
+     "name": "MiniMax M2.5",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    },
+    {
+     "id": "mistral.devstral-2-123b",
+     "base": "mistral.devstral-2-123b",
+     "name": "Devstral 2 123B",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-17",
+     "eol": null
+    },
+    {
+     "id": "mistral.magistral-small-2509",
+     "base": "mistral.magistral-small-2509",
+     "name": "Magistral Small 2509",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-14b-instruct",
+     "base": "mistral.ministral-3-14b-instruct",
+     "name": "Ministral 14B 3.0",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-8b-instruct",
+     "base": "mistral.ministral-3-8b-instruct",
+     "name": "Ministral 3 8B",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-3b-instruct",
+     "base": "mistral.ministral-3-3b-instruct",
+     "name": "Ministral 3B",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.mistral-large-3-675b-instruct",
+     "base": "mistral.mistral-large-3-675b-instruct",
+     "name": "Mistral Large 3",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.pixtral-large-2502-v1:0",
+     "base": "mistral.pixtral-large-2502-v1:0",
+     "name": "Pixtral Large (25.02)",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-08",
+     "eol": null
+    },
+    {
+     "id": "mistral.voxtral-mini-3b-2507",
+     "base": "mistral.voxtral-mini-3b-2507",
+     "name": "Voxtral Mini 3B 2507",
+     "provider": "Mistral AI",
+     "input": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.voxtral-small-24b-2507",
+     "base": "mistral.voxtral-small-24b-2507",
+     "name": "Voxtral Small 24B 2507",
+     "provider": "Mistral AI",
+     "input": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "moonshot.kimi-k2-thinking",
+     "base": "moonshot.kimi-k2-thinking",
+     "name": "Kimi K2 Thinking",
+     "provider": "Moonshot AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "moonshotai.kimi-k2.5",
+     "base": "moonshotai.kimi-k2.5",
+     "name": "Kimi K2.5",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "moonshotai.kimi-k3",
+     "base": "moonshotai.kimi-k3",
+     "name": "Kimi K3",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-27",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-3-30b",
+     "base": "nvidia.nemotron-nano-3-30b",
+     "name": "Nemotron Nano 3 30B",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-23",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-super-3-120b",
+     "base": "nvidia.nemotron-super-3-120b",
+     "name": "NVIDIA Nemotron 3 Super 120B A12B",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-12b-v2",
+     "base": "nvidia.nemotron-nano-12b-v2",
+     "name": "NVIDIA Nemotron Nano 12B v2 VL BF16",
+     "provider": "NVIDIA",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-9b-v2",
+     "base": "nvidia.nemotron-nano-9b-v2",
+     "name": "NVIDIA Nemotron Nano 9B v2",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-safeguard-120b",
+     "base": "openai.gpt-oss-safeguard-120b",
+     "name": "GPT OSS Safeguard 120B",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-safeguard-20b",
+     "base": "openai.gpt-oss-safeguard-20b",
+     "name": "GPT OSS Safeguard 20B",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-luna",
+     "base": "openai.gpt-5.6-luna",
+     "name": "GPT-5.6 Luna",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-sol",
+     "base": "openai.gpt-5.6-sol",
+     "name": "GPT-5.6 Sol",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-terra",
+     "base": "openai.gpt-5.6-terra",
+     "name": "GPT-5.6 Terra",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-6-astra",
+     "base": "openai.gpt-6-astra",
+     "name": "GPT-6 Astra",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-08",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-120b-1:0",
+     "base": "openai.gpt-oss-120b-1:0",
+     "name": "gpt-oss-120b",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-08-06",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-20b-1:0",
+     "base": "openai.gpt-oss-20b-1:0",
+     "name": "gpt-oss-20b",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-08-06",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-235b-a22b-2507-v1:0",
+     "base": "qwen.qwen3-235b-a22b-2507-v1:0",
+     "name": "Qwen3 235B A22B 2507",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-32b-v1:0",
+     "base": "qwen.qwen3-32b-v1:0",
+     "name": "Qwen3 32B (dense)",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-coder-480b-a35b-v1:0",
+     "base": "qwen.qwen3-coder-480b-a35b-v1:0",
+     "name": "Qwen3 Coder 480B A35B Instruct",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-next-80b-a3b",
+     "base": "qwen.qwen3-next-80b-a3b",
+     "name": "Qwen3 Next 80B A3B",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-vl-235b-a22b",
+     "base": "qwen.qwen3-vl-235b-a22b",
+     "name": "Qwen3 VL 235B A22B",
+     "provider": "Qwen",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-coder-30b-a3b-v1:0",
+     "base": "qwen.qwen3-coder-30b-a3b-v1:0",
+     "name": "Qwen3-Coder-30B-A3B-Instruct",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-conservative-upscale-v1:0",
+     "base": "stability.stable-conservative-upscale-v1:0",
+     "name": "Stable Image Conservative Upscale",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-control-sketch-v1:0",
+     "base": "stability.stable-image-control-sketch-v1:0",
+     "name": "Stable Image Control Sketch",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-control-structure-v1:0",
+     "base": "stability.stable-image-control-structure-v1:0",
+     "name": "Stable Image Control Structure",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-creative-upscale-v1:0",
+     "base": "stability.stable-creative-upscale-v1:0",
+     "name": "Stable Image Creative Upscale",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-erase-object-v1:0",
+     "base": "stability.stable-image-erase-object-v1:0",
+     "name": "Stable Image Erase Object",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-fast-upscale-v1:0",
+     "base": "stability.stable-fast-upscale-v1:0",
+     "name": "Stable Image Fast Upscale",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-inpaint-v1:0",
+     "base": "stability.stable-image-inpaint-v1:0",
+     "name": "Stable Image Inpaint",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-outpaint-v1:0",
+     "base": "stability.stable-outpaint-v1:0",
+     "name": "Stable Image Outpaint",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-remove-background-v1:0",
+     "base": "stability.stable-image-remove-background-v1:0",
+     "name": "Stable Image Remove Background",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-search-recolor-v1:0",
+     "base": "stability.stable-image-search-recolor-v1:0",
+     "name": "Stable Image Search and Recolor",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-search-replace-v1:0",
+     "base": "stability.stable-image-search-replace-v1:0",
+     "name": "Stable Image Search and Replace",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-image-style-guide-v1:0",
+     "base": "stability.stable-image-style-guide-v1:0",
+     "name": "Stable Image Style Guide",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "stability.stable-style-transfer-v1:0",
+     "base": "stability.stable-style-transfer-v1:0",
+     "name": "Stable Image Style Transfer",
+     "provider": "Stability AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-03",
+     "eol": null
+    },
+    {
+     "id": "twelvelabs.pegasus-1-2-v1:0",
+     "base": "twelvelabs.pegasus-1-2-v1:0",
+     "name": "Pegasus v1.2",
+     "provider": "TwelveLabs",
+     "input": [
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-31",
+     "eol": null
+    },
+    {
+     "id": "writer.palmyra-x4-v1:0",
+     "base": "writer.palmyra-x4-v1:0",
+     "name": "Palmyra X4",
+     "provider": "Writer",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-11-21",
+     "eol": null
+    },
+    {
+     "id": "writer.palmyra-x5-v1:0",
+     "base": "writer.palmyra-x5-v1:0",
+     "name": "Palmyra X5",
+     "provider": "Writer",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-11-21",
+     "eol": null
+    },
+    {
+     "id": "writer.palmyra-vision-7b",
+     "base": "writer.palmyra-vision-7b",
+     "name": "Writer Palmyra Vision 7B",
+     "provider": "Writer",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-20",
+     "eol": null
+    },
+    {
+     "id": "xai.grok-4.6",
+     "base": "xai.grok-4.6",
+     "name": "Grok 4.6",
+     "provider": "xAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-19",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-4.7",
+     "base": "zai.glm-4.7",
+     "name": "GLM 4.7",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-4.7-flash",
+     "base": "zai.glm-4.7-flash",
+     "name": "GLM 4.7 Flash",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-5",
+     "base": "zai.glm-5",
+     "name": "GLM 5",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    }
+   ]
+  },
+  "ap-northeast-1": {
+   "count": 69,
+   "models": [
+    {
+     "id": "amazon.nova-2-lite-v1:0",
+     "base": "amazon.nova-2-lite-v1:0",
+     "name": "Nova 2 Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-2-sonic-v1:0",
+     "base": "amazon.nova-2-sonic-v1:0",
+     "name": "Nova 2 Sonic",
+     "provider": "Amazon",
+     "input": [
+      "SPEECH"
+     ],
+     "output": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-canvas-v1:0",
+     "base": "amazon.nova-canvas-v1:0",
+     "name": "Nova Canvas",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "IMAGE"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2024-12-03",
+     "eol": "2026-09-30"
+    },
+    {
+     "id": "amazon.nova-lite-v1:0",
+     "base": "amazon.nova-lite-v1:0",
+     "name": "Nova Lite",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-micro-v1:0",
+     "base": "amazon.nova-micro-v1:0",
+     "name": "Nova Micro",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-pro-v1:0",
+     "base": "amazon.nova-pro-v1:0",
+     "name": "Nova Pro",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-reel-v1:0",
+     "base": "amazon.nova-reel-v1:0",
+     "name": "Nova Reel",
+     "provider": "Amazon",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "VIDEO"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2024-12-03",
+     "eol": "2026-09-30"
+    },
+    {
+     "id": "amazon.rerank-v1:0",
+     "base": "amazon.rerank-v1:0",
+     "name": "Rerank 1.0",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-text-v1",
+     "base": "amazon.titan-embed-text-v1",
+     "name": "Titan Embeddings G1 - Text",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-text-v1:2:8k",
+     "base": "amazon.titan-embed-text-v1",
+     "name": "Titan Embeddings G1 - Text",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-04-03",
+     "eol": null
+    },
+    {
+     "id": "amazon.titan-embed-text-v2:0",
+     "base": "amazon.titan-embed-text-v2:0",
+     "name": "Titan Text Embeddings V2",
+     "provider": "Amazon",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-04-30",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5",
+     "base": "anthropic.claude-fable-5",
+     "name": "Claude Fable 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-06-09",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5-1",
+     "base": "anthropic.claude-fable-5-1",
+     "name": "Claude Fable 5.1",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-31",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-haiku-4-5-20251001-v1:0",
+     "base": "anthropic.claude-haiku-4-5-20251001-v1:0",
+     "name": "Claude Haiku 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-15",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-5-20251101-v1:0",
+     "base": "anthropic.claude-opus-4-5-20251101-v1:0",
+     "name": "Claude Opus 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-11-24",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-6-v1",
+     "base": "anthropic.claude-opus-4-6-v1",
+     "name": "Claude Opus 4.6",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-05",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-7",
+     "base": "anthropic.claude-opus-4-7",
+     "name": "Claude Opus 4.7",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-04-16",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-4-8",
+     "base": "anthropic.claude-opus-4-8",
+     "name": "Claude Opus 4.8",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-05-28",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-opus-5",
+     "base": "anthropic.claude-opus-5",
+     "name": "Claude Opus 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-07-23",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-20250514-v1:0",
+     "base": "anthropic.claude-sonnet-4-20250514-v1:0",
+     "name": "Claude Sonnet 4",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "LEGACY",
+     "since": "2025-05-22",
+     "eol": "2026-10-14"
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+     "base": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+     "name": "Claude Sonnet 4.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-29",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-4-6",
+     "base": "anthropic.claude-sonnet-4-6",
+     "name": "Claude Sonnet 4.6",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-17",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-5",
+     "base": "anthropic.claude-sonnet-5",
+     "name": "Claude Sonnet 5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-06-30",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-english-v3",
+     "base": "cohere.embed-english-v3",
+     "name": "Embed English",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-01-24",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-multilingual-v3",
+     "base": "cohere.embed-multilingual-v3",
+     "name": "Embed Multilingual",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-01-24",
+     "eol": null
+    },
+    {
+     "id": "cohere.embed-v4:0",
+     "base": "cohere.embed-v4:0",
+     "name": "Embed v4",
+     "provider": "Cohere",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "EMBEDDING"
+     ],
+     "streaming": false,
+     "inference": [
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-02",
+     "eol": null
+    },
+    {
+     "id": "cohere.rerank-v3-5:0",
+     "base": "cohere.rerank-v3-5:0",
+     "name": "Rerank 3.5",
+     "provider": "Cohere",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": false,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2024-12-01",
+     "eol": null
+    },
+    {
+     "id": "deepseek.v3.2",
+     "base": "deepseek.v3.2",
+     "name": "DeepSeek V3.2",
+     "provider": "DeepSeek",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "deepseek.v3-v1:0",
+     "base": "deepseek.v3-v1:0",
+     "name": "DeepSeek-V3.1",
+     "provider": "DeepSeek",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-12b-it",
+     "base": "google.gemma-3-12b-it",
+     "name": "Gemma 3 12B IT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-27b-it",
+     "base": "google.gemma-3-27b-it",
+     "name": "Gemma 3 27B PT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "google.gemma-3-4b-it",
+     "base": "google.gemma-3-4b-it",
+     "name": "Gemma 3 4B IT",
+     "provider": "Google",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2",
+     "base": "minimax.minimax-m2",
+     "name": "MiniMax M2",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2.1",
+     "base": "minimax.minimax-m2.1",
+     "name": "MiniMax M2.1",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "minimax.minimax-m2.5",
+     "base": "minimax.minimax-m2.5",
+     "name": "MiniMax M2.5",
+     "provider": "MiniMax",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    },
+    {
+     "id": "mistral.devstral-2-123b",
+     "base": "mistral.devstral-2-123b",
+     "name": "Devstral 2 123B",
+     "provider": "Mistral AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-17",
+     "eol": null
+    },
+    {
+     "id": "mistral.magistral-small-2509",
+     "base": "mistral.magistral-small-2509",
+     "name": "Magistral Small 2509",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-14b-instruct",
+     "base": "mistral.ministral-3-14b-instruct",
+     "name": "Ministral 14B 3.0",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-8b-instruct",
+     "base": "mistral.ministral-3-8b-instruct",
+     "name": "Ministral 3 8B",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.ministral-3-3b-instruct",
+     "base": "mistral.ministral-3-3b-instruct",
+     "name": "Ministral 3B",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.mistral-large-3-675b-instruct",
+     "base": "mistral.mistral-large-3-675b-instruct",
+     "name": "Mistral Large 3",
+     "provider": "Mistral AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.voxtral-mini-3b-2507",
+     "base": "mistral.voxtral-mini-3b-2507",
+     "name": "Voxtral Mini 3B 2507",
+     "provider": "Mistral AI",
+     "input": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "mistral.voxtral-small-24b-2507",
+     "base": "mistral.voxtral-small-24b-2507",
+     "name": "Voxtral Small 24B 2507",
+     "provider": "Mistral AI",
+     "input": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "moonshot.kimi-k2-thinking",
+     "base": "moonshot.kimi-k2-thinking",
+     "name": "Kimi K2 Thinking",
+     "provider": "Moonshot AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "moonshotai.kimi-k2.5",
+     "base": "moonshotai.kimi-k2.5",
+     "name": "Kimi K2.5",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "moonshotai.kimi-k3",
+     "base": "moonshotai.kimi-k3",
+     "name": "Kimi K3",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-27",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-3-30b",
+     "base": "nvidia.nemotron-nano-3-30b",
+     "name": "Nemotron Nano 3 30B",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-23",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-super-3-120b",
+     "base": "nvidia.nemotron-super-3-120b",
+     "name": "NVIDIA Nemotron 3 Super 120B A12B",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-12b-v2",
+     "base": "nvidia.nemotron-nano-12b-v2",
+     "name": "NVIDIA Nemotron Nano 12B v2 VL BF16",
+     "provider": "NVIDIA",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "nvidia.nemotron-nano-9b-v2",
+     "base": "nvidia.nemotron-nano-9b-v2",
+     "name": "NVIDIA Nemotron Nano 9B v2",
+     "provider": "NVIDIA",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-safeguard-120b",
+     "base": "openai.gpt-oss-safeguard-120b",
+     "name": "GPT OSS Safeguard 120B",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-safeguard-20b",
+     "base": "openai.gpt-oss-safeguard-20b",
+     "name": "GPT OSS Safeguard 20B",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-luna",
+     "base": "openai.gpt-5.6-luna",
+     "name": "GPT-5.6 Luna",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-sol",
+     "base": "openai.gpt-5.6-sol",
+     "name": "GPT-5.6 Sol",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-5.6-terra",
+     "base": "openai.gpt-5.6-terra",
+     "name": "GPT-5.6 Terra",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-13",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-6-astra",
+     "base": "openai.gpt-6-astra",
+     "name": "GPT-6 Astra",
+     "provider": "OpenAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-08",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-120b-1:0",
+     "base": "openai.gpt-oss-120b-1:0",
+     "name": "gpt-oss-120b",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-08-06",
+     "eol": null
+    },
+    {
+     "id": "openai.gpt-oss-20b-1:0",
+     "base": "openai.gpt-oss-20b-1:0",
+     "name": "gpt-oss-20b",
+     "provider": "OpenAI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-08-06",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-235b-a22b-2507-v1:0",
+     "base": "qwen.qwen3-235b-a22b-2507-v1:0",
+     "name": "Qwen3 235B A22B 2507",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-32b-v1:0",
+     "base": "qwen.qwen3-32b-v1:0",
+     "name": "Qwen3 32B (dense)",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-coder-480b-a35b-v1:0",
+     "base": "qwen.qwen3-coder-480b-a35b-v1:0",
+     "name": "Qwen3 Coder 480B A35B Instruct",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-next-80b-a3b",
+     "base": "qwen.qwen3-next-80b-a3b",
+     "name": "Qwen3 Next 80B A3B",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-vl-235b-a22b",
+     "base": "qwen.qwen3-vl-235b-a22b",
+     "name": "Qwen3 VL 235B A22B",
+     "provider": "Qwen",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "qwen.qwen3-coder-30b-a3b-v1:0",
+     "base": "qwen.qwen3-coder-30b-a3b-v1:0",
+     "name": "Qwen3-Coder-30B-A3B-Instruct",
+     "provider": "Qwen",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-09-15",
+     "eol": null
+    },
+    {
+     "id": "twelvelabs.pegasus-1-2-v1:0",
+     "base": "twelvelabs.pegasus-1-2-v1:0",
+     "name": "Pegasus v1.2",
+     "provider": "TwelveLabs",
+     "input": [
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2025-10-31",
+     "eol": null
+    },
+    {
+     "id": "xai.grok-4.6",
+     "base": "xai.grok-4.6",
+     "name": "Grok 4.6",
+     "provider": "xAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-08-19",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-4.7",
+     "base": "zai.glm-4.7",
+     "name": "GLM 4.7",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-4.7-flash",
+     "base": "zai.glm-4.7-flash",
+     "name": "GLM 4.7 Flash",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-02-06",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-5",
+     "base": "zai.glm-5",
+     "name": "GLM 5",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-03-18",
+     "eol": null
+    }
+   ]
+  }
+ }
+}

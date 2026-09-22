@@ -1,0 +1,14 @@
+{
+ "schema": 1,
+ "checked_at": "2026-09-22T13:37:09Z",
+ "primary_region": "ap-northeast-2",
+ "regions": [
+  "ap-northeast-2",
+  "us-east-1",
+  "us-west-2",
+  "us-east-2",
+  "ap-northeast-1"
+ ],
+ "source": "bedrock:ListFoundationModels, bedrock:ListInferenceProfiles",
+ "page": "https://hub.sean-chloe.com/bedrock/"
+}
