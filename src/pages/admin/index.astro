@@ -310,17 +310,42 @@ import { analytics } from '../../data/site';
     const url = `${scBase()}/admin?app=${app}`;
     ($('sc-open') as HTMLAnchorElement).href = url;
     const st = $('sc-status');
+    st.className = 'hint';
     st.textContent = '연결 확인 중…';
+    // Chrome 138+ "Local Network Access": a public https page reaching 127.0.0.1 needs a
+    // one-time permission. While the prompt is up the fetch just hangs, so a short
+    // timeout would misreport a running backend as "응답 없음" (seen on Chrome 153).
+    let perm = 'unknown';
+    try {
+      perm = (await navigator.permissions.query({ name: 'local-network-access' as PermissionName })).state;
+    } catch {}
+    if (perm === 'denied') {
+      frame.hidden = true;
+      frame.removeAttribute('src');
+      st.textContent = '브라우저가 이 사이트의 로컬 네트워크 접근을 차단 중 — 주소창 왼쪽 사이트 설정에서 "로컬 네트워크 액세스"를 허용하세요';
+      st.className = 'hint err';
+      return;
+    }
+    if (perm === 'prompt') st.textContent = '브라우저가 로컬 네트워크 접근 권한을 물어봅니다 → "허용"을 누르세요';
     try {
       // opaque no-cors probe: resolves if the server answers at all, rejects if unreachable
-      await fetch(`${scBase()}/health`, { mode: 'no-cors', cache: 'no-store', signal: AbortSignal.timeout(3000) });
+      await fetch(`${scBase()}/health`, {
+        mode: 'no-cors',
+        cache: 'no-store',
+        // @ts-expect-error — Chrome LNA hint; ignored elsewhere
+        targetAddressSpace: 'loopback',
+        signal: AbortSignal.timeout(perm === 'prompt' ? 60000 : 3000),
+      });
       st.textContent = '';
       frame.hidden = false;
       if (frame.src !== url) frame.src = url;
     } catch {
       frame.hidden = true;
       frame.removeAttribute('src');
-      st.textContent = `${scBase()} 응답 없음 — 로컬 SeanChat 백엔드가 꺼져 있거나 이 기기가 아닙니다`;
+      st.textContent =
+        perm === 'prompt'
+          ? `${scBase()} 연결 안 됨 — 권한 프롬프트에 응답하지 않았거나 로컬 SeanChat 백엔드가 꺼져 있습니다. 앱 버튼을 다시 누르면 재시도합니다`
+          : `${scBase()} 응답 없음 — 로컬 SeanChat 백엔드가 꺼져 있거나 이 기기가 아닙니다`;
       st.className = 'hint err';
     }
   }
