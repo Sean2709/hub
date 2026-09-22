@@ -1,0 +1,14 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "BedrockCatalogReadOnly",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:ListFoundationModels",
+        "bedrock:ListInferenceProfiles"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
