@@ -55,28 +55,41 @@ def _cli(args: list[str]) -> dict:
     return json.loads(res.stdout)
 
 
-def fetch_models(region: str) -> list[dict]:
+def _boto3_client(region: str):
+    """boto3 client, or None when boto3 is missing / too old to know every operation we need.
+
+    GitHub's ubuntu runners ship a distro boto3 (dist-packages) whose botocore predates
+    ListInferenceProfiles → KeyError in get_paginator. In that case use the aws CLI for
+    *everything* so both calls see the same service model.
+    """
     try:
         import boto3  # type: ignore
-
-        return boto3.client("bedrock", region_name=region).list_foundation_models()["modelSummaries"]
     except ImportError:
+        return None
+    client = boto3.client("bedrock", region_name=region)
+    if not all(hasattr(client, op) for op in ("list_foundation_models", "list_inference_profiles")):
+        return None
+    return client
+
+
+def fetch_models(region: str) -> list[dict]:
+    client = _boto3_client(region)
+    if client is None:
         return _cli(["bedrock", "list-foundation-models", "--region", region])["modelSummaries"]
+    return client.list_foundation_models()["modelSummaries"]
 
 
 def fetch_profiles(region: str) -> list[dict]:
-    try:
-        import boto3  # type: ignore
-
-        client = boto3.client("bedrock", region_name=region)
-        out: list[dict] = []
-        for page in client.get_paginator("list_inference_profiles").paginate(typeEquals="SYSTEM_DEFINED"):
-            out.extend(page["inferenceProfileSummaries"])
-        return out
-    except ImportError:
+    client = _boto3_client(region)
+    if client is None:
+        # the CLI auto-paginates
         return _cli(
             ["bedrock", "list-inference-profiles", "--region", region, "--type-equals", "SYSTEM_DEFINED"]
         )["inferenceProfileSummaries"]
+    out: list[dict] = []
+    for page in client.get_paginator("list_inference_profiles").paginate(typeEquals="SYSTEM_DEFINED"):
+        out.extend(page["inferenceProfileSummaries"])
+    return out
 
 
 # ---------------------------------------------------------------- normalize
