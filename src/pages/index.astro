@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile, certs, apps, posts, focus } from '../data/site';
+
+const fmtMonth = (ym: string) => {
+  const [y, m] = ym.split('-');
+  return `${y}.${m}`;
+};
+const initials = profile.name.slice(0, 1);
+---
+
+<Base>
+  <section class="hero" id="top">
+    <div class="avatar" aria-hidden="true">{initials}</div>
+    <div>
+      <h1>{profile.name}</h1>
+      <p class="role">
+        {profile.role} <span class="sep">@</span> {profile.org}
+      </p>
+      <p class="tagline">{profile.tagline}</p>
+      <ul class="focus">
+        {focus.map((f) => <li>{f}</li>)}
+      </ul>
+      <div class="cta">
+        <a class="btn" href={profile.links.linkedin} target="_blank" rel="noopener me">LinkedIn</a>
+        <a class="btn" href={profile.links.github} target="_blank" rel="noopener me">GitHub</a>
+        <a class="btn" href={profile.links.velog} target="_blank" rel="noopener me">velog</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="apps">
+    <h2>Apps <span class="count">{apps.length}</span></h2>
+    <ul class="grid apps">
+      {apps.map((a) => (
+        <li class="card app">
+          <div class="app-head">
+            <strong>{a.name}</strong>
+            <span class="pill">{a.category}</span>
+          </div>
+          <p class="sub">{a.subtitle}</p>
+          <p class="desc">{a.desc}</p>
+          <div class="app-foot">
+            <span class="meta">v{a.version} · {a.released}</span>
+            <a class="link" href={a.url} target="_blank" rel="noopener">App Store →</a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="writing">
+    <h2>Writing <span class="count">{posts.length}</span></h2>
+    <ol class="posts">
+      {posts.map((p) => (
+        <li>
+          <time datetime={p.date}>{p.date}</time>
+          <a href={p.url} target="_blank" rel="noopener">{p.title}</a>
+          <span class="tags">{p.tags.map((t) => <span class="tag">#{t}</span>)}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="more">
+      전체 글: <a href={profile.links.velog} target="_blank" rel="noopener">velog @seanson2709</a>
+      <span class="dot">·</span>
+      <a href={profile.links.rss} target="_blank" rel="noopener">RSS</a>
+    </p>
+  </section>
+
+  <section id="certs">
+    <h2>Certifications <span class="count">{certs.length}</span></h2>
+    <ul class="grid certs">
+      {certs.map((c) => (
+        <li class={`card cert level-${c.level.toLowerCase()}`}>
+          <div class="cert-head">
+            <span class="issuer">{c.issuer}</span>
+            <span class="level">{c.level}</span>
+          </div>
+          <strong class="cert-name">{c.name}</strong>
+          <span class="meta">
+            {fmtMonth(c.earned)}
+            {c.expires && <> → {fmtMonth(c.expires)}</>}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <ul class="contact">
+      <li><span class="k">Email</span><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+      <li><span class="k">LinkedIn</span><a href={profile.links.linkedin} target="_blank" rel="noopener me">seungwoo-son</a></li>
+      <li><span class="k">GitHub</span><a href={profile.links.github} target="_blank" rel="noopener me">Sean2709</a></li>
+      <li><span class="k">Location</span><span>{profile.location}</span></li>
+    </ul>
+  </section>
+</Base>

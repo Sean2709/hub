@@ -1,0 +1,57 @@
+---
+import '../styles/global.css';
+import { profile } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${profile.name} — ${profile.role}`,
+  description = profile.tagline,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="velog @seanson2709" href={profile.links.rss} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="hub.sean-chloe.com" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="color-scheme" content="light dark" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">hub.sean-chloe.com</a>
+      <nav aria-label="주요">
+        <a href="/#apps">Apps</a>
+        <a href="/#writing">Writing</a>
+        <a href="/#certs">Certs</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <span>© {new Date().getFullYear()} {profile.name}</span>
+      <span class="dot">·</span>
+      <span>Built with Astro, deployed via GitHub Pages</span>
+    </footer>
+  </body>
+</html>
