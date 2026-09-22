@@ -5,7 +5,7 @@ Account: sean-workload (461839758724). Created 2026-09-22.
 | Resource | Name | Notes |
 |---|---|---|
 | IAM OIDC provider | `token.actions.githubusercontent.com` | audience `sts.amazonaws.com` |
-| IAM role | `hub-bedrock-refresh` | trust: `repo:Sean2709/hub:ref:refs/heads/main` only ([trust-policy.json](trust-policy.json)) |
+| IAM role | `hub-bedrock-refresh` | trust: `repo:Sean2709@214588092/hub@1381576445:ref:refs/heads/main` only (GitHub appends owner/repo IDs to `sub` since 2026; exact-match pins the IDs, so a renamed/re-created repo can't assume it) ([trust-policy.json](trust-policy.json)) |
 | Inline policy | `bedrock-catalog-readonly` | `bedrock:ListFoundationModels`, `bedrock:ListInferenceProfiles` ([bedrock-readonly-policy.json](bedrock-readonly-policy.json)) |
 | GitHub repo variable | `AWS_ROLE_ARN` | `arn:aws:iam::461839758724:role/hub-bedrock-refresh` |
 
