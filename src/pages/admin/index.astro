@@ -1,0 +1,334 @@
+---
+// /admin/ — owner-only dashboard. The HTML itself is public (static site) but shows
+// nothing without the admin bearer token, which is only ever typed into this page
+// and kept in localStorage. noindex + excluded from sitemap + no inbound links.
+import Base from '../../layouts/Base.astro';
+import { analytics } from '../../data/site';
+---
+
+<Base title="Admin — hub" description="private" wide noindex>
+  <div id="admin" data-endpoint={analytics.endpoint}>
+    <div class="page-head">
+      <h1>Admin</h1>
+      <p class="lead">접속자 현황 · 운영 상태 · 다른 관리자 화면. 토큰은 이 브라우저에만 저장됩니다.</p>
+    </div>
+
+    <div class="filters adm-bar">
+      <input id="tok" type="password" placeholder="admin token" autocomplete="off" spellcheck="false" />
+      <button id="save" class="btn">저장</button>
+      <select id="days">
+        <option value="1">오늘</option>
+        <option value="7" selected>7일</option>
+        <option value="30">30일</option>
+        <option value="90">90일</option>
+      </select>
+      <button id="reload" class="btn">새로고침</button>
+      <label class="hint"><input id="auto" type="checkbox" checked /> 60초 자동</label>
+      <label class="hint"><input id="notrack" type="checkbox" /> 내 방문 제외</label>
+      <span id="status" class="hint"></span>
+    </div>
+
+    <section id="visitors" hidden>
+      <h2>접속자 <span id="asof" class="count"></span></h2>
+      <div class="stats">
+        <div class="stat accent"><div class="n" id="k-live">–</div><div class="l">실시간 (5분)</div></div>
+        <div class="stat"><div class="n" id="k-tpv">–</div><div class="l">오늘 PV</div></div>
+        <div class="stat"><div class="n" id="k-tuv">–</div><div class="l">오늘 UV</div></div>
+        <div class="stat"><div class="n" id="k-rpv">–</div><div class="l"><span id="k-rl">7일</span> PV</div></div>
+        <div class="stat"><div class="n" id="k-ruv">–</div><div class="l"><span id="k-rl2">7일</span> UV</div></div>
+        <div class="stat"><div class="n" id="k-clk">–</div><div class="l">외부 클릭</div></div>
+        <div class="stat"><div class="n muted" id="k-bot">–</div><div class="l">봇 (제외됨)</div></div>
+      </div>
+      <p id="live-pages" class="note"></p>
+
+      <div class="card chart"><h3>일별 PV <span class="muted">/ UV</span></h3><div id="daily" class="bars"></div></div>
+
+      <div class="grid two">
+        <div class="card"><h3>페이지</h3><table class="t"><tbody id="pages"></tbody></table></div>
+        <div class="card"><h3>유입 경로</h3><table class="t"><tbody id="refs"></tbody></table></div>
+        <div class="card"><h3>외부 클릭</h3><table class="t"><tbody id="clicks"></tbody></table></div>
+        <div class="card">
+          <h3>디바이스 · 언어</h3>
+          <div id="devices" class="split"></div>
+          <p id="devices-legend" class="legend"></p>
+          <table class="t"><tbody id="langs"></tbody></table>
+        </div>
+      </div>
+
+      <div class="card chart"><h3>시간대 (KST)</h3><div id="hours" class="heat"></div></div>
+
+      <div class="card chart"><h3>최근 이벤트</h3><table class="t recent"><tbody id="recent"></tbody></table></div>
+    </section>
+
+    <section id="ops">
+      <h2>운영 상태</h2>
+      <ul class="datalist" id="ops-list"><li><span class="k">…</span> GitHub API 조회 중</li></ul>
+    </section>
+
+    <section id="others">
+      <h2>다른 관리자 <span class="count">SeanChat · 작심 · 만수르</span></h2>
+      <div class="filters adm-bar">
+        <button class="btn app" data-app="seanchat">션챗</button>
+        <button class="btn app" data-app="jaksim">작심</button>
+        <button class="btn app" data-app="mansur">만수르</button>
+        <input id="sc-url" type="text" placeholder="http://127.0.0.1:8500" spellcheck="false" />
+        <button id="sc-save" class="btn">URL 저장</button>
+        <a id="sc-open" class="link" href="#" target="_blank" rel="noopener">새 창 ↗</a>
+        <span id="sc-status" class="hint"></span>
+      </div>
+      <p class="note">SeanChat 통합 관리자(로컬 8500, 작심·만수르 Firestore 포함)를 이 자리에 띄웁니다. 공개 EC2에는 관리 화면이 없으므로(의도) 로컬 백엔드가 켜진 이 Mac에서만 보입니다. SSM 터널을 쓰면 URL을 8600으로 바꾸세요.</p>
+      <iframe id="sc-frame" title="SeanChat admin" hidden></iframe>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .adm-bar { align-items: center; flex-wrap: wrap; gap: .5rem; }
+  .adm-bar input[type="password"], .adm-bar input[type="text"] { min-width: 240px; font-family: ui-monospace, Menlo, monospace; }
+  .adm-bar .btn { padding: .35rem .7rem; font-size: .9rem; }
+  .adm-bar .btn.app.on { background: var(--fg); color: var(--bg); }
+  .adm-bar label.hint { display: inline-flex; align-items: center; gap: .3rem; }
+  #status.err { color: #dc2626; }
+  #status.ok { color: var(--assoc); }
+  .stats .stat .n.muted { color: var(--muted); }
+  .grid.two { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 1rem; }
+  .card h3 { margin: 0 0 .6rem; font-size: .95rem; }
+  .card.chart { margin-top: 1rem; }
+  table.t { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  table.t td { padding: .3rem 0; border-top: 1px solid var(--line); vertical-align: top; }
+  table.t td:last-child { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; padding-left: .6rem; }
+  table.t td.k { word-break: break-all; }
+  table.t td .bar { display: inline-block; height: 6px; background: var(--accent); opacity: .6; vertical-align: middle; margin-left: .4rem; border-radius: 3px; }
+  table.t.recent td { white-space: nowrap; }
+  table.t.recent td.k { white-space: normal; }
+  .bars { display: flex; align-items: flex-end; gap: 3px; height: 120px; padding-top: .4rem; }
+  .bars .b { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; position: relative; min-width: 4px; }
+  .bars .b i { display: block; background: var(--accent); border-radius: 2px 2px 0 0; }
+  .bars .b u { display: block; background: var(--fg); opacity: .35; border-radius: 2px 2px 0 0; }
+  .bars .b:hover::after { content: attr(data-t); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: var(--fg); color: var(--bg); font-size: .72rem; padding: .15rem .4rem; border-radius: 4px; white-space: nowrap; z-index: 2; }
+  .heat { display: grid; grid-template-columns: repeat(24, 1fr); gap: 3px; }
+  .heat div { aspect-ratio: 1; border-radius: 3px; background: var(--accent); font-size: .65rem; display: flex; align-items: flex-end; justify-content: center; color: var(--muted); }
+  .split { display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin: .2rem 0 .3rem; background: var(--line); }
+  .split i { display: block; height: 100%; }
+  .split i.m { background: var(--spec); }
+  .split i.d { background: var(--pro); }
+  .legend { font-size: .8rem; color: var(--muted); margin: 0 0 .6rem; }
+  #sc-frame { width: 100%; height: 78vh; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); margin-top: .6rem; }
+  .datalist .ok { color: var(--assoc); }
+  .datalist .warn { color: #d97706; }
+  .datalist .bad { color: #dc2626; }
+</style>
+
+<script>
+  // ---- helpers -----------------------------------------------------------------
+  const $ = (id: string) => document.getElementById(id) as HTMLElement;
+  const root = $('admin');
+  const ENDPOINT = root.dataset.endpoint!;
+  const LS_TOKEN = 'hub.admin.token';
+  const LS_NOTRACK = 'hub.notrack';
+  const LS_SC = 'hub.admin.scUrl';
+  const LS_APP = 'hub.admin.app';
+  const esc = (s: unknown) =>
+    String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+  const fmt = (n: number) => n.toLocaleString('ko-KR');
+  const rows = (id: string, items: { k: string; n: number; uv?: number }[], link = false) => {
+    const max = Math.max(1, ...items.map((i) => i.n));
+    $(id).innerHTML = items.length
+      ? items
+          .map(
+            (i) =>
+              `<tr><td class="k">${link ? `<a href="${esc(i.k)}" target="_blank" rel="noopener">${esc(i.k.replace(/^https?:\/\//, ''))}</a>` : esc(i.k)}</td>` +
+              `<td>${fmt(i.n)}${i.uv != null ? ` <span class="muted">/ ${fmt(i.uv)}</span>` : ''}<span class="bar" style="width:${Math.round((i.n / max) * 60)}px"></span></td></tr>`
+          )
+          .join('')
+      : '<tr><td class="muted">없음</td><td></td></tr>';
+  };
+  const setStatus = (msg: string, cls = '') => {
+    const el = $('status');
+    el.textContent = msg;
+    el.className = 'hint ' + cls;
+  };
+
+  // ---- token / options -----------------------------------------------------------
+  const tokEl = $('tok') as HTMLInputElement;
+  const daysEl = $('days') as HTMLSelectElement;
+  const autoEl = $('auto') as HTMLInputElement;
+  const notrackEl = $('notrack') as HTMLInputElement;
+  tokEl.value = localStorage.getItem(LS_TOKEN) || '';
+  notrackEl.checked = localStorage.getItem(LS_NOTRACK) === '1';
+  notrackEl.addEventListener('change', () => {
+    if (notrackEl.checked) localStorage.setItem(LS_NOTRACK, '1');
+    else localStorage.removeItem(LS_NOTRACK);
+  });
+  $('save').addEventListener('click', () => {
+    const t = tokEl.value.trim();
+    if (!t) return setStatus('토큰을 입력하세요', 'err');
+    localStorage.setItem(LS_TOKEN, t);
+    // the owner is here → stop counting their own visits unless they opted back in
+    if (localStorage.getItem(LS_NOTRACK) === null) {
+      localStorage.setItem(LS_NOTRACK, '1');
+      notrackEl.checked = true;
+    }
+    load();
+  });
+  tokEl.addEventListener('keydown', (e) => e.key === 'Enter' && ($('save') as HTMLButtonElement).click());
+  $('reload').addEventListener('click', () => load());
+  daysEl.addEventListener('change', () => load());
+
+  // ---- stats -------------------------------------------------------------------------
+  let timer: number | undefined;
+  async function load() {
+    const token = localStorage.getItem(LS_TOKEN);
+    if (!token) return setStatus('토큰 필요', 'err');
+    setStatus('조회 중…');
+    let res: Response;
+    try {
+      res = await fetch(`${ENDPOINT}/stats?days=${daysEl.value}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: 'no-store',
+      });
+    } catch (e) {
+      return setStatus('네트워크 오류: ' + (e as Error).message, 'err');
+    }
+    if (res.status === 401 || res.status === 403) {
+      $('visitors').hidden = true;
+      return setStatus(`토큰 거부 (${res.status})`, 'err');
+    }
+    if (!res.ok) return setStatus(`오류 ${res.status}`, 'err');
+    render(await res.json());
+    setStatus('갱신 ' + new Date().toLocaleTimeString('ko-KR'), 'ok');
+    clearTimeout(timer);
+    if (autoEl.checked) timer = window.setTimeout(load, 60_000);
+  }
+
+  function render(s: any) {
+    $('visitors').hidden = false;
+    const label = s.days === 1 ? '오늘' : `${s.days}일`;
+    $('asof').textContent = `KST ${s.now.slice(0, 16).replace('T', ' ')}`;
+    $('k-live').textContent = fmt(s.live.visitors);
+    $('k-tpv').textContent = fmt(s.today.pv);
+    $('k-tuv').textContent = fmt(s.today.uv);
+    $('k-rl').textContent = label;
+    $('k-rl2').textContent = label;
+    $('k-rpv').textContent = fmt(s.range.pv);
+    $('k-ruv').textContent = fmt(s.range.uv);
+    $('k-clk').textContent = fmt(s.range.clicks);
+    $('k-bot').textContent = fmt(s.range.bots);
+    $('live-pages').innerHTML = s.live.pages.length
+      ? '지금 보는 페이지: ' + s.live.pages.map((p: any) => `<code>${esc(p.k)}</code> ×${p.n}`).join(' · ')
+      : '지금 접속자 없음';
+
+    const dmax = Math.max(1, ...s.daily.map((d: any) => d.pv));
+    $('daily').innerHTML = s.daily
+      .map(
+        (d: any) =>
+          `<div class="b" data-t="${d.date.slice(5)} · PV ${d.pv} / UV ${d.uv}">` +
+          `<u style="height:${Math.round((d.uv / dmax) * 100)}%"></u><i style="height:${Math.round(((d.pv - d.uv) / dmax) * 100)}%"></i></div>`
+      )
+      .join('');
+
+    rows('pages', s.pages);
+    rows('refs', s.referrers);
+    rows('clicks', s.clicks, true);
+    rows('langs', s.langs);
+    const tot = s.devices.m + s.devices.d || 1;
+    $('devices').innerHTML = `<i class="m" style="width:${(s.devices.m / tot) * 100}%"></i><i class="d" style="width:${(s.devices.d / tot) * 100}%"></i>`;
+    $('devices-legend').textContent = `모바일 ${fmt(s.devices.m)} · 데스크톱 ${fmt(s.devices.d)}`;
+
+    const hmax = Math.max(1, ...s.hours);
+    $('hours').innerHTML = s.hours
+      .map((h: number, i: number) => `<div title="${i}시 · ${h}" style="opacity:${0.12 + (h / hmax) * 0.88}">${i % 3 === 0 ? i : ''}</div>`)
+      .join('');
+
+    $('recent').innerHTML = s.recent.length
+      ? s.recent
+          .map(
+            (e: any) =>
+              `<tr><td>${new Date(e.ts).toLocaleString('ko-KR', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</td>` +
+              `<td class="k">${esc(e.p)}</td><td class="muted">${esc(e.r)}</td><td>${e.d === 'm' ? '📱' : '💻'}</td></tr>`
+          )
+          .join('')
+      : '<tr><td class="muted">없음</td></tr>';
+  }
+
+  // ---- ops: GitHub Actions + data freshness (public repo → unauthenticated API) ----
+  async function ops() {
+    const items: string[] = [];
+    const li = (k: string, v: string, cls = '') => items.push(`<li><span class="k">${esc(k)}</span> <span class="${cls}">${v}</span></li>`);
+    const ago = (iso: string) => {
+      const h = (Date.now() - new Date(iso).getTime()) / 36e5;
+      return h < 1 ? `${Math.round(h * 60)}분 전` : h < 48 ? `${Math.round(h)}시간 전` : `${Math.round(h / 24)}일 전`;
+    };
+    try {
+      const meta = await (await fetch('/data/bedrock/meta.json', { cache: 'no-store' })).json();
+      const h = (Date.now() - new Date(meta.checked_at).getTime()) / 36e5;
+      li('Bedrock 데이터', `${esc(meta.checked_at)} (${ago(meta.checked_at)}) · Seoul ${meta.seoul_models ?? '?'}개`, h > 30 ? 'bad' : h > 26 ? 'warn' : 'ok');
+    } catch {
+      li('Bedrock 데이터', 'meta.json 읽기 실패', 'bad');
+    }
+    for (const [name, wf] of [
+      ['bedrock-refresh', 'bedrock-refresh.yml'],
+      ['pages 배포', 'pages.yml'],
+    ]) {
+      try {
+        const r = await fetch(`https://api.github.com/repos/Sean2709/hub/actions/workflows/${wf}/runs?per_page=1`, {
+          headers: { Accept: 'application/vnd.github+json' },
+        });
+        if (!r.ok) throw new Error(String(r.status));
+        const run = (await r.json()).workflow_runs?.[0];
+        if (!run) throw new Error('no runs');
+        const good = run.conclusion === 'success';
+        li(
+          name,
+          `<a href="${esc(run.html_url)}" target="_blank" rel="noopener">${esc(run.conclusion || run.status)}</a> · ${ago(run.updated_at)} · ${esc(run.event)}`,
+          good ? 'ok' : run.conclusion ? 'bad' : 'warn'
+        );
+      } catch (e) {
+        li(name, `조회 실패 (${esc((e as Error).message)})`, 'warn');
+      }
+    }
+    try {
+      const ch = await (await fetch('/data/bedrock/changes.json', { cache: 'no-store' })).json();
+      const last = Array.isArray(ch) ? ch[0] : ch.changes?.[0];
+      li('최근 카탈로그 변경', last ? esc(JSON.stringify(last).slice(0, 160)) : '기록 없음');
+    } catch {}
+    $('ops-list').innerHTML = items.join('');
+  }
+
+  // ---- other admins (SeanChat unified admin: 션챗 · 작심 · 만수르) ------------------
+  const scUrlEl = $('sc-url') as HTMLInputElement;
+  const frame = $('sc-frame') as HTMLIFrameElement;
+  const scBase = () => (localStorage.getItem(LS_SC) || 'http://127.0.0.1:8500').replace(/\/+$/, '');
+  scUrlEl.value = scBase();
+  $('sc-save').addEventListener('click', () => {
+    localStorage.setItem(LS_SC, scUrlEl.value.trim().replace(/\/+$/, ''));
+    showApp(localStorage.getItem(LS_APP) || 'seanchat');
+  });
+  async function showApp(app: string) {
+    localStorage.setItem(LS_APP, app);
+    document.querySelectorAll<HTMLButtonElement>('.btn.app').forEach((b) => b.classList.toggle('on', b.dataset.app === app));
+    const url = `${scBase()}/admin?app=${app}`;
+    ($('sc-open') as HTMLAnchorElement).href = url;
+    const st = $('sc-status');
+    st.textContent = '연결 확인 중…';
+    try {
+      // opaque no-cors probe: resolves if the server answers at all, rejects if unreachable
+      await fetch(`${scBase()}/health`, { mode: 'no-cors', cache: 'no-store', signal: AbortSignal.timeout(3000) });
+      st.textContent = '';
+      frame.hidden = false;
+      if (frame.src !== url) frame.src = url;
+    } catch {
+      frame.hidden = true;
+      frame.removeAttribute('src');
+      st.textContent = `${scBase()} 응답 없음 — 로컬 SeanChat 백엔드가 꺼져 있거나 이 기기가 아닙니다`;
+      st.className = 'hint err';
+    }
+  }
+  document.querySelectorAll<HTMLButtonElement>('.btn.app').forEach((b) => b.addEventListener('click', () => showApp(b.dataset.app!)));
+
+  // ---- boot ----------------------------------------------------------------------------
+  if (localStorage.getItem(LS_TOKEN)) load();
+  else setStatus('토큰을 입력하고 저장하세요');
+  ops();
+  showApp(localStorage.getItem(LS_APP) || 'seanchat');
+</script>

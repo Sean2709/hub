@@ -101,3 +101,12 @@ export const focus = [
   'Amazon Bedrock 기반 AI 워크로드 플랫폼 · 거버넌스 · FinOps',
   'Kubernetes / 플랫폼 엔지니어링 (CKA · CKAD)',
 ];
+
+// Analytics beacon (cookie-less, self-hosted). The site key is a public anti-junk
+// token: API Gateway rejects POSTs without it (or without our Origin) before any
+// Lambda runs. Reading stats needs a separate admin bearer token that never ships.
+// Infra: infra/analytics/ (API GW HTTP API → Lambda → DynamoDB, ap-northeast-2).
+export const analytics = {
+  endpoint: 'https://zoviv9w83h.execute-api.ap-northeast-2.amazonaws.com',
+  siteKey: 'f6df7409e1891e4b8153c7a1',
+};

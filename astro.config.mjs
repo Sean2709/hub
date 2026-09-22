@@ -7,7 +7,7 @@ export default defineConfig({
   site: 'https://hub.sean-chloe.com',
   // Custom domain at root → no base path. If served from *.github.io/hub, set base: '/hub'.
   output: 'static',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/admin') })],
   trailingSlash: 'ignore',
   build: {
     format: 'directory',

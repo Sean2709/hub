@@ -1,20 +1,23 @@
 ---
 import '../styles/global.css';
-import { profile } from '../data/site';
+import { profile, analytics } from '../data/site';
 
 interface Props {
   title?: string;
   description?: string;
   wide?: boolean; // data-heavy pages (/bedrock/) get a wider column
+  noindex?: boolean; // private pages (/admin/): robots noindex, no beacon
 }
 
 const {
   title = `${profile.name} — ${profile.role}`,
   description = profile.tagline,
   wide = false,
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const beaconUrl = `${analytics.endpoint}/collect?k=${analytics.siteKey}`;
 ---
 
 <!doctype html>
@@ -36,6 +39,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:site_name" content="hub.sean-chloe.com" />
     <meta name="twitter:card" content="summary" />
     <meta name="color-scheme" content="light dark" />
+    {noindex && <meta name="robots" content="noindex, nofollow, noarchive" />}
   </head>
   <body class:list={[{ wide }]}>
     <header class="site-header">
@@ -56,5 +60,38 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <span class="dot">·</span>
       <span>Built with Astro, deployed via GitHub Pages</span>
     </footer>
+    {!noindex && (
+      <script is:inline define:vars={{ beaconUrl }}>
+        // Cookie-less pageview + outbound-click beacon (see infra/analytics/).
+        // Sends path, referrer, viewport width, language — nothing that identifies a person.
+        // Opt-out for the owner: localStorage['hub.notrack']='1' (set by /admin/).
+        (function () {
+          try {
+            if (localStorage.getItem('hub.notrack') === '1') return;
+          } catch (e) {}
+          var send = function (o) {
+            o.p = location.pathname;
+            o.r = document.referrer || '';
+            o.w = window.innerWidth;
+            o.l = navigator.language || '';
+            var body = JSON.stringify(o); // string body = text/plain → no CORS preflight
+            if (navigator.sendBeacon) navigator.sendBeacon(beaconUrl, body);
+            else fetch(beaconUrl, { method: 'POST', body: body, keepalive: true, mode: 'no-cors' }).catch(function () {});
+          };
+          send({ t: 'pv' });
+          document.addEventListener(
+            'click',
+            function (e) {
+              var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+              if (!a) return;
+              var href = a.href || '';
+              if (!/^https?:/i.test(href) || a.host === location.host) return;
+              send({ t: 'click', h: href.slice(0, 300) });
+            },
+            true
+          );
+        })();
+      </script>
+    )}
   </body>
 </html>
