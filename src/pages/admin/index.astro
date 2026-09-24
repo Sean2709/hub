@@ -6,6 +6,7 @@
 // noindex + excluded from sitemap; linked from the header menu (rel=nofollow).
 import Base from '../../layouts/Base.astro';
 import { analytics, admin } from '../../data/site';
+import '../../lib/knowthat-admin.css';
 ---
 
 <Base title="Admin — hub" description="private" wide noindex>
@@ -129,10 +130,11 @@ import { analytics, admin } from '../../data/site';
             <button type="button" class="app" data-app="seanchat">SeanChat</button>
             <button type="button" class="app" data-app="jaksim">작심</button>
             <button type="button" class="app" data-app="mansur">만수르</button>
+            <button type="button" class="app" data-app="knowthat">너그거알아</button>
           </div>
           <span id="sc-status" class="status"></span>
         </div>
-        <details class="conn">
+        <details class="conn" id="sc-conn">
           <summary>연결 설정</summary>
           <div class="conn-body">
             <input id="sc-url" type="text" placeholder="http://127.0.0.1:8500" spellcheck="false" aria-label="SeanChat admin URL" />
@@ -141,6 +143,7 @@ import { analytics, admin } from '../../data/site';
           <p class="note">SeanChat 통합 관리자(로컬 8500, 작심·만수르 Firestore 포함)를 아래에 띄웁니다. 공개 EC2에는 관리 화면이 없어서(의도) 로컬 백엔드가 켜진 이 Mac에서만 보입니다. SSM 터널을 쓰면 8600으로 바꾸세요.</p>
         </details>
         <iframe id="sc-frame" title="SeanChat admin" hidden></iframe>
+        <div id="kt-panel" hidden></div>
       </section>
     </div>
   </div>
@@ -320,6 +323,8 @@ import { analytics, admin } from '../../data/site';
 </style>
 
 <script>
+  import { mountKnowThat } from '../../lib/knowthat-ui';
+  import { clearFirebaseToken } from '../../lib/knowthat-core';
   // ---- helpers -----------------------------------------------------------------
   const $ = (id: string) => document.getElementById(id) as HTMLElement;
   const root = $('admin');
@@ -486,6 +491,7 @@ import { analytics, admin } from '../../data/site';
   }
   $('logout').addEventListener('click', () => {
     localStorage.removeItem(LS_ID);
+    clearFirebaseToken();
     (window as any).google?.accounts?.id?.disableAutoSelect();
     showGate('로그아웃했습니다');
   });
@@ -697,9 +703,25 @@ import { analytics, admin } from '../../data/site';
     localStorage.setItem(LS_SC, scUrlEl.value.trim().replace(/\/+$/, ''));
     showApp(localStorage.getItem(LS_APP) || 'seanchat');
   });
+  // 너그거알아는 로컬 백엔드 없이 브라우저 → Firestore(knowthat-app) 직접 편집 (lib/knowthat-ui.ts)
+  const ktPanel = $('kt-panel');
+  let kt: ReturnType<typeof mountKnowThat> | null = null;
   async function showApp(app: string) {
     localStorage.setItem(LS_APP, app);
     document.querySelectorAll<HTMLButtonElement>('#admin .seg .app').forEach((b) => b.classList.toggle('on', b.dataset.app === app));
+    const isKt = app === 'knowthat';
+    ktPanel.hidden = !isKt;
+    $('sc-conn').hidden = isKt;
+    $('sc-open').hidden = isKt;
+    if (isKt) {
+      frame.hidden = true;
+      $('sc-status').textContent = '';
+      if (!kt) {
+        kt = mountKnowThat(ktPanel, idToken);
+        kt.load();
+      }
+      return;
+    }
     const url = `${scBase()}/admin?app=${app}`;
     ($('sc-open') as HTMLAnchorElement).href = url;
     const st = $('sc-status');
