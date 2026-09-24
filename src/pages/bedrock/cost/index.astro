@@ -40,7 +40,9 @@ const description = `서울 리전(ap-northeast-2) Bedrock 모델 ${seoul.length
 
     <script type="application/json" id="pricing-data" set:html={JSON.stringify(payload)} />
 
-    <form id="bf" autocomplete="off" novalidate class="cgrid">
+    <form id="bf" autocomplete="off" novalidate class="cstack">
+      <!-- sticky .cout is confined to this inner grid, so it can't slide over the comparison table below -->
+      <div class="cgrid">
       <div class="cform">
         <div class="box">
           <h2>워크로드</h2>
@@ -112,8 +114,9 @@ const description = `서울 리전(ap-northeast-2) Bedrock 모델 ${seoul.length
           <div class="twrap"><table><thead><tr><th>방식</th><th class="r">입력 $/1M</th><th class="r">출력 $/1M</th><th class="r">월 비용</th><th class="r">us-east-1</th></tr></thead><tbody id="b-tiers"></tbody></table></div>
         </div>
       </div>
+      </div>
 
-      <div class="box" style="grid-column:1/-1">
+      <div class="box">
         <h3>같은 워크로드, 서울 모델 비교 <span class="meta" id="cmp-meta"></span></h3>
         <div class="twrap"><table><thead><tr><th>모델</th><th>방식</th><th class="r">입력 $/1M</th><th class="r">출력 $/1M</th><th class="r">월 비용</th></tr></thead><tbody id="b-cmp"></tbody></table></div>
       </div>

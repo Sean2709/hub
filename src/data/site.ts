@@ -17,6 +17,7 @@ export const profile = {
     github: 'https://github.com/Sean2709',
     velog: 'https://velog.io/@seanson2709',
     rss: 'https://v2.velog.io/rss/@seanson2709',
+    credly: 'https://www.credly.com/users/seungwoo-son.3cb62090', // public profile (visible without login)
   },
 };
 
@@ -27,17 +28,19 @@ export type Cert = {
   issuer: 'AWS' | 'CNCF' | 'Cisco';
   earned: string; // YYYY-MM
   expires?: string; // YYYY-MM
+  badge: string; // Credly badge id — public page /badges/<id>/public_url works logged-out
+  img: string; // /img/certs/*.png (112px, from the Credly badge image)
 };
 
 export const certs: Cert[] = [
-  { name: 'AWS Certified Generative AI Developer – Professional', short: 'GenAI Dev Pro', level: 'Professional', issuer: 'AWS', earned: '2026-09', expires: '2029-09' },
-  { name: 'AWS Certified Solutions Architect – Professional', short: 'SA Pro', level: 'Professional', issuer: 'AWS', earned: '2026-05', expires: '2029-05' },
-  { name: 'AWS Certified Advanced Networking – Specialty', short: 'ANS', level: 'Specialty', issuer: 'AWS', earned: '2026-08', expires: '2029-08' },
-  { name: 'AWS Certified AI Practitioner', short: 'AIF', level: 'Foundational', issuer: 'AWS', earned: '2026-07', expires: '2029-09' },
-  { name: 'AWS Certified Solutions Architect – Associate', short: 'SAA', level: 'Associate', issuer: 'AWS', earned: '2020-07' },
-  { name: 'AWS Certified Cloud Practitioner', short: 'CLF', level: 'Foundational', issuer: 'AWS', earned: '2020-06' },
-  { name: 'Certified Kubernetes Administrator', short: 'CKA', level: 'Other', issuer: 'CNCF', earned: '2022-10' },
-  { name: 'Certified Kubernetes Application Developer', short: 'CKAD', level: 'Other', issuer: 'CNCF', earned: '2022-11' },
+  { name: 'AWS Certified Generative AI Developer – Professional', short: 'GenAI Dev Pro', level: 'Professional', issuer: 'AWS', earned: '2026-09', expires: '2029-09', badge: '722424eb-263c-4cc6-b8f9-ac3ff7a06b99', img: '/img/certs/genai-pro.png' },
+  { name: 'AWS Certified Solutions Architect – Professional', short: 'SA Pro', level: 'Professional', issuer: 'AWS', earned: '2026-05', expires: '2029-05', badge: 'e61ca7b4-5ab2-4d35-bcbc-965cb1d399cd', img: '/img/certs/sa-pro.png' },
+  { name: 'AWS Certified Advanced Networking – Specialty', short: 'ANS', level: 'Specialty', issuer: 'AWS', earned: '2026-08', expires: '2029-08', badge: '2387102f-35ff-4b0c-ba3f-98a3566e4dc9', img: '/img/certs/ans.png' },
+  { name: 'AWS Certified AI Practitioner', short: 'AIF', level: 'Foundational', issuer: 'AWS', earned: '2026-07', expires: '2029-09', badge: '6e11e5d6-513c-40b4-8e36-08be120fecc1', img: '/img/certs/aif.png' },
+  { name: 'AWS Certified Solutions Architect – Associate', short: 'SAA', level: 'Associate', issuer: 'AWS', earned: '2020-07', badge: '26ef0e5d-cd08-4650-b9a7-a262b5843653', img: '/img/certs/saa.png' },
+  { name: 'AWS Certified Cloud Practitioner', short: 'CLF', level: 'Foundational', issuer: 'AWS', earned: '2020-06', badge: 'af7220a4-fd61-49f7-8464-8dee98acfed5', img: '/img/certs/clf.png' },
+  { name: 'Certified Kubernetes Administrator', short: 'CKA', level: 'Other', issuer: 'CNCF', earned: '2022-10', badge: '6e9c77ce-62fe-4cc1-b8fa-0fe7ec05e2cf', img: '/img/certs/cka.png' },
+  { name: 'Certified Kubernetes Application Developer', short: 'CKAD', level: 'Other', issuer: 'CNCF', earned: '2022-11', badge: '360dfa53-efc4-4629-959a-3f40c3a8a1a4', img: '/img/certs/ckad.png' },
 ];
 
 export type App = {

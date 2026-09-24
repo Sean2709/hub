@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import Mark from '../components/Mark.astro';
+import '../styles/home.css';
 import { profile, certs, apps, posts, focus } from '../data/site';
 import bedrock from '../../public/data/bedrock/seoul.json';
 import bedrockMeta from '../../public/data/bedrock/meta.json';
@@ -16,32 +16,46 @@ const isNew = (d: string) => (Date.now() - new Date(d).getTime()) / 864e5 <= 14;
 const focusShort = ['Network · Landing Zone', 'Bedrock AI Platform', 'Kubernetes'];
 const ext = { target: '_blank', rel: 'noopener' };
 const me = { target: '_blank', rel: 'noopener me' };
+const [roleTitle, roleOrg] = profile.role.split(' · ');
+const tools = [
+  { href: '/bedrock/cost/', tag: 'AWS', title: 'Bedrock 비용 계산기', sub: '서울 리전 토큰 단가로 월 비용 — 리전 · Global · 배치, us-east-1 비교', icon: 'calc' },
+  { href: '/retire/', tag: 'Finance', title: '은퇴 자산 계산기', sub: '은퇴 가능 여부 · 월 가용 금액 · 자산 고갈 시점. 앱 「은퇴하면 만수르」와 같은 엔진', icon: 'trend' },
+  { href: '/pension/', tag: 'Finance', title: '연금 절세 계산기', sub: '연금저축 · IRP 세액공제와 연금소득세 과세 방식 비교 (2026 세법)', icon: 'bars' },
+];
+const glance = [
+  { href: '#tools', n: tools.length + 1, label: 'Tools' },
+  { href: '#apps', n: apps.length, label: 'Apps' },
+  { href: '#writing', n: posts.length, label: 'Posts' },
+  { href: '#certs', n: certs.length, label: 'Certs' },
+];
+const credlyBadge = (id: string) => `https://www.credly.com/badges/${id}/public_url`;
 ---
 
 <Base>
+  <div class="home">
   <section class="hero" id="top">
-    <Mark class="mono" uid="hero" />
-    <div>
-      <p class="eyebrow">{profile.role}</p>
-      <h1>{profile.name}</h1>
-      <p class="tagline">{profile.tagline}</p>
-      <ul class="hchips">{focus.map((f, i) => <li title={f}>{focusShort[i] ?? f}</li>)}</ul>
-      <div class="cta">
-        <a class="btn primary" href={`mailto:${profile.email}`}>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg>연락하기</a>
-        <a class="btn" href={profile.links.linkedin} {...me}><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" /><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7" /></svg>LinkedIn</a>
-        <a class="btn" href={profile.links.github} {...me}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4" /></svg>GitHub</a>
-        <a class="btn" href={profile.links.velog} {...me}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l7 14 7-14" /></svg>velog</a>
-      </div>
+    <p class="eyebrow"><span class="pulse" aria-hidden="true"></span>{roleTitle}{roleOrg && <span class="org">{roleOrg}</span>}</p>
+    <h1>{profile.name}<span class="stop">.</span></h1>
+    <p class="tagline">{profile.tagline}</p>
+    <ul class="hchips">{focus.map((f, i) => <li title={f}>{focusShort[i] ?? f}</li>)}</ul>
+    <div class="cta">
+      <a class="btn primary" href={`mailto:${profile.email}`}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg>연락하기</a>
+      <a class="btn" href={profile.links.linkedin} {...me}><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" /><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7" /></svg>LinkedIn</a>
+      <a class="btn" href={profile.links.github} {...me}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4" /></svg>GitHub</a>
+      <a class="btn" href={profile.links.velog} {...me}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l7 14 7-14" /></svg>velog</a>
     </div>
+    <ul class="glance" aria-label="바로가기">
+      {glance.map((g) => <li><a href={g.href}><b>{g.n}</b><span>{g.label}</span></a></li>)}
+    </ul>
   </section>
 
   <section id="tools">
-    <h2>Tools</h2>
-    <div class="card tool">
-      <a class="tool-head" href="/bedrock/">
+    <div class="shead"><h2>Tools</h2><span class="count">{tools.length + 1}</span><span class="hint">브라우저에서만 도는 계산기 · 매일 갱신되는 데이터</span></div>
+    <div class="tile feature">
+      <a class="f-head" href="/bedrock/">
         <span class="ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z" /><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" /></svg></span>
-        <span><strong>Amazon Bedrock 서울 리전 모델 현황</strong><span class="sub">있는 것 · 없는 것 · 바뀐 것 — 매일 06:00 다시 조회해 JSON · RSS로 공개</span></span>
+        <span class="f-title"><span class="tag">AWS · Data</span><strong>Amazon Bedrock 서울 리전 모델 현황</strong><span class="sub">있는 것 · 없는 것 · 바뀐 것 — 매일 06:00 다시 조회해 JSON · RSS로 공개</span></span>
         <span class="live"><i></i>LIVE</span>
       </a>
       <div class="nums">
@@ -50,157 +64,80 @@ const me = { target: '_blank', rel: 'noopener me' };
         <div><b>{bUse1.coverage_pct}<small>%</small></b><span>us-east-1 대비</span><em style={`--p:${bUse1.coverage_pct}%`}></em></div>
         <div><b>{bStats.missing_bases}</b><span>서울에 없음</span></div>
       </div>
-      <div class="tool-foot">
+      <div class="f-foot">
         <span class="meta">확인 {bChecked} · <a href="/data/bedrock/seoul.json">JSON</a> · <a href="/data/bedrock/feed.xml">RSS</a></span>
-        <a class="go" href="/bedrock/">보기 →</a>
+        <a class="go" href="/bedrock/">카탈로그 보기 <span aria-hidden="true">→</span></a>
       </div>
     </div>
-    <a class="card tool tool-row" href="/retire/">
-      <span class="ticon green"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18" /><path d="M6 16v-4M11 16V9M16 16V6" /><path d="M14 6h4v4" /></svg></span>
-      <span><strong>은퇴 자산 계산기</strong><span class="sub">나이 · 연봉 · 자산 · 연금을 넣으면 은퇴 가능 여부와 월 가용 금액, 자산 고갈 시점을 계산 — iOS 앱 「은퇴하면 만수르」와 같은 엔진, 입력값은 브라우저에만</span></span>
-      <span class="go">계산하기 →</span>
-    </a>
-    <a class="card tool tool-row" href="/pension/">
-      <span class="ticon green"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /><path d="M14 7l3-3 3 3" /></svg></span>
-      <span><strong>연금 절세 계산기</strong><span class="sub">연금저축 · IRP에 넣을 때 돌려받는 세액공제와 받을 때 내는 연금소득세(저율 · 16.5% 분리 · 종합과세)를 비교 — 2026년 세법 기준</span></span>
-      <span class="go">계산하기 →</span>
-    </a>
-    <a class="card tool tool-row" href="/bedrock/cost/">
-      <span class="ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" /><path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2M8 18h8" /></svg></span>
-      <span><strong>Amazon Bedrock 비용 계산기</strong><span class="sub">서울 리전 모델 토큰 단가(AWS Price List)로 월 비용 계산 — 리전 · Global 교차 리전 · 배치 · 캐시, us-east-1 비교. 매일 자동 갱신</span></span>
-      <span class="go">계산하기 →</span>
-    </a>
+    <ul class="tgrid">
+      {tools.map((t) => (
+        <li><a class="tile tcard" href={t.href}>
+          <span class="ticon" aria-hidden="true">
+            {t.icon === 'calc' && <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2" /><path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2M8 18h8" /></svg>}
+            {t.icon === 'trend' && <svg viewBox="0 0 24 24"><path d="M3 20h18" /><path d="M6 16v-4M11 16V9M16 16V6" /><path d="M14 6h4v4" /></svg>}
+            {t.icon === 'bars' && <svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /><path d="M14 7l3-3 3 3" /></svg>}
+          </span>
+          <span class="tag">{t.tag}</span>
+          <strong>{t.title}</strong>
+          <span class="sub">{t.sub}</span>
+          <span class="go">계산하기 <span aria-hidden="true">→</span></span>
+        </a></li>
+      ))}
+    </ul>
   </section>
-
   <section id="apps">
-    <h2>Apps</h2>
-    <ul class="apps">
+    <div class="shead"><h2>Apps</h2><span class="count">{apps.length}</span><span class="hint">iOS · App Store</span></div>
+    <ul class="agrid">
       {apps.map((a) => (
-        <li class="card app">
+        <li><a class="tile acard" href={a.url} {...ext}>
           <img src={a.icon} alt="" width="56" height="56" loading="lazy" />
-          <div class="app-body">
-            <div class="app-top"><strong>{a.name}</strong><span class="pill">{a.category}</span></div>
-            <p class="sub">{a.subtitle}</p>
-            <div class="app-foot"><span class="meta">v{a.version}</span><a class="store" href={a.url} {...ext}> App Store</a></div>
-          </div>
-        </li>
+          <span class="a-body">
+            <strong>{a.name}</strong>
+            <span class="sub">{a.subtitle}</span>
+            <span class="a-foot"><span>{a.category} · v{a.version}</span><span class="go">App Store <span aria-hidden="true">↗</span></span></span>
+          </span>
+        </a></li>
       ))}
     </ul>
   </section>
 
   <section id="writing">
-    <h2>Writing</h2>
-    <ol class="posts">
+    <div class="shead"><h2>Writing</h2><span class="count">{posts.length}</span><a class="hint link" href={profile.links.velog} {...ext}>velog 전체 보기 ↗</a></div>
+    <ol class="plist">
       {posts.map((p) => (
         <li><a href={p.url} {...ext}>
-          <time datetime={p.date}>{p.date.slice(5).replace('-', '.')}<small>{p.date.slice(0, 4)}</small></time>
+          <time datetime={p.date}><b>{p.date.slice(5).replace('-', '.')}</b><small>{p.date.slice(0, 4)}</small></time>
           <span class="t">{isNew(p.date) && <span class="new">NEW</span>}{p.title}</span>
           <span class="arr" aria-hidden="true">→</span>
         </a></li>
       ))}
     </ol>
-    <p class="more">
-      전체 글: <a href={profile.links.velog} {...ext}>velog @seanson2709</a>
-      <span class="dot">·</span>
-      <a href={profile.links.rss} {...ext}>RSS</a>
-    </p>
+    <p class="pmore"><a href={profile.links.rss} {...ext}>RSS 구독</a></p>
   </section>
 
   <section id="certs">
-    <h2>Certifications</h2>
-    <ul class="certchips">
+    <div class="shead"><h2>Certifications</h2><span class="count">{certs.length}</span><a class="hint link" href={profile.links.credly} {...me}>Credly 프로필 ↗</a></div>
+    <ul class="badges">
       {certs.map((c) => (
-        <li class={`lv-${c.level.toLowerCase()}`} title={`${c.name} · ${fmtMonth(c.earned)}${c.expires ? ` → ${fmtMonth(c.expires)}` : ''}`}>
-          <i></i>{c.short}<span>{c.earned.slice(0, 4)}</span>
-        </li>
+        <li><a href={credlyBadge(c.badge)} {...ext} title={`${c.name} · ${fmtMonth(c.earned)}${c.expires ? ` → ${fmtMonth(c.expires)}` : ''} — Credly에서 확인`}>
+          <img src={c.img} alt="" width="56" height="56" loading="lazy" />
+          <strong>{c.short}</strong>
+          <span>{c.issuer} · {c.earned.slice(0, 4)}</span>
+        </a></li>
       ))}
     </ul>
   </section>
 
   <section id="contact">
-    <h2>Contact</h2>
-    <p class="contact-line"><a href={`mailto:${profile.email}`}>{profile.email}</a> <span class="meta">· {profile.location}</span></p>
+    <div class="shead"><h2>Contact</h2></div>
+    <a class="tile ccard" href={`mailto:${profile.email}`}>
+      <span class="ticon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg></span>
+      <span class="c-body"><strong>{profile.email}</strong><span class="sub">{profile.location} · 메일이 가장 빠릅니다</span></span>
+      <span class="go" aria-hidden="true">→</span>
+    </a>
   </section>
+  </div>
 </Base>
 
-<style>
-  h2 { border: 0; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); padding: 0; margin-bottom: 0.9rem; }
-  .hero { display: grid; grid-template-columns: auto 1fr; gap: 1.6rem; }
-  .hero :global(.mono) { width: 84px; height: 84px; display: block; }
-  .eyebrow { margin: 0 0 0.3rem; color: var(--muted); font-size: 0.85rem; font-weight: 500; }
-  h1 { font-size: clamp(2.4rem, 6vw, 3.4rem); }
-  .tagline { margin: 0.6rem 0 0.9rem; font-size: 1.08rem; max-width: 52ch; }
-  .hchips { list-style: none; padding: 0; margin: 0 0 1.3rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .hchips li { font-size: 0.8rem; padding: 0.2rem 0.65rem; border-radius: 999px; background: color-mix(in srgb, var(--accent) 12%, transparent); }
-  .cta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.95rem; border: 1px solid var(--line); border-radius: 10px; background: var(--card); font-size: 0.9rem; font-weight: 500; }
-  .btn svg, .ticon svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; display: block; padding: 0; transition: border-color .15s, transform .15s; }
-  .tool:hover, .app:hover { border-color: color-mix(in srgb, var(--fg) 35%, var(--line)); }
-  .app:hover { transform: translateY(-1px); }
-  .tool { padding: 1.1rem 1.2rem; }
-  .tool-head { display: grid; grid-template-columns: auto 1fr auto; gap: 0.8rem; align-items: start; }
-  .tool-head:hover { text-decoration: none; }
-  .tool-head:hover strong { text-decoration: underline; text-underline-offset: 3px; }
-  .ticon { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--spec) 14%, transparent); color: var(--spec); }
-  .tool .sub { display: block; margin: 0.15rem 0 0; color: var(--muted); font-size: 0.88rem; }
-  .live { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; color: var(--assoc); display: flex; align-items: center; gap: 0.35rem; }
-  .live i { width: 7px; height: 7px; border-radius: 50%; background: var(--assoc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--assoc) 25%, transparent); }
-  .nums { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 1.1rem; border-top: 1px solid var(--line); }
-  .nums div { padding: 0.8rem 0.2rem 0; }
-  .nums div + div { padding-left: 1rem; border-left: 1px solid var(--line); }
-  .nums b { display: block; font-size: 1.7rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
-  .nums small { font-size: 0.9rem; }
-  .nums span { font-size: 0.75rem; color: var(--muted); }
-  .nums em { display: block; height: 4px; border-radius: 2px; margin-top: 0.4rem; background: linear-gradient(90deg, var(--spec) var(--p), var(--line) var(--p)); }
-  .tool-row { display: grid; grid-template-columns: auto 1fr auto; gap: 0.8rem; align-items: center; margin-top: 0.8rem; }
-  .tool-row:hover { text-decoration: none; }
-  .tool-row:hover strong { text-decoration: underline; text-underline-offset: 3px; }
-  .ticon.green { background: color-mix(in srgb, #059669 14%, transparent); color: #059669; }
-  .tool-foot { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-top: 0.9rem; }
-  .tool-foot .meta a { color: var(--fg); }
-  .go { font-weight: 600; font-size: 0.9rem; white-space: nowrap; }
-  .apps { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.8rem; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
-  .app { display: flex; flex-direction: row; gap: 0.9rem; padding: 1rem; }
-  .app img { border-radius: 13px; flex: none; box-shadow: 0 1px 2px rgb(0 0 0 / .15); }
-  .app-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-  .app-top { display: flex; justify-content: space-between; gap: 0.5rem; align-items: center; }
-  .pill { font-size: 0.7rem; border: 1px solid var(--line); border-radius: 999px; padding: 0.05rem 0.5rem; color: var(--muted); white-space: nowrap; }
-  .app .sub { margin: 0.1rem 0 0.6rem; color: var(--muted); font-size: 0.88rem; }
-  .app-foot { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
-  .store { font-size: 0.8rem; font-weight: 600; padding: 0.25rem 0.7rem; border-radius: 999px; background: #0a84ff; color: #fff; }
-  .store:hover { text-decoration: none; filter: brightness(1.08); }
-  .meta { color: var(--muted); font-size: 0.82rem; }
-  .posts { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
-  .posts li { display: block; padding: 0; border: 0; }
-  .posts a { display: grid; grid-template-columns: 3.6rem 1fr auto; gap: 1rem; align-items: baseline; padding: 0.85rem 0.4rem; border-bottom: 1px solid var(--line); }
-  .posts a:hover { text-decoration: none; background: var(--card); }
-  .posts a:hover .t { text-decoration: underline; text-underline-offset: 3px; }
-  .posts time { font-weight: 700; font-variant-numeric: tabular-nums; }
-  .posts time small { display: block; font-size: 0.7rem; color: var(--muted); font-weight: 500; }
-  .posts .t { font-weight: 500; line-height: 1.45; }
-  .new { font-size: 0.62rem; font-weight: 800; color: var(--accent-fg); background: var(--accent); border-radius: 4px; padding: 0.05rem 0.35rem; margin-right: 0.45rem; vertical-align: 2px; }
-  .arr { color: var(--muted); }
-  .certchips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.45rem; }
-  .certchips li { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; font-weight: 600; padding: 0.3rem 0.7rem; border: 1px solid var(--line); border-radius: 999px; background: var(--card); }
-  .certchips span { color: var(--muted); font-weight: 500; font-size: 0.75rem; }
-  .certchips i { width: 8px; height: 8px; border-radius: 50%; background: var(--found); }
-  .lv-professional i { background: var(--pro); }
-  .lv-specialty i { background: var(--spec); }
-  .lv-associate i { background: var(--assoc); }
-  .lv-other i { background: var(--other); }
-  .contact-line { margin: 0; font-size: 1.05rem; font-weight: 600; overflow-wrap: anywhere; }
-  @media (max-width: 560px) {
-    .hero { grid-template-columns: 1fr; gap: 1rem; }
-    .hero :global(.mono) { width: 60px; height: 60px; }
-    .tool-head { grid-template-columns: auto 1fr; }
-    .tool-row { grid-template-columns: auto 1fr; align-items: start; }
-    .tool-row .go { grid-column: 2; }
-    .live { display: none; }
-    .nums { grid-template-columns: repeat(2, 1fr); }
-    .nums div:nth-child(3) { padding-left: 0.2rem; border-left: 0; }
-    .posts a { grid-template-columns: 3rem 1fr; }
-    .arr { display: none; }
-  }
-</style>
+<!-- styles: src/styles/home.css (global, namespaced under .home — card markup is shared across sections) -->
+

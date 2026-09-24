@@ -13,6 +13,8 @@
   --other: #334155;
   --maxw: 880px;
   --radius: 12px;
+  --brand: #059669; /* logo green — primary accent for links, badges, focus */
+  --brand-soft: color-mix(in srgb, var(--brand) 12%, transparent);
   color-scheme: light dark;
 }
 
@@ -24,8 +26,12 @@
     --line: #262a33;
     --card: #171a21;
     --accent-fg: #0f1115;
+    --brand: #34d399;
   }
 }
+
+::selection { background: color-mix(in srgb, var(--brand) 28%, transparent); }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 4px; }
 
 body.wide { --maxw: 1140px; }
 
@@ -62,8 +68,9 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .site-header .brand svg { width: 30px; height: 30px; display: block; }
 .site-header .brand:hover svg { filter: brightness(1.08); }
 .site-header .brand:focus-visible { outline: 2px solid #059669; outline-offset: 3px; }
-.site-header nav { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 0.3rem 1.1rem; color: var(--muted); }
-.site-header nav a:hover { color: var(--fg); }
+.site-header nav { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 0.2rem 0.2rem; color: var(--muted); }
+.site-header nav a { padding: 0.3rem 0.6rem; border-radius: 8px; transition: color .15s, background-color .15s; }
+.site-header nav a:hover { color: var(--fg); background: color-mix(in srgb, var(--fg) 6%, transparent); text-decoration: none; }
 [id] { scroll-margin-top: 4.5rem; } /* anchors land below the sticky header */
 
 main { padding: 2.5rem 0 3rem; }
@@ -147,7 +154,8 @@ h2 .count { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
   .posts li, .contact li { grid-template-columns: 1fr; }
   .posts .tags { grid-column: 1; }
   .site-header { font-size: 0.82rem; flex-wrap: wrap; row-gap: 0.4rem; }
-  .site-header nav { gap: 0.6rem; flex-wrap: wrap; }
+  .site-header nav { gap: 0; flex-wrap: wrap; }
+  .site-header nav a { padding: 0.3rem 0.45rem; }
 }
 
 /* ---------------------------------------------------------------- /bedrock/ */
