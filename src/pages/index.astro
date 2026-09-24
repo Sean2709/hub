@@ -8,70 +8,69 @@ const bStats = bedrock.stats;
 const bUse1 = (bStats.reference as Record<string, { coverage_pct: number }>)['us-east-1'];
 const bChecked = new Date(bedrockMeta.checked_at).toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit' });
 
-const fmtMonth = (ym: string) => {
-  const [y, m] = ym.split('-');
-  return `${y}.${m}`;
-};
-const initials = profile.name.slice(0, 1);
+const fmtMonth = (ym: string) => ym.replace('-', '.');
+// "NEW" badge for posts ≤ 14 days old at build time (the site rebuilds daily via bedrock-refresh)
+const isNew = (d: string) => (Date.now() - new Date(d).getTime()) / 864e5 <= 14;
+// short hero chips; the full sentence stays in the tooltip
+const focusShort = ['Network · Landing Zone', 'Bedrock AI Platform', 'Kubernetes'];
+const ext = { target: '_blank', rel: 'noopener' };
+const me = { target: '_blank', rel: 'noopener me' };
 ---
 
 <Base>
   <section class="hero" id="top">
-    <div class="avatar" aria-hidden="true">{initials}</div>
+    <svg class="mono" viewBox="0 0 80 80" aria-hidden="true">
+      <rect width="80" height="80" rx="20" fill="var(--accent)" />
+      <path d="M18 60 L40 20 L62 60 Z" stroke="var(--accent-fg)" stroke-width="2.5" fill="none" opacity=".35" />
+      <g fill="var(--accent-fg)"><circle cx="18" cy="60" r="5" /><circle cx="40" cy="20" r="5" /><circle cx="62" cy="60" r="5" /></g>
+      <text x="40" y="52" text-anchor="middle" font-size="26" font-weight="800" fill="var(--accent-fg)">S</text>
+    </svg>
     <div>
+      <p class="eyebrow">{profile.role} · {profile.org}</p>
       <h1>{profile.name}</h1>
-      <p class="role">
-        {profile.role} <span class="sep">@</span> {profile.org}
-      </p>
       <p class="tagline">{profile.tagline}</p>
-      <ul class="focus">
-        {focus.map((f) => <li>{f}</li>)}
-      </ul>
+      <ul class="hchips">{focus.map((f, i) => <li title={f}>{focusShort[i] ?? f}</li>)}</ul>
       <div class="cta">
-        <a class="btn" href={profile.links.linkedin} target="_blank" rel="noopener me">LinkedIn</a>
-        <a class="btn" href={profile.links.github} target="_blank" rel="noopener me">GitHub</a>
-        <a class="btn" href={profile.links.velog} target="_blank" rel="noopener me">velog</a>
+        <a class="btn primary" href={`mailto:${profile.email}`}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg>연락하기</a>
+        <a class="btn" href={profile.links.linkedin} {...me}><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" /><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7" /></svg>LinkedIn</a>
+        <a class="btn" href={profile.links.github} {...me}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4" /></svg>GitHub</a>
+        <a class="btn" href={profile.links.velog} {...me}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l7 14 7-14" /></svg>velog</a>
       </div>
     </div>
   </section>
 
   <section id="tools">
-    <h2>Tools <span class="count">1</span></h2>
-    <ul class="grid tools">
-      <li class="card tool">
-        <div class="app-head">
-          <strong><a href="/bedrock/">Amazon Bedrock 서울 리전 모델 현황</a></strong>
-          <span class="pill">매일 갱신</span>
-        </div>
-        <p class="sub">ap-northeast-2에 지금 있는 것 · 없는 것 · 바뀐 것 — API 응답을 매일 다시 조회해 JSON·RSS로 공개</p>
-        <div class="nums">
-          <div><b>{bStats.primary_models}</b><span>서울 모델</span></div>
-          <div><b>{bStats.on_demand}</b><span>on-demand</span></div>
-          <div><b>{bUse1.coverage_pct}%</b><span>us-east-1 대비</span></div>
-          <div><b>{bStats.missing_bases}</b><span>서울에 없음</span></div>
-        </div>
-        <div class="app-foot">
-          <span class="meta">확인 {bChecked} · <a class="link" href="/data/bedrock/seoul.json">JSON</a> · <a class="link" href="/data/bedrock/feed.xml">RSS</a></span>
-          <a class="link" href="/bedrock/">보기 →</a>
-        </div>
-      </li>
-    </ul>
+    <h2>Tools</h2>
+    <div class="card tool">
+      <a class="tool-head" href="/bedrock/">
+        <span class="ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z" /><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" /></svg></span>
+        <span><strong>Amazon Bedrock 서울 리전 모델 현황</strong><span class="sub">있는 것 · 없는 것 · 바뀐 것 — 매일 06:00 다시 조회해 JSON · RSS로 공개</span></span>
+        <span class="live"><i></i>LIVE</span>
+      </a>
+      <div class="nums">
+        <div><b>{bStats.primary_models}</b><span>서울 모델</span></div>
+        <div><b>{bStats.on_demand}</b><span>on-demand</span></div>
+        <div><b>{bUse1.coverage_pct}<small>%</small></b><span>us-east-1 대비</span><em style={`--p:${bUse1.coverage_pct}%`}></em></div>
+        <div><b>{bStats.missing_bases}</b><span>서울에 없음</span></div>
+      </div>
+      <div class="tool-foot">
+        <span class="meta">확인 {bChecked} · <a href="/data/bedrock/seoul.json">JSON</a> · <a href="/data/bedrock/feed.xml">RSS</a></span>
+        <a class="go" href="/bedrock/">보기 →</a>
+      </div>
+    </div>
   </section>
 
   <section id="apps">
-    <h2>Apps <span class="count">{apps.length}</span></h2>
-    <ul class="grid apps">
+    <h2>Apps</h2>
+    <ul class="apps">
       {apps.map((a) => (
         <li class="card app">
-          <div class="app-head">
-            <strong>{a.name}</strong>
-            <span class="pill">{a.category}</span>
-          </div>
-          <p class="sub">{a.subtitle}</p>
-          <p class="desc">{a.desc}</p>
-          <div class="app-foot">
-            <span class="meta">v{a.version} · {a.released}</span>
-            <a class="link" href={a.url} target="_blank" rel="noopener">App Store →</a>
+          <img src={a.icon} alt="" width="56" height="56" loading="lazy" />
+          <div class="app-body">
+            <div class="app-top"><strong>{a.name}</strong><span class="pill">{a.category}</span></div>
+            <p class="sub">{a.subtitle}</p>
+            <div class="app-foot"><span class="meta">v{a.version}</span><a class="store" href={a.url} {...ext}> App Store</a></div>
           </div>
         </li>
       ))}
@@ -79,37 +78,29 @@ const initials = profile.name.slice(0, 1);
   </section>
 
   <section id="writing">
-    <h2>Writing <span class="count">{posts.length}</span></h2>
+    <h2>Writing</h2>
     <ol class="posts">
       {posts.map((p) => (
-        <li>
-          <time datetime={p.date}>{p.date}</time>
-          <a href={p.url} target="_blank" rel="noopener">{p.title}</a>
-          <span class="tags">{p.tags.map((t) => <span class="tag">#{t}</span>)}</span>
-        </li>
+        <li><a href={p.url} {...ext}>
+          <time datetime={p.date}>{p.date.slice(5).replace('-', '.')}<small>{p.date.slice(0, 4)}</small></time>
+          <span class="t">{isNew(p.date) && <span class="new">NEW</span>}{p.title}</span>
+          <span class="arr" aria-hidden="true">→</span>
+        </a></li>
       ))}
     </ol>
     <p class="more">
-      전체 글: <a href={profile.links.velog} target="_blank" rel="noopener">velog @seanson2709</a>
+      전체 글: <a href={profile.links.velog} {...ext}>velog @seanson2709</a>
       <span class="dot">·</span>
-      <a href={profile.links.rss} target="_blank" rel="noopener">RSS</a>
+      <a href={profile.links.rss} {...ext}>RSS</a>
     </p>
   </section>
 
   <section id="certs">
-    <h2>Certifications <span class="count">{certs.length}</span></h2>
-    <ul class="grid certs">
+    <h2>Certifications</h2>
+    <ul class="certchips">
       {certs.map((c) => (
-        <li class={`card cert level-${c.level.toLowerCase()}`}>
-          <div class="cert-head">
-            <span class="issuer">{c.issuer}</span>
-            <span class="level">{c.level}</span>
-          </div>
-          <strong class="cert-name">{c.name}</strong>
-          <span class="meta">
-            {fmtMonth(c.earned)}
-            {c.expires && <> → {fmtMonth(c.expires)}</>}
-          </span>
+        <li class={`lv-${c.level.toLowerCase()}`} title={`${c.name} · ${fmtMonth(c.earned)}${c.expires ? ` → ${fmtMonth(c.expires)}` : ''}`}>
+          <i></i>{c.short}<span>{c.earned.slice(0, 4)}</span>
         </li>
       ))}
     </ul>
@@ -117,11 +108,82 @@ const initials = profile.name.slice(0, 1);
 
   <section id="contact">
     <h2>Contact</h2>
-    <ul class="contact">
-      <li><span class="k">Email</span><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
-      <li><span class="k">LinkedIn</span><a href={profile.links.linkedin} target="_blank" rel="noopener me">seungwoo-son</a></li>
-      <li><span class="k">GitHub</span><a href={profile.links.github} target="_blank" rel="noopener me">Sean2709</a></li>
-      <li><span class="k">Location</span><span>{profile.location}</span></li>
-    </ul>
+    <p class="contact-line"><a href={`mailto:${profile.email}`}>{profile.email}</a> <span class="meta">· {profile.location}</span></p>
   </section>
 </Base>
+
+<style>
+  h2 { border: 0; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); padding: 0; margin-bottom: 0.9rem; }
+  .hero { display: grid; grid-template-columns: auto 1fr; gap: 1.6rem; }
+  .mono { width: 84px; height: 84px; }
+  .eyebrow { margin: 0 0 0.3rem; color: var(--muted); font-size: 0.85rem; font-weight: 500; }
+  h1 { font-size: clamp(2.4rem, 6vw, 3.4rem); }
+  .tagline { margin: 0.6rem 0 0.9rem; font-size: 1.08rem; max-width: 52ch; }
+  .hchips { list-style: none; padding: 0; margin: 0 0 1.3rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .hchips li { font-size: 0.8rem; padding: 0.2rem 0.65rem; border-radius: 999px; background: color-mix(in srgb, var(--accent) 12%, transparent); }
+  .cta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.95rem; border: 1px solid var(--line); border-radius: 10px; background: var(--card); font-size: 0.9rem; font-weight: 500; }
+  .btn svg, .ticon svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; display: block; padding: 0; transition: border-color .15s, transform .15s; }
+  .tool:hover, .app:hover { border-color: color-mix(in srgb, var(--fg) 35%, var(--line)); }
+  .app:hover { transform: translateY(-1px); }
+  .tool { padding: 1.1rem 1.2rem; }
+  .tool-head { display: grid; grid-template-columns: auto 1fr auto; gap: 0.8rem; align-items: start; }
+  .tool-head:hover { text-decoration: none; }
+  .tool-head:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+  .ticon { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--spec) 14%, transparent); color: var(--spec); }
+  .tool .sub { display: block; margin: 0.15rem 0 0; color: var(--muted); font-size: 0.88rem; }
+  .live { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; color: var(--assoc); display: flex; align-items: center; gap: 0.35rem; }
+  .live i { width: 7px; height: 7px; border-radius: 50%; background: var(--assoc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--assoc) 25%, transparent); }
+  .nums { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 1.1rem; border-top: 1px solid var(--line); }
+  .nums div { padding: 0.8rem 0.2rem 0; }
+  .nums div + div { padding-left: 1rem; border-left: 1px solid var(--line); }
+  .nums b { display: block; font-size: 1.7rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .nums small { font-size: 0.9rem; }
+  .nums span { font-size: 0.75rem; color: var(--muted); }
+  .nums em { display: block; height: 4px; border-radius: 2px; margin-top: 0.4rem; background: linear-gradient(90deg, var(--spec) var(--p), var(--line) var(--p)); }
+  .tool-foot { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-top: 0.9rem; }
+  .tool-foot .meta a { color: var(--fg); }
+  .go { font-weight: 600; font-size: 0.9rem; white-space: nowrap; }
+  .apps { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.8rem; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); }
+  .app { display: flex; flex-direction: row; gap: 0.9rem; padding: 1rem; }
+  .app img { border-radius: 13px; flex: none; box-shadow: 0 1px 2px rgb(0 0 0 / .15); }
+  .app-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .app-top { display: flex; justify-content: space-between; gap: 0.5rem; align-items: center; }
+  .pill { font-size: 0.7rem; border: 1px solid var(--line); border-radius: 999px; padding: 0.05rem 0.5rem; color: var(--muted); white-space: nowrap; }
+  .app .sub { margin: 0.1rem 0 0.6rem; color: var(--muted); font-size: 0.88rem; }
+  .app-foot { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+  .store { font-size: 0.8rem; font-weight: 600; padding: 0.25rem 0.7rem; border-radius: 999px; background: #0a84ff; color: #fff; }
+  .store:hover { text-decoration: none; filter: brightness(1.08); }
+  .meta { color: var(--muted); font-size: 0.82rem; }
+  .posts { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .posts li { display: block; padding: 0; border: 0; }
+  .posts a { display: grid; grid-template-columns: 3.6rem 1fr auto; gap: 1rem; align-items: baseline; padding: 0.85rem 0.4rem; border-bottom: 1px solid var(--line); }
+  .posts a:hover { text-decoration: none; background: var(--card); }
+  .posts a:hover .t { text-decoration: underline; text-underline-offset: 3px; }
+  .posts time { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .posts time small { display: block; font-size: 0.7rem; color: var(--muted); font-weight: 500; }
+  .posts .t { font-weight: 500; line-height: 1.45; }
+  .new { font-size: 0.62rem; font-weight: 800; color: var(--accent-fg); background: var(--accent); border-radius: 4px; padding: 0.05rem 0.35rem; margin-right: 0.45rem; vertical-align: 2px; }
+  .arr { color: var(--muted); }
+  .certchips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .certchips li { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; font-weight: 600; padding: 0.3rem 0.7rem; border: 1px solid var(--line); border-radius: 999px; background: var(--card); }
+  .certchips span { color: var(--muted); font-weight: 500; font-size: 0.75rem; }
+  .certchips i { width: 8px; height: 8px; border-radius: 50%; background: var(--found); }
+  .lv-professional i { background: var(--pro); }
+  .lv-specialty i { background: var(--spec); }
+  .lv-associate i { background: var(--assoc); }
+  .lv-other i { background: var(--other); }
+  .contact-line { margin: 0; font-size: 1.05rem; font-weight: 600; overflow-wrap: anywhere; }
+  @media (max-width: 560px) {
+    .hero { grid-template-columns: 1fr; gap: 1rem; }
+    .mono { width: 60px; height: 60px; }
+    .tool-head { grid-template-columns: auto 1fr; }
+    .live { display: none; }
+    .nums { grid-template-columns: repeat(2, 1fr); }
+    .nums div:nth-child(3) { padding-left: 0.2rem; border-left: 0; }
+    .posts a { grid-template-columns: 3rem 1fr; }
+    .arr { display: none; }
+  }
+</style>

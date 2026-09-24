@@ -11,8 +11,9 @@ Security posture (the whole point of this layout — see infra/analytics/README.
     the site key `?k=` and an `Origin` header equal to the site origin. The key is
     public (it ships in the page), so this is anti-junk, not secrecy — the route is
     write-only, stores no personal data (see below) and is throttled at the stage.
-  * `GET /stats` requires `Authorization: Bearer <ADMIN_TOKEN>` (32-byte random,
-    constant-time compare). This is the only read path.
+  * `GET /stats` requires `Authorization: Bearer <Google ID token>` — signed by Google
+    (RS256, JWKS), `aud` = our OAuth client, not expired, `email_verified`, and the
+    e-mail on the ADMIN_EMAILS allowlist. This is the only read path.
 
 Handlers (one zip, two functions):
   lambda_handler      integration for POST /collect, GET /stats, GET /health
@@ -46,7 +47,10 @@ import boto3
 from boto3.dynamodb.conditions import Key
 
 TABLE = os.environ["TABLE"]
-ADMIN_TOKEN = os.environ.get("ADMIN_TOKEN", "")
+# Admin = Google account on this allowlist, proven by a Google ID token issued to our
+# OAuth web client (Sign in with Google on /admin/). No static admin secret exists.
+GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
+ADMIN_EMAILS = {e.strip().lower() for e in os.environ.get("ADMIN_EMAILS", "").split(",") if e.strip()}
 SITE_KEY = os.environ.get("SITE_KEY", "")
 SALT_SECRET = os.environ.get("SALT_SECRET", "")
 ALLOWED_ORIGINS = {
@@ -82,7 +86,96 @@ def _eq(a: str, b: str) -> bool:
 
 def _bearer(event) -> str:
     got = _headers(event).get("authorization", "")
-    return got[7:] if got.startswith("Bearer ") else ""
+    return got[7:].strip() if got.startswith("Bearer ") else ""
+
+
+# --- Google ID token (Sign in with Google on /admin/) --------------------------------
+# Verified locally with the standard library only (no PyJWT/cryptography in the zip):
+# RS256 = RSASSA-PKCS1-v1_5 + SHA-256. We *re-encode* the expected EMSA block and compare
+# it byte-for-byte with sig^e mod n — no ASN.1 parsing of attacker data, which is what
+# made historical PKCS#1 v1.5 verifiers forgeable. Keys come from Google's JWKS over
+# HTTPS and are cached per container for the Cache-Control max-age.
+_GOOGLE_JWKS_URL = "https://www.googleapis.com/oauth2/v3/certs"
+_GOOGLE_ISS = {"accounts.google.com", "https://accounts.google.com"}
+_SHA256_DIGESTINFO = bytes.fromhex("3031300d060960864801650304020105000420")
+_CLOCK_SKEW = 60
+_jwks: dict = {"keys": {}, "exp": 0.0, "fetched": 0.0}
+
+
+def _b64url(s: str) -> bytes:
+    return base64.urlsafe_b64decode(s + "=" * (-len(s) % 4))
+
+
+def _fetch_jwks() -> tuple[dict, float]:
+    import urllib.request
+
+    with urllib.request.urlopen(_GOOGLE_JWKS_URL, timeout=3) as r:  # noqa: S310 (fixed https URL)
+        data = json.load(r)
+        m = re.search(r"max-age=(\d+)", r.headers.get("Cache-Control", ""))
+    keys = {
+        k["kid"]: (int.from_bytes(_b64url(k["n"]), "big"), int.from_bytes(_b64url(k["e"]), "big"))
+        for k in data.get("keys", [])
+        if k.get("kty") == "RSA" and k.get("kid")
+    }
+    return keys, time.time() + min(int(m.group(1)) if m else 3600, 86400)
+
+
+def _google_key(kid: str):
+    now = time.time()
+    # refresh when stale, or once a minute at most when an unknown kid shows up (key rotation)
+    if now >= _jwks["exp"] or (kid not in _jwks["keys"] and now - _jwks["fetched"] > 60):
+        try:
+            _jwks["keys"], _jwks["exp"] = _fetch_jwks()
+        except Exception as e:  # network/parse failure → fail closed (keep old keys if any)
+            print(json.dumps({"jwks_error": repr(e)[:200]}))
+        _jwks["fetched"] = now
+    return _jwks["keys"].get(kid)
+
+
+def _rs256_ok(signing_input: bytes, sig: bytes, n: int, e: int) -> bool:
+    k = (n.bit_length() + 7) // 8
+    if k < 256 or len(sig) != k:  # ≥ 2048-bit keys only
+        return False
+    s = int.from_bytes(sig, "big")
+    if s >= n:
+        return False
+    em = pow(s, e, n).to_bytes(k, "big")
+    t = _SHA256_DIGESTINFO + hashlib.sha256(signing_input).digest()
+    expected = b"\x00\x01" + b"\xff" * (k - len(t) - 3) + b"\x00" + t
+    return hmac.compare_digest(em, expected)
+
+
+def _google_admin(token: str) -> str:
+    """Return the admin e-mail if `token` is a valid Google ID token for an allowed
+    account, else ''. Checks signature (RS256, Google JWKS), iss, aud (our OAuth
+    client), exp/iat, email_verified and the e-mail allowlist."""
+    if not token or not GOOGLE_CLIENT_ID or not ADMIN_EMAILS or token.count(".") != 2 or len(token) > 4096:
+        return ""
+    try:
+        h64, p64, s64 = token.split(".")
+        header = json.loads(_b64url(h64))
+        claims = json.loads(_b64url(p64))
+        sig = _b64url(s64)
+    except (ValueError, TypeError):
+        return ""
+    if not isinstance(header, dict) or not isinstance(claims, dict):
+        return ""
+    if header.get("alg") != "RS256" or not isinstance(header.get("kid"), str):
+        return ""
+    key = _google_key(header["kid"])
+    if not key or not _rs256_ok(f"{h64}.{p64}".encode(), sig, *key):
+        return ""
+    now = time.time()
+    email = str(claims.get("email", "")).lower()
+    ok = (
+        claims.get("iss") in _GOOGLE_ISS
+        and claims.get("aud") == GOOGLE_CLIENT_ID
+        and isinstance(claims.get("exp"), (int, float)) and claims["exp"] + _CLOCK_SKEW > now
+        and isinstance(claims.get("iat"), (int, float)) and claims["iat"] - _CLOCK_SKEW < now
+        and claims.get("email_verified") is True
+        and email in ADMIN_EMAILS
+    )
+    return email if ok else ""
 
 
 def _role(event) -> str:
@@ -90,9 +183,10 @@ def _role(event) -> str:
 
     Re-derived from the raw credentials as well (defense in depth) so that even a
     misconfigured route — say someone attaches the wrong authorizer — cannot read
-    stats with the public site key.
+    stats with the public site key, and an ID token that expired while the
+    authorizer result was cached (≤ 300 s) is still refused here.
     """
-    if _eq(_bearer(event), ADMIN_TOKEN):
+    if _google_admin(_bearer(event)):
         return "admin"
     qs = event.get("queryStringParameters") or {}
     origin = _headers(event).get("origin", "").rstrip("/")
@@ -105,7 +199,7 @@ def authorizer_handler(event, _ctx):
     """API Gateway HTTP API REQUEST authorizer (simple response).
 
     Routes:  POST /collect  → site key (?k=) + Origin ∈ ALLOWED_ORIGINS, or admin
-             GET  /stats, /health → admin bearer only
+             GET  /stats, /health → Google admin ID token only
     Anything else is denied. Identity sources are configured on the API so that
     API Gateway returns 401 by itself when they are absent (this function is then
     never invoked; results are cached per identity value for 300 s).
@@ -337,5 +431,5 @@ def lambda_handler(event, _ctx):
     if method == "GET" and path == "/health":
         if _role(event) != "admin":
             return _resp(401, {"error": "unauthorized"})
-        return _resp(200, {"ok": True, "table": TABLE})
+        return _resp(200, {"ok": True, "table": TABLE, "email": _google_admin(_bearer(event))})
     return _resp(404, {"error": "not found"})

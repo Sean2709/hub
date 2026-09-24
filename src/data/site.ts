@@ -45,6 +45,7 @@ export type App = {
   url: string;
   version: string;
   released: string; // YYYY-MM-DD
+  icon: string; // /img/apps/*.png (160px, from the app's AppIcon 1024)
 };
 
 export const apps: App[] = [
@@ -56,6 +57,7 @@ export const apps: App[] = [
     url: 'https://apps.apple.com/kr/app/id6804211842',
     version: '1.1.0',
     released: '2026-08-26',
+    icon: '/img/apps/jaksim.png',
   },
   {
     name: '은퇴하면 만수르',
@@ -65,6 +67,7 @@ export const apps: App[] = [
     url: 'https://apps.apple.com/kr/app/id6801016602',
     version: '1.0',
     released: '2026-08-17',
+    icon: '/img/apps/mansur.png',
   },
 ];
 
@@ -109,4 +112,12 @@ export const focus = [
 export const analytics = {
   endpoint: 'https://zoviv9w83h.execute-api.ap-northeast-2.amazonaws.com',
   siteKey: 'f6df7409e1891e4b8153c7a1',
+};
+
+// /admin/ sign-in: Google Identity Services. The OAuth *client ID* is public by design
+// (it ships in every GIS page); access is decided server-side by the Lambda authorizer,
+// which verifies the Google ID token and checks the e-mail against ADMIN_EMAILS.
+export const admin = {
+  googleClientId: '53886632583-rg6ckd1ph9chkniojam8kc065ems88hp.apps.googleusercontent.com',
+  email: 'seanson2709@gmail.com',
 };

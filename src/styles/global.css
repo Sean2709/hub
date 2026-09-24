@@ -51,13 +51,23 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 
 .site-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 0; border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 0.85rem 0; border-bottom: 1px solid var(--line);
   font-size: 0.9rem;
+  position: sticky; top: 0; z-index: 5;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px);
 }
 .site-header .brand { font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
-.site-header nav { display: flex; gap: 1.1rem; color: var(--muted); }
+.site-header nav { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 0.3rem 1.1rem; color: var(--muted); }
 .site-header nav a:hover { color: var(--fg); }
+.site-header .nav-admin {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.2rem 0.6rem; border: 1px solid var(--line); border-radius: 999px; line-height: 1.4;
+}
+.site-header .nav-admin:hover { border-color: var(--fg); text-decoration: none; }
+.site-header .nav-admin svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+[id] { scroll-margin-top: 4.5rem; } /* anchors land below the sticky header */
 
 main { padding: 2.5rem 0 3rem; }
 section + section { margin-top: 3.25rem; }

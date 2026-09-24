@@ -1,21 +1,34 @@
 ---
 // /admin/ — owner-only dashboard. The HTML itself is public (static site) but shows
-// nothing without the admin bearer token, which is only ever typed into this page
-// and kept in localStorage. noindex + excluded from sitemap + no inbound links.
+// nothing until you sign in with Google as the admin account. The Google ID token
+// (1 h) is sent as a bearer to the analytics API, whose Lambda authorizer verifies
+// signature / aud / exp / e-mail — the client-side e-mail check here is UX only.
+// noindex + excluded from sitemap; linked from the header menu (rel=nofollow).
 import Base from '../../layouts/Base.astro';
-import { analytics } from '../../data/site';
+import { analytics, admin } from '../../data/site';
 ---
 
 <Base title="Admin — hub" description="private" wide noindex>
-  <div id="admin" data-endpoint={analytics.endpoint}>
+  <div id="admin" data-endpoint={analytics.endpoint} data-client-id={admin.googleClientId} data-email={admin.email}>
     <div class="page-head">
       <h1>Admin</h1>
-      <p class="lead">접속자 현황 · 운영 상태 · 다른 관리자 화면. 토큰은 이 브라우저에만 저장됩니다.</p>
+      <p class="lead">접속자 현황 · 운영 상태 · 다른 관리자 화면. 관리자 Google 계정으로 로그인해야 보입니다.</p>
     </div>
 
+    <div id="gate" class="card gate">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>
+      <div>
+        <strong>관리자 로그인</strong>
+        <p class="note">Google 계정으로 로그인하세요. 허용된 계정만 데이터를 볼 수 있습니다.</p>
+        <div id="g-btn"></div>
+        <p id="gate-msg" class="note"></p>
+      </div>
+    </div>
+
+    <div id="panel" hidden>
     <div class="filters adm-bar">
-      <input id="tok" type="password" placeholder="admin token" autocomplete="off" spellcheck="false" />
-      <button id="save" class="btn">저장</button>
+      <span class="who"><img id="who-pic" alt="" width="22" height="22" referrerpolicy="no-referrer" hidden /><span id="who-email"></span></span>
+      <button id="logout" class="btn">로그아웃</button>
       <select id="days">
         <option value="1">오늘</option>
         <option value="7" selected>7일</option>
@@ -79,10 +92,21 @@ import { analytics } from '../../data/site';
       <p class="note">SeanChat 통합 관리자(로컬 8500, 작심·만수르 Firestore 포함)를 이 자리에 띄웁니다. 공개 EC2에는 관리 화면이 없으므로(의도) 로컬 백엔드가 켜진 이 Mac에서만 보입니다. SSM 터널을 쓰면 URL을 8600으로 바꾸세요.</p>
       <iframe id="sc-frame" title="SeanChat admin" hidden></iframe>
     </section>
+    </div>
   </div>
+  <script is:inline src="https://accounts.google.com/gsi/client" async defer></script>
 </Base>
 
 <style>
+  .gate { display: flex; flex-direction: row; gap: 1rem; align-items: flex-start; max-width: 520px; border-left-width: 1px; padding: 1.2rem 1.3rem; margin-top: 1.2rem; }
+  .gate[hidden] { display: none; }
+  .gate > svg { width: 28px; height: 28px; flex: none; fill: none; stroke: var(--muted); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-top: .15rem; }
+  .gate .note { margin: .2rem 0 .9rem; }
+  #g-btn { min-height: 44px; }
+  #gate-msg:empty { display: none; }
+  #gate-msg.err { color: #dc2626; }
+  .who { display: inline-flex; align-items: center; gap: .4rem; font-size: .88rem; font-weight: 500; margin-right: .3rem; }
+  .who img { border-radius: 50%; }
   .adm-bar { align-items: center; flex-wrap: wrap; gap: .5rem; }
   .adm-bar input[type="password"], .adm-bar input[type="text"] { min-width: 240px; font-family: ui-monospace, Menlo, monospace; }
   .adm-bar .btn { padding: .35rem .7rem; font-size: .9rem; }
@@ -124,7 +148,6 @@ import { analytics } from '../../data/site';
   const $ = (id: string) => document.getElementById(id) as HTMLElement;
   const root = $('admin');
   const ENDPOINT = root.dataset.endpoint!;
-  const LS_TOKEN = 'hub.admin.token';
   const LS_NOTRACK = 'hub.notrack';
   const LS_SC = 'hub.admin.scUrl';
   const LS_APP = 'hub.admin.app';
@@ -149,37 +172,128 @@ import { analytics } from '../../data/site';
     el.className = 'hint ' + cls;
   };
 
-  // ---- token / options -----------------------------------------------------------
-  const tokEl = $('tok') as HTMLInputElement;
-  const daysEl = $('days') as HTMLSelectElement;
-  const autoEl = $('auto') as HTMLInputElement;
-  const notrackEl = $('notrack') as HTMLInputElement;
-  tokEl.value = localStorage.getItem(LS_TOKEN) || '';
-  notrackEl.checked = localStorage.getItem(LS_NOTRACK) === '1';
-  notrackEl.addEventListener('change', () => {
-    if (notrackEl.checked) localStorage.setItem(LS_NOTRACK, '1');
-    else localStorage.removeItem(LS_NOTRACK);
-  });
-  $('save').addEventListener('click', () => {
-    const t = tokEl.value.trim();
-    if (!t) return setStatus('토큰을 입력하세요', 'err');
-    localStorage.setItem(LS_TOKEN, t);
+  // ---- Google sign-in (GIS) ---------------------------------------------------------
+  // The ID token is the bearer for /stats. It lives 1 h; when it's about to expire we
+  // ask GIS again (auto_select → silent for the one previously-consented account).
+  const CLIENT_ID = root.dataset.clientId!;
+  const ADMIN_EMAIL = (root.dataset.email || '').toLowerCase();
+  const LS_ID = 'hub.admin.idtoken';
+  localStorage.removeItem('hub.admin.token'); // retired static admin token — purge old copies
+  type Claims = { email?: string; exp?: number; picture?: string };
+  const claims = (jwt: string | null): Claims | null => {
+    try {
+      const p = jwt!.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(p), (c) => c.charCodeAt(0))));
+    } catch {
+      return null;
+    }
+  };
+  const fresh = (c: Claims | null, marginS = 90) => !!c?.exp && c.exp * 1000 - Date.now() > marginS * 1000;
+  const idToken = () => {
+    const t = localStorage.getItem(LS_ID);
+    return fresh(claims(t)) ? t : null;
+  };
+  const gateMsg = (msg: string, err = false) => {
+    const el = $('gate-msg');
+    el.textContent = msg;
+    el.className = 'note' + (err ? ' err' : '');
+  };
+  let gisReady = false;
+  function gis(cb: () => void) {
+    const g = (window as any).google?.accounts?.id;
+    if (g) {
+      if (!gisReady) {
+        g.initialize({
+          client_id: CLIENT_ID,
+          callback: onCredential,
+          auto_select: true,
+          cancel_on_tap_outside: false,
+          use_fedcm_for_prompt: true,
+          itp_support: true,
+          context: 'signin',
+        });
+        g.renderButton($('g-btn'), { theme: 'outline', size: 'large', text: 'signin_with', shape: 'pill', locale: 'ko' });
+        gisReady = true;
+      }
+      return cb();
+    }
+    let n = 0;
+    const iv = window.setInterval(() => {
+      if ((window as any).google?.accounts?.id) {
+        clearInterval(iv);
+        gis(cb);
+      } else if (++n > 100) {
+        clearInterval(iv);
+        gateMsg('Google 로그인 스크립트를 불러오지 못했습니다 (차단 확장 프로그램/네트워크 확인)', true);
+      }
+    }, 100);
+  }
+  function onCredential(resp: { credential: string }) {
+    const c = claims(resp.credential);
+    if ((c?.email || '').toLowerCase() !== ADMIN_EMAIL) {
+      (window as any).google?.accounts?.id?.disableAutoSelect();
+      return gateMsg(`${c?.email ?? '이 계정'} 은(는) 관리자 권한이 없습니다`, true);
+    }
+    localStorage.setItem(LS_ID, resp.credential);
     // the owner is here → stop counting their own visits unless they opted back in
     if (localStorage.getItem(LS_NOTRACK) === null) {
       localStorage.setItem(LS_NOTRACK, '1');
       notrackEl.checked = true;
     }
+    signedIn();
+  }
+  function showGate(msg = '', err = false, keepPanel = false) {
+    clearTimeout(timer);
+    if (!keepPanel) $('panel').hidden = true;
+    $('gate').hidden = false;
+    gateMsg(msg, err);
+    gis(() => (window as any).google.accounts.id.prompt());
+  }
+  let booted = false;
+  function signedIn() {
+    const c = claims(idToken());
+    $('gate').hidden = true;
+    $('panel').hidden = false;
+    $('who-email').textContent = c?.email ?? '';
+    const pic = $('who-pic') as HTMLImageElement;
+    if (c?.picture?.startsWith('https://')) {
+      pic.src = c.picture;
+      pic.hidden = false;
+    }
     load();
+    if (!booted) {
+      booted = true;
+      ops();
+      showApp(localStorage.getItem(LS_APP) || 'seanchat');
+    }
+  }
+  $('logout').addEventListener('click', () => {
+    localStorage.removeItem(LS_ID);
+    (window as any).google?.accounts?.id?.disableAutoSelect();
+    showGate('로그아웃했습니다');
   });
-  tokEl.addEventListener('keydown', (e) => e.key === 'Enter' && ($('save') as HTMLButtonElement).click());
+
+  // ---- options -------------------------------------------------------------------
+  const daysEl = $('days') as HTMLSelectElement;
+  const autoEl = $('auto') as HTMLInputElement;
+  const notrackEl = $('notrack') as HTMLInputElement;
+  notrackEl.checked = localStorage.getItem(LS_NOTRACK) === '1';
+  notrackEl.addEventListener('change', () => {
+    if (notrackEl.checked) localStorage.setItem(LS_NOTRACK, '1');
+    else localStorage.removeItem(LS_NOTRACK);
+  });
   $('reload').addEventListener('click', () => load());
   daysEl.addEventListener('change', () => load());
 
   // ---- stats -------------------------------------------------------------------------
   let timer: number | undefined;
   async function load() {
-    const token = localStorage.getItem(LS_TOKEN);
-    if (!token) return setStatus('토큰 필요', 'err');
+    const token = idToken();
+    if (!token) {
+      localStorage.removeItem(LS_ID);
+      // keep the last numbers on screen while GIS silently re-issues a token (auto_select)
+      return showGate('로그인이 만료되어 갱신 중… 안 되면 아래 버튼으로 다시 로그인하세요', false, booted);
+    }
     setStatus('조회 중…');
     let res: Response;
     try {
@@ -188,11 +302,13 @@ import { analytics } from '../../data/site';
         cache: 'no-store',
       });
     } catch (e) {
-      return setStatus('네트워크 오류: ' + (e as Error).message, 'err');
+      const local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+      return setStatus(local ? '로컬에서는 API CORS가 hub 도메인만 허용해서 통계를 못 불러와요 (정상).' : '네트워크 오류: ' + (e as Error).message, 'err');
     }
     if (res.status === 401 || res.status === 403) {
+      localStorage.removeItem(LS_ID);
       $('visitors').hidden = true;
-      return setStatus(`토큰 거부 (${res.status})`, 'err');
+      return showGate(`서버가 로그인을 거부했습니다 (${res.status}) — 다시 로그인하세요`, true);
     }
     if (!res.ok) return setStatus(`오류 ${res.status}`, 'err');
     render(await res.json());
@@ -262,7 +378,11 @@ import { analytics } from '../../data/site';
     try {
       const meta = await (await fetch('/data/bedrock/meta.json', { cache: 'no-store' })).json();
       const h = (Date.now() - new Date(meta.checked_at).getTime()) / 36e5;
-      li('Bedrock 데이터', `${esc(meta.checked_at)} (${ago(meta.checked_at)}) · Seoul ${meta.seoul_models ?? '?'}개`, h > 30 ? 'bad' : h > 26 ? 'warn' : 'ok');
+      let n = '?';
+      try {
+        n = String((await (await fetch('/data/bedrock/seoul.json', { cache: 'no-store' })).json()).stats?.primary_models ?? '?');
+      } catch {}
+      li('Bedrock 데이터', `${esc(meta.checked_at)} (${ago(meta.checked_at)}) · 서울 ${esc(n)}개 모델`, h > 30 ? 'bad' : h > 26 ? 'warn' : 'ok');
     } catch {
       li('Bedrock 데이터', 'meta.json 읽기 실패', 'bad');
     }
@@ -289,8 +409,22 @@ import { analytics } from '../../data/site';
     }
     try {
       const ch = await (await fetch('/data/bedrock/changes.json', { cache: 'no-store' })).json();
-      const last = Array.isArray(ch) ? ch[0] : ch.changes?.[0];
-      li('최근 카탈로그 변경', last ? esc(JSON.stringify(last).slice(0, 160)) : '기록 없음');
+      const list: Record<string, unknown>[] = Array.isArray(ch) ? ch : ch.changes ?? [];
+      const latest = list.reduce((m, c) => (String(c.date) > m ? String(c.date) : m), '');
+      const rows = list.filter((c) => String(c.date) === latest);
+      li(
+        '최근 카탈로그 변경',
+        rows.length
+          ? `${esc(latest)} · ` +
+              rows
+                .map((c) => {
+                  const n = (k: string) => (Array.isArray(c[k]) ? (c[k] as unknown[]).length : 0);
+                  const what = c.type === 'diff' ? `+${n('added')}/-${n('removed')}/~${n('changed')}` : `${esc(String(c.type ?? ''))} ${esc(String(c.count ?? ''))}개`;
+                  return `${esc(String(c.region ?? ''))} ${what}`;
+                })
+                .join(', ')
+          : '기록 없음'
+      );
     } catch {}
     $('ops-list').innerHTML = items.join('');
   }
@@ -352,8 +486,9 @@ import { analytics } from '../../data/site';
   document.querySelectorAll<HTMLButtonElement>('.btn.app').forEach((b) => b.addEventListener('click', () => showApp(b.dataset.app!)));
 
   // ---- boot ----------------------------------------------------------------------------
-  if (localStorage.getItem(LS_TOKEN)) load();
-  else setStatus('토큰을 입력하고 저장하세요');
-  ops();
-  showApp(localStorage.getItem(LS_APP) || 'seanchat');
+  if (idToken()) signedIn();
+  else {
+    localStorage.removeItem(LS_ID);
+    showGate();
+  }
 </script>
