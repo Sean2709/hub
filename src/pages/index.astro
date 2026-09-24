@@ -22,7 +22,7 @@ const me = { target: '_blank', rel: 'noopener me' };
   <section class="hero" id="top">
     <Mark class="mono" uid="hero" />
     <div>
-      <p class="eyebrow">{profile.role} · {profile.org}</p>
+      <p class="eyebrow">{profile.role}</p>
       <h1>{profile.name}</h1>
       <p class="tagline">{profile.tagline}</p>
       <ul class="hchips">{focus.map((f, i) => <li title={f}>{focusShort[i] ?? f}</li>)}</ul>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Source for public/og.png (1200x630). Render: headless Chrome --window-size=1200,630 --screenshot -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#047857"/></linearGradient>
+    <linearGradient id="h" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.4" fill="#fff" fill-opacity=".07"/></pattern>
+    <radialGradient id="glow" cx="0.85" cy="0.15" r="0.7"><stop offset="0" stop-color="#10b981" stop-opacity=".22"/><stop offset="1" stop-color="#10b981" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#0f1115"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <!-- decorative route: nodes joined by lines (network motif) -->
+  <g fill="none" stroke="#34d399" stroke-opacity=".35" stroke-width="2">
+    <path d="M880 150 L1010 230 L960 380 L1100 470"/>
+    <path d="M1010 230 L1120 180"/>
+    <path d="M960 380 L840 460"/>
+  </g>
+  <g fill="#0f1115" stroke="#34d399" stroke-width="3">
+    <circle cx="880" cy="150" r="9"/><circle cx="1010" cy="230" r="12"/><circle cx="1120" cy="180" r="7"/>
+    <circle cx="960" cy="380" r="10"/><circle cx="1100" cy="470" r="8"/><circle cx="840" cy="460" r="7"/>
+  </g>
+  <!-- mark -->
+  <g transform="translate(96 110) scale(1.5)">
+    <rect width="80" height="80" rx="20" fill="url(#g)"/>
+    <rect width="80" height="80" rx="20" fill="url(#h)"/>
+    <path d="M50 26.5c-2.6-3-6.2-4.5-10.5-4.5-6.4 0-10.5 3.4-10.5 8.3 0 11.2 22 6.4 22 18.6 0 5.3-4.6 9.1-11.3 9.1-4.8 0-8.8-1.8-11.7-5.2" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    <g fill="#fff"><circle cx="50" cy="26.5" r="4.6"/><circle cx="28" cy="52.8" r="4.6"/></g>
+  </g>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Apple SD Gothic Neo', sans-serif">
+    <text x="96" y="345" fill="#f5f5f5" font-size="92" font-weight="800" letter-spacing="-2">Sean Son</text>
+    <text x="98" y="405" fill="#a3a3a3" font-size="30" font-weight="500">AWS Industries ProServe Global Accounts</text>
+    <g font-size="24" font-weight="600">
+      <rect x="96" y="452" width="104" height="44" rx="22" fill="none" stroke="#2f3541" stroke-width="2"/>
+      <text x="148" y="482" fill="#d4d4d4" text-anchor="middle">Apps</text>
+      <rect x="214" y="452" width="130" height="44" rx="22" fill="none" stroke="#2f3541" stroke-width="2"/>
+      <text x="279" y="482" fill="#d4d4d4" text-anchor="middle">Writing</text>
+      <rect x="358" y="452" width="112" height="44" rx="22" fill="none" stroke="#2f3541" stroke-width="2"/>
+      <text x="414" y="482" fill="#d4d4d4" text-anchor="middle">Tools</text>
+      <rect x="484" y="452" width="108" height="44" rx="22" fill="none" stroke="#2f3541" stroke-width="2"/>
+      <text x="538" y="482" fill="#d4d4d4" text-anchor="middle">Certs</text>
+    </g>
+    <text x="98" y="566" fill="#34d399" font-size="26" font-weight="600">hub.sean-chloe.com</text>
+  </g>
+</svg>

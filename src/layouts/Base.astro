@@ -18,6 +18,7 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site).href; // 1200x630, source public/og.svg
 const beaconUrl = `${analytics.endpoint}/collect?k=${analytics.siteKey}`;
 ---
 
@@ -41,7 +42,12 @@ const beaconUrl = `${analytics.endpoint}/collect?k=${analytics.siteKey}`;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="hub.sean-chloe.com" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${profile.name} — hub.sean-chloe.com`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
     <meta name="color-scheme" content="light dark" />
     {noindex && <meta name="robots" content="noindex, nofollow, noarchive" />}
   </head>
@@ -54,8 +60,6 @@ const beaconUrl = `${analytics.endpoint}/collect?k=${analytics.siteKey}`;
         <a href="/#writing">Writing</a>
         <a href="/#certs">Certs</a>
         <a href="/#contact">Contact</a>
-        <a class="nav-admin" href="/admin/" rel="nofollow" aria-label="Admin (관리자 로그인)">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>Admin</a>
       </nav>
     </header>
     <main>
@@ -65,6 +69,7 @@ const beaconUrl = `${analytics.endpoint}/collect?k=${analytics.siteKey}`;
       <span>© {new Date().getFullYear()} {profile.name}</span>
       <span class="dot">·</span>
       <span>Built with Astro, deployed via GitHub Pages</span>
+      <p class="disclaimer">{profile.disclaimer}<br /><span lang="en">{profile.disclaimerEn}</span></p>
     </footer>
     {!noindex && (
       <script is:inline define:vars={{ beaconUrl }}>

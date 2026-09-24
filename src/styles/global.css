@@ -64,12 +64,6 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .site-header .brand:focus-visible { outline: 2px solid #059669; outline-offset: 3px; }
 .site-header nav { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 0.3rem 1.1rem; color: var(--muted); }
 .site-header nav a:hover { color: var(--fg); }
-.site-header .nav-admin {
-  display: inline-flex; align-items: center; gap: 0.3rem;
-  padding: 0.2rem 0.6rem; border: 1px solid var(--line); border-radius: 999px; line-height: 1.4;
-}
-.site-header .nav-admin:hover { border-color: var(--fg); text-decoration: none; }
-.site-header .nav-admin svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 [id] { scroll-margin-top: 4.5rem; } /* anchors land below the sticky header */
 
 main { padding: 2.5rem 0 3rem; }
@@ -145,6 +139,7 @@ h2 .count { font-size: 0.85rem; color: var(--muted); font-weight: 500; }
 .contact .k { color: var(--muted); font-size: 0.9rem; }
 
 .site-footer { padding: 1.25rem 0 2rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
+.site-footer .disclaimer { margin: 0.6rem 0 0; font-size: 0.78rem; line-height: 1.55; opacity: 0.85; }
 
 @media (max-width: 560px) {
   .hero { grid-template-columns: 1fr; }
