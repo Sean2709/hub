@@ -1,0 +1,2885 @@
+{
+ "schema": 1,
+ "source": "AWS Price List bulk API (public), on-demand text tokens",
+ "currency": "USD",
+ "unit": "per 1M tokens",
+ "primary_region": "ap-northeast-2",
+ "versions": {
+  "AmazonBedrock/ap-northeast-2": "20260922212139",
+  "AmazonBedrock/us-east-1": "20260922212139",
+  "AmazonBedrockFoundationModels/ap-northeast-2": "20260922164418",
+  "AmazonBedrockFoundationModels/us-east-1": "20260922164418"
+ },
+ "regions": {
+  "ap-northeast-2": {
+   "count": 29,
+   "models": [
+    {
+     "name": "Nova 2.0 Lite",
+     "provider": "Amazon",
+     "prices": {
+      "global.batch": {
+       "in": 0.18,
+       "out": 1.48
+      },
+      "global.flex": {
+       "cacheRead": 0.045,
+       "in": 0.18,
+       "cacheWrite": 0.0,
+       "out": 1.48
+      },
+      "global.priority": {
+       "cacheWrite": 0.0,
+       "cacheRead": 0.1575,
+       "in": 0.63,
+       "out": 5.18
+      },
+      "global.standard": {
+       "cacheRead": 0.09,
+       "in": 0.36,
+       "out": 2.96,
+       "cacheWrite": 0.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova 2.0 Omni",
+     "provider": "Amazon",
+     "prices": {
+      "global.batch": {
+       "out": 1.5,
+       "in": 0.2
+      },
+      "global.flex": {
+       "in": 0.2,
+       "out": 1.5
+      },
+      "global.priority": {
+       "out": 5.2,
+       "in": 0.6
+      },
+      "global.standard": {
+       "in": 0.4,
+       "out": 3.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova 2.0 Pro",
+     "provider": "Amazon",
+     "prices": {
+      "global.batch": {
+       "in": 0.74,
+       "out": 5.92
+      },
+      "global.flex": {
+       "out": 5.92,
+       "in": 0.74
+      },
+      "global.priority": {
+       "in": 2.59,
+       "out": 20.72
+      },
+      "global.standard": {
+       "out": 11.84,
+       "in": 1.48
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova Lite",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "out": 0.142,
+       "in": 0.0355
+      },
+      "region.standard": {
+       "out": 0.284,
+       "cacheRead": 0.01775,
+       "in": 0.071
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova Micro",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "in": 0.0205,
+       "out": 0.082
+      },
+      "region.standard": {
+       "out": 0.164,
+       "in": 0.041,
+       "cacheRead": 0.01025
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova Pro",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "out": 1.9,
+       "in": 0.475
+      },
+      "region.flex": {
+       "out": 1.9,
+       "in": 0.475,
+       "cacheWrite": 0.0,
+       "cacheRead": 0.11875
+      },
+      "region.priority": {
+       "in": 1.6625,
+       "out": 6.65,
+       "cacheRead": 0.415625,
+       "cacheWrite": 0.0
+      },
+      "region.standard": {
+       "out": 3.8,
+       "cacheRead": 0.2375,
+       "in": 0.95
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Titan Text Embeddings V2",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "in": 0.012296
+      },
+      "region.standard": {
+       "in": 0.024592
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Claude 3 Haiku",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 0.125,
+       "out": 0.625
+      },
+      "region.standard": {
+       "in": 0.25,
+       "out": 1.25
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude 3 Sonnet",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "out": 7.5,
+       "in": 1.5
+      },
+      "region.standard": {
+       "in": 3.0,
+       "out": 15.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude 3.5 Sonnet",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 1.5,
+       "out": 7.5
+      },
+      "region.standard": {
+       "out": 15.0,
+       "in": 3.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude 3.5 Sonnet v2",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 1.5,
+       "out": 7.5
+      },
+      "region.standard": {
+       "in": 3.0,
+       "out": 15.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude 3.7 Sonnet",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "out": 7.5,
+       "in": 1.5
+      },
+      "region.standard": {
+       "cacheRead": 0.3,
+       "out": 15.0,
+       "in": 3.0,
+       "cacheWrite": 3.75
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Fable 5",
+     "provider": "Anthropic",
+     "prices": {
+      "global.standard": {
+       "in": 10.0,
+       "cacheWrite": 12.5,
+       "out": 50.0,
+       "cacheRead": 1.0,
+       "cacheWrite1h": 20.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Fable 5.1",
+     "provider": "Anthropic",
+     "prices": {
+      "global.standard": {
+       "cacheRead": 0.25,
+       "out": 50.0,
+       "cacheWrite1h": 20.0,
+       "in": 10.0,
+       "cacheWrite": 12.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Haiku 4.5",
+     "provider": "Anthropic",
+     "prices": {
+      "global.batch": {
+       "out": 2.5,
+       "in": 0.5
+      },
+      "global.standard": {
+       "cacheRead": 0.1,
+       "cacheWrite1h": 2.0,
+       "in": 1.0,
+       "cacheWrite": 1.25,
+       "out": 5.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Mythos 5.1",
+     "provider": "Anthropic",
+     "prices": {
+      "global.standard": {
+       "cacheWrite": 12.5,
+       "out": 50.0,
+       "in": 10.0,
+       "cacheRead": 0.25,
+       "cacheWrite1h": 20.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 4.5",
+     "provider": "Anthropic",
+     "prices": {
+      "global.batch": {
+       "out": 12.5,
+       "in": 2.5
+      },
+      "global.standard": {
+       "out": 25.0,
+       "cacheWrite": 6.25,
+       "cacheRead": 0.5,
+       "cacheWrite1h": 10.0,
+       "in": 5.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 4.6",
+     "provider": "Anthropic",
+     "prices": {
+      "global.batch": {
+       "in": 2.5,
+       "out": 12.5
+      },
+      "global.standard": {
+       "cacheWrite": 6.25,
+       "cacheWrite1h": 10.0,
+       "in": 5.0,
+       "out": 25.0,
+       "cacheRead": 0.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 4.7",
+     "provider": "Anthropic",
+     "prices": {
+      "global.standard": {
+       "cacheWrite1h": 10.0,
+       "cacheRead": 0.5,
+       "cacheWrite": 6.25,
+       "out": 25.0,
+       "in": 5.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 4.8",
+     "provider": "Anthropic",
+     "prices": {
+      "global.standard": {
+       "in": 5.0,
+       "cacheWrite": 6.25,
+       "cacheWrite1h": 10.0,
+       "cacheRead": 0.5,
+       "out": 25.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 5",
+     "provider": "Anthropic",
+     "prices": {
+      "global.batch": {
+       "in": 2.5,
+       "out": 12.5
+      },
+      "global.standard": {
+       "in": 5.0,
+       "out": 25.0,
+       "cacheRead": 0.5,
+       "cacheWrite": 6.25,
+       "cacheWrite1h": 10.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 5.5",
+     "provider": "Anthropic",
+     "prices": {
+      "global.standard": {
+       "cacheRead": 0.2,
+       "out": 20.0,
+       "cacheWrite": 5.0,
+       "cacheWrite1h": 8.0,
+       "in": 4.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Sonnet 4",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 1.5,
+       "out": 7.5
+      },
+      "region.standard": {
+       "cacheWrite": 3.75,
+       "out": 15.0,
+       "in": 3.0,
+       "cacheRead": 0.3
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Sonnet 4.5",
+     "provider": "Anthropic",
+     "prices": {
+      "global.batch": {
+       "out": 7.5,
+       "in": 1.5
+      },
+      "global.standard": {
+       "in": 3.0,
+       "cacheWrite": 3.75,
+       "cacheRead": 0.3,
+       "cacheWrite1h": 6.0,
+       "out": 15.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Sonnet 4.6",
+     "provider": "Anthropic",
+     "prices": {
+      "global.batch": {
+       "in": 1.5,
+       "out": 7.5
+      },
+      "global.standard": {
+       "cacheWrite": 3.75,
+       "in": 3.0,
+       "cacheRead": 0.3,
+       "cacheWrite1h": 6.0,
+       "out": 15.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Sonnet 5",
+     "provider": "Anthropic",
+     "prices": {
+      "global.standard": {
+       "cacheWrite1h": 4.0,
+       "cacheRead": 0.2,
+       "out": 10.0,
+       "in": 2.0,
+       "cacheWrite": 2.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Cohere Embed 4",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "in": 0.12
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Kimi K3",
+     "provider": "Moonshot AI",
+     "prices": {
+      "region.batch": {
+       "out": 8.25,
+       "in": 1.65
+      },
+      "region.flex": {
+       "cacheRead": 0.165,
+       "in": 1.65,
+       "cacheWrite": 2.0625,
+       "out": 8.25
+      },
+      "region.priority": {
+       "out": 28.875,
+       "cacheRead": 0.5775,
+       "cacheWrite": 7.21875,
+       "in": 5.775
+      },
+      "region.standard": {
+       "out": 16.5,
+       "cacheWrite": 4.125,
+       "cacheRead": 0.33,
+       "in": 3.3
+      },
+      "global.flex": {
+       "in": 1.5,
+       "cacheRead": 0.15,
+       "cacheWrite": 1.875,
+       "out": 7.5
+      },
+      "global.priority": {
+       "cacheRead": 0.525,
+       "out": 26.25,
+       "in": 5.25,
+       "cacheWrite": 6.5625
+      },
+      "global.standard": {
+       "in": 3.0,
+       "out": 15.0,
+       "cacheWrite": 3.75,
+       "cacheRead": 0.3
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Grok 4.6",
+     "provider": "xAI",
+     "prices": {
+      "region.flex": {
+       "in": 1.1,
+       "cacheRead": 0.275,
+       "out": 3.3
+      },
+      "region.priority": {
+       "out": 11.55,
+       "in": 3.85,
+       "cacheRead": 0.9625
+      },
+      "region.standard": {
+       "cacheRead": 0.55,
+       "out": 6.6,
+       "in": 2.2
+      },
+      "global.flex": {
+       "in": 1.0,
+       "out": 3.0,
+       "cacheRead": 0.25
+      },
+      "global.priority": {
+       "out": 10.5,
+       "in": 3.5,
+       "cacheRead": 0.875
+      },
+      "global.standard": {
+       "in": 2.0,
+       "cacheRead": 0.5,
+       "out": 6.0
+      }
+     },
+     "kind": "text"
+    }
+   ]
+  },
+  "us-east-1": {
+   "count": 123,
+   "models": [
+    {
+     "name": "Jamba 1.5 Large",
+     "provider": "AI21 Labs",
+     "prices": {
+      "region.standard": {
+       "out": 8.0,
+       "in": 2.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Jamba 1.5 Mini",
+     "provider": "AI21 Labs",
+     "prices": {
+      "region.standard": {
+       "in": 0.2,
+       "out": 0.4
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Jamba-Instruct",
+     "provider": "AI21 Labs",
+     "prices": {
+      "region.standard": {
+       "in": 0.5,
+       "out": 0.7
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Jurassic-2 Mid",
+     "provider": "AI21 Labs",
+     "prices": {
+      "region.standard": {
+       "out": 12.5,
+       "in": 12.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Jurassic-2 Ultra",
+     "provider": "AI21 Labs",
+     "prices": {
+      "region.standard": {
+       "out": 18.8,
+       "in": 18.8
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova 2.0 Lite",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "out": 1.375,
+       "in": 0.165
+      },
+      "region.flex": {
+       "cacheRead": 0.04125,
+       "cacheWrite": 0.0,
+       "in": 0.165,
+       "out": 1.375
+      },
+      "region.priority": {
+       "cacheRead": 0.144375,
+       "out": 4.8125,
+       "cacheWrite": 0.0,
+       "in": 0.5775
+      },
+      "region.standard": {
+       "in": 0.33,
+       "cacheWrite": 0.0,
+       "cacheRead": 0.0825,
+       "out": 2.75
+      },
+      "global.batch": {
+       "in": 0.15,
+       "out": 1.25
+      },
+      "global.flex": {
+       "in": 0.15,
+       "out": 1.25,
+       "cacheWrite": 0.0,
+       "cacheRead": 0.0375
+      },
+      "global.priority": {
+       "cacheRead": 0.13125,
+       "out": 4.375,
+       "cacheWrite": 0.0,
+       "in": 0.525
+      },
+      "global.standard": {
+       "cacheWrite": 0.0,
+       "in": 0.3,
+       "cacheRead": 0.075,
+       "out": 2.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova 2.0 Omni",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "in": 0.2,
+       "out": 1.4
+      },
+      "region.flex": {
+       "out": 1.4,
+       "in": 0.2
+      },
+      "region.priority": {
+       "out": 4.8,
+       "in": 0.6
+      },
+      "region.standard": {
+       "in": 0.3,
+       "out": 2.8
+      },
+      "global.batch": {
+       "out": 1.3,
+       "in": 0.2
+      },
+      "global.flex": {
+       "out": 1.3,
+       "in": 0.2
+      },
+      "global.priority": {
+       "out": 4.4,
+       "in": 0.5
+      },
+      "global.standard": {
+       "in": 0.3,
+       "out": 2.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova 2.0 Pro",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "in": 0.6875,
+       "out": 5.5
+      },
+      "region.flex": {
+       "in": 0.6875,
+       "out": 5.5
+      },
+      "region.priority": {
+       "in": 2.40625,
+       "out": 19.25
+      },
+      "region.standard": {
+       "in": 1.375,
+       "out": 11.0
+      },
+      "global.batch": {
+       "out": 5.0,
+       "in": 0.625
+      },
+      "global.flex": {
+       "out": 5.0,
+       "in": 0.625
+      },
+      "global.priority": {
+       "in": 2.1875,
+       "out": 17.5
+      },
+      "global.standard": {
+       "in": 1.25,
+       "out": 10.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova Lite",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "out": 0.12,
+       "in": 0.03
+      },
+      "region.standard": {
+       "cacheWrite": 0.0,
+       "out": 0.24,
+       "cacheRead": 0.015,
+       "in": 0.06
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova MME",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "in": 0.0675
+      },
+      "region.standard": {
+       "in": 0.135
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Nova Micro",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "out": 0.07,
+       "in": 0.0175
+      },
+      "region.standard": {
+       "cacheWrite": 0.0,
+       "in": 0.035,
+       "cacheRead": 0.00875,
+       "out": 0.14
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova Premier",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "out": 6.25,
+       "in": 1.25
+      },
+      "region.flex": {
+       "cacheWrite": 0.0,
+       "out": 6.25,
+       "in": 1.25,
+       "cacheRead": 0.3125
+      },
+      "region.priority": {
+       "cacheWrite": 0.0,
+       "in": 4.375,
+       "out": 21.875,
+       "cacheRead": 1.09375
+      },
+      "region.standard": {
+       "in": 2.5,
+       "out": 12.5,
+       "cacheRead": 0.625
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova Pro",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "in": 0.4,
+       "out": 1.6
+      },
+      "region.flex": {
+       "cacheRead": 0.1,
+       "in": 0.4,
+       "out": 1.6,
+       "cacheWrite": 0.0
+      },
+      "region.priority": {
+       "cacheWrite": 0.0,
+       "in": 1.4,
+       "cacheRead": 0.35,
+       "out": 5.6
+      },
+      "region.standard": {
+       "out": 3.2,
+       "cacheRead": 0.2,
+       "in": 0.8,
+       "cacheWrite": 0.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova Sonic",
+     "provider": "Amazon",
+     "prices": {
+      "region.standard": {
+       "out": 0.24,
+       "in": 0.06
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nova Sonic 2.0",
+     "provider": "Amazon",
+     "prices": {
+      "region.standard": {
+       "in": 0.33,
+       "out": 2.75
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Titan Embeddings G1 - Text",
+     "provider": "Amazon",
+     "prices": {
+      "region.standard": {
+       "in": 0.1
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Titan Text Embeddings V2",
+     "provider": "Amazon",
+     "prices": {
+      "region.batch": {
+       "in": 0.01
+      },
+      "region.standard": {
+       "in": 0.02
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Titan Text G1 - Express",
+     "provider": "Amazon",
+     "prices": {
+      "region.standard": {
+       "in": 0.2,
+       "out": 0.6
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Titan Text G1 - Lite",
+     "provider": "Amazon",
+     "prices": {
+      "region.standard": {
+       "in": 0.15,
+       "out": 0.2
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Titan Text Premier",
+     "provider": "Amazon",
+     "prices": {
+      "region.standard": {
+       "out": 1.5,
+       "in": 0.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "in": 8.0,
+       "out": 24.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude (100K)",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "in": 22.04,
+       "out": 65.36
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude 2.0",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "in": 8.0
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Claude 2.1",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "in": 8.0
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Claude 3 Haiku",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 0.125,
+       "out": 0.625
+      },
+      "region.standard": {
+       "in": 0.25,
+       "out": 1.25
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude 3 Opus",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 7.5,
+       "out": 37.5
+      },
+      "region.standard": {
+       "out": 75.0,
+       "in": 15.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude 3 Sonnet",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "out": 7.5,
+       "in": 1.5
+      },
+      "region.standard": {
+       "in": 3.0,
+       "out": 15.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude 3.5 Haiku",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "out": 2.0,
+       "in": 0.4
+      },
+      "region.standard": {
+       "out": 4.0,
+       "cacheWrite": 1.0,
+       "in": 0.8,
+       "cacheRead": 0.08
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude 3.5 Sonnet",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 1.5,
+       "out": 7.5
+      },
+      "region.standard": {
+       "out": 15.0,
+       "in": 3.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude 3.5 Sonnet v2",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "out": 7.5,
+       "in": 1.5
+      },
+      "region.standard": {
+       "out": 15.0,
+       "in": 3.0,
+       "cacheRead": 0.3,
+       "cacheWrite": 3.75
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude 3.7 Sonnet",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "out": 7.5,
+       "in": 1.5
+      },
+      "region.standard": {
+       "out": 15.0,
+       "cacheRead": 0.3,
+       "cacheWrite": 3.75,
+       "in": 3.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Fable 5",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "cacheWrite1h": 22.0,
+       "in": 11.0,
+       "cacheRead": 1.1,
+       "cacheWrite": 13.75,
+       "out": 55.0
+      },
+      "global.standard": {
+       "cacheWrite": 12.5,
+       "out": 50.0,
+       "cacheWrite1h": 20.0,
+       "in": 10.0,
+       "cacheRead": 1.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Fable 5.1",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "out": 55.0,
+       "cacheWrite1h": 22.0,
+       "in": 11.0,
+       "cacheRead": 0.275,
+       "cacheWrite": 13.75
+      },
+      "global.standard": {
+       "in": 10.0,
+       "cacheRead": 0.25,
+       "cacheWrite1h": 20.0,
+       "cacheWrite": 12.5,
+       "out": 50.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Haiku 4.5",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "out": 2.75,
+       "in": 0.55
+      },
+      "region.standard": {
+       "cacheWrite": 1.375,
+       "cacheRead": 0.11,
+       "in": 1.1,
+       "cacheWrite1h": 2.2,
+       "out": 5.5
+      },
+      "global.batch": {
+       "out": 2.5,
+       "in": 0.5
+      },
+      "global.standard": {
+       "in": 1.0,
+       "cacheWrite": 1.25,
+       "cacheWrite1h": 2.0,
+       "cacheRead": 0.1,
+       "out": 5.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Instant",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "in": 0.8,
+       "out": 2.4
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Instant (100K)",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "out": 11.02,
+       "in": 3.26
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Mythos 5",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "out": 55.0,
+       "in": 11.0,
+       "cacheWrite": 13.75,
+       "cacheWrite1h": 22.0,
+       "cacheRead": 1.1
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Mythos 5.1",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "in": 11.0,
+       "cacheRead": 0.275,
+       "cacheWrite1h": 22.0,
+       "out": 55.0,
+       "cacheWrite": 13.75
+      },
+      "global.standard": {
+       "cacheWrite1h": 20.0,
+       "cacheRead": 0.25,
+       "out": 50.0,
+       "in": 10.0,
+       "cacheWrite": 12.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Mythos Preview",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "out": 137.5,
+       "in": 27.5,
+       "cacheWrite1h": 55.0,
+       "cacheRead": 2.75,
+       "cacheWrite": 34.375
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 4",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 7.5,
+       "out": 37.5
+      },
+      "region.standard": {
+       "out": 75.0,
+       "in": 15.0,
+       "cacheWrite": 18.75,
+       "cacheRead": 1.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 4.1",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "in": 15.0,
+       "cacheRead": 1.5,
+       "out": 75.0,
+       "cacheWrite": 18.75
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 4.5",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 2.75,
+       "out": 13.75
+      },
+      "region.standard": {
+       "out": 27.5,
+       "in": 5.5,
+       "cacheWrite1h": 11.0,
+       "cacheRead": 0.55,
+       "cacheWrite": 6.875
+      },
+      "global.batch": {
+       "in": 2.5,
+       "out": 12.5
+      },
+      "global.standard": {
+       "in": 5.0,
+       "cacheWrite1h": 10.0,
+       "cacheRead": 0.5,
+       "cacheWrite": 6.25,
+       "out": 25.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 4.6",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 2.75,
+       "out": 13.75
+      },
+      "region.standard": {
+       "in": 5.5,
+       "cacheWrite1h": 11.0,
+       "cacheRead": 0.55,
+       "cacheWrite": 6.875,
+       "out": 27.5
+      },
+      "global.batch": {
+       "in": 2.5,
+       "out": 12.5
+      },
+      "global.standard": {
+       "cacheWrite1h": 10.0,
+       "in": 5.0,
+       "cacheRead": 0.5,
+       "cacheWrite": 6.25,
+       "out": 25.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 4.7",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "cacheWrite": 6.875,
+       "in": 5.5,
+       "cacheRead": 0.55,
+       "cacheWrite1h": 11.0,
+       "out": 27.5
+      },
+      "global.standard": {
+       "cacheRead": 0.5,
+       "out": 25.0,
+       "cacheWrite1h": 10.0,
+       "in": 5.0,
+       "cacheWrite": 6.25
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 4.8",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "out": 27.5,
+       "cacheWrite1h": 11.0,
+       "cacheWrite": 6.875,
+       "cacheRead": 0.55,
+       "in": 5.5
+      },
+      "global.standard": {
+       "in": 5.0,
+       "out": 25.0,
+       "cacheWrite1h": 10.0,
+       "cacheRead": 0.5,
+       "cacheWrite": 6.25
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 5",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 2.75,
+       "out": 13.75
+      },
+      "region.standard": {
+       "cacheWrite1h": 11.0,
+       "cacheWrite": 6.875,
+       "out": 27.5,
+       "cacheRead": 0.55,
+       "in": 5.5
+      },
+      "global.batch": {
+       "out": 12.5,
+       "in": 2.5
+      },
+      "global.standard": {
+       "cacheRead": 0.5,
+       "cacheWrite1h": 10.0,
+       "out": 25.0,
+       "cacheWrite": 6.25,
+       "in": 5.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Opus 5.5",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "in": 4.4,
+       "cacheRead": 0.22,
+       "out": 22.0,
+       "cacheWrite1h": 8.8,
+       "cacheWrite": 5.5
+      },
+      "global.standard": {
+       "in": 4.0,
+       "cacheWrite1h": 8.0,
+       "cacheWrite": 5.0,
+       "out": 20.0,
+       "cacheRead": 0.2
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Sonnet 4",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 1.5,
+       "out": 7.5
+      },
+      "region.standard": {
+       "in": 3.0,
+       "cacheWrite": 3.75,
+       "cacheRead": 0.3,
+       "out": 15.0
+      },
+      "global.batch": {
+       "out": 7.5,
+       "in": 1.5
+      },
+      "global.standard": {
+       "cacheRead": 0.3,
+       "cacheWrite": 3.75,
+       "out": 15.0,
+       "in": 3.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Sonnet 4.5",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 1.65,
+       "out": 8.25
+      },
+      "region.standard": {
+       "in": 3.3,
+       "cacheWrite1h": 6.6,
+       "cacheRead": 0.33,
+       "cacheWrite": 4.125,
+       "out": 16.5
+      },
+      "global.batch": {
+       "out": 7.5,
+       "in": 1.5
+      },
+      "global.standard": {
+       "cacheRead": 0.3,
+       "in": 3.0,
+       "cacheWrite": 3.75,
+       "out": 15.0,
+       "cacheWrite1h": 6.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Sonnet 4.6",
+     "provider": "Anthropic",
+     "prices": {
+      "region.batch": {
+       "in": 1.65,
+       "out": 8.25
+      },
+      "region.standard": {
+       "in": 3.3,
+       "cacheWrite1h": 6.6,
+       "cacheRead": 0.33,
+       "out": 16.5,
+       "cacheWrite": 4.125
+      },
+      "global.batch": {
+       "out": 7.5,
+       "in": 1.5
+      },
+      "global.standard": {
+       "cacheWrite": 3.75,
+       "in": 3.0,
+       "out": 15.0,
+       "cacheWrite1h": 6.0,
+       "cacheRead": 0.3
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Claude Sonnet 5",
+     "provider": "Anthropic",
+     "prices": {
+      "region.standard": {
+       "cacheWrite": 2.75,
+       "out": 11.0,
+       "in": 2.2,
+       "cacheRead": 0.22,
+       "cacheWrite1h": 4.4
+      },
+      "global.standard": {
+       "cacheWrite1h": 4.0,
+       "cacheWrite": 2.5,
+       "in": 2.0,
+       "out": 10.0,
+       "cacheRead": 0.2
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Cohere Command R",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "out": 1.5,
+       "in": 0.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Cohere Command R+",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "out": 15.0,
+       "in": 3.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Cohere Embed 3 Model - English",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "in": 0.1
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Cohere Embed 4",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "in": 0.12
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Cohere Embed Model 3 - Multilingual",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "in": 0.1
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Cohere Generate Model - Command",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "out": 2.0,
+       "in": 1.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Cohere Generate Model - Command-Light",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "in": 0.3,
+       "out": 0.6
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "DeepSeek V3.1",
+     "provider": "DeepSeek",
+     "prices": {
+      "region.batch": {
+       "out": 0.84,
+       "in": 0.29
+      },
+      "region.flex": {
+       "in": 0.29,
+       "out": 0.84
+      },
+      "region.priority": {
+       "out": 2.94,
+       "in": 1.015
+      },
+      "region.standard": {
+       "in": 0.58,
+       "out": 1.68
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "DeepSeek v3.2",
+     "provider": "DeepSeek",
+     "prices": {
+      "region.batch": {
+       "out": 0.925,
+       "in": 0.31
+      },
+      "region.flex": {
+       "out": 0.925,
+       "in": 0.31
+      },
+      "region.priority": {
+       "in": 1.085,
+       "out": 3.2375
+      },
+      "region.standard": {
+       "in": 0.62,
+       "out": 1.85
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "R1",
+     "provider": "DeepSeek",
+     "prices": {
+      "region.standard": {
+       "in": 1.35,
+       "out": 5.4
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Gemma 3 12B",
+     "provider": "Google",
+     "prices": {
+      "region.batch": {
+       "in": 0.05,
+       "out": 0.15
+      },
+      "region.flex": {
+       "in": 0.05,
+       "out": 0.15
+      },
+      "region.priority": {
+       "in": 0.16,
+       "out": 0.51
+      },
+      "region.standard": {
+       "out": 0.29,
+       "in": 0.09
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Gemma 3 27B",
+     "provider": "Google",
+     "prices": {
+      "region.batch": {
+       "in": 0.12,
+       "out": 0.19
+      },
+      "region.flex": {
+       "in": 0.12,
+       "out": 0.19
+      },
+      "region.priority": {
+       "out": 0.67,
+       "in": 0.4
+      },
+      "region.standard": {
+       "out": 0.38,
+       "in": 0.23
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Gemma 3 4B",
+     "provider": "Google",
+     "prices": {
+      "region.batch": {
+       "in": 0.02,
+       "out": 0.04
+      },
+      "region.flex": {
+       "out": 0.04,
+       "in": 0.02
+      },
+      "region.priority": {
+       "out": 0.14,
+       "in": 0.07
+      },
+      "region.standard": {
+       "out": 0.08,
+       "in": 0.04
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Gemma 4 26b A4b",
+     "provider": "Google",
+     "prices": {
+      "region.batch": {
+       "out": 0.2,
+       "in": 0.065
+      },
+      "region.flex": {
+       "in": 0.065,
+       "out": 0.2
+      },
+      "region.priority": {
+       "out": 0.7,
+       "in": 0.2275
+      },
+      "region.standard": {
+       "in": 0.13,
+       "out": 0.4
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Gemma 4 31b",
+     "provider": "Google",
+     "prices": {
+      "region.batch": {
+       "out": 0.2,
+       "in": 0.07
+      },
+      "region.flex": {
+       "in": 0.07,
+       "out": 0.2
+      },
+      "region.priority": {
+       "out": 0.7,
+       "in": 0.245
+      },
+      "region.standard": {
+       "in": 0.14,
+       "out": 0.4
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Gemma 4 E2b",
+     "provider": "Google",
+     "prices": {
+      "region.batch": {
+       "in": 0.02,
+       "out": 0.04
+      },
+      "region.flex": {
+       "in": 0.02,
+       "out": 0.04
+      },
+      "region.priority": {
+       "out": 0.14,
+       "in": 0.07
+      },
+      "region.standard": {
+       "in": 0.04,
+       "out": 0.08
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 3 70B",
+     "provider": "Meta",
+     "prices": {
+      "region.standard": {
+       "in": 2.65,
+       "out": 3.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 3 8B",
+     "provider": "Meta",
+     "prices": {
+      "region.standard": {
+       "out": 0.6,
+       "in": 0.3
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 3.1 405B",
+     "provider": "Meta",
+     "prices": {
+      "region.batch": {
+       "out": 1.2,
+       "in": 1.2
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 3.1 70B",
+     "provider": "Meta",
+     "prices": {
+      "region.batch": {
+       "in": 0.36,
+       "out": 0.36
+      },
+      "region.standard": {
+       "in": 0.72,
+       "out": 0.72
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 3.1 8B",
+     "provider": "Meta",
+     "prices": {
+      "region.batch": {
+       "in": 0.11,
+       "out": 0.11
+      },
+      "region.standard": {
+       "in": 0.22,
+       "out": 0.22
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 3.2 11B",
+     "provider": "Meta",
+     "prices": {
+      "region.standard": {
+       "in": 0.16,
+       "out": 0.16
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 3.2 1B",
+     "provider": "Meta",
+     "prices": {
+      "region.standard": {
+       "out": 0.1,
+       "in": 0.1
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 3.2 3B",
+     "provider": "Meta",
+     "prices": {
+      "region.standard": {
+       "out": 0.15,
+       "in": 0.15
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 3.2 90B",
+     "provider": "Meta",
+     "prices": {
+      "region.standard": {
+       "out": 0.72,
+       "in": 0.72
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 3.3 70B",
+     "provider": "Meta",
+     "prices": {
+      "region.batch": {
+       "in": 0.36,
+       "out": 0.36
+      },
+      "region.standard": {
+       "in": 0.72,
+       "out": 0.72
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 4 Maverick 17B",
+     "provider": "Meta",
+     "prices": {
+      "region.batch": {
+       "out": 0.485,
+       "in": 0.12
+      },
+      "region.standard": {
+       "in": 0.24,
+       "out": 0.97
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama 4 Scout 17B",
+     "provider": "Meta",
+     "prices": {
+      "region.batch": {
+       "in": 0.085,
+       "out": 0.33
+      },
+      "region.standard": {
+       "out": 0.66,
+       "in": 0.17
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Meta Llama 2 Chat 13B",
+     "provider": "Meta",
+     "prices": {
+      "region.standard": {
+       "in": 0.75,
+       "out": 1.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Meta Llama 2 Chat 70B",
+     "provider": "Meta",
+     "prices": {
+      "region.standard": {
+       "out": 2.56,
+       "in": 1.95
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "MiniMax M2.5",
+     "provider": "MiniMax",
+     "prices": {
+      "region.batch": {
+       "out": 0.6,
+       "in": 0.15
+      },
+      "region.flex": {
+       "in": 0.15,
+       "out": 0.6
+      },
+      "region.priority": {
+       "in": 0.525,
+       "out": 2.1
+      },
+      "region.standard": {
+       "out": 1.2,
+       "in": 0.3
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Minimax M2",
+     "provider": "MiniMax",
+     "prices": {
+      "region.batch": {
+       "out": 0.6,
+       "in": 0.15
+      },
+      "region.flex": {
+       "in": 0.15,
+       "out": 0.6
+      },
+      "region.priority": {
+       "in": 0.52,
+       "out": 2.1
+      },
+      "region.standard": {
+       "out": 1.2,
+       "in": 0.3
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Minimax M2.1",
+     "provider": "MiniMax",
+     "prices": {
+      "region.batch": {
+       "out": 0.6,
+       "in": 0.15
+      },
+      "region.flex": {
+       "out": 0.6,
+       "in": 0.15
+      },
+      "region.priority": {
+       "out": 2.1,
+       "in": 0.525
+      },
+      "region.standard": {
+       "out": 1.2,
+       "in": 0.3
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Devstral",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.batch": {
+       "out": 1.0,
+       "in": 0.2
+      },
+      "region.flex": {
+       "in": 0.2,
+       "out": 1.0
+      },
+      "region.priority": {
+       "out": 3.5,
+       "in": 0.7
+      },
+      "region.standard": {
+       "out": 2.0,
+       "in": 0.4
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Magistral Small 1.2",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.batch": {
+       "in": 0.25,
+       "out": 0.75
+      },
+      "region.flex": {
+       "in": 0.25,
+       "out": 0.75
+      },
+      "region.priority": {
+       "in": 0.88,
+       "out": 2.63
+      },
+      "region.standard": {
+       "in": 0.5,
+       "out": 1.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Ministral 14B 3.0",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.batch": {
+       "in": 0.1,
+       "out": 0.1
+      },
+      "region.flex": {
+       "out": 0.1,
+       "in": 0.1
+      },
+      "region.priority": {
+       "out": 0.35,
+       "in": 0.35
+      },
+      "region.standard": {
+       "in": 0.2,
+       "out": 0.2
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Ministral 3B 3.0",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.batch": {
+       "out": 0.05,
+       "in": 0.05
+      },
+      "region.flex": {
+       "in": 0.05,
+       "out": 0.05
+      },
+      "region.priority": {
+       "out": 0.17,
+       "in": 0.17
+      },
+      "region.standard": {
+       "in": 0.1,
+       "out": 0.1
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Ministral 8B 3.0",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.batch": {
+       "in": 0.07,
+       "out": 0.07
+      },
+      "region.flex": {
+       "out": 0.07,
+       "in": 0.07
+      },
+      "region.priority": {
+       "in": 0.26,
+       "out": 0.26
+      },
+      "region.standard": {
+       "in": 0.15,
+       "out": 0.15
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Mistral 7B",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.standard": {
+       "in": 0.15,
+       "out": 0.2
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Mistral Large",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.standard": {
+       "in": 4.0,
+       "out": 12.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Mistral Large 3",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.batch": {
+       "in": 0.25,
+       "out": 0.75
+      },
+      "region.flex": {
+       "out": 0.75,
+       "in": 0.25
+      },
+      "region.priority": {
+       "in": 0.88,
+       "out": 2.63
+      },
+      "region.standard": {
+       "in": 0.5,
+       "out": 1.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Mistral Small",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.batch": {
+       "in": 0.5,
+       "out": 1.5
+      },
+      "region.standard": {
+       "in": 1.0,
+       "out": 3.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Mixtral 8x7B",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.standard": {
+       "out": 0.7,
+       "in": 0.45
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Pixtral Large 25.02",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.standard": {
+       "out": 6.0,
+       "in": 2.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Voxtral Mini 1.0",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.batch": {
+       "in": 0.02,
+       "out": 0.02
+      },
+      "region.flex": {
+       "out": 0.02,
+       "in": 0.02
+      },
+      "region.priority": {
+       "out": 0.07,
+       "in": 0.07
+      },
+      "region.standard": {
+       "out": 0.04,
+       "in": 0.04
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Voxtral Small 1.0",
+     "provider": "Mistral AI",
+     "prices": {
+      "region.batch": {
+       "out": 0.15,
+       "in": 0.05
+      },
+      "region.flex": {
+       "in": 0.05,
+       "out": 0.15
+      },
+      "region.priority": {
+       "in": 0.17,
+       "out": 0.52
+      },
+      "region.standard": {
+       "in": 0.1,
+       "out": 0.3
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Kimi K2 Thinking",
+     "provider": "Moonshot AI",
+     "prices": {
+      "region.batch": {
+       "in": 0.3,
+       "out": 1.25
+      },
+      "region.flex": {
+       "out": 1.25,
+       "in": 0.3
+      },
+      "region.priority": {
+       "in": 1.05,
+       "out": 4.38
+      },
+      "region.standard": {
+       "in": 0.6,
+       "out": 2.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Kimi K2.5",
+     "provider": "Moonshot AI",
+     "prices": {
+      "region.batch": {
+       "out": 1.5,
+       "in": 0.3
+      },
+      "region.flex": {
+       "out": 1.5,
+       "in": 0.3
+      },
+      "region.priority": {
+       "in": 1.05,
+       "out": 5.25
+      },
+      "region.standard": {
+       "out": 3.0,
+       "in": 0.6
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Kimi K3",
+     "provider": "Moonshot AI",
+     "prices": {
+      "region.batch": {
+       "in": 1.65,
+       "out": 8.25
+      },
+      "region.flex": {
+       "in": 1.65,
+       "cacheRead": 0.165,
+       "out": 8.25,
+       "cacheWrite": 2.0625
+      },
+      "region.priority": {
+       "cacheRead": 0.5775,
+       "in": 5.775,
+       "cacheWrite": 7.21875,
+       "out": 28.875
+      },
+      "region.standard": {
+       "in": 3.3,
+       "out": 16.5,
+       "cacheWrite": 4.125,
+       "cacheRead": 0.33
+      },
+      "global.flex": {
+       "in": 1.5,
+       "out": 7.5,
+       "cacheRead": 0.15,
+       "cacheWrite": 1.875
+      },
+      "global.priority": {
+       "out": 26.25,
+       "in": 5.25,
+       "cacheWrite": 6.5625,
+       "cacheRead": 0.525
+      },
+      "global.standard": {
+       "cacheWrite": 3.75,
+       "in": 3.0,
+       "out": 15.0,
+       "cacheRead": 0.3
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "NVIDIA Nemotron 3 Super 120B A12B",
+     "provider": "Nvidia",
+     "prices": {
+      "region.batch": {
+       "in": 0.075,
+       "out": 0.325
+      },
+      "region.flex": {
+       "out": 0.325,
+       "in": 0.075
+      },
+      "region.priority": {
+       "in": 0.2625,
+       "out": 1.1375
+      },
+      "region.standard": {
+       "out": 0.65,
+       "in": 0.15
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "NVIDIA Nemotron Nano 2",
+     "provider": "Nvidia",
+     "prices": {
+      "region.batch": {
+       "out": 0.12,
+       "in": 0.03
+      },
+      "region.flex": {
+       "out": 0.12,
+       "in": 0.03
+      },
+      "region.priority": {
+       "out": 0.4,
+       "in": 0.11
+      },
+      "region.standard": {
+       "out": 0.23,
+       "in": 0.06
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "NVIDIA Nemotron Nano 2 VL",
+     "provider": "Nvidia",
+     "prices": {
+      "region.batch": {
+       "out": 0.3,
+       "in": 0.1
+      },
+      "region.flex": {
+       "in": 0.1,
+       "out": 0.3
+      },
+      "region.priority": {
+       "in": 0.35,
+       "out": 1.05
+      },
+      "region.standard": {
+       "out": 0.6,
+       "in": 0.2
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Nemotron Nano 3 30B",
+     "provider": "Nvidia",
+     "prices": {
+      "region.batch": {
+       "out": 0.12,
+       "in": 0.03
+      },
+      "region.flex": {
+       "out": 0.12,
+       "in": 0.03
+      },
+      "region.priority": {
+       "in": 0.11,
+       "out": 0.42
+      },
+      "region.standard": {
+       "in": 0.06,
+       "out": 0.24
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "GPT OSS Safeguard 120B",
+     "provider": "OpenAI",
+     "prices": {
+      "region.batch": {
+       "in": 0.07,
+       "out": 0.3
+      },
+      "region.flex": {
+       "in": 0.07,
+       "out": 0.3
+      },
+      "region.priority": {
+       "out": 1.05,
+       "in": 0.26
+      },
+      "region.standard": {
+       "in": 0.15,
+       "out": 0.6
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "GPT OSS Safeguard 20B",
+     "provider": "OpenAI",
+     "prices": {
+      "region.batch": {
+       "out": 0.1,
+       "in": 0.03
+      },
+      "region.flex": {
+       "in": 0.03,
+       "out": 0.1
+      },
+      "region.priority": {
+       "in": 0.12,
+       "out": 0.35
+      },
+      "region.standard": {
+       "in": 0.07,
+       "out": 0.2
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "gpt-oss-120b",
+     "provider": "OpenAI",
+     "prices": {
+      "region.batch": {
+       "out": 0.3,
+       "in": 0.075
+      },
+      "region.flex": {
+       "in": 0.075,
+       "out": 0.3
+      },
+      "region.priority": {
+       "in": 0.2625,
+       "out": 1.05
+      },
+      "region.standard": {
+       "in": 0.15,
+       "out": 0.6
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "gpt-oss-20b",
+     "provider": "OpenAI",
+     "prices": {
+      "region.batch": {
+       "in": 0.035,
+       "out": 0.15
+      },
+      "region.flex": {
+       "in": 0.035,
+       "out": 0.15
+      },
+      "region.priority": {
+       "out": 0.525,
+       "in": 0.1225
+      },
+      "region.standard": {
+       "out": 0.3,
+       "in": 0.07
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Qwen3 235B A22B 2507",
+     "provider": "Qwen",
+     "prices": {
+      "region.batch": {
+       "in": 0.11,
+       "out": 0.44
+      },
+      "region.flex": {
+       "out": 0.44,
+       "in": 0.11
+      },
+      "region.priority": {
+       "out": 1.54,
+       "in": 0.385
+      },
+      "region.standard": {
+       "out": 0.88,
+       "in": 0.22
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Qwen3 32B",
+     "provider": "Qwen",
+     "prices": {
+      "region.batch": {
+       "out": 0.3,
+       "in": 0.075
+      },
+      "region.flex": {
+       "out": 0.3,
+       "in": 0.075
+      },
+      "region.priority": {
+       "out": 1.05,
+       "in": 0.2625
+      },
+      "region.standard": {
+       "out": 0.6,
+       "in": 0.15
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Qwen3 Coder 30B A3B",
+     "provider": "Qwen",
+     "prices": {
+      "region.batch": {
+       "out": 0.3,
+       "in": 0.075
+      },
+      "region.flex": {
+       "out": 0.3,
+       "in": 0.075
+      },
+      "region.priority": {
+       "in": 0.2625,
+       "out": 1.05
+      },
+      "region.standard": {
+       "in": 0.15,
+       "out": 0.6
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Qwen3 Coder 480B A35B",
+     "provider": "Qwen",
+     "prices": {
+      "region.batch": {
+       "in": 0.225,
+       "out": 0.9
+      },
+      "region.flex": {
+       "out": 0.9,
+       "in": 0.225
+      },
+      "region.priority": {
+       "in": 0.7875,
+       "out": 3.15
+      },
+      "region.standard": {
+       "in": 0.45,
+       "out": 1.8
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Qwen3 Coder Next",
+     "provider": "Qwen",
+     "prices": {
+      "region.batch": {
+       "out": 0.6,
+       "in": 0.25
+      },
+      "region.flex": {
+       "out": 0.6,
+       "in": 0.25
+      },
+      "region.priority": {
+       "out": 2.1,
+       "in": 0.875
+      },
+      "region.standard": {
+       "in": 0.5,
+       "out": 1.2
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Qwen3 Next 80B A3B",
+     "provider": "Qwen",
+     "prices": {
+      "region.batch": {
+       "in": 0.07,
+       "out": 0.6
+      },
+      "region.flex": {
+       "out": 0.6,
+       "in": 0.07
+      },
+      "region.priority": {
+       "in": 0.26,
+       "out": 2.1
+      },
+      "region.standard": {
+       "out": 1.2,
+       "in": 0.14
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Qwen3 VL 235B A22B",
+     "provider": "Qwen",
+     "prices": {
+      "region.batch": {
+       "in": 0.26,
+       "out": 1.33
+      },
+      "region.flex": {
+       "out": 1.33,
+       "in": 0.26
+      },
+      "region.priority": {
+       "out": 4.66,
+       "in": 0.93
+      },
+      "region.standard": {
+       "in": 0.53,
+       "out": 2.66
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Palmyra X4",
+     "provider": "Writer",
+     "prices": {
+      "region.standard": {
+       "out": 10.0,
+       "in": 2.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Palmyra X5",
+     "provider": "Writer",
+     "prices": {
+      "region.standard": {
+       "out": 6.0,
+       "in": 0.6
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Writer Palmyra Vision 7B",
+     "provider": "Writer",
+     "prices": {
+      "region.batch": {
+       "in": 0.075,
+       "out": 0.3
+      },
+      "region.flex": {
+       "in": 0.075,
+       "out": 0.3
+      },
+      "region.priority": {
+       "in": 0.2625,
+       "out": 1.05
+      },
+      "region.standard": {
+       "in": 0.15,
+       "out": 0.6
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "GLM 4.7",
+     "provider": "Z.ai",
+     "prices": {
+      "region.batch": {
+       "out": 1.1,
+       "in": 0.3
+      },
+      "region.flex": {
+       "in": 0.3,
+       "out": 1.1
+      },
+      "region.priority": {
+       "out": 3.85,
+       "in": 1.05
+      },
+      "region.standard": {
+       "out": 2.2,
+       "in": 0.6
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "GLM 4.7 Flash",
+     "provider": "Z.ai",
+     "prices": {
+      "region.batch": {
+       "in": 0.035,
+       "out": 0.2
+      },
+      "region.flex": {
+       "in": 0.035,
+       "out": 0.2
+      },
+      "region.priority": {
+       "out": 0.7,
+       "in": 0.1225
+      },
+      "region.standard": {
+       "in": 0.07,
+       "out": 0.4
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "GLM 5",
+     "provider": "Z.ai",
+     "prices": {
+      "region.batch": {
+       "out": 1.6,
+       "in": 0.5
+      },
+      "region.flex": {
+       "out": 1.6,
+       "in": 0.5
+      },
+      "region.priority": {
+       "in": 1.75,
+       "out": 5.6
+      },
+      "region.standard": {
+       "in": 1.0,
+       "out": 3.2
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Grok 4.3",
+     "provider": "xAI",
+     "prices": {
+      "region.batch": {
+       "out": 1.25,
+       "in": 0.625,
+       "cacheRead": 0.1
+      },
+      "region.flex": {
+       "out": 1.25,
+       "in": 0.625,
+       "cacheRead": 0.1
+      },
+      "region.priority": {
+       "cacheRead": 0.35,
+       "out": 4.375,
+       "in": 2.1875
+      },
+      "region.standard": {
+       "in": 1.25,
+       "out": 2.5,
+       "cacheRead": 0.2
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Grok 4.6",
+     "provider": "xAI",
+     "prices": {
+      "region.flex": {
+       "out": 3.3,
+       "in": 1.1,
+       "cacheRead": 0.275
+      },
+      "region.priority": {
+       "cacheRead": 0.9625,
+       "in": 3.85,
+       "out": 11.55
+      },
+      "region.standard": {
+       "cacheRead": 0.55,
+       "out": 6.6,
+       "in": 2.2
+      },
+      "global.flex": {
+       "out": 3.0,
+       "in": 1.0,
+       "cacheRead": 0.25
+      },
+      "global.priority": {
+       "cacheRead": 0.875,
+       "out": 10.5,
+       "in": 3.5
+      },
+      "global.standard": {
+       "cacheRead": 0.5,
+       "in": 2.0,
+       "out": 6.0
+      }
+     },
+     "kind": "text"
+    }
+   ]
+  }
+ }
+}

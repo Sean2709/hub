@@ -1,0 +1,280 @@
+---
+import Base from '../../../layouts/Base.astro';
+import '../../../styles/calc.css';
+import pricing from '../../../../public/data/bedrock/pricing.json';
+import meta from '../../../../public/data/bedrock/meta.json';
+
+type Price = { in?: number; out?: number; cacheRead?: number; cacheWrite?: number; cacheWrite1h?: number };
+type M = { name: string; provider: string; kind: string; prices: Record<string, Price> };
+const PRIMARY = pricing.primary_region;
+const seoul = pricing.regions[PRIMARY as 'ap-northeast-2'].models as M[];
+const use1Map = new Map((pricing.regions['us-east-1'].models as M[]).map((m) => [m.name, m.prices]));
+// client payload: Seoul models + us-east-1 prices for the same model names only
+const payload = seoul.map((m) => ({ ...m, ref: use1Map.get(m.name) ?? null }));
+const byProvider = new Map<string, M[]>();
+for (const m of seoul) byProvider.set(m.provider || '기타', [...(byProvider.get(m.provider || '기타') ?? []), m]);
+const groups = [...byProvider.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+const version = Object.values(pricing.versions).sort().at(-1) ?? '';
+const vDate = version ? `${version.slice(0, 4)}-${version.slice(4, 6)}-${version.slice(6, 8)}` : '';
+const defaultModel = seoul.find((m) => /Sonnet 4\.6/.test(m.name))?.name ?? seoul.find((m) => m.kind === 'text')?.name ?? '';
+const textCount = seoul.filter((m) => m.kind === 'text').length;
+
+const title = 'Amazon Bedrock 비용 계산기 — 서울 리전 토큰 단가';
+const description = `서울 리전(ap-northeast-2) Bedrock 모델 ${seoul.length}개의 토큰 단가(AWS Price List)로 월 비용을 계산하고, 리전 직접 호출·Global 교차 리전·배치 비용과 us-east-1을 비교합니다. 매일 자동 갱신.`;
+---
+
+<Base title={title} description={description} wide>
+  <div class="calc">
+    <header class="chead page-head">
+      <span class="ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2" /><path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2M8 18h8" /></svg>
+      </span>
+      <div>
+        <h1>Bedrock 비용 계산기</h1>
+        <p class="lead">
+          서울 리전 모델 {seoul.length}개의 on-demand 토큰 단가(AWS Price List 공개 API, 가격표 {vDate})로 월 비용을 계산합니다.
+          매일 06:00 KST <a href="/bedrock/">카탈로그</a>와 함께 갱신 · 원본 <a href="/data/bedrock/pricing.json">pricing.json</a>
+        </p>
+      </div>
+    </header>
+
+    <script type="application/json" id="pricing-data" set:html={JSON.stringify(payload)} />
+
+    <form id="bf" autocomplete="off" novalidate class="cgrid">
+      <div class="cform">
+        <div class="box">
+          <h2>워크로드</h2>
+          <div class="fields">
+            <label class="fld full">
+              <span class="lbl">모델</span>
+              <span class="inp">
+                <select name="model">
+                  {groups.map(([prov, ms]) => (
+                    <optgroup label={prov}>
+                      {ms.map((m) => <option value={m.name} selected={m.name === defaultModel}>{m.name}{m.kind === 'embedding' ? ' (임베딩)' : ''}</option>)}
+                    </optgroup>
+                  ))}
+                </select>
+              </span>
+              <span class="hint" id="model-hint"></span>
+            </label>
+            <div class="fld full">
+              <span class="lbl">호출 방식</span>
+              <div class="seg" id="tiers" role="radiogroup" aria-label="호출 방식"></div>
+              <span class="hint" id="tier-hint"></span>
+            </div>
+            <label class="fld">
+              <span class="lbl">월 요청 수</span>
+              <span class="inp"><input type="number" name="requests" min="0" step="1000" inputmode="numeric" /><span class="unit">회/월</span></span>
+              <span class="hint" data-hint="requests"></span>
+            </label>
+            <label class="fld">
+              <span class="lbl">환율</span>
+              <span class="inp"><input type="number" name="fx" min="0" step="10" inputmode="numeric" /><span class="unit">원/USD</span></span>
+              <span class="hint">직접 입력</span>
+            </label>
+            <label class="fld">
+              <span class="lbl">요청당 입력 토큰</span>
+              <span class="inp"><input type="number" name="inTok" min="0" step="100" inputmode="numeric" /><span class="unit">tokens</span></span>
+              <span class="hint">프롬프트 + 문맥 (한글 1자 ≈ 1~2토큰)</span>
+            </label>
+            <label class="fld" id="out-fld">
+              <span class="lbl">요청당 출력 토큰</span>
+              <span class="inp"><input type="number" name="outTok" min="0" step="100" inputmode="numeric" /><span class="unit">tokens</span></span>
+              <span class="hint">응답 길이</span>
+            </label>
+            <label class="fld full" id="cache-fld">
+              <span class="lbl">입력 중 프롬프트 캐시 적중 비율</span>
+              <span class="inp"><input type="number" name="cacheHit" min="0" max="100" step="5" inputmode="numeric" /><span class="unit">%</span></span>
+              <span class="hint" id="cache-hint">시스템 프롬프트·문서처럼 반복되는 앞부분 비율 (캐시 쓰기 비용은 제외)</span>
+            </label>
+          </div>
+        </div>
+        <div class="bar-btns">
+          <button type="button" data-act="reset">초기화</button>
+          <span class="saved" id="saved" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <div class="cout" aria-live="polite">
+        <div class="box hero-r">
+          <p class="cap">월 예상 비용</p>
+          <p class="big" id="b-usd">—</p>
+          <p class="sub" id="b-sub"></p>
+        </div>
+        <ul class="kpis">
+          <li class="box"><span class="k">입력</span><b id="b-in">—</b><span class="s" id="b-in-s"></span></li>
+          <li class="box"><span class="k">출력</span><b id="b-out">—</b><span class="s" id="b-out-s"></span></li>
+          <li class="box"><span class="k">요청 1,000건당</span><b id="b-per">—</b><span class="s" id="b-per-s"></span></li>
+        </ul>
+        <div class="box">
+          <h3>이 모델, 호출 방식별 <span class="meta">월 비용</span></h3>
+          <div class="twrap"><table><thead><tr><th>방식</th><th class="r">입력 $/1M</th><th class="r">출력 $/1M</th><th class="r">월 비용</th><th class="r">us-east-1</th></tr></thead><tbody id="b-tiers"></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="box" style="grid-column:1/-1">
+        <h3>같은 워크로드, 서울 모델 비교 <span class="meta" id="cmp-meta"></span></h3>
+        <div class="twrap"><table><thead><tr><th>모델</th><th>방식</th><th class="r">입력 $/1M</th><th class="r">출력 $/1M</th><th class="r">월 비용</th></tr></thead><tbody id="b-cmp"></tbody></table></div>
+      </div>
+    </form>
+
+    <p class="disclaimer" style="margin-top:1.2rem">
+      AWS Price List의 on-demand 텍스트 토큰 단가만 반영합니다(USD, 부가세 별도). 캐시 쓰기, 이미지·영상 입력, Guardrails, Knowledge Bases, 프로비저닝 처리량, 약정 할인은 빠져 있습니다.
+      가격표에 Geo(APAC) 교차 리전 on-demand 단가가 없어 리전 직접/Global만 비교하며, 서울에서 최신 Claude는 Global 교차 리전 단가만 게시돼 있습니다.
+      실제 청구는 <a href="https://aws.amazon.com/bedrock/pricing/" target="_blank" rel="noopener">Bedrock 요금 페이지</a>와 Cost Explorer로 확인하세요. 서울 텍스트 모델 {textCount}개 기준, 데이터 확인 {meta.checked_at.slice(0, 10)}.
+    </p>
+  </div>
+</Base>
+
+<script>
+  type Price = { in?: number; out?: number; cacheRead?: number; cacheWrite?: number; cacheWrite1h?: number };
+  type M = { name: string; provider: string; kind: string; prices: Record<string, Price>; ref: Record<string, Price> | null };
+  type S = { model: string; tier: string; requests: number; inTok: number; outTok: number; cacheHit: number; fx: number };
+
+  const MODELS: M[] = JSON.parse(document.getElementById('pricing-data')!.textContent || '[]');
+  const byName = new Map(MODELS.map((m) => [m.name, m]));
+  const LS = 'hub.bedrockcost.v1';
+  const form = document.getElementById('bf') as HTMLFormElement;
+  const sel = form.elements.namedItem('model') as HTMLSelectElement;
+  const DEF: S = { model: sel.value, tier: '', requests: 100000, inTok: 2000, outTok: 500, cacheHit: 0, fx: 1400 };
+  const $ = (id: string) => document.getElementById(id)!;
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  const num = (v: unknown, lo = 0, hi = Infinity) => { const n = typeof v === 'number' ? v : parseFloat(String(v)); return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : 0; };
+
+  const TIER_LABEL: Record<string, string> = {
+    'region.standard': '서울 리전 직접', 'region.batch': '배치', 'region.flex': 'Flex', 'region.priority': 'Priority',
+    'global.standard': 'Global 교차 리전', 'global.batch': 'Global 배치', 'global.flex': 'Global Flex', 'global.priority': 'Global Priority',
+  };
+  const TIER_HINT: Record<string, string> = {
+    'region.standard': '데이터가 서울 리전 안에서 처리됩니다.',
+    'global.standard': 'global. 추론 프로필 — 전 세계 리전으로 라우팅(데이터 레지던시 주의).',
+    batch: '비동기 일괄 처리(보통 24시간 이내), S3 입출력.',
+    flex: '지연을 감수하는 대신 저렴한 등급.',
+    priority: '혼잡 시 우선 처리되는 프리미엄 등급.',
+  };
+  const tierOrder = (k: string) => ['region.standard', 'global.standard', 'region.batch', 'global.batch', 'region.flex', 'global.flex', 'region.priority', 'global.priority'].indexOf(k);
+  const tiersOf = (m: M) => Object.keys(m.prices).sort((a, b) => tierOrder(a) - tierOrder(b));
+  const defaultTier = (m: M) => (m.prices['region.standard'] ? 'region.standard' : m.prices['global.standard'] ? 'global.standard' : tiersOf(m)[0]);
+
+  const usd = (x: number) => {
+    if (!Number.isFinite(x)) return '—';
+    if (x === 0) return '$0';
+    if (x < 0.01) return `$${x.toFixed(4)}`;
+    if (x < 100) return `$${x.toFixed(2)}`;
+    return `$${Math.round(x).toLocaleString('en-US')}`;
+  };
+  const krw = (x: number, fx: number) => {
+    const w = x * fx;
+    if (!(fx > 0) || !Number.isFinite(w)) return '';
+    if (w >= 1e8) return `약 ${(w / 1e8).toFixed(2)}억원`;
+    if (w >= 1e4) return `약 ${Math.round(w / 1e4).toLocaleString('en-US')}만원`;
+    return `약 ${Math.round(w).toLocaleString('en-US')}원`;
+  };
+  const p1m = (x?: number) => (x === undefined ? '—' : `$${x < 1 ? x.toFixed(3).replace(/0+$/, '').replace(/\.$/, '') : x.toFixed(2)}`);
+
+  /** 월 비용 (USD) */
+  function cost(p: Price | undefined, s: S) {
+    if (!p || p.in === undefined) return null;
+    const h = p.cacheRead !== undefined ? s.cacheHit / 100 : 0;
+    const inCost = (s.requests * s.inTok * ((1 - h) * p.in + h * (p.cacheRead ?? p.in))) / 1e6;
+    const noCache = (s.requests * s.inTok * p.in) / 1e6;
+    const outCost = (s.requests * s.outTok * (p.out ?? 0)) / 1e6;
+    return { inCost, outCost, total: inCost + outCost, saved: noCache - inCost, cached: h > 0 };
+  }
+
+  function renderTiers(m: M, cur: string) {
+    $('tiers').innerHTML = tiersOf(m).map((k) =>
+      `<label><input type="radio" name="tier" value="${k}"${k === cur ? ' checked' : ''} />${esc(TIER_LABEL[k] ?? k)}</label>`).join('');
+  }
+
+  function read(): S {
+    const fd = new FormData(form);
+    return {
+      model: String(fd.get('model') || DEF.model), tier: String(fd.get('tier') || ''),
+      requests: num(fd.get('requests'), 0, 1e12), inTok: num(fd.get('inTok'), 0, 1e8), outTok: num(fd.get('outTok'), 0, 1e8),
+      cacheHit: num(fd.get('cacheHit'), 0, 100), fx: num(fd.get('fx'), 0, 1e5),
+    };
+  }
+  function write(s: S) {
+    const m = byName.get(s.model) ?? byName.get(DEF.model)!;
+    sel.value = m.name;
+    renderTiers(m, m.prices[s.tier] ? s.tier : defaultTier(m));
+    for (const k of ['requests', 'inTok', 'outTok', 'cacheHit', 'fx'] as const) (form.elements.namedItem(k) as HTMLInputElement).value = String(s[k]);
+  }
+
+  function render() {
+    const s = read();
+    const m = byName.get(s.model);
+    if (!m) return;
+    if (!m.prices[s.tier]) { s.tier = defaultTier(m); renderTiers(m, s.tier); }
+    const p = m.prices[s.tier];
+    const emb = m.kind === 'embedding';
+    ($('out-fld') as HTMLElement).style.display = emb ? 'none' : '';
+    const hasCache = p.cacheRead !== undefined;
+    (form.elements.namedItem('cacheHit') as HTMLInputElement).disabled = !hasCache;
+    $('cache-fld').style.opacity = hasCache ? '' : '0.5';
+    $('cache-hint').textContent = hasCache
+      ? `캐시 읽기 $${p.cacheRead}/1M (입력 대비 ${Math.round((p.cacheRead! / p.in!) * 100)}%) · 캐시 쓰기 비용은 제외`
+      : '이 모델·방식은 가격표에 프롬프트 캐시 단가가 없습니다.';
+    $('model-hint').textContent = `${m.provider} · 입력 ${p1m(p.in)} / 출력 ${emb ? '—' : p1m(p.out)} per 1M tokens`;
+    const tk = s.tier.split('.')[1];
+    $('tier-hint').textContent = TIER_HINT[s.tier] ?? TIER_HINT[tk] ?? '';
+    const reqH = document.querySelector<HTMLElement>('[data-hint="requests"]')!;
+    reqH.textContent = s.requests > 0 ? `하루 약 ${Math.round(s.requests / 30).toLocaleString('en-US')}회` : '';
+
+    const e = cost(p, emb ? { ...s, outTok: 0 } : s)!;
+    $('b-usd').textContent = usd(e.total);
+    $('b-sub').textContent = [krw(e.total, s.fx), `${TIER_LABEL[s.tier] ?? s.tier} · ${m.name}`, `연 ${usd(e.total * 12)}`].filter(Boolean).join(' · ');
+    $('b-in').textContent = usd(e.inCost);
+    $('b-in-s').textContent = e.cached && e.saved > 0 ? `캐시로 ${usd(e.saved)} 절감` : `${(s.requests * s.inTok / 1e6).toLocaleString('en-US', { maximumFractionDigits: 1 })}M tokens`;
+    $('b-out').textContent = emb ? '—' : usd(e.outCost);
+    $('b-out-s').textContent = emb ? '임베딩은 출력 과금 없음' : `${(s.requests * s.outTok / 1e6).toLocaleString('en-US', { maximumFractionDigits: 1 })}M tokens`;
+    const per = s.requests > 0 ? (e.total / s.requests) * 1000 : 0;
+    $('b-per').textContent = usd(per);
+    $('b-per-s').textContent = krw(per, s.fx);
+
+    const sv = emb ? { ...s, outTok: 0 } : s;
+    $('b-tiers').innerHTML = tiersOf(m).map((k) => {
+      const c = cost(m.prices[k], sv)!;
+      const r = m.ref?.[k] ? cost(m.ref[k], sv) : null;
+      const diff = r && r.total > 0 ? Math.round((c.total / r.total - 1) * 100) : null;
+      const refTxt = r ? `${usd(r.total)}${diff ? ` <span class="muted">(서울 ${diff > 0 ? '+' : ''}${diff}%)</span>` : ''}` : '<span class="muted">—</span>';
+      return `<tr class="${k === s.tier ? 'sel' : ''}"><td>${esc(TIER_LABEL[k] ?? k)}</td><td class="r">${p1m(m.prices[k].in)}</td><td class="r">${emb ? '—' : p1m(m.prices[k].out)}</td><td class="r">${usd(c.total)}</td><td class="r">${refTxt}</td></tr>`;
+    }).join('');
+
+    // model comparison — same kind, cheapest standard (region direct if available, else global)
+    const rows = MODELS.filter((x) => x.kind === m.kind).map((x) => {
+      const k = x.prices['region.standard'] ? 'region.standard' : x.prices['global.standard'] ? 'global.standard' : defaultTier(x);
+      return { x, k, c: cost(x.prices[k], sv)! };
+    }).filter((r) => r.c).sort((a, b) => a.c.total - b.c.total);
+    const max = Math.max(...rows.map((r) => r.c.total), 1e-9);
+    $('cmp-meta').textContent = `${rows.length}개 · 기본 방식(리전 직접, 없으면 Global) · 싼 순`;
+    $('b-cmp').innerHTML = rows.map((r) =>
+      `<tr class="${r.x.name === m.name ? 'sel' : ''}"><td>${esc(r.x.name)} <span class="muted">${esc(r.x.provider)}</span></td><td class="muted">${r.k.startsWith('global') ? 'Global' : '서울'}</td><td class="r">${p1m(r.x.prices[r.k].in)}</td><td class="r">${emb ? '—' : p1m(r.x.prices[r.k].out)}</td><td class="r">${usd(r.c.total)}<span class="rank-bar" style="width:${Math.max(2, (r.c.total / max) * 100).toFixed(1)}%"></span></td></tr>`).join('');
+    return s;
+  }
+
+  let t: number | undefined;
+  function update(save = true) {
+    const s = render();
+    if (save && s) {
+      try { localStorage.setItem(LS, JSON.stringify(s)); $('saved').textContent = '저장됨'; } catch { /* ignore */ }
+      clearTimeout(t); t = window.setTimeout(() => ($('saved').textContent = ''), 1200);
+    }
+  }
+  sel.addEventListener('change', () => { const m = byName.get(sel.value)!; renderTiers(m, defaultTier(m)); update(); });
+  form.addEventListener('input', (e) => { if (e.target !== sel) update(); });
+  form.addEventListener('submit', (e) => e.preventDefault());
+  form.querySelector('[data-act="reset"]')!.addEventListener('click', () => {
+    try { localStorage.removeItem(LS); } catch { /* ignore */ }
+    write(DEF); update(false); $('saved').textContent = '초기화됨';
+  });
+  let init = DEF;
+  try {
+    const raw = JSON.parse(localStorage.getItem(LS) || 'null');
+    if (raw && typeof raw === 'object') init = { ...DEF, ...Object.fromEntries(Object.entries(raw).filter(([k, v]) => k in DEF && typeof v === typeof (DEF as any)[k])) } as S;
+  } catch { /* ignore */ }
+  write(init);
+  update(false);
+</script>

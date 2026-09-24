@@ -88,6 +88,7 @@ const description = `ap-northeast-2에서 지금 쓸 수 있는 Bedrock 파운�
       마지막 확인 <b><time datetime={meta.checked_at}>{checkedKST} KST</time></b>
       <span class="dot">·</span> 원본 데이터 <a href="/data/bedrock/seoul.json">JSON</a> · <a href="/data/bedrock/feed.xml">RSS</a>
       <span class="dot">·</span> <a href="https://github.com/Sean2709/hub/blob/main/scripts/gen_bedrock.py" target="_blank" rel="noopener">생성 스크립트</a>
+      <span class="dot">·</span> <a href="/bedrock/cost/"><b>토큰 비용 계산기 →</b></a>
     </p>
     <ul class="stats">
       <li class="stat accent"><span class="n">{stats.primary_models}</span><span class="l">서울 모델 (base {stats.primary_bases})</span></li>
@@ -241,6 +242,7 @@ const description = `ap-northeast-2에서 지금 쓸 수 있는 Bedrock 파운�
       <li><span class="k">profiles.json</span><span><a href="/data/bedrock/profiles.json">/data/bedrock/profiles.json</a> — 서울 추론 프로필과 라우팅 리전</span></li>
       <li><span class="k">changes.json</span><span><a href="/data/bedrock/changes.json">/data/bedrock/changes.json</a> — 변경 이력 (최신순)</span></li>
       <li><span class="k">feed.xml</span><span><a href="/data/bedrock/feed.xml">/data/bedrock/feed.xml</a> — 변경 이력 RSS 2.0</span></li>
+      <li><span class="k">pricing.json</span><span><a href="/data/bedrock/pricing.json">/data/bedrock/pricing.json</a> — 서울·us-east-1 토큰 단가(AWS Price List, USD/1M) · <a href="/bedrock/cost/">비용 계산기</a></span></li>
       <li><span class="k">meta.json</span><span><a href="/data/bedrock/meta.json">/data/bedrock/meta.json</a> — 마지막 확인 시각·소스</span></li>
     </ul>
 <pre class="code"><code># 서울에서 on-demand로 바로 부를 수 있는 모델 ID

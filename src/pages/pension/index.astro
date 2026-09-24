@@ -1,0 +1,298 @@
+---
+import Base from '../../layouts/Base.astro';
+import '../../styles/calc.css';
+import { apps } from '../../data/site';
+
+const mansur = apps.find((a) => a.icon.includes('mansur'))!;
+const title = '연금 절세 계산기 — 연금저축·IRP 세액공제와 연금소득세';
+const description =
+  '연금저축·IRP에 넣을 때 돌려받는 세액공제(16.5%/13.2%, ISA 전환 포함)와 받을 때 내는 연금소득세(저율 3.3~5.5%·16.5% 분리과세·종합과세)를 비교합니다. 2026년 세법 기준, 브라우저에서만 계산.';
+
+type F = { k: string; label: string; unit: string; min?: number; max?: number; step?: number; hint?: string; full?: boolean };
+const inFields: F[] = [
+  { k: 'income', label: '총급여', unit: '만원/년', min: 0, max: 100000, hint: '' },
+  { k: 'ps', label: '연금저축 납입', unit: '만원/년', min: 0, max: 18000 },
+  { k: 'irp', label: 'IRP 납입', unit: '만원/년', min: 0, max: 18000 },
+  { k: 'isa', label: 'ISA 만기 전환액', unit: '만원', min: 0, max: 100000, hint: '올해 연금계좌로 옮긴 금액 (없으면 0)' },
+  { k: 'taxCap', label: '결정세액 (선택)', unit: '만원', min: 0, max: 100000, hint: '원천징수영수증의 결정세액(소득세). 비우면 추정', full: true },
+];
+const outFields: F[] = [
+  { k: 'age', label: '받는 나이', unit: '세', min: 40, max: 110 },
+  { k: 'privateAnnual', label: '사적연금 연 수령액', unit: '만원/년', min: 0, max: 100000, hint: '세액공제 받은 원금 + 운용수익 (퇴직금 재원 제외)' },
+  { k: 'publicAnnual', label: '공적연금 연액', unit: '만원/년', min: 0, max: 100000, hint: '국민연금 등 과세 대상분' },
+  { k: 'otherIncome', label: '그 외 종합소득금액', unit: '만원/년', min: 0, max: 1000000, hint: '사업·임대 등 (없으면 0)' },
+];
+---
+
+<Base title={title} description={description} wide>
+  <div class="calc">
+    <header class="chead page-head">
+      <span class="ic" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /><path d="M14 7l3-3 3 3" /></svg>
+      </span>
+      <div>
+        <h1>연금 절세 계산기</h1>
+        <p class="lead">
+          연금저축·IRP에 <b>넣을 때</b> 돌려받는 세금과 <b>받을 때</b> 내는 세금을 한 번에. 2026년 세법 기준이고, 입력값은 이 브라우저에만 저장됩니다.
+          은퇴 전체 계획은 <a href="/retire/">은퇴 자산 계산기</a>(<a href={mansur.url} target="_blank" rel="noopener">만수르</a> 앱 엔진)에서.
+        </p>
+      </div>
+    </header>
+
+    <form id="pf" autocomplete="off" novalidate class="cstack">
+      <div class="bar-btns">
+        <button type="button" data-act="reset">초기화</button>
+        <span class="saved" id="saved" aria-live="polite"></span>
+      </div>
+
+      <div class="cgrid">
+        <div class="box cform">
+          <h2>① 넣을 때 — 세액공제 <span class="meta">연말정산</span></h2>
+          <div class="seg" role="radiogroup" aria-label="소득 유형">
+            <label><input type="radio" name="incomeType" value="salary" />근로소득자</label>
+            <label><input type="radio" name="incomeType" value="other" />사업자·기타</label>
+          </div>
+          <div class="fields">
+            {inFields.map((f) => (
+              <label class:list={['fld', { full: f.full }]}>
+                <span class="lbl" data-lbl={f.k}>{f.label}</span>
+                <span class="inp">
+                  <input type="number" name={f.k} min={f.min} max={f.max} step={f.step ?? 1} inputmode="numeric" placeholder={f.k === 'taxCap' ? '자동 추정' : '0'} />
+                  <span class="unit">{f.unit}</span>
+                </span>
+                <span class="hint" data-hint={f.k}>{f.hint ?? ''}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div class="cout" aria-live="polite">
+          <div class="box hero-r">
+            <p class="cap">올해 돌려받는 세금</p>
+            <p class="big" id="c-applied">—</p>
+            <p class="sub" id="c-sub"></p>
+            <div class="meter" id="c-meter" aria-hidden="true"></div>
+            <ul class="legend" id="c-legend"></ul>
+          </div>
+          <ul class="kpis">
+            <li class="box"><span class="k">공제율</span><b id="c-rate">—</b><span class="s" id="c-rate-s"></span></li>
+            <li class="box"><span class="k">남은 한도</span><b id="c-room">—</b><span class="s" id="c-room-s"></span></li>
+            <li class="box"><span class="k">중도 해지하면</span><b id="c-pen">—</b><span class="s">기타소득세 16.5%</span></li>
+          </ul>
+          <div class="box"><h3>체크 포인트</h3><ol class="tips" id="c-tips"></ol></div>
+        </div>
+      </div>
+
+      <div class="cgrid">
+        <div class="box cform">
+          <h2>② 받을 때 — 연금소득세 <span class="meta">55세 이후</span></h2>
+          <div class="fields">
+            {outFields.map((f) => (
+              <label class="fld">
+                <span class="lbl">{f.label}</span>
+                <span class="inp">
+                  <input type="number" name={f.k} min={f.min} max={f.max} step={f.step ?? 1} inputmode="numeric" placeholder="0" />
+                  <span class="unit">{f.unit}</span>
+                </span>
+                <span class="hint" data-hint={f.k}>{f.hint ?? ''}</span>
+              </label>
+            ))}
+          </div>
+          <div class="checks"><label><input type="checkbox" name="lifelong" />종신형 연금 (보험사 연금저축)</label></div>
+        </div>
+
+        <div class="cout" aria-live="polite">
+          <div class="box hero-r">
+            <p class="cap" id="p-cap">가장 유리한 방식</p>
+            <p class="big" id="p-best">—</p>
+            <p class="sub" id="p-sub"></p>
+          </div>
+          <div class="box"><h3>과세 방식 비교 <span class="meta">사적연금에 붙는 세금 · 연간</span></h3><ul class="opts" id="p-opts"></ul></div>
+          <details class="box more-info">
+            <summary>종합과세 계산 내역</summary>
+            <dl class="kv" id="p-detail"></dl>
+            <p class="note" style="margin:0.6rem 0 0">종합과세 세액 = (공적+사적연금+그 외 소득)에 대한 세금 − (사적연금을 뺀) 세금. 본인 기본공제 150만원만 반영했습니다.</p>
+          </details>
+          <div class="box"><h3>체크 포인트</h3><ol class="tips" id="p-tips"></ol></div>
+        </div>
+      </div>
+    </form>
+
+    <p class="disclaimer" style="margin-top:1.5rem">
+      참고용 계산이며 세무 자문이 아닙니다. 2026년 귀속 소득세법 기준으로 단순화했습니다: 세액공제는 결정세액 한도만 반영(다른 공제·감면 미반영), 종합과세는 연금소득공제와 본인 기본공제만 반영했고, 퇴직금 재원 연금(이연퇴직소득세 60~70%)·의료비 인출·연금수령한도(10년차 이내 평가액÷(11−연차)×120%)는 계산하지 않습니다.
+      정확한 금액은 홈택스·금융회사 조회 결과를 확인하세요.
+    </p>
+  </div>
+</Base>
+
+<script>
+  import { credit, payout, PT, won, pct, type CreditInput, type PayoutInput } from '../../lib/pension';
+  import { manwon } from '../../lib/mansur';
+
+  type State = CreditInput & PayoutInput;
+  const LS = 'hub.pension.v1';
+  const DEF: State = {
+    incomeType: 'salary', income: 6000, ps: 600, irp: 300, isa: 0, taxCap: 0,
+    age: 65, lifelong: false, privateAnnual: 1200, publicAnnual: 1000, otherIncome: 0,
+  };
+  const form = document.getElementById('pf') as HTMLFormElement;
+  const $ = (id: string) => document.getElementById(id)!;
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+  const num = (v: string) => { const n = parseFloat(v); return Number.isFinite(n) ? n : 0; };
+  const inputs = () => Array.from(form.elements) as HTMLInputElement[];
+
+  function load(): State {
+    try {
+      const raw = JSON.parse(localStorage.getItem(LS) || 'null');
+      if (!raw || typeof raw !== 'object') return { ...DEF };
+      const s: any = { ...DEF };
+      for (const k of Object.keys(DEF) as (keyof State)[]) {
+        const v = raw[k];
+        if (typeof v === typeof DEF[k] && (typeof v !== 'number' || Number.isFinite(v))) s[k] = v;
+      }
+      if (s.incomeType !== 'salary' && s.incomeType !== 'other') s.incomeType = 'salary';
+      return s;
+    } catch { return { ...DEF }; }
+  }
+  function writeForm(s: State) {
+    for (const el of inputs()) {
+      if (!el.name) continue;
+      const v = (s as any)[el.name];
+      if (el.type === 'checkbox') el.checked = !!v;
+      else if (el.type === 'radio') el.checked = el.value === v;
+      else el.value = el.name === 'taxCap' && !v ? '' : String(v ?? '');
+    }
+  }
+  function readForm(): State {
+    const s: any = { ...DEF };
+    for (const el of inputs()) {
+      if (!el.name) continue;
+      if (el.type === 'checkbox') s[el.name] = el.checked;
+      else if (el.type === 'radio') { if (el.checked) s[el.name] = el.value; }
+      else s[el.name] = num(el.value);
+    }
+    return s;
+  }
+
+  const COLORS = { ps: '#059669', irp: '#10b981', isa: '#6ee7b7' };
+  function renderCredit(s: State) {
+    const c = credit(s);
+    const salary = s.incomeType === 'salary';
+    $('c-applied').textContent = won(c.applied);
+    const cap = c.capNat === null ? '' : ` · 결정세액 ${c.capEstimated ? '추정 ' : ''}${won(c.capNat)} 한도`;
+    $('c-sub').textContent = `공제대상 ${manwon(c.base)} × ${pct(c.rate)}${cap}`;
+    const limit = PT.combinedLimit + (c.isaBase > 0 ? c.isaBase : 0);
+    const seg = (v: number, col: string) => (v > 0 ? `<i style="width:${((v / limit) * 100).toFixed(2)}%;background:${col}"></i>` : '');
+    $('c-meter').innerHTML = seg(c.psBase, COLORS.ps) + seg(c.irpBase, COLORS.irp) + seg(c.isaBase, COLORS.isa);
+    $('c-legend').innerHTML =
+      `<li><i style="background:${COLORS.ps}"></i>연금저축 ${manwon(c.psBase)}</li>` +
+      `<li><i style="background:${COLORS.irp}"></i>IRP ${manwon(c.irpBase)}</li>` +
+      (c.isaBase > 0 ? `<li><i style="background:${COLORS.isa}"></i>ISA 전환 ${manwon(c.isaBase)}</li>` : '') +
+      `<li><i style="background:var(--line)"></i>한도 ${manwon(limit)}</li>`;
+    $('c-rate').textContent = pct(c.rate);
+    $('c-rate-s').textContent = salary
+      ? `총급여 ${manwon(PT.salaryThreshold)} ${c.preferred ? '이하' : '초과'}`
+      : `종합소득금액 ${manwon(PT.incomeThreshold)} ${c.preferred ? '이하' : '초과'}`;
+    $('c-room').textContent = manwon(c.room);
+    $('c-room-s').textContent = c.room > 0 ? `더 넣으면 +${won(c.roomGain)}` : '한도 다 채움';
+    $('c-pen').textContent = won(c.penaltyIfCashed);
+    const lbl = document.querySelector('[data-lbl="income"]');
+    if (lbl) lbl.textContent = salary ? '총급여' : '종합소득금액';
+    hint('income', s.income > 0 ? manwon(s.income) : '', true);
+
+    const tips: string[] = [];
+    if (c.psOver > 0 && c.room > 0) tips.push(`연금저축은 단독 한도가 <b>600만원</b>이라 ${manwon(c.psOver)}은 공제되지 않습니다. 그만큼 <b>IRP</b>로 넣으면 +${won(Math.min(c.psOver, c.room) * c.rate)}.`);
+    else if (c.psOver > 0) tips.push(`연금저축 ${manwon(c.psOver)}은 600만원 단독 한도를 넘어 공제 대상이 아닙니다(납입은 가능, 과세이연 효과만).`);
+    if (c.overLimit > 0) tips.push(`합산 한도 900만원을 넘은 ${manwon(c.overLimit)}은 공제 대상이 아닙니다. 초과분은 금융회사에 <b>이월 신청</b>하면 다음 해 이후 납입액으로 공제받을 수 있습니다.`);
+    if (c.room > 0 && c.roomGain > 0) tips.push(`한도까지 ${manwon(c.room)} 남았습니다. 월 ${manwon(Math.ceil(c.room / 12))}씩 더 넣으면 ${won(c.roomGain)}을 더 돌려받습니다.`);
+    if (c.lostByCap > 0.005) tips.push(`<span class="warn">결정세액이 부족해 ${won(c.lostByCap)}은 돌려받지 못합니다.</span> 세액공제는 낸 세금 안에서만 돌려주므로, 이 경우 납입을 줄이거나 과세이연 목적임을 감안하세요.`);
+    if (s.isa > 0) {
+      if (c.isaUnused > 0) tips.push(`ISA 전환액 중 추가 공제에 반영되는 건 10%(최대 300만원)라 ${manwon(c.isaBase)}만 공제 대상입니다.`);
+    } else tips.push(`ISA 만기 자금을 60일 안에 연금계좌로 옮기면 전환액의 10%(최대 300만원)를 추가로 공제받습니다.`);
+    if (!c.preferred) tips.push(`중도 해지하면 16.5%를 내는데 공제는 ${pct(c.rate)}만 받았으므로 <b>해지 시 손해</b>입니다. 급하면 해지 대신 연금계좌 담보대출이나 부분 인출(비공제 원금 먼저)을 검토하세요.`);
+    if (c.capEstimated) tips.push(`결정세액은 근로소득 기준 <b>추정치</b>입니다(다른 공제 미반영). 정확히 보려면 원천징수영수증의 결정세액을 입력하세요.`);
+    $('c-tips').innerHTML = tips.map((t) => `<li>${t}</li>`).join('');
+  }
+
+  function renderPayout(s: State) {
+    const p = payout(s);
+    const opts = $('p-opts');
+    if (!p.eligible) {
+      $('p-cap').textContent = '55세 전에는';
+      $('p-best').textContent = '연금 수령 불가';
+      $('p-sub').textContent = `연금 외로 찾으면 기타소득세 16.5% — 연 ${manwon(s.privateAnnual)}이면 ${won(p.cashOutTax)}`;
+    } else if (p.best) {
+      const b = p.options.find((o) => o.id === p.best)!;
+      $('p-cap').textContent = '가장 유리한 방식';
+      $('p-best').textContent = `${b.label.replace(/ \d.*$/, '')} · ${won(b.tax)}`;
+      $('p-sub').textContent = `연 ${manwon(s.privateAnnual)} 중 세후 ${won(b.net)} (실효세율 ${pct(b.eff, 2)})`;
+    } else {
+      $('p-cap').textContent = '가장 유리한 방식';
+      $('p-best').textContent = '—';
+      $('p-sub').textContent = '사적연금 연 수령액을 입력하세요.';
+    }
+    opts.innerHTML = p.options.map((o) => {
+      const cls = [o.id === p.best ? 'best' : '', o.available ? '' : 'off'].join(' ').trim();
+      const badge = o.id === p.best ? '<span class="badge">유리</span>' : '';
+      const val = o.available ? `${won(o.tax)}` : '—';
+      const eff = o.available && s.privateAnnual > 0 ? ` · 실효 ${pct(o.eff, 2)}` : '';
+      return `<li class="${cls}"><span class="t">${esc(o.label)}${badge}</span><span class="v">${val}</span><span class="d">${esc(o.note)}${eff}</span></li>`;
+    }).join('');
+    const d = p.compDetail;
+    $('p-detail').innerHTML = [
+      ['총연금액 (공적+사적)', manwon(d.total)],
+      ['연금소득공제', `−${manwon(d.deduction)}`],
+      ['과세표준 (그 외 소득 포함, 기본공제 후)', manwon(d.taxBase)],
+      ['전체 종합소득세 (지방세 포함)', won(d.withTax)],
+      ['사적연금 빼면', won(d.withoutTax)],
+      ['→ 사적연금 몫', won(Math.max(0, d.withTax - d.withoutTax))],
+    ].map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+
+    const tips: string[] = [];
+    if (p.eligible) {
+      const low = p.options[0], comp = p.options[2], sep = p.options[1];
+      if (!p.overCap && s.privateAnnual > 0) {
+        tips.push(`연 1,500만원 이하라 ${pct(p.lowRate)} 원천징수로 끝납니다. 1,500만원까지 여유 ${manwon(PT.separateCap - s.privateAnnual)}.`);
+        if (comp.tax < low.tax - 0.5) tips.push(`다른 소득이 적어 <b>종합과세</b>가 ${won(low.tax - comp.tax)} 더 쌉니다. 5월 종합소득세 신고 때 합산을 선택하면 원천징수된 세금을 돌려받습니다.`);
+      }
+      if (p.overCap) {
+        tips.push(`1,500만원을 넘으면 저율(${pct(p.lowRate)})이 전체에 적용되지 않습니다. 수령 기간을 늘려 연 1,500만원 이하로 맞추면 ${won(low.tax)}으로 줄어듭니다(차이 ${won(Math.min(sep.tax, comp.tax) - low.tax)}).`);
+      }
+      if (s.age < 70) tips.push(`70세부터 ${pct(0.044)}, 80세부터 ${pct(0.033)}로 세율이 내려갑니다${s.lifelong ? '' : '. 종신형이면 70세 전에도 4.4%'}.`);
+      tips.push(`퇴직금을 IRP로 받아 연금으로 나누면 퇴직소득세의 70%(11년차부터 60%)만 내고, 1,500만원 한도 계산에서도 빠집니다.`);
+    } else {
+      tips.push(`가입 5년 이상 + 55세 이후 + 연금수령한도 이내일 때만 연금소득세(3.3~5.5%)가 적용됩니다.`);
+    }
+    $('p-tips').innerHTML = tips.map((t) => `<li>${t}</li>`).join('');
+    hint('privateAnnual', s.privateAnnual > 0 ? `월 ${manwon(Math.round(s.privateAnnual / 12))} · 세액공제분+수익 (퇴직금 재원 제외)` : '', s.privateAnnual > 0);
+  }
+
+  const baseHints = new Map<string, string>();
+  function hint(k: string, text: string, money = false) {
+    const el = document.querySelector<HTMLElement>(`[data-hint="${k}"]`);
+    if (!el) return;
+    if (!baseHints.has(k)) baseHints.set(k, el.textContent || '');
+    el.textContent = text || baseHints.get(k) || '';
+    el.classList.toggle('money', money && !!text);
+  }
+
+  let t: number | undefined;
+  function update(save = true) {
+    const s = readForm();
+    renderCredit(s);
+    renderPayout(s);
+    if (save) {
+      try { localStorage.setItem(LS, JSON.stringify(s)); $('saved').textContent = '저장됨'; } catch { /* private mode */ }
+      clearTimeout(t); t = window.setTimeout(() => ($('saved').textContent = ''), 1200);
+    }
+  }
+  form.addEventListener('input', () => update());
+  form.addEventListener('change', () => update());
+  form.addEventListener('submit', (e) => e.preventDefault());
+  form.querySelector('[data-act="reset"]')!.addEventListener('click', () => {
+    try { localStorage.removeItem(LS); } catch { /* ignore */ }
+    writeForm({ ...DEF }); update(false); $('saved').textContent = '초기화됨';
+  });
+  writeForm(load());
+  update(false);
+</script>

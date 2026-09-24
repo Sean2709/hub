@@ -1,0 +1,108 @@
+/* Shared styles for browser-only calculators (/pension/, /bedrock/cost/).
+   Global (imported per page) because results are rendered with innerHTML — Astro scoped CSS wouldn't reach them.
+   Everything is namespaced under .calc to avoid clashing with global.css (.card, section+section, …). */
+.calc { --ok: #059669; --ok2: #10b981; --warn: #d97706; --bad: #dc2626; }
+.calc .chead { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+.calc .chead .ic { flex: none; width: 52px; height: 52px; border-radius: 12px; display: grid; place-items: center;
+  background: linear-gradient(135deg, #34d399, #047857); color: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / .15); }
+.calc .chead .ic svg { width: 28px; height: 28px; }
+.calc .chead h1 { margin: 0; }
+.calc .chead .lead a { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
+
+.calc .cgrid { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+.calc .cform { display: grid; gap: 0.7rem; min-width: 0; }
+.calc .cout { display: grid; gap: 0.8rem; position: sticky; top: 4.2rem; min-width: 0; }
+.calc .cstack { display: grid; gap: 0.8rem; min-width: 0; }
+
+.calc .bar-btns { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.calc .bar-btns button, .calc .seg label {
+  font: inherit; font-size: 0.85rem; padding: 0.35rem 0.8rem; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer; white-space: nowrap;
+}
+.calc .bar-btns button:hover, .calc .seg label:hover { border-color: var(--fg); }
+.calc .saved { font-size: 0.8rem; color: var(--muted); margin-left: auto; }
+
+.calc .box { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem; min-width: 0; }
+.calc .box > h2, .calc .box > h3 { font-size: 1rem; margin: 0 0 0.75rem; padding: 0; border: 0; display: flex; gap: 0.5rem; align-items: baseline; justify-content: space-between; }
+.calc .box > h2 .meta, .calc .box > h3 .meta { font-weight: 500; }
+.calc .note { margin: -0.2rem 0 0.8rem; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+.calc .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem 0.8rem; }
+.calc .fld { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.calc .fld.full { grid-column: 1 / -1; }
+.calc .lbl { font-size: 0.8rem; color: var(--muted); font-weight: 500; }
+.calc .inp { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 0 0.6rem; min-width: 0; }
+.calc .inp:focus-within { border-color: var(--ok2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok2) 22%, transparent); }
+.calc .inp input, .calc .inp select { flex: 1; min-width: 0; width: 100%; border: 0; background: transparent; color: var(--fg); font: inherit; font-size: 16px; padding: 0.45rem 0; font-variant-numeric: tabular-nums; outline: none; }
+.calc .inp select { cursor: pointer; text-overflow: ellipsis; }
+.calc .inp select option { background: var(--card); color: var(--fg); }
+.calc .unit { font-size: 0.75rem; color: var(--muted); white-space: nowrap; padding-left: 0.3rem; }
+.calc .hint { font-size: 0.72rem; color: var(--muted); min-height: 1em; line-height: 1.35; }
+.calc .hint.money { color: var(--ok); font-weight: 600; }
+.calc .seg { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.calc .seg input { position: absolute; opacity: 0; pointer-events: none; }
+.calc .seg label:has(input:checked) { background: var(--ok); border-color: var(--ok); color: #fff; font-weight: 600; }
+.calc .seg label:has(input:focus-visible) { outline: 2px solid var(--ok2); outline-offset: 2px; }
+.calc .checks { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; font-size: 0.9rem; }
+.calc .checks label { display: inline-flex; gap: 0.4rem; align-items: center; cursor: pointer; }
+.calc .checks input { accent-color: var(--ok2); }
+
+/* big result */
+.calc .hero-r { border-top: 4px solid var(--ok); }
+.calc .cap { margin: 0; font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+.calc .big { margin: 0.35rem 0 0.2rem; font-size: clamp(1.8rem, 5vw, 2.4rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.calc .sub { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+.calc .kpis { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; }
+.calc .kpis li { padding: 0.8rem 0.9rem; display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.calc .kpis .k { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+.calc .kpis b { font-size: 1.15rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.25; overflow-wrap: anywhere; }
+.calc .kpis .s { font-size: 0.75rem; color: var(--muted); line-height: 1.35; }
+
+/* stacked bar */
+.calc .meter { display: flex; height: 10px; border-radius: 5px; background: var(--line); overflow: hidden; margin: 0.6rem 0 0.4rem; }
+.calc .meter i { display: block; height: 100%; }
+.calc .legend { display: flex; flex-wrap: wrap; gap: 0.2rem 0.9rem; font-size: 0.75rem; color: var(--muted); margin: 0; padding: 0; list-style: none; }
+.calc .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 0.3rem; vertical-align: 0; }
+
+/* option compare rows */
+.calc .opts { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.calc .opts li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.1rem 0.8rem; align-items: baseline; padding: 0.65rem 0.8rem; border: 1px solid var(--line); border-radius: 10px; }
+.calc .opts li.best { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 8%, transparent); }
+.calc .opts li.off { opacity: 0.5; }
+.calc .opts .t { font-weight: 700; font-size: 0.92rem; }
+.calc .opts .v { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.calc .opts .d { grid-column: 1 / -1; font-size: 0.78rem; color: var(--muted); }
+.calc .opts .badge { font-size: 0.7rem; font-weight: 800; color: #fff; background: var(--ok); border-radius: 999px; padding: 0.05rem 0.45rem; margin-left: 0.35rem; vertical-align: 0.1em; }
+
+.calc .tips { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem; font-size: 0.88rem; line-height: 1.5; }
+.calc .tips.empty { list-style: none; padding: 0; color: var(--muted); }
+.calc .tips b { font-weight: 700; }
+.calc .tips .warn { color: var(--warn); }
+
+.calc table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.calc th { text-align: left; font-size: 0.74rem; color: var(--muted); font-weight: 600; padding: 0 0.4rem 0.4rem 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.calc td { padding: 0.45rem 0.4rem 0.45rem 0; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; vertical-align: top; }
+.calc tr:last-child td { border-bottom: 0; }
+.calc .r { text-align: right; }
+.calc td.muted, .calc .muted { color: var(--muted); }
+.calc tr.sel td { background: color-mix(in srgb, var(--ok) 9%, transparent); font-weight: 600; }
+.calc .twrap { overflow-x: auto; margin: 0 -0.2rem; padding: 0 0.2rem; }
+.calc .rank-bar { display: block; height: 4px; border-radius: 2px; background: var(--ok2); margin-top: 0.25rem; min-width: 2px; }
+.calc .disclaimer { margin: 0.2rem 0 0; font-size: 0.75rem; color: var(--muted); line-height: 1.55; }
+.calc details.more-info summary { cursor: pointer; font-weight: 700; font-size: 0.95rem; }
+.calc details.more-info[open] summary { margin-bottom: 0.6rem; }
+.calc dl.kv { display: grid; grid-template-columns: auto 1fr; gap: 0.3rem 1rem; margin: 0; font-size: 0.85rem; }
+.calc dl.kv dt { color: var(--muted); }
+.calc dl.kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 1000px) { .calc .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 820px) {
+  .calc .cgrid { grid-template-columns: minmax(0, 1fr); }
+  .calc .cout { position: static; }
+}
+@media (max-width: 560px) {
+  /* icon above the title so the intro text gets the full width */
+  .calc .chead { flex-direction: column; align-items: flex-start; gap: 0.7rem; }
+  .calc .chead .ic { width: 44px; height: 44px; }
+  .calc .chead .ic svg { width: 24px; height: 24px; }
+}
+@media (max-width: 400px) { .calc .fields { grid-template-columns: minmax(0, 1fr); } }
