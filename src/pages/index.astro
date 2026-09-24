@@ -35,7 +35,7 @@ const credlyBadge = (id: string) => `https://www.credly.com/badges/${id}/public_
   <div class="home">
   <section class="hero" id="top">
     <p class="eyebrow"><span class="pulse" aria-hidden="true"></span>{roleTitle}{roleOrg && <span class="org">{roleOrg}</span>}</p>
-    <h1>{profile.name}<span class="stop">.</span></h1>
+    <h1>{profile.name}</h1>
     <p class="tagline">{profile.tagline}</p>
     <ul class="hchips">{focus.map((f, i) => <li title={f}>{focusShort[i] ?? f}</li>)}</ul>
     <div class="cta">
