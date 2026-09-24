@@ -71,7 +71,7 @@ export const apps: App[] = [
   },
   {
     name: '은퇴하면 만수르',
-    subtitle: '은퇴 자산·연금 시뮬레이터',
+    subtitle: '내 은퇴 자산 시뮬레이터',
     desc: '물가를 반영한 연금·자산 시뮬레이션과 순위 카드. iOS.',
     category: 'Finance',
     url: 'https://apps.apple.com/kr/app/id6801016602',
