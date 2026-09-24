@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "region": "ap-northeast-2",
- "count": 33,
+ "count": 35,
  "profiles": [
   {
    "id": "apac.amazon.nova-lite-v1:0",
@@ -276,7 +276,7 @@
    "global_endpoint": true,
    "status": "ACTIVE",
    "created": "2026-04-15",
-   "updated": "2026-05-15"
+   "updated": "2026-09-24"
   },
   {
    "id": "global.anthropic.claude-opus-4-8",
@@ -289,7 +289,7 @@
    "global_endpoint": true,
    "status": "ACTIVE",
    "created": "2026-05-27",
-   "updated": "2026-05-27"
+   "updated": "2026-09-24"
   },
   {
    "id": "global.anthropic.claude-opus-5",
@@ -302,7 +302,7 @@
    "global_endpoint": true,
    "status": "ACTIVE",
    "created": "2026-07-21",
-   "updated": "2026-08-03"
+   "updated": "2026-09-23"
   },
   {
    "id": "global.anthropic.claude-opus-5-5",
@@ -354,7 +354,7 @@
    "global_endpoint": true,
    "status": "ACTIVE",
    "created": "2026-06-30",
-   "updated": "2026-08-03"
+   "updated": "2026-09-24"
   },
   {
    "id": "global.cohere.embed-v4:0",
@@ -381,6 +381,32 @@
    "status": "ACTIVE",
    "created": "2026-09-10",
    "updated": "2026-09-10"
+  },
+  {
+   "id": "global.openai.gpt-5.4",
+   "name": "Global OpenAI GPT 5.4",
+   "scope": "global",
+   "model": "openai.gpt-5.4",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-09-23",
+   "updated": "2026-09-23"
+  },
+  {
+   "id": "global.openai.gpt-5.5",
+   "name": "Global OpenAI GPT 5.5",
+   "scope": "global",
+   "model": "openai.gpt-5.5",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-09-23",
+   "updated": "2026-09-23"
   },
   {
    "id": "global.openai.gpt-5.6-luna",
