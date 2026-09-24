@@ -1,0 +1,521 @@
+---
+// 은퇴 자산 계산기 — iOS 앱 "은퇴하면 만수르"의 계산 엔진(src/lib/mansur.ts)을 그대로 쓰는 웹 버전.
+// 모든 계산은 브라우저에서만 수행되고, 입력값은 localStorage('hub.retire.v1')에만 저장된다(서버 전송 없음).
+import Base from '../../layouts/Base.astro';
+import { apps } from '../../data/site';
+
+const mansur = apps.find((a) => a.icon.includes('mansur'))!;
+const title = '은퇴 자산 계산기 — 은퇴하면 만수르 웹 버전';
+const description =
+  '나이·연봉·자산·연금(국민연금·IRP·연금저축·퇴직연금·주택연금)을 넣으면 물가를 반영해 은퇴 가능 여부, 월 가용 금액, 자산 고갈 시점을 계산합니다. 입력값은 브라우저에만 저장됩니다.';
+
+type F = { k: string; label: string; unit: string; min?: number; max?: number; step?: number; hint?: string };
+const groups: { id: string; title: string; open: boolean; fields: F[]; note?: string }[] = [
+  {
+    id: 'basic', title: '기본', open: true,
+    fields: [
+      { k: 'currentAge', label: '현재 나이', unit: '세', min: 18, max: 99 },
+      { k: 'retireAge', label: '은퇴 나이', unit: '세', min: 18, max: 100 },
+      { k: 'lifeExpectancy', label: '기대수명', unit: '세', min: 50, max: 110 },
+      { k: 'salary', label: '세전 연봉', unit: '만원/년', min: 0, step: 100 },
+      { k: 'monthlyCost', label: '월 생활비 (지금)', unit: '만원/월', min: 0, step: 10 },
+      { k: 'targetMonthlyCost', label: '은퇴 후 목표 생활비', unit: '만원/월', min: 0, step: 10, hint: '0이면 지금 생활비와 같게' },
+    ],
+  },
+  {
+    id: 'assets', title: '자산 · 부채', open: true,
+    fields: [
+      { k: 'cash', label: '현금 · 예금', unit: '만원', min: 0, step: 100 },
+      { k: 'invest', label: '투자자산', unit: '만원', min: 0, step: 100 },
+      { k: 'monthlyInvest', label: '월 투자금액', unit: '만원/월', min: 0, step: 10, hint: '현금 → 투자로 매달 옮기는 금액' },
+      { k: 'realEstate.home', label: '거주 주택 시세', unit: '만원', min: 0, step: 1000 },
+      { k: 'realEstate.investment', label: '투자 부동산', unit: '만원', min: 0, step: 1000 },
+      { k: 'debt.balance', label: '부채 잔액', unit: '만원', min: 0, step: 100 },
+      { k: 'debt.rate', label: '부채 금리', unit: '%', min: 0, max: 30, step: 0.1 },
+    ],
+  },
+  {
+    id: 'pension', title: '연금', open: true,
+    fields: [
+      { k: 'nationalPension.monthly', label: '국민연금 예상 월액', unit: '만원/월', min: 0, step: 5, hint: '국민연금공단 "내 연금 알아보기" 예상액' },
+      { k: 'nationalPension.startAge', label: '국민연금 개시 나이', unit: '세', min: 60, max: 70 },
+      { k: 'irp.balance', label: 'IRP 잔액', unit: '만원', min: 0, step: 100 },
+      { k: 'irp.annualPay', label: 'IRP 연 납입', unit: '만원/년', min: 0, step: 50 },
+      { k: 'pensionSavings.balance', label: '연금저축 잔액', unit: '만원', min: 0, step: 100 },
+      { k: 'pensionSavings.annualPay', label: '연금저축 연 납입', unit: '만원/년', min: 0, step: 50 },
+      { k: 'retirePension.balance', label: '퇴직연금 적립액', unit: '만원', min: 0, step: 100, hint: '재직 중 매년 연봉의 1/12이 쌓이는 것으로 계산' },
+    ],
+  },
+  {
+    id: 'housing', title: '주택연금', open: false,
+    note: '거주 주택으로 가입하면 은퇴(최소 55세) 시점 예상 시세 기준 종신 월액을 계산합니다(HF 2026.3 표, 12억 상한).',
+    fields: [
+      { k: 'housingPension.homePrice', label: '가입 주택 시세', unit: '만원', min: 0, step: 1000, hint: '0이면 거주 주택 시세 사용' },
+      { k: 'housingPension.monthly', label: '직접 입력 월액', unit: '만원/월', min: 0, step: 5, hint: '자동 계산이 0일 때만 사용' },
+    ],
+  },
+  {
+    id: 'assume', title: '가정', open: false,
+    note: '모든 결과는 물가를 뺀 "오늘 돈 가치"로 표시됩니다.',
+    fields: [
+      { k: 'expectedReturn', label: '기대 수익률', unit: '%/년', min: -10, max: 30, step: 0.1 },
+      { k: 'inflation', label: '물가 상승률', unit: '%/년', min: 0, max: 20, step: 0.1 },
+      { k: 'salaryGrowth', label: '임금 상승률', unit: '%/년', min: 0, max: 20, step: 0.1 },
+      { k: 'housingGrowth', label: '주택가격 상승률', unit: '%/년', min: -10, max: 20, step: 0.1 },
+    ],
+  },
+];
+---
+
+<Base title={title} description={description} wide>
+  <header class="page-head rhead">
+    <img src={mansur.icon} alt="" width="52" height="52" />
+    <div>
+      <h1>은퇴 자산 계산기</h1>
+      <p class="lead">
+        iOS 앱 <a href={mansur.url} target="_blank" rel="noopener">은퇴하면 만수르</a>와 같은 계산 엔진입니다. 입력값은 이 브라우저에만 저장되고 서버로 보내지 않습니다.
+      </p>
+    </div>
+  </header>
+
+  <div class="rgrid">
+    <form id="rf" class="rform" autocomplete="off" novalidate>
+      <div class="rbar">
+        <button type="button" data-act="sample">샘플</button>
+        <button type="button" data-act="reset">초기화</button>
+        <button type="button" data-act="share">링크 복사</button>
+        <span class="saved" id="saved" aria-live="polite"></span>
+      </div>
+      {groups.map((g) => (
+        <details class="grp" open={g.open} data-grp={g.id}>
+          <summary>{g.title}</summary>
+          {g.note && <p class="note">{g.note}</p>}
+          {g.id === 'pension' && (
+            <div class="fld seg-fld">
+              <span class="lbl">퇴직연금 유형</span>
+              <div class="seg" role="radiogroup" aria-label="퇴직연금 유형">
+                <label><input type="radio" name="retirePension.type" value="DC" />DC</label>
+                <label><input type="radio" name="retirePension.type" value="DB" />DB</label>
+              </div>
+            </div>
+          )}
+          {g.id === 'housing' && (
+            <div class="checks">
+              <label><input type="checkbox" name="housingPension.use" />주택연금 가입</label>
+              <label><input type="checkbox" name="housingPension.residing" />가입 주택에 거주</label>
+            </div>
+          )}
+          <div class="fields">
+            {g.fields.map((f) => (
+              <label class="fld">
+                <span class="lbl">{f.label}</span>
+                <span class="inp">
+                  <input type="number" name={f.k} min={f.min} max={f.max} step={f.step ?? 1} inputmode={f.unit.startsWith('%') ? 'decimal' : 'numeric'} />
+                  <span class="unit">{f.unit}</span>
+                </span>
+                <span class="hint" data-hint={f.k}>{f.hint ?? ''}</span>
+              </label>
+            ))}
+          </div>
+        </details>
+      ))}
+    </form>
+
+    <section class="rout" aria-label="계산 결과">
+      <div class="card hero-r" id="hero">
+        <p class="cap" id="capline">은퇴 가능 여부</p>
+        <div class="badges"><span class="status" id="status">—</span><span class="fire" id="fire" hidden>FIRE</span></div>
+        <p class="avail" aria-live="polite"><span class="lblsm">은퇴 후 예상 월 가용 금액</span><b id="avail">—</b><span id="target" class="tgt"></span></p>
+        <div class="gauge" aria-hidden="true"><i id="gauge"></i><em></em></div>
+        <p class="split" id="split"></p>
+        <p class="early" id="early"></p>
+      </div>
+
+      <ul class="kpis">
+        <li class="card"><span class="k">필요 자산 준비율</span><b id="k-rate">—</b><em class="bar"><i id="k-rate-bar"></i></em></li>
+        <li class="card"><span class="k" id="k-nw-l">은퇴 시 순자산</span><b id="k-nw">—</b><span class="s" id="k-liq"></span></li>
+        <li class="card"><span class="k">자산 고갈</span><b id="k-dep">—</b><span class="s" id="k-dep-s"></span></li>
+        <li class="card"><span class="k">세후 월급</span><b id="k-net">—</b><span class="s" id="k-free"></span></li>
+      </ul>
+
+      <div class="card chartcard">
+        <div class="ch-head"><strong>순자산 추이</strong><span class="meta">오늘 돈 가치 · 억원</span></div>
+        <div id="chart" class="chart" role="img" aria-label="나이별 순자산 막대 그래프"></div>
+      </div>
+
+      <div class="card">
+        <div class="ch-head"><strong>연금 수령 스케줄</strong><span class="meta" id="pen-total"></span></div>
+        <table class="ptab">
+          <thead><tr><th>연금</th><th>개시</th><th>기간</th><th class="r">월액</th></tr></thead>
+          <tbody id="pen"></tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="ch-head"><strong>맞춤 추천</strong></div>
+        <ol class="recs" id="recs"></ol>
+      </div>
+
+      <details class="card yearly">
+        <summary><strong>연도별 표</strong></summary>
+        <div class="ywrap">
+          <table class="ytab">
+            <thead><tr><th>나이</th><th class="r">순자산</th><th class="r">연 수입</th><th class="r">연 지출</th></tr></thead>
+            <tbody id="years"></tbody>
+          </table>
+        </div>
+      </details>
+
+      <p class="disclaimer">
+        참고용 시뮬레이션이며 투자·세무 자문이 아닙니다. 연 단위 계산, 세금은 2026년 근로소득 기준 단순화, 연금 계좌는 55세(또는 은퇴) 이후 기대수명까지 균등 인출로 가정합니다.
+        정확한 수치는 앱 또는 각 기관 조회 결과를 확인하세요.
+      </p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .rhead { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+  .rhead img { border-radius: 12px; flex: none; box-shadow: 0 1px 2px rgb(0 0 0 / .15); }
+  .rhead h1 { margin: 0; }
+  .rhead .lead a { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
+
+  .rgrid { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+  .rform { display: grid; gap: 0.7rem; }
+  .rout { display: grid; gap: 0.8rem; position: sticky; top: 4.2rem; min-width: 0; }
+
+  .rbar { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+  .rbar button, .seg label {
+    font: inherit; font-size: 0.85rem; padding: 0.35rem 0.8rem; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer;
+  }
+  .rbar button:hover { border-color: var(--fg); }
+  .saved { font-size: 0.8rem; color: var(--muted); margin-left: auto; }
+
+  .grp { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 0 1rem; }
+  .grp summary { cursor: pointer; font-weight: 700; padding: 0.8rem 0; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .grp summary::-webkit-details-marker { display: none; }
+  .grp summary::after { content: ''; width: 8px; height: 8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform .15s; margin-right: 4px; }
+  .grp[open] summary::after { transform: rotate(-135deg); }
+  .grp[open] { padding-bottom: 1rem; }
+  .note { margin: -0.2rem 0 0.8rem; font-size: 0.8rem; color: var(--muted); }
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem 0.8rem; }
+  .fld { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+  .lbl { font-size: 0.8rem; color: var(--muted); font-weight: 500; }
+  .inp { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); padding: 0 0.6rem; }
+  .inp:focus-within { border-color: #10b981; box-shadow: 0 0 0 3px color-mix(in srgb, #10b981 22%, transparent); }
+  .inp input { flex: 1; min-width: 0; width: 100%; border: 0; background: transparent; color: var(--fg); font: inherit; font-size: 16px; padding: 0.45rem 0; font-variant-numeric: tabular-nums; outline: none; }
+  .inp input::-webkit-inner-spin-button { opacity: 0.4; }
+  .unit { font-size: 0.75rem; color: var(--muted); white-space: nowrap; padding-left: 0.3rem; }
+  .hint { font-size: 0.72rem; color: var(--muted); min-height: 1em; line-height: 1.3; }
+  .hint.money { color: #059669; font-weight: 600; }
+  .seg-fld { margin-bottom: 0.7rem; }
+  .seg { display: flex; gap: 0.4rem; }
+  .seg input, .checks input { accent-color: #10b981; }
+  .seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg label:has(input:checked) { background: #059669; border-color: #059669; color: #fff; font-weight: 600; }
+  .seg label:has(input:focus-visible) { outline: 2px solid #10b981; outline-offset: 2px; }
+  .checks { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin-bottom: 0.8rem; font-size: 0.9rem; }
+  .checks label { display: inline-flex; gap: 0.4rem; align-items: center; cursor: pointer; }
+  .grp.off .fields { opacity: 0.45; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem; }
+  .hero-r { --st: #059669; border-top: 4px solid var(--st); }
+  .hero-r[data-st='주의'] { --st: #d97706; }
+  .hero-r[data-st='부족'] { --st: #dc2626; }
+  .cap { margin: 0; font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+  .badges { display: flex; gap: 0.4rem; margin: 0.4rem 0 0.2rem; }
+  .status, .fire { font-size: 0.85rem; font-weight: 800; padding: 0.15rem 0.65rem; border-radius: 999px; color: #fff; background: var(--st); }
+  .fire { background: #0f766e; letter-spacing: 0.06em; }
+  .fire[hidden] { display: none; }
+  .avail { margin: 0.5rem 0 0.4rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.5rem; }
+  .lblsm { width: 100%; font-size: 0.8rem; color: var(--muted); }
+  .avail b { font-size: clamp(1.8rem, 5vw, 2.4rem); letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .tgt { color: var(--muted); font-size: 0.95rem; }
+  .gauge { position: relative; height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; }
+  .gauge i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--st); border-radius: 4px; transition: width .25s; }
+  .gauge em { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--card); } /* 100% 목표선 (게이지 = 목표의 200%까지) */
+  .split { margin: 0.5rem 0 0; font-size: 0.82rem; color: var(--muted); }
+  .early { margin: 0.35rem 0 0; font-size: 0.85rem; font-weight: 600; }
+  .early:empty { display: none; }
+  .early.ok { color: #059669; } .early.warn { color: #d97706; } .early.bad { color: #dc2626; }
+
+  .kpis { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.6rem; }
+  .kpis li { padding: 0.8rem 0.9rem; display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+  .kpis .k { font-size: 0.75rem; color: var(--muted); font-weight: 600; }
+  .kpis b { font-size: 1.25rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.2; overflow-wrap: anywhere; }
+  .kpis .s { font-size: 0.75rem; color: var(--muted); line-height: 1.3; }
+  .bar { display: block; height: 4px; border-radius: 2px; background: var(--line); margin-top: 0.35rem; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: #059669; }
+
+  .ch-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; margin-bottom: 0.6rem; }
+  .chart { width: 100%; height: 190px; }
+  .chart :global(svg) { display: block; width: 100%; height: 100%; overflow: visible; }
+  .chart :global(text) { font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+  .chart :global(.grid) { stroke: var(--line); }
+  .chart :global(.pos) { fill: #10b981; } .chart :global(.pos.ret) { fill: #047857; }
+  .chart :global(.neg) { fill: #dc2626; }
+  .chart :global(.mark) { stroke: var(--fg); stroke-dasharray: 3 3; opacity: 0.5; }
+  .chart :global(.mlabel) { fill: var(--fg); font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th { text-align: left; font-size: 0.75rem; color: var(--muted); font-weight: 600; padding: 0 0 0.4rem; border-bottom: 1px solid var(--line); }
+  table :global(td) { padding: 0.5rem 0; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+  table :global(tr:last-child td) { border-bottom: 0; }
+  .r, table :global(.r) { text-align: right; }
+  table :global(td.muted) { color: var(--muted); text-align: center; }
+  .recs { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.6rem; }
+  .recs :global(li strong) { display: block; font-size: 0.92rem; }
+  .recs :global(li span) { display: block; margin-top: 0.1rem; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+  .recs.empty { list-style: none; padding: 0; color: var(--muted); font-size: 0.88rem; }
+  .yearly summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .yearly summary::-webkit-details-marker { display: none; }
+  .yearly summary::after { content: ''; width: 8px; height: 8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform .15s; margin-right: 4px; }
+  .yearly[open] summary::after { transform: rotate(-135deg); }
+  .ywrap { max-height: 320px; overflow: auto; margin-top: 0.6rem; }
+  .ytab th { position: sticky; top: 0; background: var(--card); }
+  .ytab :global(tr.ret td) { font-weight: 700; color: #047857; }
+  .ytab :global(td.neg) { color: #dc2626; }
+  .disclaimer { margin: 0.2rem 0 0; font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+
+  @media (max-width: 1000px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 820px) {
+    .rgrid { grid-template-columns: minmax(0, 1fr); }
+    .rout { position: static; order: -1; } /* 모바일: 결과 먼저 */
+  }
+  @media (max-width: 400px) { .fields { grid-template-columns: minmax(0, 1fr); } }
+</style>
+
+<script>
+  import {
+    emptyProfile, sampleProfile, simulate, earliestRetireAge, recommend, netSalary, monthlyFreeCashFlow,
+    manwon, comma, type Profile, type SimResult,
+  } from '../../lib/mansur';
+
+  const LS = 'hub.retire.v1';
+  const PCT = new Set(['debt.rate', 'expectedReturn', 'inflation', 'salaryGrowth', 'housingGrowth']);
+  const form = document.getElementById('rf') as HTMLFormElement;
+  const $ = (id: string) => document.getElementById(id)!;
+  const r0 = (n: number) => Math.round(n);
+  const won = (n: number) => `${comma(r0(n))}만원`;
+
+  // ── Profile ↔ form ──
+  const getPath = (o: any, path: string) => path.split('.').reduce((a, k) => a?.[k], o);
+  const setPath = (o: any, path: string, v: unknown) => {
+    const ks = path.split('.');
+    const last = ks.pop()!;
+    ks.reduce((a, k) => a[k], o)[last] = v;
+  };
+  const num = (v: string) => { const n = parseFloat(v); return Number.isFinite(n) ? n : 0; };
+
+  function writeForm(p: Profile) {
+    for (const el of Array.from(form.elements) as HTMLInputElement[]) {
+      if (!el.name) continue;
+      const v = getPath(p, el.name);
+      if (el.type === 'checkbox') el.checked = !!v;
+      else if (el.type === 'radio') el.checked = el.value === v;
+      else el.value = PCT.has(el.name) ? String(+(Number(v) * 100).toFixed(2)) : String(v ?? 0);
+    }
+  }
+  function readForm(): Profile {
+    const p = emptyProfile();
+    for (const el of Array.from(form.elements) as HTMLInputElement[]) {
+      if (!el.name) continue;
+      if (el.type === 'checkbox') setPath(p, el.name, el.checked);
+      else if (el.type === 'radio') { if (el.checked) setPath(p, el.name, el.value); }
+      else {
+        let v = num(el.value);
+        if (PCT.has(el.name)) v /= 100;
+        else if (/Age|lifeExpectancy/.test(el.name)) v = Math.round(v);
+        else v = Math.max(0, v);
+        setPath(p, el.name, v);
+      }
+    }
+    return p;
+  }
+  function merge(base: Profile, raw: any): Profile {
+    // 저장본/링크의 알 수 없는 키·잘못된 타입은 무시
+    const out = JSON.parse(JSON.stringify(base));
+    const walk = (dst: any, src: any) => {
+      for (const k of Object.keys(dst)) {
+        if (src == null || !(k in src)) continue;
+        if (dst[k] && typeof dst[k] === 'object') walk(dst[k], src[k]);
+        else if (typeof src[k] === typeof dst[k] && (typeof src[k] !== 'number' || Number.isFinite(src[k]))) dst[k] = src[k];
+      }
+    };
+    walk(out, raw);
+    return out;
+  }
+
+  // ── share link: #p=<base64url(json)> (해시는 서버·비콘으로 전송되지 않음) ──
+  const enc = (p: Profile) => btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(p)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const dec = (s: string) => JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0))));
+
+  function initial(): { p: Profile; from: string } {
+    const m = location.hash.match(/^#p=([\w-]+)$/);
+    if (m) { try { return { p: merge(emptyProfile(), dec(m[1])), from: 'link' }; } catch {} }
+    try { const s = localStorage.getItem(LS); if (s) return { p: merge(emptyProfile(), JSON.parse(s)), from: 'saved' }; } catch {}
+    return { p: sampleProfile(), from: 'sample' };
+  }
+
+  // ── render ──
+  const STATUS = { 가능: '은퇴 가능', 주의: '주의 필요', 부족: '준비 부족' } as const;
+
+  function hints(p: Profile) {
+    for (const el of form.querySelectorAll<HTMLElement>('[data-hint]')) {
+      const k = el.dataset.hint!;
+      const base = el.dataset.base ?? (el.dataset.base = el.textContent ?? '');
+      const input = form.elements.namedItem(k) as HTMLInputElement;
+      const unit = input?.parentElement?.querySelector('.unit')?.textContent ?? '';
+      const v = Number(getPath(p, k));
+      const money = unit.startsWith('만원') && v >= 10000;
+      el.textContent = money ? manwon(v) + (unit.includes('/') ? unit.slice(2) : '') : base;
+      el.classList.toggle('money', money);
+    }
+    form.querySelector('[data-grp="housing"]')!.classList.toggle('off', !p.housingPension.use);
+  }
+
+  function chart(sim: SimResult, p: Profile) {
+    const box = $('chart');
+    const W = Math.max(260, box.clientWidth), H = box.clientHeight || 190;
+    const L = 34, R = 6, T = 16, B = 20;
+    const s = sim.snapshots;
+    if (!s.length) { box.innerHTML = ''; return; }
+    const vals = s.map((x) => x.netWorth / 10000);
+    let hi = Math.max(0, ...vals), lo = Math.min(0, ...vals);
+    if (hi === lo) hi = 1;
+    const step = niceStep((hi - lo) / 4);
+    hi = Math.ceil(hi / step) * step; lo = Math.floor(lo / step) * step;
+    const y = (v: number) => T + ((hi - v) / (hi - lo)) * (H - T - B);
+    const bw = (W - L - R) / s.length;
+    const x = (i: number) => L + i * bw;
+    let g = '';
+    for (let v = lo; v <= hi + 1e-9; v += step) {
+      g += `<line class="grid" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${fmtEok(v)}</text>`;
+    }
+    const retAge = Math.max(p.retireAge, p.currentAge);
+    let bars = '';
+    s.forEach((d, i) => {
+      const v = vals[i];
+      const y0 = y(Math.max(0, v)), h = Math.max(0.5, Math.abs(y(v) - y(0)));
+      const cls = v < 0 ? 'neg' : d.age >= retAge ? 'pos ret' : 'pos';
+      bars += `<rect class="${cls}" x="${x(i) + bw * 0.12}" y="${y0}" width="${Math.max(1, bw * 0.76)}" height="${h}"><title>${d.age}세 · ${manwon(d.netWorth)}</title></rect>`;
+    });
+    const tick = s.length > 40 ? 10 : 5;
+    let ax = '';
+    s.forEach((d, i) => { if (d.age % tick === 0) ax += `<text x="${x(i) + bw / 2}" y="${H - 4}" text-anchor="middle">${d.age}</text>`; });
+    const ri = s.findIndex((d) => d.age === retAge);
+    let mk = '';
+    if (ri > 0) mk += `<line class="mark" x1="${x(ri)}" x2="${x(ri)}" y1="${T - 6}" y2="${H - B}"/><text class="mlabel" x="${x(ri) + 4}" y="${T - 4}">은퇴 ${retAge}세</text>`;
+    const di = sim.depletionAge !== null ? s.findIndex((d) => d.age === sim.depletionAge) : -1;
+    if (di >= 0) {
+      const anchor = x(di) > W - 90 ? 'end' : 'start';
+      mk += `<line class="mark" x1="${x(di)}" x2="${x(di)}" y1="${T + 8}" y2="${H - B}"/><text class="mlabel" x="${x(di) + (anchor === 'end' ? -4 : 4)}" y="${T + 10}" text-anchor="${anchor}" style="fill:#dc2626">고갈 ${sim.depletionAge}세</text>`;
+    }
+    box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">${g}${bars}${mk}${ax}</svg>`;
+  }
+  const niceStep = (raw: number) => {
+    const p = Math.pow(10, Math.floor(Math.log10(raw || 1)));
+    return [1, 2, 2.5, 5, 10].map((m) => m * p).find((m) => m >= raw) ?? 10 * p;
+  };
+  const fmtEok = (v: number) => (Math.abs(v) >= 1 || v === 0 ? `${+v.toFixed(1)}` : `${+v.toFixed(2)}`);
+
+  let last: { p: Profile; sim: SimResult } | null = null;
+
+  function render() {
+    const p = readForm();
+    const sim = simulate(p);
+    last = { p, sim };
+    hints(p);
+    const retired = p.currentAge >= p.retireAge;
+    const target = Math.max(p.targetMonthlyCost > 0 ? p.targetMonthlyCost : p.monthlyCost, 0);
+
+    const hero = $('hero');
+    hero.dataset.st = sim.status;
+    $('capline').textContent = retired ? `은퇴 생활 유지 가능 여부 (현재 ${p.currentAge}세)` : `은퇴 가능 여부 (${p.retireAge}세 기준)`;
+    $('status').textContent = STATUS[sim.status];
+    $('fire').hidden = !sim.fire;
+    $('avail').textContent = won(sim.monthlyAvailable);
+    $('target').textContent = `/ 목표 ${won(target)}`;
+    ($('gauge') as HTMLElement).style.width = `${Math.min(100, (sim.monthlyAvailable / Math.max(target, 1)) * 50)}%`;
+    $('split').textContent = `연금 평균 ${won(sim.avgMonthlyPension)} + 자산 인출 ${won(sim.monthlyFromAssets)} · 오늘 돈 가치`;
+
+    const early = $('early');
+    early.className = 'early';
+    early.textContent = '';
+    if (!retired) {
+      const e = earliestRetireAge(p);
+      if (e !== null) {
+        if (e <= p.currentAge + 1 && e < p.retireAge) { early.textContent = `지금 은퇴해도 목표 생활이 가능합니다 — 목표(${p.retireAge}세)보다 ${p.retireAge - e}년 빠릅니다`; early.classList.add('ok'); }
+        else if (e < p.retireAge) { early.textContent = `최소 ${e}세부터 은퇴 가능 — 목표보다 ${p.retireAge - e}년 빠릅니다`; early.classList.add('ok'); }
+        else if (e > p.retireAge) { early.textContent = `현재 조건으로는 ${e}세부터 은퇴 가능합니다`; early.classList.add('warn'); }
+      } else if (sim.status !== '가능') { early.textContent = '현재 조건으로는 80세까지도 은퇴가 어렵습니다'; early.classList.add('bad'); }
+    }
+
+    const rate = sim.achievementRate;
+    $('k-rate').textContent = rate >= 999 ? '999%+' : `${r0(rate)}%`;
+    ($('k-rate-bar') as HTMLElement).style.width = `${Math.min(100, rate)}%`;
+    $('k-nw-l').textContent = retired ? '현재 순자산' : '은퇴 시 순자산';
+    $('k-nw').textContent = manwon(sim.retirementAsset);
+    $('k-liq').textContent = `유동자산 ${manwon(sim.liquidAtRetire)}`;
+    $('k-dep').textContent = sim.depletionAge === null ? '없음' : `${sim.depletionAge}세`;
+    $('k-dep-s').textContent = sim.depletionAge === null ? `${p.lifeExpectancy}세까지 유지` : `기대수명 ${p.lifeExpectancy}세`;
+    const ns = netSalary(p.salary);
+    $('k-net').textContent = p.salary > 0 ? won(ns.monthlyNet) : '—';
+    const free = monthlyFreeCashFlow(p);
+    $('k-free').textContent = free === null ? '연봉 미입력' : `생활비·연금 납입 후 ${free < 0 ? '−' : ''}${won(Math.abs(free))}`;
+
+    chart(sim, p);
+
+    const pen = $('pen');
+    pen.innerHTML = sim.pensionSchedule.length
+      ? sim.pensionSchedule.map((s) => `<tr><td>${s.name}</td><td>${s.startAge}세</td><td>${s.lifelong ? '종신' : `${s.endAge}세까지`}</td><td class="r">${won(s.monthly)}</td></tr>`).join('')
+      : '<tr><td colspan="4" class="muted">연금 없음</td></tr>';
+    $('pen-total').textContent = sim.pensionSchedule.length ? `모두 받을 때 월 ${won(sim.totalMonthlyPension)}` : '';
+
+    const recs = recommend(p, sim);
+    const rl = $('recs');
+    rl.classList.toggle('empty', !recs.length);
+    rl.innerHTML = recs.length
+      ? recs.map((r) => `<li><strong>${esc(r.title)}</strong><span>${esc(r.body)}</span></li>`).join('')
+      : '<li>현재 준비 상태가 양호합니다. 추가 추천 사항이 없습니다.</li>';
+
+    const retAge = Math.max(p.retireAge, p.currentAge);
+    $('years').innerHTML = sim.snapshots
+      .map((s) => `<tr${s.age === retAge ? ' class="ret"' : ''}><td>${s.age}</td><td class="r${s.netWorth < 0 ? ' neg' : ''}">${manwon(s.netWorth)}</td><td class="r">${won(s.income)}</td><td class="r">${won(s.expense)}</td></tr>`)
+      .join('');
+  }
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+
+  // ── persistence ──
+  let saveT = 0;
+  const flash = (msg: string) => { const s = $('saved'); s.textContent = msg; window.clearTimeout(Number(s.dataset.t)); s.dataset.t = String(window.setTimeout(() => (s.textContent = ''), 2500)); };
+  function save() {
+    window.clearTimeout(saveT);
+    saveT = window.setTimeout(() => {
+      try { localStorage.setItem(LS, JSON.stringify(readForm())); flash('이 브라우저에 저장됨'); } catch {}
+      if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    }, 600);
+  }
+
+  form.addEventListener('input', () => { render(); save(); });
+  form.addEventListener('submit', (e) => e.preventDefault());
+  form.querySelector('.rbar')!.addEventListener('click', async (e) => {
+    const act = (e.target as HTMLElement).closest('button')?.dataset.act;
+    if (act === 'sample') { writeForm(sampleProfile()); render(); save(); flash('샘플 값을 불러왔습니다'); }
+    else if (act === 'reset') { writeForm(emptyProfile()); render(); try { localStorage.removeItem(LS); } catch {} flash('초기화했습니다'); }
+    else if (act === 'share') {
+      const url = `${location.origin}${location.pathname}#p=${enc(readForm())}`;
+      try { await navigator.clipboard.writeText(url); flash('링크를 복사했습니다 — 입력값이 링크에 담깁니다'); }
+      catch { history.replaceState(null, '', url); flash('주소창의 링크를 복사하세요'); }
+    }
+  });
+  let rz = 0;
+  new ResizeObserver(() => { cancelAnimationFrame(rz); rz = requestAnimationFrame(() => last && chart(last.sim, last.p)); }).observe($('chart'));
+
+  const init = initial();
+  writeForm(init.p);
+  render();
+  if (init.from === 'sample') flash('샘플 값입니다 — 내 값으로 바꿔보세요');
+  if (init.from === 'link') flash('공유 링크의 값입니다');
+</script>

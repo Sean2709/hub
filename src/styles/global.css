@@ -58,7 +58,10 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   background: color-mix(in srgb, var(--bg) 82%, transparent);
   -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px);
 }
-.site-header .brand { font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
+.site-header .brand { display: inline-flex; flex: none; border-radius: 9px; }
+.site-header .brand svg { width: 30px; height: 30px; display: block; }
+.site-header .brand:hover svg { filter: brightness(1.08); }
+.site-header .brand:focus-visible { outline: 2px solid #059669; outline-offset: 3px; }
 .site-header nav { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 0.3rem 1.1rem; color: var(--muted); }
 .site-header nav a:hover { color: var(--fg); }
 .site-header .nav-admin {

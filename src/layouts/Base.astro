@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { profile, analytics } from '../data/site';
+import Mark from '../components/Mark.astro';
 
 interface Props {
   title?: string;
@@ -29,7 +30,10 @@ const beaconUrl = `${analytics.endpoint}/collect?k=${analytics.siteKey}`;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#059669" />
     <link rel="alternate" type="application/rss+xml" title="velog @seanson2709" href={profile.links.rss} />
 
     <meta property="og:type" content="website" />
@@ -43,7 +47,7 @@ const beaconUrl = `${analytics.endpoint}/collect?k=${analytics.siteKey}`;
   </head>
   <body class:list={[{ wide }]}>
     <header class="site-header">
-      <a class="brand" href="/">hub.sean-chloe.com</a>
+      <a class="brand" href="/" aria-label="홈"><Mark uid="hdr" /></a>
       <nav aria-label="주요">
         <a href="/#tools">Tools</a>
         <a href="/#apps">Apps</a>

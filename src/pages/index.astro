@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Mark from '../components/Mark.astro';
 import { profile, certs, apps, posts, focus } from '../data/site';
 import bedrock from '../../public/data/bedrock/seoul.json';
 import bedrockMeta from '../../public/data/bedrock/meta.json';
@@ -19,12 +20,7 @@ const me = { target: '_blank', rel: 'noopener me' };
 
 <Base>
   <section class="hero" id="top">
-    <svg class="mono" viewBox="0 0 80 80" aria-hidden="true">
-      <rect width="80" height="80" rx="20" fill="var(--accent)" />
-      <path d="M18 60 L40 20 L62 60 Z" stroke="var(--accent-fg)" stroke-width="2.5" fill="none" opacity=".35" />
-      <g fill="var(--accent-fg)"><circle cx="18" cy="60" r="5" /><circle cx="40" cy="20" r="5" /><circle cx="62" cy="60" r="5" /></g>
-      <text x="40" y="52" text-anchor="middle" font-size="26" font-weight="800" fill="var(--accent-fg)">S</text>
-    </svg>
+    <Mark class="mono" uid="hero" />
     <div>
       <p class="eyebrow">{profile.role} · {profile.org}</p>
       <h1>{profile.name}</h1>
@@ -59,6 +55,11 @@ const me = { target: '_blank', rel: 'noopener me' };
         <a class="go" href="/bedrock/">보기 →</a>
       </div>
     </div>
+    <a class="card tool tool-row" href="/retire/">
+      <span class="ticon green"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18" /><path d="M6 16v-4M11 16V9M16 16V6" /><path d="M14 6h4v4" /></svg></span>
+      <span><strong>은퇴 자산 계산기</strong><span class="sub">나이 · 연봉 · 자산 · 연금을 넣으면 은퇴 가능 여부와 월 가용 금액, 자산 고갈 시점을 계산 — iOS 앱 「은퇴하면 만수르」와 같은 엔진, 입력값은 브라우저에만</span></span>
+      <span class="go">계산하기 →</span>
+    </a>
   </section>
 
   <section id="apps">
@@ -115,7 +116,7 @@ const me = { target: '_blank', rel: 'noopener me' };
 <style>
   h2 { border: 0; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); padding: 0; margin-bottom: 0.9rem; }
   .hero { display: grid; grid-template-columns: auto 1fr; gap: 1.6rem; }
-  .mono { width: 84px; height: 84px; }
+  .hero :global(.mono) { width: 84px; height: 84px; display: block; }
   .eyebrow { margin: 0 0 0.3rem; color: var(--muted); font-size: 0.85rem; font-weight: 500; }
   h1 { font-size: clamp(2.4rem, 6vw, 3.4rem); }
   .tagline { margin: 0.6rem 0 0.9rem; font-size: 1.08rem; max-width: 52ch; }
@@ -143,6 +144,10 @@ const me = { target: '_blank', rel: 'noopener me' };
   .nums small { font-size: 0.9rem; }
   .nums span { font-size: 0.75rem; color: var(--muted); }
   .nums em { display: block; height: 4px; border-radius: 2px; margin-top: 0.4rem; background: linear-gradient(90deg, var(--spec) var(--p), var(--line) var(--p)); }
+  .tool-row { display: grid; grid-template-columns: auto 1fr auto; gap: 0.8rem; align-items: center; margin-top: 0.8rem; }
+  .tool-row:hover { text-decoration: none; }
+  .tool-row:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+  .ticon.green { background: color-mix(in srgb, #059669 14%, transparent); color: #059669; }
   .tool-foot { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; margin-top: 0.9rem; }
   .tool-foot .meta a { color: var(--fg); }
   .go { font-weight: 600; font-size: 0.9rem; white-space: nowrap; }
@@ -178,8 +183,10 @@ const me = { target: '_blank', rel: 'noopener me' };
   .contact-line { margin: 0; font-size: 1.05rem; font-weight: 600; overflow-wrap: anywhere; }
   @media (max-width: 560px) {
     .hero { grid-template-columns: 1fr; gap: 1rem; }
-    .mono { width: 60px; height: 60px; }
+    .hero :global(.mono) { width: 60px; height: 60px; }
     .tool-head { grid-template-columns: auto 1fr; }
+    .tool-row { grid-template-columns: auto 1fr; align-items: start; }
+    .tool-row .go { grid-column: 2; }
     .live { display: none; }
     .nums { grid-template-columns: repeat(2, 1fr); }
     .nums div:nth-child(3) { padding-left: 0.2rem; border-left: 0; }
