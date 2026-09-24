@@ -3,7 +3,7 @@
 
 export const profile = {
   name: 'Sean Son',
-  role: 'AWS Industries ProServe Global Accounts',
+  role: 'Cloud Infrastructure Architect · AWS Industries ProServe Global Accounts',
   // footer on every page: personal site, not affiliated with / endorsed by the employer
   disclaimer:
     '개인 프로젝트입니다. 이 사이트의 글·앱·도구는 개인 의견과 작업이며, 소속 회사(Amazon Web Services)의 공식 입장이나 서비스와 무관합니다.',
