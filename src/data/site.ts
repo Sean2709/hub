@@ -50,6 +50,16 @@ export type App = {
 
 export const apps: App[] = [
   {
+    name: '너그거알아',
+    subtitle: '매일 하나, 상식 퀴즈',
+    desc: '매일 자정 도착하는 4지선다 상식 한 문제. 스트릭·위젯, 계정·서버 없이 기기 안에만 저장. iOS.',
+    category: 'Education',
+    url: 'https://apps.apple.com/kr/app/id6814826377',
+    version: '1.0',
+    released: '2026-09-24',
+    icon: '/img/apps/knowthat.png',
+  },
+  {
     name: '작심: 습관 리그',
     subtitle: '매일 루틴 체크, 목표 달성 트래커',
     desc: '습관을 리그로 겨루는 iOS 습관 트래커. SwiftUI + 서버 정산.',
@@ -79,6 +89,12 @@ export type Post = {
 };
 
 export const posts: Post[] = [
+  {
+    title: '쉽게 따라하는 LZA를 활용한 AWS Control Tower 구축 (2) - OU / 계정 / SCP를 코드로 관리하기',
+    url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-LZA%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-AWS-Control-Tower-%EA%B5%AC%EC%B6%95-2-OU-%EA%B3%84%EC%A0%95-SCP%EB%A5%BC-%EC%BD%94%EB%93%9C%EB%A1%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0',
+    date: '2026-09-24',
+    tags: ['aws', 'lza', 'control-tower', 'organizations', 'scp'],
+  },
   {
     title: '쉽게 따라하는 Amazon Bedrock으로 나만의 AI 어시스턴트 만들기 (2) — iPhone 앱 붙이기: SwiftUI + SSE',
     url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-Amazon-Bedrock%EC%9C%BC%EB%A1%9C-%EB%82%98%EB%A7%8C%EC%9D%98-AI-%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-iPhone-%EC%95%B1-%EB%B6%99%EC%9D%B4%EA%B8%B0-SwiftUI-SSE',
