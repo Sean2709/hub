@@ -10,9 +10,16 @@ import { analytics, admin } from '../../data/site';
 
 <Base title="Admin — hub" description="private" wide noindex>
   <div id="admin" data-endpoint={analytics.endpoint} data-client-id={admin.googleClientId} data-email={admin.email}>
-    <div class="page-head">
-      <h1>Admin</h1>
-      <p class="lead">접속자 현황 · 운영 상태 · 다른 관리자 화면. 관리자 Google 계정으로 로그인해야 보입니다.</p>
+    <div class="page-head adm-head">
+      <div>
+        <h1>Admin</h1>
+        <p class="lead">접속자 현황 · 운영 상태 · 앱 관리 화면</p>
+      </div>
+      <div class="who" id="who" hidden>
+        <img id="who-pic" alt="" width="28" height="28" referrerpolicy="no-referrer" hidden />
+        <span id="who-email"></span>
+        <button id="logout" class="ghost" type="button">로그아웃</button>
+      </div>
     </div>
 
     <div id="gate" class="card gate">
@@ -26,121 +33,290 @@ import { analytics, admin } from '../../data/site';
     </div>
 
     <div id="panel" hidden>
-    <div class="filters adm-bar">
-      <span class="who"><img id="who-pic" alt="" width="22" height="22" referrerpolicy="no-referrer" hidden /><span id="who-email"></span></span>
-      <button id="logout" class="btn">로그아웃</button>
-      <select id="days">
-        <option value="1">오늘</option>
-        <option value="7" selected>7일</option>
-        <option value="30">30일</option>
-        <option value="90">90일</option>
-      </select>
-      <button id="reload" class="btn">새로고침</button>
-      <label class="hint"><input id="auto" type="checkbox" checked /> 60초 자동</label>
-      <label class="hint"><input id="notrack" type="checkbox" /> 내 방문 제외</label>
-      <span id="status" class="hint"></span>
-    </div>
-
-    <section id="visitors" hidden>
-      <h2>접속자 <span id="asof" class="count"></span></h2>
-      <div class="stats">
-        <div class="stat accent"><div class="n" id="k-live">–</div><div class="l">실시간 (5분)</div></div>
-        <div class="stat"><div class="n" id="k-tpv">–</div><div class="l">오늘 PV</div></div>
-        <div class="stat"><div class="n" id="k-tuv">–</div><div class="l">오늘 UV</div></div>
-        <div class="stat"><div class="n" id="k-rpv">–</div><div class="l"><span id="k-rl">7일</span> PV</div></div>
-        <div class="stat"><div class="n" id="k-ruv">–</div><div class="l"><span id="k-rl2">7일</span> UV</div></div>
-        <div class="stat"><div class="n" id="k-clk">–</div><div class="l">외부 클릭</div></div>
-        <div class="stat"><div class="n muted" id="k-bot">–</div><div class="l">봇 (제외됨)</div></div>
-      </div>
-      <p id="live-pages" class="note"></p>
-
-      <div class="card chart"><h3>일별 PV <span class="muted">/ UV</span></h3><div id="daily" class="bars"></div></div>
-
-      <div class="grid two">
-        <div class="card"><h3>페이지</h3><table class="t"><tbody id="pages"></tbody></table></div>
-        <div class="card"><h3>유입 경로</h3><table class="t"><tbody id="refs"></tbody></table></div>
-        <div class="card"><h3>외부 클릭</h3><table class="t"><tbody id="clicks"></tbody></table></div>
-        <div class="card">
-          <h3>디바이스 · 언어</h3>
-          <div id="devices" class="split"></div>
-          <p id="devices-legend" class="legend"></p>
-          <table class="t"><tbody id="langs"></tbody></table>
+      <div class="toolbar">
+        <nav class="jump" aria-label="섹션">
+          <a href="#visitors">접속자</a><a href="#ops">운영</a><a href="#others">앱 관리</a>
+        </nav>
+        <div class="seg" id="days" role="group" aria-label="기간">
+          <button type="button" data-d="1">오늘</button>
+          <button type="button" data-d="7" class="on">7일</button>
+          <button type="button" data-d="30">30일</button>
+          <button type="button" data-d="90">90일</button>
+        </div>
+        <button id="reload" class="icon-btn" type="button" title="새로고침" aria-label="새로고침">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66" /><path d="M20 4v5h-5" /></svg>
+        </button>
+        <span id="status" class="status"></span>
+        <div class="toggles">
+          <label class="sw"><input id="auto" type="checkbox" checked /><span aria-hidden="true"></span>60초 자동</label>
+          <label class="sw"><input id="notrack" type="checkbox" /><span aria-hidden="true"></span>내 방문 제외</label>
         </div>
       </div>
 
-      <div class="card chart"><h3>시간대 (KST)</h3><div id="hours" class="heat"></div></div>
+      <section id="visitors" hidden>
+        <div class="sec-head"><h2>접속자</h2><span id="asof" class="mono muted"></span></div>
+        <div class="kpis">
+          <div class="kpi live">
+            <div class="l"><span class="pulse" aria-hidden="true"></span>실시간 · 5분</div>
+            <div class="n" id="k-live">–</div>
+            <div class="s" id="live-pages"></div>
+          </div>
+          <div class="kpi">
+            <div class="l">오늘</div>
+            <div class="n"><span id="k-tpv">–</span><small>PV</small></div>
+            <div class="s">방문자 <b id="k-tuv">–</b></div>
+          </div>
+          <div class="kpi">
+            <div class="l">최근 <span id="k-rl">7일</span></div>
+            <div class="n"><span id="k-rpv">–</span><small>PV</small></div>
+            <div class="s">방문자 <b id="k-ruv">–</b></div>
+          </div>
+          <div class="kpi">
+            <div class="l">외부 클릭</div>
+            <div class="n"><span id="k-clk">–</span></div>
+            <div class="s">봇 제외 <b id="k-bot">–</b></div>
+          </div>
+        </div>
 
-      <div class="card chart"><h3>최근 이벤트</h3><table class="t recent"><tbody id="recent"></tbody></table></div>
-    </section>
+        <div class="box">
+          <div class="box-head">
+            <h3>일별 추이</h3>
+            <span class="legend"><i class="lg pv"></i>PV <i class="lg uv"></i>방문자</span>
+          </div>
+          <div class="chart">
+            <span class="ymax mono" id="ymax"></span>
+            <div id="daily" class="bars"></div>
+          </div>
+          <div id="xaxis" class="xaxis mono"></div>
+        </div>
 
-    <section id="ops">
-      <h2>운영 상태</h2>
-      <ul class="datalist" id="ops-list"><li><span class="k">…</span> GitHub API 조회 중</li></ul>
-    </section>
+        <div class="adm-grid">
+          <div class="box"><div class="box-head"><h3>페이지</h3><span class="muted">PV / 방문자</span></div><ul class="rank" id="pages"></ul></div>
+          <div class="box"><div class="box-head"><h3>유입 경로</h3></div><ul class="rank" id="refs"></ul></div>
+          <div class="box"><div class="box-head"><h3>외부 클릭</h3></div><ul class="rank" id="clicks"></ul></div>
+          <div class="box">
+            <div class="box-head"><h3>디바이스 · 언어</h3></div>
+            <div id="devices" class="split"></div>
+            <p id="devices-legend" class="dev-legend"></p>
+            <ul class="rank" id="langs"></ul>
+          </div>
+        </div>
 
-    <section id="others">
-      <h2>다른 관리자 <span class="count">SeanChat · 작심 · 만수르</span></h2>
-      <div class="filters adm-bar">
-        <button class="btn app" data-app="seanchat">션챗</button>
-        <button class="btn app" data-app="jaksim">작심</button>
-        <button class="btn app" data-app="mansur">만수르</button>
-        <input id="sc-url" type="text" placeholder="http://127.0.0.1:8500" spellcheck="false" />
-        <button id="sc-save" class="btn">URL 저장</button>
-        <a id="sc-open" class="link" href="#" target="_blank" rel="noopener">새 창 ↗</a>
-        <span id="sc-status" class="hint"></span>
-      </div>
-      <p class="note">SeanChat 통합 관리자(로컬 8500, 작심·만수르 Firestore 포함)를 이 자리에 띄웁니다. 공개 EC2에는 관리 화면이 없으므로(의도) 로컬 백엔드가 켜진 이 Mac에서만 보입니다. SSM 터널을 쓰면 URL을 8600으로 바꾸세요.</p>
-      <iframe id="sc-frame" title="SeanChat admin" hidden></iframe>
-    </section>
+        <div class="box">
+          <div class="box-head"><h3>시간대</h3><span class="muted">KST · 진할수록 많음</span></div>
+          <div id="hours" class="heat"></div>
+          <div class="heat-x mono"><span>0</span><span>6</span><span>12</span><span>18</span><span>23</span></div>
+        </div>
+
+        <div class="box">
+          <div class="box-head"><h3>최근 방문</h3><span class="muted">최대 30건</span></div>
+          <ul class="recent" id="recent"></ul>
+        </div>
+      </section>
+
+      <section id="ops">
+        <div class="sec-head"><h2>운영 상태</h2></div>
+        <div class="tiles" id="ops-list"><div class="tile"><div class="tk">GitHub API 조회 중…</div></div></div>
+      </section>
+
+      <section id="others">
+        <div class="sec-head">
+          <h2>앱 관리</h2>
+          <a id="sc-open" class="ext" href="#" target="_blank" rel="noopener">새 창에서 열기 ↗</a>
+        </div>
+        <div class="app-row">
+          <div class="seg" role="group" aria-label="앱">
+            <button type="button" class="app" data-app="seanchat">SeanChat</button>
+            <button type="button" class="app" data-app="jaksim">작심</button>
+            <button type="button" class="app" data-app="mansur">만수르</button>
+          </div>
+          <span id="sc-status" class="status"></span>
+        </div>
+        <details class="conn">
+          <summary>연결 설정</summary>
+          <div class="conn-body">
+            <input id="sc-url" type="text" placeholder="http://127.0.0.1:8500" spellcheck="false" aria-label="SeanChat admin URL" />
+            <button id="sc-save" class="ghost" type="button">저장</button>
+          </div>
+          <p class="note">SeanChat 통합 관리자(로컬 8500, 작심·만수르 Firestore 포함)를 아래에 띄웁니다. 공개 EC2에는 관리 화면이 없어서(의도) 로컬 백엔드가 켜진 이 Mac에서만 보입니다. SSM 터널을 쓰면 8600으로 바꾸세요.</p>
+        </details>
+        <iframe id="sc-frame" title="SeanChat admin" hidden></iframe>
+      </section>
     </div>
   </div>
   <script is:inline src="https://accounts.google.com/gsi/client" async defer></script>
 </Base>
 
-<style>
-  .gate { display: flex; flex-direction: row; gap: 1rem; align-items: flex-start; max-width: 520px; border-left-width: 1px; padding: 1.2rem 1.3rem; margin-top: 1.2rem; }
-  .gate[hidden] { display: none; }
-  .gate > svg { width: 28px; height: 28px; flex: none; fill: none; stroke: var(--muted); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-top: .15rem; }
-  .gate .note { margin: .2rem 0 .9rem; }
-  #g-btn { min-height: 44px; }
-  #gate-msg:empty { display: none; }
-  #gate-msg.err { color: #dc2626; }
-  .who { display: inline-flex; align-items: center; gap: .4rem; font-size: .88rem; font-weight: 500; margin-right: .3rem; }
-  .who img { border-radius: 50%; }
-  .adm-bar { align-items: center; flex-wrap: wrap; gap: .5rem; }
-  .adm-bar input[type="password"], .adm-bar input[type="text"] { min-width: 240px; font-family: ui-monospace, Menlo, monospace; }
-  .adm-bar .btn { padding: .35rem .7rem; font-size: .9rem; }
-  .adm-bar .btn.app.on { background: var(--fg); color: var(--bg); }
-  .adm-bar label.hint { display: inline-flex; align-items: center; gap: .3rem; }
-  #status.err { color: #dc2626; }
-  #status.ok { color: var(--assoc); }
-  .stats .stat .n.muted { color: var(--muted); }
-  .grid.two { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 1rem; }
-  .card h3 { margin: 0 0 .6rem; font-size: .95rem; }
-  .card.chart { margin-top: 1rem; }
-  table.t { width: 100%; border-collapse: collapse; font-size: .88rem; }
-  table.t td { padding: .3rem 0; border-top: 1px solid var(--line); vertical-align: top; }
-  table.t td:last-child { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; padding-left: .6rem; }
-  table.t td.k { word-break: break-all; }
-  table.t td .bar { display: inline-block; height: 6px; background: var(--accent); opacity: .6; vertical-align: middle; margin-left: .4rem; border-radius: 3px; }
-  table.t.recent td { white-space: nowrap; }
-  table.t.recent td.k { white-space: normal; }
-  .bars { display: flex; align-items: flex-end; gap: 3px; height: 120px; padding-top: .4rem; }
-  .bars .b { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; position: relative; min-width: 4px; }
-  .bars .b i { display: block; background: var(--accent); border-radius: 2px 2px 0 0; }
-  .bars .b u { display: block; background: var(--fg); opacity: .35; border-radius: 2px 2px 0 0; }
-  .bars .b:hover::after { content: attr(data-t); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: var(--fg); color: var(--bg); font-size: .72rem; padding: .15rem .4rem; border-radius: 4px; white-space: nowrap; z-index: 2; }
-  .heat { display: grid; grid-template-columns: repeat(24, 1fr); gap: 3px; }
-  .heat div { aspect-ratio: 1; border-radius: 3px; background: var(--accent); font-size: .65rem; display: flex; align-items: flex-end; justify-content: center; color: var(--muted); }
-  .split { display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin: .2rem 0 .3rem; background: var(--line); }
-  .split i { display: block; height: 100%; }
-  .split i.m { background: var(--spec); }
-  .split i.d { background: var(--pro); }
-  .legend { font-size: .8rem; color: var(--muted); margin: 0 0 .6rem; }
-  #sc-frame { width: 100%; height: 78vh; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); margin-top: .6rem; }
-  .datalist .ok { color: var(--assoc); }
-  .datalist .warn { color: #d97706; }
-  .datalist .bad { color: #dc2626; }
+<!-- is:global (every rule prefixed with #admin): most of this page is rendered via innerHTML,
+     and Astro's scoped attributes don't reach injected nodes — that's why the daily bars and
+     the heatmap used to render invisible. -->
+<style is:global>
+  #admin { --ok: #16a34a; --warn: #d97706; --bad: #dc2626; --uv: var(--fg); }
+  #admin .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; }
+  #admin .muted { color: var(--muted); }
+  #admin [hidden] { display: none !important; }
+
+  /* head + gate */
+  #admin .adm-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; }
+  #admin .adm-head .lead { margin-top: .3rem; }
+  #admin .who { display: inline-flex; align-items: center; gap: .5rem; font-size: .88rem; font-weight: 500; padding: .3rem .35rem .3rem .4rem; border: 1px solid var(--line); border-radius: 999px; background: var(--card); max-width: 100%; }
+  #admin .who img { border-radius: 50%; }
+  #admin .who #who-email { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  #admin .gate { display: flex; flex-direction: row; gap: 1rem; align-items: flex-start; max-width: 520px; border-left-width: 1px; padding: 1.2rem 1.3rem; margin-top: 1.4rem; }
+  #admin .gate > svg { width: 28px; height: 28px; flex: none; fill: none; stroke: var(--muted); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-top: .15rem; }
+  #admin .gate .note { margin: .2rem 0 .9rem; }
+  #admin #g-btn { min-height: 44px; }
+  #admin #gate-msg:empty { display: none; }
+  #admin #gate-msg.err { color: var(--bad); }
+
+  /* controls */
+  #admin button { font: inherit; color: inherit; cursor: pointer; }
+  #admin .ghost { background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: .2rem .7rem; font-size: .82rem; }
+  #admin .ghost:hover, #admin .icon-btn:hover { border-color: var(--fg); }
+  #admin .seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--line); border-radius: 10px; }
+  #admin .seg button { border: 0; background: transparent; padding: .3rem .75rem; border-radius: 8px; font-size: .85rem; font-weight: 500; color: var(--muted); white-space: nowrap; }
+  #admin .seg button:hover { color: var(--fg); }
+  #admin .seg button.on { background: var(--card); color: var(--fg); box-shadow: 0 1px 2px rgb(0 0 0 / .12); }
+  #admin .icon-btn { display: inline-grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); }
+  #admin .icon-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  #admin .icon-btn.spin svg { animation: adm-spin .8s linear infinite; }
+  @keyframes adm-spin { to { transform: rotate(360deg); } }
+  #admin .status { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  #admin .status.ok { color: var(--ok); }
+  #admin .status.err { color: var(--bad); }
+  #admin .sw { display: inline-flex; align-items: center; gap: .45rem; font-size: .82rem; color: var(--muted); cursor: pointer; user-select: none; white-space: nowrap; }
+  #admin .sw input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  #admin .sw span { position: relative; width: 30px; height: 18px; border-radius: 999px; background: var(--line); transition: background .15s; flex: none; }
+  #admin .sw span::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / .25); transition: transform .15s; }
+  #admin .sw input:checked + span { background: var(--ok); }
+  #admin .sw input:checked + span::after { transform: translateX(12px); }
+  #admin .sw input:focus-visible + span { outline: 2px solid var(--spec); outline-offset: 2px; }
+
+  #admin .toolbar {
+    position: sticky; top: 3.4rem; z-index: 4; margin: 1.4rem 0 0; padding: .55rem 0;
+    display: flex; align-items: center; gap: .55rem .7rem; flex-wrap: wrap;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  #admin .jump { display: flex; gap: .9rem; font-size: .85rem; color: var(--muted); margin-right: .4rem; }
+  #admin .jump a:hover { color: var(--fg); text-decoration: none; }
+  #admin .toggles { display: flex; gap: 1rem; margin-left: auto; }
+
+  /* sections */
+  #admin section { margin-top: 2.2rem; }
+  #admin .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-bottom: .9rem; border-bottom: 1px solid var(--line); padding-bottom: .45rem; }
+  #admin .sec-head h2 { margin: 0; padding: 0; border: 0; font-size: 1.15rem; }
+  #admin .sec-head .mono { font-size: .78rem; }
+  #admin .box { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: .95rem 1.05rem 1rem; margin-top: .85rem; min-width: 0; }
+  #admin .box-head { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; margin-bottom: .7rem; }
+  #admin .box-head h3 { margin: 0; font-size: .92rem; }
+  #admin .box-head .muted { font-size: .75rem; }
+
+  /* KPIs */
+  #admin .kpis { display: grid; gap: .7rem; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #admin .kpi { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: .85rem 1rem .8rem; min-width: 0; }
+  #admin .kpi .l { font-size: .78rem; color: var(--muted); font-weight: 500; display: flex; align-items: center; gap: .4rem; }
+  #admin .kpi .n { font-size: 1.9rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.15; margin-top: .25rem; font-variant-numeric: tabular-nums; }
+  #admin .kpi .n small { font-size: .75rem; font-weight: 600; color: var(--muted); margin-left: .3rem; letter-spacing: 0; }
+  #admin .kpi .s { font-size: .78rem; color: var(--muted); margin-top: .2rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #admin .kpi .s b { color: var(--fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+  #admin .kpi .s code { font-size: .95em; }
+  #admin .kpi.live { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); background: color-mix(in srgb, var(--ok) 6%, var(--card)); }
+  #admin .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+  #admin .kpi.live.on .pulse { background: var(--ok); box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 60%, transparent); animation: adm-pulse 1.8s infinite; }
+  @keyframes adm-pulse { 70% { box-shadow: 0 0 0 7px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+  /* daily chart */
+  #admin .legend { font-size: .75rem; color: var(--muted); display: inline-flex; align-items: center; gap: .35rem; }
+  #admin .lg { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-left: .35rem; }
+  #admin .lg.pv, #admin .bars .b i { background: color-mix(in srgb, var(--accent) 38%, var(--card)); }
+  #admin .lg.uv, #admin .bars .b u { background: var(--accent); }
+  #admin .chart { position: relative; height: 150px; border-bottom: 1px solid var(--line);
+    background: repeating-linear-gradient(to top, transparent 0 calc(25% - 1px), color-mix(in srgb, var(--line) 70%, transparent) calc(25% - 1px) 25%); }
+  #admin .chart { margin-top: 1.1rem; }
+  /* y-max label sits just above the top gridline (never over a full-height bar) */
+  #admin .ymax { position: absolute; bottom: calc(100% + 2px); left: 0; font-size: .68rem; line-height: 1; color: var(--muted); }
+  #admin .bars { position: absolute; inset: 0; display: flex; align-items: stretch; gap: 3px; }
+  #admin .bars .b { flex: 1 1 0; position: relative; min-width: 2px; }
+  #admin .bars .b i, #admin .bars .b u { position: absolute; bottom: 0; left: 0; right: 0; border-radius: 3px 3px 0 0; min-height: 0; }
+  #admin .bars .b u { left: 22%; right: 22%; }
+  #admin .bars .b:hover i { filter: brightness(.92); }
+  #admin .bars .b:hover::after { content: attr(data-t); position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); background: var(--fg); color: var(--bg); font-size: .72rem; padding: .15rem .45rem; border-radius: 5px; white-space: nowrap; z-index: 3; pointer-events: none; }
+  #admin .bars .b:first-child:hover::after { left: 0; transform: none; }
+  #admin .bars .b:last-child:hover::after { left: auto; right: 0; transform: none; }
+  #admin .xaxis { display: flex; justify-content: space-between; font-size: .68rem; color: var(--muted); margin-top: .35rem; }
+
+  /* ranked lists (bar behind the row) */
+  #admin .adm-grid { display: grid; gap: 0 .85rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #admin .rank { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; font-size: .86rem; }
+  #admin .rank li { position: relative; display: flex; justify-content: space-between; gap: .75rem; padding: .28rem .5rem; border-radius: 6px; overflow: hidden; }
+  #admin .rank li > i { position: absolute; inset: 0 auto 0 0; background: color-mix(in srgb, var(--accent) 16%, transparent); border-radius: 6px; z-index: 0; }
+  #admin .rank li > span { position: relative; z-index: 1; min-width: 0; }
+  #admin .rank .k { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #admin .rank .v { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 600; }
+  #admin .rank .v .muted { font-weight: 400; }
+  #admin .rank li.empty { color: var(--muted); }
+  #admin .split { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: var(--line); gap: 2px; }
+  #admin .split i { display: block; height: 100%; }
+  #admin .split i.m { background: var(--spec); }
+  #admin .split i.d { background: var(--pro); }
+  #admin .dev-legend { display: flex; gap: 1rem; font-size: .8rem; color: var(--muted); margin: .45rem 0 .7rem; }
+  #admin .dev-legend span { display: inline-flex; align-items: center; gap: .3rem; }
+  #admin .dev-legend b { color: var(--fg); font-variant-numeric: tabular-nums; }
+  #admin .dev-legend .dm { color: var(--spec); } #admin .dev-legend .dd { color: var(--pro); }
+
+  /* hours heatmap */
+  #admin .heat { display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); gap: 3px; }
+  #admin .heat div { height: 28px; border-radius: 4px; background: var(--line); }
+  #admin .heat-x { display: flex; justify-content: space-between; font-size: .68rem; color: var(--muted); margin-top: .35rem; }
+
+  /* recent */
+  #admin .recent { list-style: none; margin: 0; padding: 0; font-size: .85rem; }
+  #admin .recent li { display: grid; grid-template-columns: 6rem minmax(0, 1fr) minmax(0, 11rem) 1.2rem; gap: .75rem; align-items: center; padding: .38rem 0; border-top: 1px solid var(--line); }
+  #admin .recent li:first-child { border-top: 0; }
+  #admin .recent .t { color: var(--muted); font-size: .78rem; }
+  #admin .recent .p, #admin .recent .r { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #admin .recent .r { color: var(--muted); }
+  #admin .recent svg, #admin .dev-legend svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  #admin .recent svg { color: var(--muted); }
+
+  /* ops tiles */
+  #admin .tiles { display: grid; gap: .7rem; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+  #admin .tile { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: .8rem .95rem; min-width: 0; }
+  #admin .tile .tk { display: flex; align-items: center; gap: .45rem; font-size: .78rem; color: var(--muted); font-weight: 500; }
+  #admin .tile .tk::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--line); flex: none; }
+  #admin .tile.ok .tk::before { background: var(--ok); }
+  #admin .tile.warn .tk::before { background: var(--warn); }
+  #admin .tile.bad .tk::before { background: var(--bad); }
+  #admin .tile .tv { font-weight: 600; margin-top: .3rem; font-size: .95rem; overflow-wrap: anywhere; }
+  #admin .tile.bad .tv { color: var(--bad); }
+  #admin .tile .ts { font-size: .78rem; color: var(--muted); margin-top: .1rem; overflow-wrap: anywhere; }
+
+  /* other admins */
+  #admin .ext { font-size: .82rem; color: var(--muted); white-space: nowrap; }
+  #admin .app-row { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
+  #admin .conn { margin-top: .7rem; font-size: .85rem; }
+  #admin .conn summary { cursor: pointer; color: var(--muted); width: fit-content; }
+  #admin .conn-body { display: flex; gap: .5rem; margin-top: .5rem; max-width: 520px; }
+  #admin .conn-body input { flex: 1; min-width: 0; font: .85rem ui-monospace, Menlo, monospace; color: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: .4rem .6rem; }
+  #admin .conn .note { color: var(--muted); font-size: .8rem; margin: .5rem 0 0; max-width: 75ch; }
+  #admin #sc-frame { width: 100%; height: 78vh; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); margin-top: .8rem; display: block; }
+
+  @media (max-width: 760px) {
+    #admin .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #admin .adm-grid { grid-template-columns: minmax(0, 1fr); }
+    #admin .toggles { margin-left: 0; width: 100%; }
+    #admin .recent li { grid-template-columns: 6rem minmax(0, 1fr) 1.1rem; }
+    #admin .recent .r { display: none; }
+  }
+  @media (max-width: 560px) {
+    #admin .jump { display: none; }
+    #admin .toolbar { top: 5rem; }
+    #admin .kpi .n { font-size: 1.55rem; }
+    #admin .heat div { height: 22px; }
+    #admin .heat { gap: 2px; }
+  }
 </style>
 
 <script>
@@ -154,22 +330,31 @@ import { analytics, admin } from '../../data/site';
   const esc = (s: unknown) =>
     String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
   const fmt = (n: number) => n.toLocaleString('ko-KR');
+  const ICON = {
+    m: '<svg viewBox="0 0 24 24" aria-label="모바일"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg>',
+    d: '<svg viewBox="0 0 24 24" aria-label="데스크톱"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>',
+  };
+  // ranked list: the row itself is the bar (width ∝ share of the top item)
   const rows = (id: string, items: { k: string; n: number; uv?: number }[], link = false) => {
     const max = Math.max(1, ...items.map((i) => i.n));
     $(id).innerHTML = items.length
       ? items
-          .map(
-            (i) =>
-              `<tr><td class="k">${link ? `<a href="${esc(i.k)}" target="_blank" rel="noopener">${esc(i.k.replace(/^https?:\/\//, ''))}</a>` : esc(i.k)}</td>` +
-              `<td>${fmt(i.n)}${i.uv != null ? ` <span class="muted">/ ${fmt(i.uv)}</span>` : ''}<span class="bar" style="width:${Math.round((i.n / max) * 60)}px"></span></td></tr>`
-          )
+          .map((i) => {
+            const label = link
+              ? `<a href="${esc(i.k)}" target="_blank" rel="noopener" title="${esc(i.k)}">${esc(i.k.replace(/^https?:\/\//, ''))}</a>`
+              : `<span title="${esc(i.k)}">${esc(i.k)}</span>`;
+            return (
+              `<li><i style="width:${((i.n / max) * 100).toFixed(1)}%"></i><span class="k">${label}</span>` +
+              `<span class="v">${fmt(i.n)}${i.uv != null ? ` <span class="muted">/ ${fmt(i.uv)}</span>` : ''}</span></li>`
+            );
+          })
           .join('')
-      : '<tr><td class="muted">없음</td><td></td></tr>';
+      : '<li class="empty"><span>아직 없음</span></li>';
   };
   const setStatus = (msg: string, cls = '') => {
     const el = $('status');
     el.textContent = msg;
-    el.className = 'hint ' + cls;
+    el.className = 'status ' + cls;
   };
 
   // ---- Google sign-in (GIS) ---------------------------------------------------------
@@ -178,6 +363,36 @@ import { analytics, admin } from '../../data/site';
   const CLIENT_ID = root.dataset.clientId!;
   const ADMIN_EMAIL = (root.dataset.email || '').toLowerCase();
   const LS_ID = 'hub.admin.idtoken';
+  // layout preview on a dev server only (`/admin/?demo`): synthetic numbers, no auth, no API
+  // call — the live API's CORS allows only the hub origin, so localhost can't fetch real stats.
+  const DEMO = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) && new URLSearchParams(location.search).has('demo');
+  function demoStats(days: number) {
+    const r = (a: number, b: number) => a + Math.floor(Math.random() * (b - a + 1));
+    const now = new Date(Date.now() + 9 * 36e5);
+    const daily = Array.from({ length: days }, (_, i) => {
+      const d = new Date(now.getTime() - (days - 1 - i) * 864e5);
+      const pv = r(2, 40);
+      return { date: d.toISOString().slice(0, 10), pv, uv: Math.max(1, Math.round(pv * (0.45 + Math.random() * 0.4))) };
+    });
+    const pv = daily.reduce((a, d) => a + d.pv, 0);
+    const pages = ['/', '/bedrock/', '/admin/'].map((k, i) => ({ k, n: Math.round(pv / (i + 1.4)), uv: Math.round(pv / (i + 2.2)) }));
+    return {
+      days, now: now.toISOString(),
+      live: { visitors: 2, pages: [{ k: '/', n: 1 }, { k: '/bedrock/', n: 1 }] },
+      today: { pv: daily[days - 1].pv, uv: daily[days - 1].uv },
+      range: { pv, uv: daily.reduce((a, d) => a + d.uv, 0), clicks: r(3, 30), bots: r(0, 20) },
+      daily, pages,
+      referrers: [{ k: 'direct', n: r(20, 60) }, { k: 'velog.io', n: r(5, 20) }, { k: 'google.com', n: r(1, 10) }, { k: 'github.com', n: r(1, 5) }],
+      clicks: [{ k: 'https://apps.apple.com/kr/app/id6804211842', n: r(3, 9) }, { k: 'https://velog.io/@seanson2709', n: r(1, 5) }],
+      langs: [{ k: 'ko', n: r(20, 50) }, { k: 'en', n: r(5, 20) }, { k: 'ja', n: r(0, 4) }],
+      devices: { m: r(10, 40), d: r(10, 40) },
+      hours: Array.from({ length: 24 }, (_, h) => (h > 8 && h < 24 ? r(0, 12) : r(0, 2))),
+      recent: Array.from({ length: 12 }, (_, i) => ({
+        ts: Date.now() - i * r(4, 90) * 6e4, p: pages[i % 3].k,
+        r: ['direct', 'velog.io', 'google.com', 'https://a-very-long-referrer.example.com/some/deep/path'][i % 4], d: i % 3 ? 'd' : 'm',
+      })),
+    };
+  }
   localStorage.removeItem('hub.admin.token'); // retired static admin token — purge old copies
   type Claims = { email?: string; exp?: number; picture?: string };
   const claims = (jwt: string | null): Claims | null => {
@@ -245,15 +460,17 @@ import { analytics, admin } from '../../data/site';
   function showGate(msg = '', err = false, keepPanel = false) {
     clearTimeout(timer);
     if (!keepPanel) $('panel').hidden = true;
+    if (!keepPanel) $('who').hidden = true;
     $('gate').hidden = false;
     gateMsg(msg, err);
     gis(() => (window as any).google.accounts.id.prompt());
   }
   let booted = false;
   function signedIn() {
-    const c = claims(idToken());
+    const c = DEMO ? { email: ADMIN_EMAIL + ' (demo)' } : claims(idToken());
     $('gate').hidden = true;
     $('panel').hidden = false;
+    $('who').hidden = false;
     $('who-email').textContent = c?.email ?? '';
     const pic = $('who-pic') as HTMLImageElement;
     if (c?.picture?.startsWith('https://')) {
@@ -274,7 +491,15 @@ import { analytics, admin } from '../../data/site';
   });
 
   // ---- options -------------------------------------------------------------------
-  const daysEl = $('days') as HTMLSelectElement;
+  const daysEl = $('days');
+  let days = 7;
+  daysEl.querySelectorAll<HTMLButtonElement>('button').forEach((b) =>
+    b.addEventListener('click', () => {
+      days = Number(b.dataset.d);
+      daysEl.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b));
+      load();
+    })
+  );
   const autoEl = $('auto') as HTMLInputElement;
   const notrackEl = $('notrack') as HTMLInputElement;
   notrackEl.checked = localStorage.getItem(LS_NOTRACK) === '1';
@@ -283,11 +508,19 @@ import { analytics, admin } from '../../data/site';
     else localStorage.removeItem(LS_NOTRACK);
   });
   $('reload').addEventListener('click', () => load());
-  daysEl.addEventListener('change', () => load());
+  autoEl.addEventListener('change', () => {
+    clearTimeout(timer);
+    if (autoEl.checked) timer = window.setTimeout(load, 60_000);
+  });
 
   // ---- stats -------------------------------------------------------------------------
   let timer: number | undefined;
   async function load() {
+    if (DEMO) {
+      render(demoStats(days));
+      setStatus('데모 데이터 · 갱신 ' + new Date().toLocaleTimeString('ko-KR'), 'ok');
+      return;
+    }
     const token = idToken();
     if (!token) {
       localStorage.removeItem(LS_ID);
@@ -295,15 +528,18 @@ import { analytics, admin } from '../../data/site';
       return showGate('로그인이 만료되어 갱신 중… 안 되면 아래 버튼으로 다시 로그인하세요', false, booted);
     }
     setStatus('조회 중…');
+    $('reload').classList.add('spin');
     let res: Response;
     try {
-      res = await fetch(`${ENDPOINT}/stats?days=${daysEl.value}`, {
+      res = await fetch(`${ENDPOINT}/stats?days=${days}`, {
         headers: { Authorization: `Bearer ${token}` },
         cache: 'no-store',
       });
     } catch (e) {
       const local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
-      return setStatus(local ? '로컬에서는 API CORS가 hub 도메인만 허용해서 통계를 못 불러와요 (정상).' : '네트워크 오류: ' + (e as Error).message, 'err');
+      return setStatus(local ? '로컬에서는 API CORS가 hub 도메인만 허용해서 통계를 못 불러와요 (정상). ?demo 로 레이아웃 확인' : '네트워크 오류: ' + (e as Error).message, 'err');
+    } finally {
+      $('reload').classList.remove('spin');
     }
     if (res.status === 401 || res.status === 403) {
       localStorage.removeItem(LS_ID);
@@ -312,69 +548,91 @@ import { analytics, admin } from '../../data/site';
     }
     if (!res.ok) return setStatus(`오류 ${res.status}`, 'err');
     render(await res.json());
-    setStatus('갱신 ' + new Date().toLocaleTimeString('ko-KR'), 'ok');
+    setStatus('갱신 ' + new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }), 'ok');
     clearTimeout(timer);
     if (autoEl.checked) timer = window.setTimeout(load, 60_000);
   }
 
   function render(s: any) {
     $('visitors').hidden = false;
-    const label = s.days === 1 ? '오늘' : `${s.days}일`;
     $('asof').textContent = `KST ${s.now.slice(0, 16).replace('T', ' ')}`;
     $('k-live').textContent = fmt(s.live.visitors);
+    document.querySelector('#admin .kpi.live')!.classList.toggle('on', s.live.visitors > 0);
     $('k-tpv').textContent = fmt(s.today.pv);
     $('k-tuv').textContent = fmt(s.today.uv);
-    $('k-rl').textContent = label;
-    $('k-rl2').textContent = label;
+    $('k-rl').textContent = s.days === 1 ? '1일' : `${s.days}일`;
     $('k-rpv').textContent = fmt(s.range.pv);
     $('k-ruv').textContent = fmt(s.range.uv);
     $('k-clk').textContent = fmt(s.range.clicks);
     $('k-bot').textContent = fmt(s.range.bots);
     $('live-pages').innerHTML = s.live.pages.length
-      ? '지금 보는 페이지: ' + s.live.pages.map((p: any) => `<code>${esc(p.k)}</code> ×${p.n}`).join(' · ')
+      ? s.live.pages.map((p: any) => `<code>${esc(p.k)}</code> ×${p.n}`).join(' · ')
       : '지금 접속자 없음';
 
+    // daily: wide pale bar = PV, narrow solid bar = UV (overlaid, same scale)
     const dmax = Math.max(1, ...s.daily.map((d: any) => d.pv));
+    const pct = (n: number) => `${((n / dmax) * 100).toFixed(1)}%`;
+    $('ymax').textContent = fmt(dmax);
     $('daily').innerHTML = s.daily
       .map(
         (d: any) =>
-          `<div class="b" data-t="${d.date.slice(5)} · PV ${d.pv} / UV ${d.uv}">` +
-          `<u style="height:${Math.round((d.uv / dmax) * 100)}%"></u><i style="height:${Math.round(((d.pv - d.uv) / dmax) * 100)}%"></i></div>`
+          `<div class="b" data-t="${esc(d.date.slice(5))} · PV ${d.pv} · 방문자 ${d.uv}">` +
+          `<i style="height:${pct(d.pv)}"></i><u style="height:${pct(d.uv)}"></u></div>`
       )
       .join('');
+    const ds: string[] = s.daily.map((d: any) => String(d.date).slice(5).replace('-', '.'));
+    const ticks = ds.length <= 1 ? ds : [ds[0], ds[Math.floor((ds.length - 1) / 2)], ds[ds.length - 1]];
+    $('xaxis').innerHTML = ticks.map((t) => `<span>${esc(t)}</span>`).join('');
 
     rows('pages', s.pages);
     rows('refs', s.referrers);
     rows('clicks', s.clicks, true);
     rows('langs', s.langs);
-    const tot = s.devices.m + s.devices.d || 1;
-    $('devices').innerHTML = `<i class="m" style="width:${(s.devices.m / tot) * 100}%"></i><i class="d" style="width:${(s.devices.d / tot) * 100}%"></i>`;
-    $('devices-legend').textContent = `모바일 ${fmt(s.devices.m)} · 데스크톱 ${fmt(s.devices.d)}`;
+    const tot = s.devices.m + s.devices.d;
+    const share = (n: number) => (tot ? Math.round((n / tot) * 100) : 0);
+    $('devices').innerHTML = tot
+      ? `<i class="m" style="width:${(s.devices.m / tot) * 100}%"></i><i class="d" style="width:${(s.devices.d / tot) * 100}%"></i>`
+      : '';
+    $('devices-legend').innerHTML =
+      `<span class="dm">${ICON.m}</span><span>모바일 <b>${fmt(s.devices.m)}</b> · ${share(s.devices.m)}%</span>` +
+      `<span class="dd">${ICON.d}</span><span>데스크톱 <b>${fmt(s.devices.d)}</b> · ${share(s.devices.d)}%</span>`;
 
     const hmax = Math.max(1, ...s.hours);
     $('hours').innerHTML = s.hours
-      .map((h: number, i: number) => `<div title="${i}시 · ${h}" style="opacity:${0.12 + (h / hmax) * 0.88}">${i % 3 === 0 ? i : ''}</div>`)
+      .map((h: number, i: number) => {
+        const bg = h ? `color-mix(in srgb, var(--accent) ${Math.round(18 + (h / hmax) * 82)}%, var(--line))` : '';
+        return `<div title="${i}시 · ${h}"${bg ? ` style="background:${bg}"` : ''}></div>`;
+      })
       .join('');
 
+    const hhmm = (ts: number | string) => {
+      const d = new Date(new Date(ts).getTime() + 9 * 36e5); // KST regardless of the viewer's TZ
+      const p = (n: number) => String(n).padStart(2, '0');
+      return `${p(d.getUTCMonth() + 1)}.${p(d.getUTCDate())} ${p(d.getUTCHours())}:${p(d.getUTCMinutes())}`;
+    };
     $('recent').innerHTML = s.recent.length
       ? s.recent
           .map(
             (e: any) =>
-              `<tr><td>${new Date(e.ts).toLocaleString('ko-KR', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</td>` +
-              `<td class="k">${esc(e.p)}</td><td class="muted">${esc(e.r)}</td><td>${e.d === 'm' ? '📱' : '💻'}</td></tr>`
+              `<li><span class="t mono">${hhmm(e.ts)}</span>` +
+              `<span class="p" title="${esc(e.p)}">${esc(e.p)}</span><span class="r" title="${esc(e.r)}">${esc(e.r)}</span>${e.d === 'm' ? ICON.m : ICON.d}</li>`
           )
           .join('')
-      : '<tr><td class="muted">없음</td></tr>';
+      : '<li class="muted">아직 없음</li>';
   }
 
   // ---- ops: GitHub Actions + data freshness (public repo → unauthenticated API) ----
   async function ops() {
     const items: string[] = [];
-    const li = (k: string, v: string, cls = '') => items.push(`<li><span class="k">${esc(k)}</span> <span class="${cls}">${v}</span></li>`);
+    // v/sub are pre-escaped HTML
+    const tile = (k: string, v: string, sub = '', cls = '') =>
+      items.push(`<div class="tile ${cls}"><div class="tk">${esc(k)}</div><div class="tv">${v}</div>${sub ? `<div class="ts">${sub}</div>` : ''}</div>`);
     const ago = (iso: string) => {
       const h = (Date.now() - new Date(iso).getTime()) / 36e5;
       return h < 1 ? `${Math.round(h * 60)}분 전` : h < 48 ? `${Math.round(h)}시간 전` : `${Math.round(h / 24)}일 전`;
     };
+    const kst = (iso: string) =>
+      new Date(iso).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
     try {
       const meta = await (await fetch('/data/bedrock/meta.json', { cache: 'no-store' })).json();
       const h = (Date.now() - new Date(meta.checked_at).getTime()) / 36e5;
@@ -382,13 +640,13 @@ import { analytics, admin } from '../../data/site';
       try {
         n = String((await (await fetch('/data/bedrock/seoul.json', { cache: 'no-store' })).json()).stats?.primary_models ?? '?');
       } catch {}
-      li('Bedrock 데이터', `${esc(meta.checked_at)} (${ago(meta.checked_at)}) · 서울 ${esc(n)}개 모델`, h > 30 ? 'bad' : h > 26 ? 'warn' : 'ok');
+      tile('Bedrock 데이터', `서울 ${esc(n)}개 모델`, `확인 ${esc(ago(meta.checked_at))} · ${esc(kst(meta.checked_at))} KST`, h > 30 ? 'bad' : h > 26 ? 'warn' : 'ok');
     } catch {
-      li('Bedrock 데이터', 'meta.json 읽기 실패', 'bad');
+      tile('Bedrock 데이터', 'meta.json 읽기 실패', '', 'bad');
     }
     for (const [name, wf] of [
       ['bedrock-refresh', 'bedrock-refresh.yml'],
-      ['pages 배포', 'pages.yml'],
+      ['Pages 배포', 'pages.yml'],
     ]) {
       try {
         const r = await fetch(`https://api.github.com/repos/Sean2709/hub/actions/workflows/${wf}/runs?per_page=1`, {
@@ -398,32 +656,33 @@ import { analytics, admin } from '../../data/site';
         const run = (await r.json()).workflow_runs?.[0];
         if (!run) throw new Error('no runs');
         const good = run.conclusion === 'success';
-        li(
+        tile(
           name,
-          `<a href="${esc(run.html_url)}" target="_blank" rel="noopener">${esc(run.conclusion || run.status)}</a> · ${ago(run.updated_at)} · ${esc(run.event)}`,
+          `<a href="${esc(run.html_url)}" target="_blank" rel="noopener">${esc(run.conclusion || run.status)} ↗</a>`,
+          `${esc(ago(run.updated_at))} · ${esc(run.event)}`,
           good ? 'ok' : run.conclusion ? 'bad' : 'warn'
         );
       } catch (e) {
-        li(name, `조회 실패 (${esc((e as Error).message)})`, 'warn');
+        tile(name, '조회 실패', esc((e as Error).message), 'warn');
       }
     }
     try {
       const ch = await (await fetch('/data/bedrock/changes.json', { cache: 'no-store' })).json();
       const list: Record<string, unknown>[] = Array.isArray(ch) ? ch : ch.changes ?? [];
-      const latest = list.reduce((m, c) => (String(c.date) > m ? String(c.date) : m), '');
-      const rows = list.filter((c) => String(c.date) === latest);
-      li(
+      const diffs = list.filter((c) => c.type === 'diff');
+      const src = diffs.length ? diffs : list;
+      const latest = src.reduce((m, c) => (String(c.date) > m ? String(c.date) : m), '');
+      const rows = src.filter((c) => String(c.date) === latest);
+      const n = (c: Record<string, unknown>, k: string) => (Array.isArray(c[k]) ? (c[k] as unknown[]).length : 0);
+      tile(
         '최근 카탈로그 변경',
-        rows.length
-          ? `${esc(latest)} · ` +
-              rows
-                .map((c) => {
-                  const n = (k: string) => (Array.isArray(c[k]) ? (c[k] as unknown[]).length : 0);
-                  const what = c.type === 'diff' ? `+${n('added')}/-${n('removed')}/~${n('changed')}` : `${esc(String(c.type ?? ''))} ${esc(String(c.count ?? ''))}개`;
-                  return `${esc(String(c.region ?? ''))} ${what}`;
-                })
-                .join(', ')
-          : '기록 없음'
+        !rows.length ? '기록 없음' : diffs.length ? esc(latest) : '변경 없음',
+        !rows.length
+          ? ''
+          : diffs.length
+            ? rows.map((c) => `${esc(String(c.region ?? ''))} +${n(c, 'added')} −${n(c, 'removed')} ~${n(c, 'changed')}`).join(' · ')
+            : `기준선 ${esc(latest)} · ${rows.length}개 리전`,
+        'ok'
       );
     } catch {}
     $('ops-list').innerHTML = items.join('');
@@ -440,11 +699,11 @@ import { analytics, admin } from '../../data/site';
   });
   async function showApp(app: string) {
     localStorage.setItem(LS_APP, app);
-    document.querySelectorAll<HTMLButtonElement>('.btn.app').forEach((b) => b.classList.toggle('on', b.dataset.app === app));
+    document.querySelectorAll<HTMLButtonElement>('#admin .seg .app').forEach((b) => b.classList.toggle('on', b.dataset.app === app));
     const url = `${scBase()}/admin?app=${app}`;
     ($('sc-open') as HTMLAnchorElement).href = url;
     const st = $('sc-status');
-    st.className = 'hint';
+    st.className = 'status';
     st.textContent = '연결 확인 중…';
     // Chrome 138+ "Local Network Access": a public https page reaching 127.0.0.1 needs a
     // one-time permission. While the prompt is up the fetch just hangs, so a short
@@ -457,7 +716,7 @@ import { analytics, admin } from '../../data/site';
       frame.hidden = true;
       frame.removeAttribute('src');
       st.textContent = '브라우저가 이 사이트의 로컬 네트워크 접근을 차단 중 — 주소창 왼쪽 사이트 설정에서 "로컬 네트워크 액세스"를 허용하세요';
-      st.className = 'hint err';
+      st.className = 'status err';
       return;
     }
     if (perm === 'prompt') st.textContent = '브라우저가 로컬 네트워크 접근 권한을 물어봅니다 → "허용"을 누르세요';
@@ -480,13 +739,13 @@ import { analytics, admin } from '../../data/site';
         perm === 'prompt'
           ? `${scBase()} 연결 안 됨 — 권한 프롬프트에 응답하지 않았거나 로컬 SeanChat 백엔드가 꺼져 있습니다. 앱 버튼을 다시 누르면 재시도합니다`
           : `${scBase()} 응답 없음 — 로컬 SeanChat 백엔드가 꺼져 있거나 이 기기가 아닙니다`;
-      st.className = 'hint err';
+      st.className = 'status err';
     }
   }
-  document.querySelectorAll<HTMLButtonElement>('.btn.app').forEach((b) => b.addEventListener('click', () => showApp(b.dataset.app!)));
+  document.querySelectorAll<HTMLButtonElement>('#admin .seg .app').forEach((b) => b.addEventListener('click', () => showApp(b.dataset.app!)));
 
   // ---- boot ----------------------------------------------------------------------------
-  if (idToken()) signedIn();
+  if (DEMO || idToken()) signedIn();
   else {
     localStorage.removeItem(LS_ID);
     showGate();
