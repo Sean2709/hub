@@ -1,6 +1,8 @@
 // 너그거알아(KnowThat) 문항 관리 — 도메인 로직 + Firestore REST.
 // KnowThat 리포 `scripts/content.py`와 같은 규칙(검증·스케줄 연장·잠금). 바꾸면 둘 다 바꿀 것.
 // 앱은 Firestore `public/content`(비인증 GET)를 받아 쓴다. 쓰기는 rules상 관리자 계정만.
+// 출제 방식(앱 1.0.2~, KnowThat `Shared/DailyAssignment.swift`): 설치별 seed로 활성 문항을 섞어 사용자마다 날마다
+// 다른 문제, 한 번 본 문제는 다시 안 나옴, 분야는 남은 문항 수에 비례. `schedule`은 1.0.1 이하 호환용으로만 유지.
 
 export const PROJECT = 'knowthat-app';
 // Firebase 웹 API 키(공개값 — 보안은 Firestore rules가 담당)
@@ -8,6 +10,8 @@ export const API_KEY = 'AIzaSyCvr4F6l0DfGKLsQ1BcrhSLIphX8L4gzEs';
 const FS = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents`;
 
 export const EPOCH_UTC = Date.UTC(2026, 0, 1);
+/** 스토어 출시일(2026-09-24) dayIndex — 가장 먼저 설치한 사람의 첫날 */
+export const RELEASE_INDEX = Math.round((Date.UTC(2026, 8, 24) - EPOCH_UTC) / 86400e3);
 export const HORIZON = 180;
 export const CATEGORIES: Record<string, string> = {
   earth: '지구', history: '역사', korea: '한국', science: '과학', culture: '문화',
@@ -121,10 +125,20 @@ export function diffSummary(p: Payload, pub: Payload | null, t = todayIndex()) {
   const po = new Map((pub?.facts ?? []).map((f) => [f.id, JSON.stringify(f)]));
   const added = p.facts.filter((f) => !po.has(f.id)).map((f) => f.id);
   const changed = p.facts.filter((f) => po.has(f.id) && po.get(f.id) !== JSON.stringify(f)).map((f) => f.id);
+  const pr = new Map((pub?.facts ?? []).map((f) => [f.id, !!f.retired]));
+  const retired = p.facts.filter((f) => pr.get(f.id) === false && f.retired).map((f) => f.id);
+  const resumed = p.facts.filter((f) => pr.get(f.id) === true && !f.retired).map((f) => f.id);
   const ps = pub?.schedule ?? [];
   let sched = 0;
   for (let i = t + 1; i < Math.min(p.schedule.length, ps.length); i++) if (p.schedule[i] !== ps[i]) sched++;
-  return { added, changed, sched, total: added.length + changed.length + sched };
+  return { added, changed, retired, resumed, sched, total: added.length + changed.length + sched };
+}
+
+/** 분야별 활성 문항 수(앱은 남은 문항 수에 비례해 분야를 고르므로 ≈ 출제 비율) */
+export function categoryCounts(p: Payload) {
+  const m = new Map<string, number>(Object.keys(CATEGORIES).map((k) => [k, 0]));
+  for (const f of p.facts) if (!f.retired) m.set(f.category, (m.get(f.category) ?? 0) + 1);
+  return m;
 }
 
 export function nextId(p: Payload, category: string) {

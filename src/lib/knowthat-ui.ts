@@ -1,10 +1,11 @@
 // 너그거알아(KnowThat) 문항 관리 패널 — /admin/ 앱 관리 탭에서 mount.
 // 작업본(메모리) → "초안 저장"(admin/draft) → "배포"(public/content + manifest, version+1).
 // 규칙(검증·스케줄 잠금·연장)은 knowthat-core.ts = KnowThat `scripts/content.py`와 동일.
+// 앱 1.0.2~는 사용자별 무작위 배정(날짜별 공통 문제 없음) → 화면은 문항 풀 중심. 날짜 스케줄은 1.0.1 이하 호환용 탭으로만.
 import {
-  CATEGORIES, LIMITS, HORIZON, type Fact, type Payload, type Doc,
+  CATEGORIES, LIMITS, HORIZON, RELEASE_INDEX, type Fact, type Payload, type Doc,
   len, clone, todayIndex, dateLabel, nowIso, validate, validateFact, extend, lockedDiff,
-  diffSummary, nextId, firebaseToken, clearFirebaseToken, getDoc, commit, ConflictError,
+  diffSummary, categoryCounts, nextId, firebaseToken, clearFirebaseToken, getDoc, commit, ConflictError,
   stringify, activeCount,
 } from './knowthat-core';
 
@@ -29,6 +30,7 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
   let form: Fact | null = null; // 에디터 폼 값(적용 전)
   let schedFrom = -14; // 스케줄 탭 표시 시작(오늘 기준 상대)
   let schedCount = 90;
+  let reflow = false; // 다음 배포 때 구버전 스케줄을 내일부터 재배치
   let busy = false;
   let msg = { text: '', cls: '' };
 
@@ -111,7 +113,7 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
     }
   }
 
-  async function publish(reflow: boolean) {
+  async function publish() {
     if (!work) return;
     const p = extend(clone(work), T(), HORIZON, reflow);
     const bad = lockedDiff(p, pub);
@@ -124,11 +126,14 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
     const d = diffSummary(p, pub);
     if (pub && !d.total) return say('배포본과 차이 없음', '');
     const next = (pub?.version ?? 0) + 1;
+    const n = activeCount(p);
+    const other = d.changed.length - d.retired.length - d.resumed.length;
     const ok = confirm(
       `v${next} 배포 — 앱이 다음 실행(최대 3시간 간격 확인) 때 받아 갑니다.\n\n` +
-        `새 문항 ${d.added.length} · 수정 ${d.changed.length} · 미래 스케줄 변경 ${d.sched}칸\n` +
-        `활성 문항 ${activeCount(p)}개 · 스케줄 ~${dateLabel(p.schedule.length - 1, true)}` +
-        (reflow ? '\n\n※ 내일부터 스케줄 전체 재배치' : ''),
+        `새 문항 ${d.added.length} · 내용 수정 ${other} · 출제 중지 ${d.retired.length} · 재개 ${d.resumed.length}\n` +
+        `활성 문항 ${n}개 — 사용자마다 무작위 하루 1문항(한 사람당 ${n}일 동안 중복 없음)\n` +
+        `구버전(1.0.1 이하) 스케줄: ~${dateLabel(p.schedule.length - 1, true)}까지 자동 연장${d.sched ? ` · 변경 ${d.sched}칸` : ''}` +
+        (reflow ? '\n\n※ 구버전 스케줄을 내일부터 전체 재배치' : ''),
     );
     if (!ok) return;
     busy = true;
@@ -149,6 +154,7 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
       draftDoc = { json: s, updateTime: ut(2), fields: { updatedAt: { stringValue: p.updatedAt } } };
       work = p;
       saved = s;
+      reflow = false;
       say(`v${next} 배포 OK — 활성 ${activeCount(p)}문항`, 'ok');
     } catch (e: any) {
       say(e?.message ?? String(e), 'err');
@@ -228,7 +234,7 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
     if (f.retired) delete f.retired;
     else f.retired = true;
     if (form?.id === id) form = clone(f);
-    say(f.retired ? `${id} 출제 중지 — 배포 시 미래 스케줄에서 자동 교체(과거 기록은 유지)` : `${id} 출제 재개`, 'ok');
+    say(f.retired ? `${id} 출제 중지 — 배포하면 더 이상 배정 안 됨(오늘 아직 안 푼 사람은 다른 문제로 교체, 푼 기록은 유지)` : `${id} 출제 재개 — 배포하면 다시 배정 대상`, 'ok');
     render();
   }
 
@@ -261,19 +267,7 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
     (withAll ? `<option value="">전체 분류</option>` : '') +
     Object.entries(CATEGORIES).map(([k, n]) => `<option value="${k}"${k === v ? ' selected' : ''}>${n}</option>`).join('');
 
-  function stats() {
-    const t = T();
-    const m = new Map<string, { n: number; last: number; next: number }>();
-    (work?.schedule ?? []).forEach((id, i) => {
-      const s = m.get(id) ?? { n: 0, last: -1, next: -1 };
-      if (i <= t) { s.n++; s.last = i; } else if (s.next < 0) s.next = i;
-      m.set(id, s);
-    });
-    return m;
-  }
-
   function render() {
-    const t = T();
     if (!work) {
       el.innerHTML = `<div class="kt"><div class="kt-bar"><b>너그거알아 문항 관리</b>
         <button type="button" data-act="load"${busy ? ' disabled' : ''}>불러오기</button></div>
@@ -281,19 +275,24 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
       return;
     }
     const d = diffSummary(work, pub);
-    const today = byId().get(work.schedule[t] ?? '');
+    const n = activeCount(work);
+    const other = d.changed.length - d.retired.length - d.resumed.length;
+    const pend = [
+      d.added.length && `새 ${d.added.length}`, other && `수정 ${other}`,
+      d.retired.length && `중지 ${d.retired.length}`, d.resumed.length && `재개 ${d.resumed.length}`,
+      d.sched && `구버전 스케줄 ${d.sched}칸`,
+    ].filter(Boolean).join(' · ');
     el.innerHTML = `<div class="kt">
       <div class="kt-bar">
         <div class="sum">
-          <b>배포본 v${pub?.version ?? '-'}</b> · 활성 ${activeCount(work)}/${work.facts.length}문항 · 스케줄 ~${dateLabel(work.schedule.length - 1, true)}
-          ${d.total ? `<span class="pending">미배포 변경 ${d.added.length ? `새 ${d.added.length} ` : ''}${d.changed.length ? `수정 ${d.changed.length} ` : ''}${d.sched ? `스케줄 ${d.sched}칸` : ''}</span>` : `<span class="pending none">배포본과 동일</span>`}
+          <b>배포본 v${pub?.version ?? '-'}</b> · 활성 ${n}/${work.facts.length}문항
+          ${d.total ? `<span class="pending">미배포 변경 ${pend}</span>` : `<span class="pending none">배포본과 동일</span>`}
           ${dirty() ? `<span class="pending bad">초안 미저장</span>` : ''}
-          <div class="today">오늘(${dateLabel(t)}) <span class="mono">${esc(today?.id ?? '-')}</span> ${esc(today?.q ?? '')}</div>
+          <div class="kt-note">출제: 사용자마다 무작위 하루 1문항 · 한 번 본 문제는 다시 안 나옴(앱 1.0.2~) · 한 사람당 <b>${n}일</b> 중복 없음 · 가장 빠른 재출제 ≈ ${dateLabel(RELEASE_INDEX + n, true)}(출시일 설치자 기준)</div>
         </div>
         <div class="acts">
           <button type="button" data-act="load"${busy ? ' disabled' : ''}>새로고침</button>
           <button type="button" data-act="save"${busy || !dirty() ? ' disabled' : ''}>초안 저장</button>
-          <label class="chk" title="내일부터 스케줄을 활성 문항으로 처음부터 다시 배치"><input type="checkbox" class="kt-reflow"> 재배치</label>
           <button type="button" class="primary" data-act="publish"${busy ? ' disabled' : ''}>배포</button>
           <button type="button" data-act="reset"${busy || !pub ? ' disabled' : ''} title="작업본을 배포본으로 되돌림">↺</button>
         </div>
@@ -301,7 +300,7 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
       <p class="msg kt-msg ${msg.cls}">${esc(msg.text)}</p>
       <div class="kt-tabs">
         <button type="button" data-tab="facts" class="${tab === 'facts' ? 'on' : ''}">문항</button>
-        <button type="button" data-tab="sched" class="${tab === 'sched' ? 'on' : ''}">스케줄</button>
+        <button type="button" data-tab="sched" class="${tab === 'sched' ? 'on' : ''}" title="앱 1.0.1 이하만 쓰는 날짜별 스케줄">구버전 스케줄</button>
       </div>
       <div class="kt-body">${tab === 'facts' ? factsHtml() : schedHtml()}</div>
     </div>`;
@@ -309,7 +308,13 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
   }
 
   function factsHtml() {
-    return `<div class="tools">
+    const cc = categoryCounts(work!);
+    const n = activeCount(work!) || 1;
+    return `<div class="kt-cats" title="앱은 남은(안 본) 문항 수에 비례해 분야를 고릅니다 — 활성 문항 비율 ≈ 출제 비율">
+        <span class="lb">분야별 활성</span>
+        ${[...cc].map(([k, c]) => `<button type="button" class="cat${k === cat ? ' on' : ''}" data-cat="${k}">${esc(CATEGORIES[k])} <b>${c}</b> <small>${Math.round((c / n) * 100)}%</small></button>`).join('')}
+      </div>
+      <div class="tools">
         <input type="search" class="kt-search" placeholder="id·질문·보기·해설 검색" value="${esc(query)}">
         <select class="kt-cat">${catOpts(cat, true)}</select>
         <select class="kt-filter">
@@ -325,7 +330,6 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
     const box = el.querySelector('.kt-list');
     if (!box || !work) return;
     const po = new Map((pub?.facts ?? []).map((f) => [f.id, JSON.stringify(f)]));
-    const st = stats();
     const q = query.trim().toLowerCase();
     const rows = work.facts.filter((f) => {
       if (cat && f.category !== cat) return false;
@@ -337,9 +341,8 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
       return true;
     });
     box.innerHTML = `<div class="count">${rows.length}개 / 전체 ${work.facts.length}</div>` + (rows.map((f) => {
-      const s = st.get(f.id);
       const chg = po.get(f.id) !== JSON.stringify(f);
-      const when = f.retired ? '중지' : s?.next! >= 0 ? `다음 ${dateLabel(s!.next)}` : s?.last! >= 0 ? `최근 ${dateLabel(s!.last)}` : '미배정';
+      const when = f.retired ? '출제 중지' : !po.has(f.id) ? '미배포' : '';
       return `<div class="row${f.id === sel ? ' sel' : ''}${f.retired ? ' retired' : ''}" data-id="${esc(f.id)}">
         <span class="mono">${esc(f.id)}${chg ? '<i class="dot" title="미배포 변경"></i>' : ''}</span>
         <span class="chip">${esc(CATEGORIES[f.category] ?? f.category)}</span>
@@ -354,16 +357,16 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
     if (!box || !work) return;
     if (!form) {
       box.innerHTML = `<div class="editor empty">왼쪽에서 문항을 고르거나 <b>+ 새 문항</b>을 누르세요.<br>
-        <small>배포된 문항은 삭제하지 않고 "출제 중지"합니다(과거 기록 보호). 오늘·과거 스케줄은 잠겨 있습니다.</small></div>`;
+        <small>문제는 사용자마다 무작위로 배정되고, 한 번 본 문제는 다시 나오지 않습니다(앱 1.0.2~). 새 문항은 배포하면 모든 사람의 "안 본 문제"에 들어갑니다.<br>
+        배포된 문항은 누군가 이미 풀었을 수 있어 삭제하지 않고 "출제 중지"합니다(푼 기록 보호).</small></div>`;
       return;
     }
     const f = form;
     const isNew = sel === '';
     const published = pubIds().has(f.id);
-    const s = stats().get(f.id);
     box.innerHTML = `<div class="editor">
       <h3>${isNew ? '새 문항' : '문항 편집'} <span class="mono">${esc(f.id)}</span>${f.retired ? ' <span class="pending">출제 중지</span>' : ''}</h3>
-      <p class="meta">${published ? '배포됨' : '미배포'} · 출제 ${s?.n ?? 0}회${s && s.last >= 0 ? ` (최근 ${dateLabel(s.last)})` : ''}${s && s.next >= 0 ? ` · 다음 ${dateLabel(s.next)}` : ''}${published && (s?.n ?? 0) > 0 ? ' · <b>수정 시 이미 푼 사람의 기록 화면에도 반영</b>' : ''}</p>
+      <p class="meta">${!published ? '미배포 — 배포하면 모든 사람의 "안 본 문제"에 추가' : f.retired ? '배포됨 · 출제 중지(새로 배정 안 됨, 푼 기록엔 남음)' : '배포됨 · 무작위 배정 대상'}${published ? ' · <b>수정하면 이 문제를 이미 푼 사람의 기록 화면에도 반영</b>' : ''}</p>
       <label class="f"><span>분류${isNew ? '' : ' (id 고정)'}</span><select data-k="category"${isNew ? '' : ' disabled'}>${catOpts(f.category)}</select></label>
       <label class="f"><span>질문 <b class="c" data-c="q">${counter(f.q, LIMITS.q)}</b></span><textarea data-k="q" rows="2">${esc(f.q)}</textarea></label>
       <div class="f"><span>보기 (● = 정답)</span>
@@ -424,7 +427,14 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
         <span class="sq${!x || x.retired ? ' bad' : ''}">${x ? `<span class="chip">${esc(CATEGORIES[x.category] ?? x.category)}</span> ${esc(x.q)}${x.retired ? ' (출제 중지됨)' : ''}` : '없는 문항'}</span>
       </div>`);
     }
-    return `<div class="tools">
+    const today = f.get(w.schedule[t] ?? '');
+    return `<div class="kt-legacy">
+        <b>앱 1.0.2부터는 이 스케줄을 쓰지 않습니다</b> — 사용자마다 무작위로 배정돼 "오늘의 공통 문제"가 없습니다.
+        1.0.1 이하를 아직 쓰는 사람만 이 날짜별 문항을 받고, 배포할 때 오늘+${HORIZON}일까지 자동 연장·중지 문항 자동 교체되므로 보통 손댈 필요 없습니다.
+        <div class="lt">구버전 오늘 ${dateLabel(t)} · <span class="mono">${esc(today?.id ?? '-')}</span> ${esc(today?.q ?? '')}</div>
+        <label class="chk" title="내일부터 스케줄을 활성 문항으로 처음부터 다시 배치"><input type="checkbox" class="kt-reflow"${reflow ? ' checked' : ''}> 다음 배포 때 내일부터 재배치</label>
+      </div>
+      <div class="tools">
         <button type="button" data-act="s-prev">◀ 이전</button>
         <button type="button" data-act="s-today">오늘</button>
         <button type="button" data-act="s-fill" title="스케줄 끝을 ${HORIZON}일 앞까지 채우고, 미래 칸의 중지·없는 문항을 교체">빈칸·중지 문항 정리</button>
@@ -442,13 +452,14 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
     if (tb) { tab = tb.dataset.tab as Tab; return render(); }
     const row = tg.closest<HTMLElement>('.kt-list .row');
     if (row) return select(row.dataset.id!);
+    const cb = tg.closest<HTMLElement>('.kt-cats [data-cat]');
+    if (cb) { cat = cat === cb.dataset.cat ? '' : cb.dataset.cat!; return render(); }
     const act = tg.closest<HTMLElement>('[data-act]')?.dataset.act;
     if (!act) return;
-    const reflow = (el.querySelector('.kt-reflow') as HTMLInputElement | null)?.checked ?? false;
     switch (act) {
       case 'load': return void load();
       case 'save': return void saveDraft();
-      case 'publish': return void publish(reflow);
+      case 'publish': return void publish();
       case 'reset': return resetToPublished();
       case 'new': return select('');
       case 'apply': return applyForm();
@@ -479,6 +490,7 @@ export function mountKnowThat(el: HTMLElement, googleIdToken: () => string | nul
     const tg = ev.target as HTMLInputElement;
     if (tg.classList.contains('kt-cat')) { cat = tg.value; return renderList(); }
     if (tg.classList.contains('kt-filter')) { filter = tg.value as Filter; return renderList(); }
+    if (tg.classList.contains('kt-reflow')) { reflow = tg.checked; return; }
     if (tg.classList.contains('sid')) return setSlot(Number(tg.dataset.i), tg.value.trim());
     if (!form) return;
     if (tg.name === 'kt-ans') { form.answer = Number(tg.value); return renderLive(); }
