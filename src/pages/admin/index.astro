@@ -131,6 +131,7 @@ import '../../lib/knowthat-admin.css';
             <button type="button" class="app" data-app="jaksim">작심</button>
             <button type="button" class="app" data-app="mansur">만수르</button>
             <button type="button" class="app" data-app="knowthat">너그거알아</button>
+            <button type="button" class="app" data-app="orma">오르마</button>
           </div>
           <span id="sc-status" class="status"></span>
         </div>
@@ -140,7 +141,7 @@ import '../../lib/knowthat-admin.css';
             <input id="sc-url" type="text" placeholder="http://127.0.0.1:8500" spellcheck="false" aria-label="SeanChat admin URL" />
             <button id="sc-save" class="ghost" type="button">저장</button>
           </div>
-          <p class="note">SeanChat 통합 관리자(로컬 8500, 작심·만수르 Firestore 포함)를 아래에 띄웁니다. 공개 EC2에는 관리 화면이 없어서(의도) 로컬 백엔드가 켜진 이 Mac에서만 보입니다. SSM 터널을 쓰면 8600으로 바꾸세요.</p>
+          <p class="note" id="sc-note">SeanChat 통합 관리자(로컬 8500, 작심·만수르 Firestore 포함)를 아래에 띄웁니다. 공개 EC2에는 관리 화면이 없어서(의도) 로컬 백엔드가 켜진 이 Mac에서만 보입니다. SSM 터널을 쓰면 8600으로 바꾸세요.</p>
         </details>
         <iframe id="sc-frame" title="SeanChat admin" hidden></iframe>
         <div id="kt-panel" hidden></div>
@@ -697,11 +698,25 @@ import '../../lib/knowthat-admin.css';
   // ---- other admins (SeanChat unified admin: 션챗 · 작심 · 만수르) ------------------
   const scUrlEl = $('sc-url') as HTMLInputElement;
   const frame = $('sc-frame') as HTMLIFrameElement;
+  // 오르마(게임, 코드명 돌바람 — StoneAge 레포, 집 Mac launchd 7700)는 SeanChat과 별개 백엔드 — 주소를 따로 기억한다.
+  // 게임 서버의 /admin 은 루프백 요청만 받는다(같은 Wi-Fi 기기에서는 404).
+  const LS_DB = 'hub.admin.ormaUrl';
+  // 옛 키(dolbaram) 값이 있으면 옮겨 온다
+  if (!localStorage.getItem(LS_DB) && localStorage.getItem('hub.admin.dolbaramUrl')) localStorage.setItem(LS_DB, localStorage.getItem('hub.admin.dolbaramUrl') || '');
+  localStorage.removeItem('hub.admin.dolbaramUrl');
+  if (localStorage.getItem(LS_APP) === 'dolbaram') localStorage.setItem(LS_APP, 'orma');
+  const DB_DEFAULT = 'http://127.0.0.1:7700';
+  const SC_NOTE = $('sc-note').textContent || '';
+  const DB_NOTE = '오르마 게임 서버(집 Mac의 launchd 상시 서버, 기본 7700)의 관리 화면을 아래에 띄웁니다. 서버가 루프백 요청만 받으므로 그 Mac에서만 보입니다. 접속자·계정 조회, 펫 등급/레벨, 아이템·장비·스톤 지급, 공지, 연결 끊기를 할 수 있습니다.';
+  const isDb = (app: string) => app === 'orma';
   const scBase = () => (localStorage.getItem(LS_SC) || 'http://127.0.0.1:8500').replace(/\/+$/, '');
+  const dbBase = () => (localStorage.getItem(LS_DB) || DB_DEFAULT).replace(/\/+$/, '');
+  const baseFor = (app: string) => (isDb(app) ? dbBase() : scBase());
   scUrlEl.value = scBase();
   $('sc-save').addEventListener('click', () => {
-    localStorage.setItem(LS_SC, scUrlEl.value.trim().replace(/\/+$/, ''));
-    showApp(localStorage.getItem(LS_APP) || 'seanchat');
+    const app = localStorage.getItem(LS_APP) || 'seanchat';
+    localStorage.setItem(isDb(app) ? LS_DB : LS_SC, scUrlEl.value.trim().replace(/\/+$/, ''));
+    showApp(app);
   });
   // 너그거알아는 로컬 백엔드 없이 브라우저 → Firestore(knowthat-app) 직접 편집 (lib/knowthat-ui.ts)
   const ktPanel = $('kt-panel');
@@ -722,7 +737,13 @@ import '../../lib/knowthat-admin.css';
       }
       return;
     }
-    const url = `${scBase()}/admin?app=${app}`;
+    const base = baseFor(app);
+    const label = isDb(app) ? '오르마 게임 서버' : '로컬 SeanChat 백엔드';
+    scUrlEl.value = base;
+    scUrlEl.placeholder = isDb(app) ? DB_DEFAULT : 'http://127.0.0.1:8500';
+    $('sc-note').textContent = isDb(app) ? DB_NOTE : SC_NOTE;
+    frame.title = isDb(app) ? '오르마 admin' : 'SeanChat admin';
+    const url = isDb(app) ? `${base}/admin` : `${base}/admin?app=${app}`;
     ($('sc-open') as HTMLAnchorElement).href = url;
     const st = $('sc-status');
     st.className = 'status';
@@ -744,7 +765,7 @@ import '../../lib/knowthat-admin.css';
     if (perm === 'prompt') st.textContent = '브라우저가 로컬 네트워크 접근 권한을 물어봅니다 → "허용"을 누르세요';
     try {
       // opaque no-cors probe: resolves if the server answers at all, rejects if unreachable
-      await fetch(`${scBase()}/health`, {
+      await fetch(`${base}/health`, {
         mode: 'no-cors',
         cache: 'no-store',
         // @ts-expect-error — Chrome LNA hint; ignored elsewhere
@@ -759,8 +780,8 @@ import '../../lib/knowthat-admin.css';
       frame.removeAttribute('src');
       st.textContent =
         perm === 'prompt'
-          ? `${scBase()} 연결 안 됨 — 권한 프롬프트에 응답하지 않았거나 로컬 SeanChat 백엔드가 꺼져 있습니다. 앱 버튼을 다시 누르면 재시도합니다`
-          : `${scBase()} 응답 없음 — 로컬 SeanChat 백엔드가 꺼져 있거나 이 기기가 아닙니다`;
+          ? `${base} 연결 안 됨 — 권한 프롬프트에 응답하지 않았거나 ${label}가 꺼져 있습니다. 앱 버튼을 다시 누르면 재시도합니다`
+          : `${base} 응답 없음 — ${label}가 꺼져 있거나 이 기기가 아닙니다${isDb(app) ? ' (npm run server -- status)' : ''}`;
       st.className = 'status err';
     }
   }
