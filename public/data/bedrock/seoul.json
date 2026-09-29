@@ -2,36 +2,36 @@
  "schema": 1,
  "region": "ap-northeast-2",
  "stats": {
-  "primary_models": 38,
-  "primary_bases": 37,
+  "primary_models": 39,
+  "primary_bases": 38,
   "reference": {
    "us-east-1": {
-    "models": 122,
-    "bases": 111,
-    "shared_bases": 34,
-    "coverage_pct": 30.6
+    "models": 123,
+    "bases": 112,
+    "shared_bases": 35,
+    "coverage_pct": 31.2
    },
    "us-west-2": {
-    "models": 116,
-    "bases": 110,
-    "shared_bases": 32,
-    "coverage_pct": 29.1
+    "models": 117,
+    "bases": 111,
+    "shared_bases": 33,
+    "coverage_pct": 29.7
    },
    "us-east-2": {
-    "models": 93,
-    "bases": 91,
-    "shared_bases": 32,
-    "coverage_pct": 35.2
+    "models": 94,
+    "bases": 92,
+    "shared_bases": 33,
+    "coverage_pct": 35.9
    },
    "ap-northeast-1": {
-    "models": 76,
-    "bases": 75,
-    "shared_bases": 32,
-    "coverage_pct": 42.7
+    "models": 77,
+    "bases": 76,
+    "shared_bases": 33,
+    "coverage_pct": 43.4
    }
   },
   "on_demand": 5,
-  "cris_only": 32,
+  "cris_only": 33,
   "no_access_path": 1,
   "providers": [
    "Amazon",
@@ -926,6 +926,33 @@
    "eol": null,
    "profiles": [
     "global.openai.gpt-6-sol"
+   ],
+   "access": [
+    "cris"
+   ]
+  },
+  {
+   "id": "openai.gpt-6.1-sol",
+   "base": "openai.gpt-6.1-sol",
+   "name": "GPT-6.1 Sol",
+   "provider": "OpenAI",
+   "input": [
+    "IMAGE",
+    "TEXT"
+   ],
+   "output": [
+    "TEXT"
+   ],
+   "streaming": true,
+   "inference": [
+    "INFERENCE_PROFILE"
+   ],
+   "customization": [],
+   "status": "ACTIVE",
+   "since": "2026-10-15",
+   "eol": null,
+   "profiles": [
+    "global.openai.gpt-6.1-sol"
    ],
    "access": [
     "cris"
