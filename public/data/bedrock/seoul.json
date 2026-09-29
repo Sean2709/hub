@@ -2,36 +2,36 @@
  "schema": 1,
  "region": "ap-northeast-2",
  "stats": {
-  "primary_models": 36,
-  "primary_bases": 35,
+  "primary_models": 38,
+  "primary_bases": 37,
   "reference": {
    "us-east-1": {
-    "models": 120,
-    "bases": 109,
-    "shared_bases": 32,
-    "coverage_pct": 29.4
+    "models": 122,
+    "bases": 111,
+    "shared_bases": 34,
+    "coverage_pct": 30.6
    },
    "us-west-2": {
-    "models": 114,
-    "bases": 108,
-    "shared_bases": 30,
-    "coverage_pct": 27.8
+    "models": 116,
+    "bases": 110,
+    "shared_bases": 32,
+    "coverage_pct": 29.1
    },
    "us-east-2": {
-    "models": 91,
-    "bases": 89,
-    "shared_bases": 30,
-    "coverage_pct": 33.7
+    "models": 93,
+    "bases": 91,
+    "shared_bases": 32,
+    "coverage_pct": 35.2
    },
    "ap-northeast-1": {
-    "models": 74,
-    "bases": 73,
-    "shared_bases": 30,
-    "coverage_pct": 41.1
+    "models": 76,
+    "bases": 75,
+    "shared_bases": 32,
+    "coverage_pct": 42.7
    }
   },
   "on_demand": 5,
-  "cris_only": 30,
+  "cris_only": 32,
   "no_access_path": 1,
   "providers": [
    "Amazon",
@@ -635,6 +635,33 @@
    ]
   },
   {
+   "id": "anthropic.claude-sonnet-5-5",
+   "base": "anthropic.claude-sonnet-5-5",
+   "name": "Claude Sonnet 5.5",
+   "provider": "Anthropic",
+   "input": [
+    "IMAGE",
+    "TEXT"
+   ],
+   "output": [
+    "TEXT"
+   ],
+   "streaming": true,
+   "inference": [
+    "INFERENCE_PROFILE"
+   ],
+   "customization": [],
+   "status": "ACTIVE",
+   "since": "2026-09-28",
+   "eol": null,
+   "profiles": [
+    "global.anthropic.claude-sonnet-5-5"
+   ],
+   "access": [
+    "cris"
+   ]
+  },
+  {
    "id": "cohere.embed-v4:0",
    "base": "cohere.embed-v4:0",
    "name": "Embed v4",
@@ -1012,6 +1039,33 @@
    "eol": null,
    "profiles": [
     "global.xai.grok-4.6"
+   ],
+   "access": [
+    "cris"
+   ]
+  },
+  {
+   "id": "xai.grok-4.7",
+   "base": "xai.grok-4.7",
+   "name": "Grok 4.7",
+   "provider": "xAI",
+   "input": [
+    "IMAGE",
+    "TEXT"
+   ],
+   "output": [
+    "TEXT"
+   ],
+   "streaming": true,
+   "inference": [
+    "INFERENCE_PROFILE"
+   ],
+   "customization": [],
+   "status": "ACTIVE",
+   "since": "2026-09-28",
+   "eol": null,
+   "profiles": [
+    "global.xai.grok-4.7"
    ],
    "access": [
     "cris"

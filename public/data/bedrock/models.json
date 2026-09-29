@@ -3,7 +3,7 @@
  "primary_region": "ap-northeast-2",
  "regions": {
   "ap-northeast-2": {
-   "count": 36,
+   "count": 38,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -467,6 +467,27 @@
      "eol": null
     },
     {
+     "id": "anthropic.claude-sonnet-5-5",
+     "base": "anthropic.claude-sonnet-5-5",
+     "name": "Claude Sonnet 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-28",
+     "eol": null
+    },
+    {
      "id": "cohere.embed-v4:0",
      "base": "cohere.embed-v4:0",
      "name": "Embed v4",
@@ -764,11 +785,32 @@
      "status": "ACTIVE",
      "since": "2026-08-19",
      "eol": null
+    },
+    {
+     "id": "xai.grok-4.7",
+     "base": "xai.grok-4.7",
+     "name": "Grok 4.7",
+     "provider": "xAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-28",
+     "eol": null
     }
    ]
   },
   "us-east-1": {
-   "count": 120,
+   "count": 122,
    "models": [
     {
      "id": "ai21.jamba-1-5-large-v1:0",
@@ -1605,6 +1647,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-06-30",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-5-5",
+     "base": "anthropic.claude-sonnet-5-5",
+     "name": "Claude Sonnet 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-28",
      "eol": null
     },
     {
@@ -3219,6 +3282,27 @@
      "eol": null
     },
     {
+     "id": "xai.grok-4.7",
+     "base": "xai.grok-4.7",
+     "name": "Grok 4.7",
+     "provider": "xAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-28",
+     "eol": null
+    },
+    {
      "id": "zai.glm-4.7",
      "base": "zai.glm-4.7",
      "name": "GLM 4.7",
@@ -3281,7 +3365,7 @@
    ]
   },
   "us-west-2": {
-   "count": 114,
+   "count": 116,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -3827,6 +3911,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-06-30",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-5-5",
+     "base": "anthropic.claude-sonnet-5-5",
+     "name": "Claude Sonnet 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-28",
      "eol": null
     },
     {
@@ -5582,6 +5687,27 @@
      "eol": null
     },
     {
+     "id": "xai.grok-4.7",
+     "base": "xai.grok-4.7",
+     "name": "Grok 4.7",
+     "provider": "xAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-28",
+     "eol": null
+    },
+    {
      "id": "zai.glm-4.7",
      "base": "zai.glm-4.7",
      "name": "GLM 4.7",
@@ -5644,7 +5770,7 @@
    ]
   },
   "us-east-2": {
-   "count": 91,
+   "count": 93,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -6045,6 +6171,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-06-30",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-5-5",
+     "base": "anthropic.claude-sonnet-5-5",
+     "name": "Claude Sonnet 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-28",
      "eol": null
     },
     {
@@ -7467,6 +7614,27 @@
      "eol": null
     },
     {
+     "id": "xai.grok-4.7",
+     "base": "xai.grok-4.7",
+     "name": "Grok 4.7",
+     "provider": "xAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-28",
+     "eol": null
+    },
+    {
      "id": "zai.glm-4.7",
      "base": "zai.glm-4.7",
      "name": "GLM 4.7",
@@ -7529,7 +7697,7 @@
    ]
   },
   "ap-northeast-1": {
-   "count": 74,
+   "count": 76,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -8030,6 +8198,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-06-30",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-sonnet-5-5",
+     "base": "anthropic.claude-sonnet-5-5",
+     "name": "Claude Sonnet 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-28",
      "eol": null
     },
     {
@@ -8996,6 +9185,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-08-19",
+     "eol": null
+    },
+    {
+     "id": "xai.grok-4.7",
+     "base": "xai.grok-4.7",
+     "name": "Grok 4.7",
+     "provider": "xAI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-28",
      "eol": null
     },
     {

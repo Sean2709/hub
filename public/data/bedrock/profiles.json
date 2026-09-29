@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "region": "ap-northeast-2",
- "count": 35,
+ "count": 37,
  "profiles": [
   {
    "id": "apac.amazon.nova-lite-v1:0",
@@ -357,6 +357,19 @@
    "updated": "2026-09-24"
   },
   {
+   "id": "global.anthropic.claude-sonnet-5-5",
+   "name": "Global Anthropic Claude Sonnet 5.5",
+   "scope": "global",
+   "model": "anthropic.claude-sonnet-5-5",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-09-28",
+   "updated": "2026-09-28"
+  },
+  {
    "id": "global.cohere.embed-v4:0",
    "name": "Global Cohere Embed v4",
    "scope": "global",
@@ -458,7 +471,7 @@
    "global_endpoint": true,
    "status": "ACTIVE",
    "created": "2026-09-08",
-   "updated": "2026-09-08"
+   "updated": "2026-09-28"
   },
   {
    "id": "global.openai.gpt-6-luna",
@@ -511,6 +524,19 @@
    "status": "ACTIVE",
    "created": "2026-08-18",
    "updated": "2026-08-18"
+  },
+  {
+   "id": "global.xai.grok-4.7",
+   "name": "Global xAI Grok 4.7",
+   "scope": "global",
+   "model": "xai.grok-4.7",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-09-25",
+   "updated": "2026-09-25"
   }
  ]
 }

@@ -1,5 +1,100 @@
 [
  {
+  "date": "2026-09-29",
+  "type": "diff",
+  "region": "ap-northeast-2",
+  "added": [
+   {
+    "id": "anthropic.claude-sonnet-5-5",
+    "name": "Claude Sonnet 5.5",
+    "provider": "Anthropic"
+   },
+   {
+    "id": "xai.grok-4.7",
+    "name": "Grok 4.7",
+    "provider": "xAI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-09-29",
+  "type": "diff",
+  "region": "us-east-1",
+  "added": [
+   {
+    "id": "anthropic.claude-sonnet-5-5",
+    "name": "Claude Sonnet 5.5",
+    "provider": "Anthropic"
+   },
+   {
+    "id": "xai.grok-4.7",
+    "name": "Grok 4.7",
+    "provider": "xAI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-09-29",
+  "type": "diff",
+  "region": "us-west-2",
+  "added": [
+   {
+    "id": "anthropic.claude-sonnet-5-5",
+    "name": "Claude Sonnet 5.5",
+    "provider": "Anthropic"
+   },
+   {
+    "id": "xai.grok-4.7",
+    "name": "Grok 4.7",
+    "provider": "xAI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-09-29",
+  "type": "diff",
+  "region": "us-east-2",
+  "added": [
+   {
+    "id": "anthropic.claude-sonnet-5-5",
+    "name": "Claude Sonnet 5.5",
+    "provider": "Anthropic"
+   },
+   {
+    "id": "xai.grok-4.7",
+    "name": "Grok 4.7",
+    "provider": "xAI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-09-29",
+  "type": "diff",
+  "region": "ap-northeast-1",
+  "added": [
+   {
+    "id": "anthropic.claude-sonnet-5-5",
+    "name": "Claude Sonnet 5.5",
+    "provider": "Anthropic"
+   },
+   {
+    "id": "xai.grok-4.7",
+    "name": "Grok 4.7",
+    "provider": "xAI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
   "date": "2026-09-24",
   "type": "diff",
   "region": "ap-northeast-2",
