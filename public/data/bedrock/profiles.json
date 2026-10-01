@@ -341,7 +341,7 @@
    "global_endpoint": true,
    "status": "ACTIVE",
    "created": "2026-02-13",
-   "updated": "2026-09-29"
+   "updated": "2026-09-30"
   },
   {
    "id": "global.anthropic.claude-sonnet-5",

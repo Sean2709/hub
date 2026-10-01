@@ -354,7 +354,8 @@
      ],
      "streaming": true,
      "inference": [
-      "INFERENCE_PROFILE"
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
      ],
      "customization": [],
      "status": "ACTIVE",
@@ -459,7 +460,8 @@
      ],
      "streaming": true,
      "inference": [
-      "INFERENCE_PROFILE"
+      "INFERENCE_PROFILE",
+      "ON_DEMAND"
      ],
      "customization": [],
      "status": "ACTIVE",
@@ -831,7 +833,7 @@
    ]
   },
   "us-east-1": {
-   "count": 123,
+   "count": 120,
    "models": [
     {
      "id": "ai21.jamba-1-5-large-v1:0",
@@ -962,30 +964,6 @@
      "status": "ACTIVE",
      "since": "2025-12-02",
      "eol": null
-    },
-    {
-     "id": "amazon.nova-canvas-v1:0",
-     "base": "amazon.nova-canvas-v1:0",
-     "name": "Nova Canvas",
-     "provider": "Amazon",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "IMAGE"
-     ],
-     "streaming": false,
-     "inference": [
-      "ON_DEMAND",
-      "PROVISIONED"
-     ],
-     "customization": [
-      "FINE_TUNING"
-     ],
-     "status": "LEGACY",
-     "since": "2025-02-18",
-     "eol": "2026-09-30"
     },
     {
      "id": "amazon.nova-lite-v1:0",
@@ -1191,48 +1169,6 @@
      "status": "ACTIVE",
      "since": "2024-12-03",
      "eol": null
-    },
-    {
-     "id": "amazon.nova-reel-v1:0",
-     "base": "amazon.nova-reel-v1:0",
-     "name": "Nova Reel",
-     "provider": "Amazon",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "VIDEO"
-     ],
-     "streaming": false,
-     "inference": [
-      "ON_DEMAND"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2024-12-03",
-     "eol": "2026-09-30"
-    },
-    {
-     "id": "amazon.nova-reel-v1:1",
-     "base": "amazon.nova-reel-v1:1",
-     "name": "Nova Reel",
-     "provider": "Amazon",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "VIDEO"
-     ],
-     "streaming": false,
-     "inference": [
-      "ON_DEMAND"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2024-12-03",
-     "eol": "2026-09-30"
     },
     {
      "id": "amazon.titan-embed-text-v1",
@@ -7781,7 +7717,7 @@
    ]
   },
   "ap-northeast-1": {
-   "count": 77,
+   "count": 75,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -7825,27 +7761,6 @@
      "status": "ACTIVE",
      "since": "2025-12-02",
      "eol": null
-    },
-    {
-     "id": "amazon.nova-canvas-v1:0",
-     "base": "amazon.nova-canvas-v1:0",
-     "name": "Nova Canvas",
-     "provider": "Amazon",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "IMAGE"
-     ],
-     "streaming": false,
-     "inference": [
-      "ON_DEMAND"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2024-12-03",
-     "eol": "2026-09-30"
     },
     {
      "id": "amazon.nova-lite-v1:0",
@@ -7911,27 +7826,6 @@
      "status": "ACTIVE",
      "since": "2024-12-03",
      "eol": null
-    },
-    {
-     "id": "amazon.nova-reel-v1:0",
-     "base": "amazon.nova-reel-v1:0",
-     "name": "Nova Reel",
-     "provider": "Amazon",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "VIDEO"
-     ],
-     "streaming": false,
-     "inference": [
-      "ON_DEMAND"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2024-12-03",
-     "eol": "2026-09-30"
     },
     {
      "id": "amazon.rerank-v1:0",

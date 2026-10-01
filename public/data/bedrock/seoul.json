@@ -6,10 +6,10 @@
   "primary_bases": 38,
   "reference": {
    "us-east-1": {
-    "models": 123,
-    "bases": 112,
+    "models": 120,
+    "bases": 109,
     "shared_bases": 35,
-    "coverage_pct": 31.2
+    "coverage_pct": 32.1
    },
    "us-west-2": {
     "models": 117,
@@ -24,14 +24,14 @@
     "coverage_pct": 35.9
    },
    "ap-northeast-1": {
-    "models": 77,
-    "bases": 76,
+    "models": 75,
+    "bases": 74,
     "shared_bases": 33,
-    "coverage_pct": 43.4
+    "coverage_pct": 44.6
    }
   },
-  "on_demand": 5,
-  "cris_only": 33,
+  "on_demand": 7,
+  "cris_only": 31,
   "no_access_path": 1,
   "providers": [
    "Amazon",
@@ -42,7 +42,7 @@
    "TwelveLabs",
    "xAI"
   ],
-  "missing_bases": 86
+  "missing_bases": 83
  },
  "models": [
   {
@@ -486,7 +486,8 @@
    ],
    "streaming": true,
    "inference": [
-    "INFERENCE_PROFILE"
+    "INFERENCE_PROFILE",
+    "ON_DEMAND"
    ],
    "customization": [],
    "status": "ACTIVE",
@@ -496,6 +497,7 @@
     "global.anthropic.claude-opus-5"
    ],
    "access": [
+    "on-demand",
     "cris"
    ]
   },
@@ -621,7 +623,8 @@
    ],
    "streaming": true,
    "inference": [
-    "INFERENCE_PROFILE"
+    "INFERENCE_PROFILE",
+    "ON_DEMAND"
    ],
    "customization": [],
    "status": "ACTIVE",
@@ -631,6 +634,7 @@
     "global.anthropic.claude-sonnet-5"
    ],
    "access": [
+    "on-demand",
     "cris"
    ]
   },
@@ -1132,32 +1136,6 @@
     "us-east-1",
     "us-west-2",
     "ap-northeast-1"
-   ]
-  },
-  {
-   "base": "amazon.nova-canvas-v1:0",
-   "name": "Nova Canvas",
-   "provider": "Amazon",
-   "regions": [
-    "us-east-1",
-    "ap-northeast-1"
-   ]
-  },
-  {
-   "base": "amazon.nova-reel-v1:0",
-   "name": "Nova Reel",
-   "provider": "Amazon",
-   "regions": [
-    "us-east-1",
-    "ap-northeast-1"
-   ]
-  },
-  {
-   "base": "amazon.nova-reel-v1:1",
-   "name": "Nova Reel",
-   "provider": "Amazon",
-   "regions": [
-    "us-east-1"
    ]
   },
   {
