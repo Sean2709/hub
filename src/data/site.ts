@@ -3,11 +3,11 @@
 
 export const profile = {
   name: 'Sean Son',
-  role: 'Cloud Infrastructure Architect · AWS Industries ProServe Global Accounts',
-  // footer on every page: personal site, not affiliated with / endorsed by the employer
+  role: 'Cloud Infrastructure Architect',
+  // footer on every page
   disclaimer:
-    '개인 프로젝트입니다. 이 사이트의 글·앱·도구는 개인 의견과 작업이며, 소속 회사(Amazon Web Services)의 공식 입장이나 서비스와 무관합니다.',
-  disclaimerEn: 'Personal project. Views and work here are my own and do not represent Amazon Web Services.',
+    '개인 프로젝트입니다. 이 사이트의 글·앱·도구는 모두 개인 의견과 작업입니다.',
+  disclaimerEn: 'Personal project. Views and work here are my own.',
   tagline:
     'AWS 위에서 네트워크·랜딩존·AI 워크로드 플랫폼을 설계하고, 불편한 건 직접 만들어 씁니다.',
   location: 'Seoul, KR',
@@ -96,20 +96,38 @@ export type Post = {
 
 export const posts: Post[] = [
   {
+    title: '쉽게 따라하는 Amazon Bedrock으로 나만의 AI 어시스턴트 만들기 (4) - iPhone App 마무리: 설정 화면, 실기기, Markdown',
+    url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-Amazon-Bedrock%EC%9C%BC%EB%A1%9C-%EB%82%98%EB%A7%8C%EC%9D%98-AI-%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-4-iPhone-App-%EB%A7%88%EB%AC%B4%EB%A6%AC-%EC%84%A4%EC%A0%95-%ED%99%94%EB%A9%B4-%EC%8B%A4%EA%B8%B0%EA%B8%B0-Markdown',
+    date: '2026-10-03',
+    tags: ['aws', 'bedrock', 'ios', 'swiftui'],
+  },
+  {
+    title: '쉽게 따라하는 Amazon Bedrock으로 나만의 AI 어시스턴트 만들기 (2) - 대화 기억, 도구 호출, SSE Server',
+    url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-Amazon-Bedrock%EC%9C%BC%EB%A1%9C-%EB%82%98%EB%A7%8C%EC%9D%98-AI-%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-%EB%8C%80%ED%99%94-%EA%B8%B0%EC%96%B5-%EB%8F%84%EA%B5%AC-%ED%98%B8%EC%B6%9C-SSE-Server',
+    date: '2026-10-03',
+    tags: ['aws', 'bedrock', 'python', 'fastapi', 'sse'],
+  },
+  {
+    title: '쉽게 따라하는 LZA를 활용한 AWS Control Tower 구축 (3) - Transit Gateway / VPC Network 구성',
+    url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-LZA%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-AWS-Control-Tower-%EA%B5%AC%EC%B6%95-3-Transit-Gateway-VPC-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-%EA%B5%AC%EC%84%B1',
+    date: '2026-10-03',
+    tags: ['aws', 'lza', 'control-tower', 'transit-gateway', 'vpc'],
+  },
+  {
     title: '쉽게 따라하는 LZA를 활용한 AWS Control Tower 구축 (2) - OU / 계정 / SCP를 코드로 관리하기',
     url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-LZA%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-AWS-Control-Tower-%EA%B5%AC%EC%B6%95-2-OU-%EA%B3%84%EC%A0%95-SCP%EB%A5%BC-%EC%BD%94%EB%93%9C%EB%A1%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0',
     date: '2026-09-24',
     tags: ['aws', 'lza', 'control-tower', 'organizations', 'scp'],
   },
   {
-    title: '쉽게 따라하는 Amazon Bedrock으로 나만의 AI 어시스턴트 만들기 (2) — iPhone 앱 붙이기: SwiftUI + SSE',
-    url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-Amazon-Bedrock%EC%9C%BC%EB%A1%9C-%EB%82%98%EB%A7%8C%EC%9D%98-AI-%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-iPhone-%EC%95%B1-%EB%B6%99%EC%9D%B4%EA%B8%B0-SwiftUI-SSE',
+    title: '쉽게 따라하는 Amazon Bedrock으로 나만의 AI 어시스턴트 만들기 (3) - iPhone App 만들기: SwiftUI + SSE',
+    url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-Amazon-Bedrock%EC%9C%BC%EB%A1%9C-%EB%82%98%EB%A7%8C%EC%9D%98-AI-%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-3-iPhone-App-%EB%A7%8C%EB%93%A4%EA%B8%B0-SwiftUI-SSE',
     date: '2026-09-22',
     tags: ['aws', 'bedrock', 'ios', 'swiftui', 'sse'],
   },
   {
-    title: '쉽게 따라하는 Amazon Bedrock으로 나만의 AI 어시스턴트 만들기 (1) — 첫 호출부터 대화·도구 호출까지',
-    url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-Amazon-Bedrock%EC%9C%BC%EB%A1%9C-%EB%82%98%EB%A7%8C%EC%9D%98-AI-%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%EC%B2%AB-%ED%98%B8%EC%B6%9C%EB%B6%80%ED%84%B0-%EB%8C%80%ED%99%94%EB%8F%84%EA%B5%AC-%ED%98%B8%EC%B6%9C%EA%B9%8C%EC%A7%80',
+    title: '쉽게 따라하는 Amazon Bedrock으로 나만의 AI 어시스턴트 만들기 (1) - 첫 호출부터 Streaming까지',
+    url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-Amazon-Bedrock%EC%9C%BC%EB%A1%9C-%EB%82%98%EB%A7%8C%EC%9D%98-AI-%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%EC%B2%AB-%ED%98%B8%EC%B6%9C%EB%B6%80%ED%84%B0-Streaming%EA%B9%8C%EC%A7%80',
     date: '2026-09-20',
     tags: ['aws', 'bedrock', 'python', 'boto3'],
   },
