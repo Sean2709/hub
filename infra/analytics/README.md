@@ -22,7 +22,7 @@ admin   ──GET  /stats  Authorization: Bearer <Google ID token>──▶ │ 
 
 | Resource | Name | Notes |
 |---|---|---|
-| API GW HTTP API | `hub-analytics` (`zoviv9w83h`) | routes `POST /collect`, `GET /stats`, `GET /health` — all `CUSTOM` auth. Stage `$default` throttle 20 rps / burst 50. CORS `AllowOrigins=https://hub.seanson.com,https://hub.sean-chloe.com` (old origin kept during the domain move) |
+| API GW HTTP API | `hub-analytics` (`zoviv9w83h`) | routes `POST /collect`, `GET /stats`, `GET /health` — all `CUSTOM` auth. Stage `$default` throttle 20 rps / burst 50. CORS `AllowOrigins=https://hub.seanson.com` (old origin kept during the domain move) |
 | Authorizer `site-key` | `3luuoy` | identity sources `$request.querystring.k` + `$request.header.origin` → both must be present or API GW returns 401 without invoking anything. Cached 300 s per (k, origin) |
 | Authorizer `admin-bearer` | `enwegx` | identity source `$request.header.authorization` (a Google ID token). Cached 300 s per token; the handler re-checks `exp` so the cache can't extend a token's life |
 | Lambda | `hub-analytics` | handler `lambda_function.lambda_handler`; role `hub-analytics-lambda` ([policy-collector.json](policy-collector.json): `dynamodb:PutItem/Query` on the one table + its own log group). Resource policy: invoke only from `apigateway.amazonaws.com` scoped to this API ARN. **No Function URL** |
@@ -65,7 +65,7 @@ in, and the page sends the resulting **ID token** (JWT, ~1 h) as the bearer. The
 The e-mail check in the page's JS is only UX. Expired tokens: the page asks GIS again with
 `auto_select` (silent for the one consented account), otherwise shows the button.
 
-OAuth client: Google Cloud project `hub-sean-chloe`, *Web application* client, authorized
+OAuth client: Google Cloud project `sean-hub` (no. 53886632583), *Web application* client, authorized
 JavaScript origins `https://hub.seanson.com`, `http://localhost:4321`, `http://localhost`.
 Consent screen in *Testing* with `seanson2709@gmail.com` as the only test user (scopes
 openid/email/profile only). The client ID is public (`src/data/site.ts` → `admin.googleClientId`);
