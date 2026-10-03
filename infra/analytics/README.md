@@ -1,4 +1,4 @@
-# infra/analytics — self-hosted, cookie-less visitor analytics for hub.sean-chloe.com
+# infra/analytics — self-hosted, cookie-less visitor analytics for hub.seanson.com
 
 Account: sean-workload (461839758724), region ap-northeast-2. Created 2026-09-22.
 Dashboard: `/admin/` on the site (static HTML; shows nothing until you sign in with Google as
@@ -22,7 +22,7 @@ admin   ──GET  /stats  Authorization: Bearer <Google ID token>──▶ │ 
 
 | Resource | Name | Notes |
 |---|---|---|
-| API GW HTTP API | `hub-analytics` (`zoviv9w83h`) | routes `POST /collect`, `GET /stats`, `GET /health` — all `CUSTOM` auth. Stage `$default` throttle 20 rps / burst 50. CORS `AllowOrigins=https://hub.sean-chloe.com` only |
+| API GW HTTP API | `hub-analytics` (`zoviv9w83h`) | routes `POST /collect`, `GET /stats`, `GET /health` — all `CUSTOM` auth. Stage `$default` throttle 20 rps / burst 50. CORS `AllowOrigins=https://hub.seanson.com,https://hub.sean-chloe.com` (old origin kept during the domain move) |
 | Authorizer `site-key` | `3luuoy` | identity sources `$request.querystring.k` + `$request.header.origin` → both must be present or API GW returns 401 without invoking anything. Cached 300 s per (k, origin) |
 | Authorizer `admin-bearer` | `enwegx` | identity source `$request.header.authorization` (a Google ID token). Cached 300 s per token; the handler re-checks `exp` so the cache can't extend a token's life |
 | Lambda | `hub-analytics` | handler `lambda_function.lambda_handler`; role `hub-analytics-lambda` ([policy-collector.json](policy-collector.json): `dynamodb:PutItem/Query` on the one table + its own log group). Resource policy: invoke only from `apigateway.amazonaws.com` scoped to this API ARN. **No Function URL** |
@@ -36,7 +36,7 @@ Both functions ship the **same zip** (`lambda_function.py`); they differ only in
 
 | Caller | Credential | Can |
 |---|---|---|
-| any visitor's browser | `?k=<SITE_KEY>` **and** `Origin: https://hub.sean-chloe.com` | `POST /collect` only (write-only, 204, no body) |
+| any visitor's browser | `?k=<SITE_KEY>` **and** `Origin: https://hub.seanson.com` | `POST /collect` only (write-only, 204, no body) |
 | owner | `Authorization: Bearer <Google ID token>` for an `ADMIN_EMAILS` account | `GET /stats`, `GET /health`, and `/collect` |
 | anyone else | — | 401/403 from API GW; Lambda never runs |
 
@@ -66,7 +66,7 @@ The e-mail check in the page's JS is only UX. Expired tokens: the page asks GIS 
 `auto_select` (silent for the one consented account), otherwise shows the button.
 
 OAuth client: Google Cloud project `hub-sean-chloe`, *Web application* client, authorized
-JavaScript origins `https://hub.sean-chloe.com`, `http://localhost:4321`, `http://localhost`.
+JavaScript origins `https://hub.seanson.com`, `http://localhost:4321`, `http://localhost`.
 Consent screen in *Testing* with `seanson2709@gmail.com` as the only test user (scopes
 openid/email/profile only). The client ID is public (`src/data/site.ts` → `admin.googleClientId`);
 there is no client secret in this flow. To add another admin: append to `ADMIN_EMAILS` on

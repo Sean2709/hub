@@ -1,4 +1,4 @@
-# hub.sean-chloe.com
+# hub.seanson.com
 
 Sean's personal hub — tools, iOS apps, writing, certifications.
 
@@ -14,16 +14,16 @@ from the Bedrock control-plane API and published as-is:
 
 | file | what |
 |---|---|
-| [`seoul.json`](https://hub.sean-chloe.com/data/bedrock/seoul.json) | models available in Seoul + access path (on-demand / CRIS profile ids) + models missing vs. reference regions + stats |
-| [`models.json`](https://hub.sean-chloe.com/data/bedrock/models.json) | normalized `ListFoundationModels` for all tracked regions (`ap-northeast-2`, `us-east-1`, `us-west-2`, `us-east-2`, `ap-northeast-1`) |
-| [`profiles.json`](https://hub.sean-chloe.com/data/bedrock/profiles.json) | system-defined inference profiles reachable from Seoul, with routed regions |
-| [`changes.json`](https://hub.sean-chloe.com/data/bedrock/changes.json) | append-only diff log (added / removed / changed) |
-| [`feed.xml`](https://hub.sean-chloe.com/data/bedrock/feed.xml) | RSS 2.0 of `changes.json` |
-| [`meta.json`](https://hub.sean-chloe.com/data/bedrock/meta.json) | last-checked timestamp, sources |
+| [`seoul.json`](https://hub.seanson.com/data/bedrock/seoul.json) | models available in Seoul + access path (on-demand / CRIS profile ids) + models missing vs. reference regions + stats |
+| [`models.json`](https://hub.seanson.com/data/bedrock/models.json) | normalized `ListFoundationModels` for all tracked regions (`ap-northeast-2`, `us-east-1`, `us-west-2`, `us-east-2`, `ap-northeast-1`) |
+| [`profiles.json`](https://hub.seanson.com/data/bedrock/profiles.json) | system-defined inference profiles reachable from Seoul, with routed regions |
+| [`changes.json`](https://hub.seanson.com/data/bedrock/changes.json) | append-only diff log (added / removed / changed) |
+| [`feed.xml`](https://hub.seanson.com/data/bedrock/feed.xml) | RSS 2.0 of `changes.json` |
+| [`meta.json`](https://hub.seanson.com/data/bedrock/meta.json) | last-checked timestamp, sources |
 
 ```sh
 # on-demand model ids in Seoul
-curl -s https://hub.sean-chloe.com/data/bedrock/seoul.json | jq -r '.models[] | select(.access | index("on-demand")) | .id'
+curl -s https://hub.seanson.com/data/bedrock/seoul.json | jq -r '.models[] | select(.access | index("on-demand")) | .id'
 ```
 
 Pipeline: `.github/workflows/bedrock-refresh.yml` (cron) → OIDC → read-only IAM role →

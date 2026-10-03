@@ -246,11 +246,11 @@ const description = `ap-northeast-2에서 지금 쓸 수 있는 Bedrock 파운�
       <li><span class="k">meta.json</span><span><a href="/data/bedrock/meta.json">/data/bedrock/meta.json</a> — 마지막 확인 시각·소스</span></li>
     </ul>
 <pre class="code"><code># 서울에서 on-demand로 바로 부를 수 있는 모델 ID
-curl -s https://hub.sean-chloe.com/data/bedrock/seoul.json \
+curl -s https://hub.seanson.com/data/bedrock/seoul.json \
   | jq -r '.models[] | select(.access | index("on-demand")) | .id'
 
 # Claude 계열이 서울에서 어떤 프로필로 열려 있나
-curl -s https://hub.sean-chloe.com/data/bedrock/seoul.json \
+curl -s https://hub.seanson.com/data/bedrock/seoul.json \
   | jq -r '.models[] | select(.provider=="Anthropic") | "\(.name)\t\(.profiles|join(","))"'</code></pre>
     <p class="note">
       소스: AWS Bedrock 컨트롤플레인 API 공개 카탈로그 응답. 프롬프트 캐싱·툴 사용·구조화 출력 같은 <em>기능</em> 지원 여부는 API가 돌려주지 않아 포함하지 않았습니다(문서 기반 오버레이는 다음 단계).

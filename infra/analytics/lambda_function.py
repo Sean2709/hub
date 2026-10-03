@@ -1,4 +1,4 @@
-"""hub-analytics — cookie-less page analytics for hub.sean-chloe.com.
+"""hub-analytics — cookie-less page analytics for hub.seanson.com.
 
 Security posture (the whole point of this layout — see infra/analytics/README.md):
   * Nothing in this account is reachable without an authorizer. The API is an
@@ -55,7 +55,7 @@ SITE_KEY = os.environ.get("SITE_KEY", "")
 SALT_SECRET = os.environ.get("SALT_SECRET", "")
 ALLOWED_ORIGINS = {
     o.strip().rstrip("/")
-    for o in os.environ.get("ALLOWED_ORIGINS", "https://hub.sean-chloe.com").split(",")
+    for o in os.environ.get("ALLOWED_ORIGINS", "https://hub.seanson.com").split(",")
     if o.strip()
 }
 SITE_HOSTS = {urlsplit(o).hostname for o in ALLOWED_ORIGINS}

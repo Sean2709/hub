@@ -14,7 +14,7 @@ os.environ.update({
     "ADMIN_EMAILS": "seanson2709@gmail.com",
     "SITE_KEY": "site-key-public",
     "SALT_SECRET": "salt",
-    "ALLOWED_ORIGINS": "https://hub.sean-chloe.com,http://localhost:4321",
+    "ALLOWED_ORIGINS": "https://hub.seanson.com,http://localhost:4321",
 })
 sys.path.insert(0, str(Path(__file__).parent))
 import lambda_function as lf  # noqa: E402
@@ -90,7 +90,7 @@ class StubTable:
 
 
 lf._table = StubTable()
-SITE = "https://hub.sean-chloe.com"
+SITE = "https://hub.seanson.com"
 
 
 def ev(method, path, *, body=None, headers=None, qs=None, route=None):
