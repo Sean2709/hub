@@ -113,6 +113,15 @@ done
 ```
 Then re-run the live checks below.
 
+## Bot flag (`b=1`, reason in `br`)
+
+Flagged rows are stored but excluded from every stat (shown only as `range.bots`).
+`br`: `no-ua` · `ua` (keyword regex) · `webdriver` (page reported `navigator.webdriver`) ·
+`headless-ch` (`sec-ch-ua` says HeadlessChrome) · `ua-spoof` (iPhone/iPad/Firefox UA but the
+request carries `sec-ch-ua`, which WebKit/Gecko never send). `ch=1` = Client Hints present —
+diagnostic only. New domains get CT-log scanners within minutes of cert issuance with
+normal-looking rotated UAs; these rules catch most of them, not all.
+
 ## Live security checks (expected)
 
 ```

@@ -195,6 +195,23 @@ post({"t": "click", "p": "/", "h": "javascript:alert(1)"})
 check(len(lf._table.items) == n, "collect: /admin, non-root path, bad type, non-http href all dropped")
 r = lf.lambda_handler({**ev("POST", "/collect", body='{"t":"pv","p":"/"}', qs={"k": "site-key-public"}, headers={"origin": SITE, "user-agent": "curl/8.4"})}, None)
 check(lf._table.items[-1].get("b") == 1, "collect: curl UA flagged as bot")
+IOS = "Mozilla/5.0 (iPhone; CPU iPhone OS 26_3_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/144.0.7559.95 Mobile/15E148 Safari/604.1"
+WIN = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+CH = '"Chromium";v="151", "Google Chrome";v="151", "Not.A/Brand";v="99"'
+def hit(ua, extra=None, body='{"t":"pv","p":"/"}'):
+    lf.lambda_handler(ev("POST", "/collect", body=body, qs={"k": "site-key-public"},
+                         headers={"origin": SITE, "user-agent": ua, **(extra or {})}), None)
+    return lf._table.items[-1]
+it = hit(IOS)
+check("b" not in it and "ch" not in it, "bot: real iPhone CriOS (no client hints) → human")
+it = hit(WIN, {"sec-ch-ua": CH})
+check("b" not in it and it.get("ch") == 1, "bot: real desktop Chrome with client hints → human, ch=1")
+check(hit(IOS, {"sec-ch-ua": CH}).get("br") == "ua-spoof", "bot: iPhone UA + sec-ch-ua → ua-spoof")
+check(hit("Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0", {"sec-ch-ua": CH}).get("br") == "ua-spoof", "bot: Firefox UA + sec-ch-ua → ua-spoof")
+check(hit(WIN, {"sec-ch-ua": '"HeadlessChrome";v="151"'}).get("br") == "headless-ch", "bot: HeadlessChrome client hint")
+check(hit(WIN, body='{"t":"pv","p":"/","wd":1}').get("br") == "webdriver", "bot: navigator.webdriver reported")
+check(hit("Mozilla/5.0 (compatible; Baiduspider-render/2.0)").get("br") == "ua", "bot: Baiduspider UA")
+del lf._table.items[-7:]  # keep the stats expectations below unchanged
 r = post({"t": "pv", "p": "/x" * 2000})
 check(r["statusCode"] == 204 and len(lf._table.items) == n + 1, "collect: oversized body dropped silently")
 

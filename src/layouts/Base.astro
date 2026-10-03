@@ -85,6 +85,7 @@ const beaconUrl = `${analytics.endpoint}/collect?k=${analytics.siteKey}`;
             o.r = document.referrer || '';
             o.w = window.innerWidth;
             o.l = navigator.language || '';
+            if (navigator.webdriver) o.wd = 1; // automation (Puppeteer/Playwright/Selenium) → counted as bot
             var body = JSON.stringify(o); // string body = text/plain → no CORS preflight
             if (navigator.sendBeacon) navigator.sendBeacon(beaconUrl, body);
             else fetch(beaconUrl, { method: 'POST', body: body, keepalive: true, mode: 'no-cors' }).catch(function () {});

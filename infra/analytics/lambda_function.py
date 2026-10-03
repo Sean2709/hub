@@ -71,6 +71,30 @@ _BOT_RE = re.compile(
     re.I,
 )
 _MOBILE_RE = re.compile(r"Mobile|Android|iPhone|iPad|iPod", re.I)
+# Engines that never send Client Hints (WebKit on iOS — incl. CriOS/FxiOS — and Gecko).
+_NO_CH_UA_RE = re.compile(r"iPhone|iPad|iPod|Firefox/|FxiOS", re.I)
+
+
+def _bot_reason(ua: str, headers: dict, data: dict) -> str:
+    """Why this hit looks automated ('' = looks human).
+
+    Scanners that watch Certificate Transparency logs hit a new domain minutes after its
+    cert is issued, with a normal-looking (often rotated) UA, so UA keywords alone miss them.
+    Extra signals: the page reported navigator.webdriver, Client Hints say HeadlessChrome,
+    or the UA claims an engine that cannot send sec-ch-ua while the request carries it.
+    """
+    if not ua:
+        return "no-ua"
+    if _BOT_RE.search(ua):
+        return "ua"
+    if data.get("wd") in (1, True, "1"):
+        return "webdriver"
+    ch = headers.get("sec-ch-ua", "")
+    if "headless" in ch.lower():
+        return "headless-ch"
+    if ch and _NO_CH_UA_RE.search(ua):
+        return "ua-spoof"
+    return ""
 
 _table = boto3.resource("dynamodb").Table(TABLE) if TABLE else None
 
@@ -300,8 +324,12 @@ def collect(event) -> dict:
         "ua": _clip(ua, 160),
         "ttl": now_ms // 1000 + TTL_DAYS * 86400,
     }
-    if _BOT_RE.search(ua) or not ua:
+    reason = _bot_reason(ua, headers, data)
+    if reason:
         item["b"] = 1
+        item["br"] = reason
+    if headers.get("sec-ch-ua"):
+        item["ch"] = 1  # Client Hints present (diagnostic for future bot rules; no PII)
     lang = _clip(data.get("l"), 16)
     if lang:
         item["l"] = lang
