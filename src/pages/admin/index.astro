@@ -698,15 +698,17 @@ import '../../lib/knowthat-admin.css';
   // ---- other admins (SeanChat unified admin: 션챗 · 작심 · 만수르) ------------------
   const scUrlEl = $('sc-url') as HTMLInputElement;
   const frame = $('sc-frame') as HTMLIFrameElement;
-  // 오룬카(게임 — Orunka 레포, 집 Mac launchd com.sean.orunka 7800)는 SeanChat과 별개 백엔드 — 주소를 따로 기억한다.
-  // 게임 서버 /admin/api/* 인증: 헤더 x-orunka-admin = ADMIN_KEY(관리 화면 우상단 입력). ADMIN_KEY가 없으면 DEV=1 + 루프백만 허용.
+  // 오룬카(게임)는 2026-10-04부터 Unity판(OrunkaUnity 레포, 오프라인 싱글 맥 앱 — 게임 서버 없음).
+  // 관리 화면 = 같은 Mac의 로컬 관리 도구 OrunkaUnity/tools/admin/serve.py (launchd com.sean.orunka, 127.0.0.1:7800 —
+  // 옛 TS판 Node 서버와 같은 주소라 저장된 orunkaUrl을 그대로 쓴다). 저장 파일 보기·고치기·빌드/PLAN/Shots 현황.
+  // 고치기 POST는 x-orunka-admin 헤더 필요(ORUNKA_ADMIN_KEY를 설정했을 때만 값 검사), 저장 고치기는 게임이 꺼져 있을 때만.
   const LS_DB = 'hub.admin.orunkaUrl';
   // 옛 게임(오르마·돌바람, StoneAge 레포 7700)은 폐기됨 — 저장된 주소는 7700을 가리키므로 옮기지 않고 지운다
   ['hub.admin.ormaUrl', 'hub.admin.dolbaramUrl'].forEach((k) => localStorage.removeItem(k));
   if (['orma', 'dolbaram'].includes(localStorage.getItem(LS_APP) || '')) localStorage.setItem(LS_APP, 'orunka');
   const DB_DEFAULT = 'http://127.0.0.1:7800';
   const SC_NOTE = $('sc-note').textContent || '';
-  const DB_NOTE = '오룬카 게임 서버(집 Mac의 launchd 상시 서버, 기본 7800)의 관리 화면을 아래에 띄웁니다. 루프백 주소라 그 Mac에서만 보입니다. 관리 기능을 쓰려면 화면 우상단에 ADMIN_KEY를 넣으세요(서버를 DEV=1로 띄웠으면 비워도 됩니다). 서버 상태, 전체 저장, 공지, 접속자·캐릭터 조회, 아이템·라이 지급, 연결 끊기를 할 수 있습니다.';
+  const DB_NOTE = '오룬카 관리 도구(Unity판 — 집 Mac의 launchd 상시 도구, 기본 7800)를 아래에 띄웁니다. 루프백 주소라 그 Mac에서만 보입니다. Unity판은 서버 없는 오프라인 싱글 게임이라 접속자·공지 대신 내 저장 파일(캐릭터·펫·가방·퀘스트), 저장 고치기(라이·아이템·회복·위치·처음 안내·펫 등급/레벨/능력치 — 등급을 바꾸면 그 등급 평균으로 채운 뒤 직접 조정, 고치기 전 자동 백업·되돌리기 — 게임이 꺼져 있을 때만), 빌드·레포·PLAN.md 진행, 최근 자동 검증(Shots), 게임 데이터를 보여 줍니다. 꺼져 있으면 OrunkaUnity에서 bash tools/admin/agent.sh install.';
   const isDb = (app: string) => app === 'orunka';
   const scBase = () => (localStorage.getItem(LS_SC) || 'http://127.0.0.1:8500').replace(/\/+$/, '');
   const dbBase = () => (localStorage.getItem(LS_DB) || DB_DEFAULT).replace(/\/+$/, '');
@@ -737,7 +739,7 @@ import '../../lib/knowthat-admin.css';
       return;
     }
     const base = baseFor(app);
-    const label = isDb(app) ? '오룬카 게임 서버' : '로컬 SeanChat 백엔드';
+    const label = isDb(app) ? '오룬카 관리 도구' : '로컬 SeanChat 백엔드';
     scUrlEl.value = base;
     scUrlEl.placeholder = isDb(app) ? DB_DEFAULT : 'http://127.0.0.1:8500';
     $('sc-note').textContent = isDb(app) ? DB_NOTE : SC_NOTE;
@@ -780,7 +782,7 @@ import '../../lib/knowthat-admin.css';
       st.textContent =
         perm === 'prompt'
           ? `${base} 연결 안 됨 — 권한 프롬프트에 응답하지 않았거나 ${label}가 꺼져 있습니다. 앱 버튼을 다시 누르면 재시도합니다`
-          : `${base} 응답 없음 — ${label}가 꺼져 있거나 이 기기가 아닙니다${isDb(app) ? ' (npm run server -- status)' : ''}`;
+          : `${base} 응답 없음 — ${label}가 꺼져 있거나 이 기기가 아닙니다${isDb(app) ? ' (OrunkaUnity: bash tools/admin/agent.sh status)' : ''}`;
       st.className = 'status err';
     }
   }
