@@ -708,7 +708,7 @@ import '../../lib/knowthat-admin.css';
   if (['orma', 'dolbaram'].includes(localStorage.getItem(LS_APP) || '')) localStorage.setItem(LS_APP, 'orunka');
   const DB_DEFAULT = 'http://127.0.0.1:7800';
   const SC_NOTE = $('sc-note').textContent || '';
-  const DB_NOTE = '오룬카 관리 도구(Unity판 — 집 Mac의 launchd 상시 도구, 기본 7800)를 아래에 띄웁니다. 루프백 주소라 그 Mac에서만 보입니다. Unity판은 서버 없는 오프라인 싱글 게임이라 접속자·공지 대신 내 저장 파일(캐릭터·펫·가방·퀘스트), 저장 고치기(라이·아이템·회복·위치·처음 안내·펫 등급/레벨/능력치 — 등급을 바꾸면 그 등급 평균으로 채운 뒤 직접 조정, 고치기 전 자동 백업·되돌리기 — 게임이 꺼져 있을 때만), 빌드·레포·PLAN.md 진행, 최근 자동 검증(Shots), 게임 데이터를 보여 줍니다. 꺼져 있으면 OrunkaUnity에서 bash tools/admin/agent.sh install.';
+  const DB_NOTE = '오룬카 관리 도구(Unity판 — 집 Mac의 launchd 상시 도구, 기본 7800)를 아래에 띄웁니다. 루프백 주소라 그 Mac에서만 보입니다. Unity판은 서버 없는 오프라인 싱글 게임이라 접속자·공지 대신 내 저장 파일(캐릭터·펫·가방·퀘스트), 저장 고치기(라이·아이템·회복·위치·처음 안내·펫 등급/레벨/능력치 — 등급을 바꾸면 그 등급 평균으로 채운 뒤 직접 조정, 펫 데려오기 — 짐승·등급·레벨을 고르면 평균 능력치로 채운 뒤 조정해서 새 펫으로 추가(빛깔·유니크·최대 5마리), 고치기 전 자동 백업·되돌리기 — 게임이 꺼져 있을 때만), 빌드·레포·PLAN.md 진행, 최근 자동 검증(Shots), 게임 데이터를 보여 줍니다. 꺼져 있으면 OrunkaUnity에서 bash tools/admin/agent.sh install.';
   const isDb = (app: string) => app === 'orunka';
   const scBase = () => (localStorage.getItem(LS_SC) || 'http://127.0.0.1:8500').replace(/\/+$/, '');
   const dbBase = () => (localStorage.getItem(LS_DB) || DB_DEFAULT).replace(/\/+$/, '');
