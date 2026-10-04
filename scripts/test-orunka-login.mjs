@@ -31,4 +31,15 @@ t('apple 저장값 cb 위조', !mod.appleReturn(`#id_token=${jwt}&state=appleSt1
 r = mod.appleReturn('#error=user_cancelled_authorize&state=appleSt1', sv);
 t('apple 취소 → 게임에 err', !r.ok && r.cb === 'orunka://auth' && /그만뒀/.test(r.msg));
 t('apple 토큰 꼴 아님', !mod.appleReturn('#id_token=<x>&state=appleSt1', sv).ok);
+// Google 리디렉트(iPhone 시트)
+const gu = new URL(mod.googleAuthUrl('cid.apps.googleusercontent.com', 'gSt1', 'n1'));
+t('google 주소', gu.origin === 'https://accounts.google.com' && gu.searchParams.get('redirect_uri') === 'https://hub.seanson.com/orunka/login/'
+  && gu.searchParams.get('response_type') === 'id_token' && gu.searchParams.get('state') === 'gSt1' && gu.searchParams.get('nonce') === 'n1' && gu.searchParams.get('client_id') === 'cid.apps.googleusercontent.com');
+const gs = { cb: 'orunka://auth', state: 'gamestate1', as: 'gSt1', nonce: 'n1' };
+r = mod.googleReturn(`#state=gSt1&id_token=${jwt}&authuser=0&prompt=consent`, gs);
+t('google 돌아옴 정상', r.ok && r.cb === 'orunka://auth' && r.kv.idt === jwt && r.kv.prov === 'google.com' && !('nonce' in r.kv));
+t('google state 다름', !mod.googleReturn(`#state=x&id_token=${jwt}`, gs).ok);
+t('google 저장값 cb 위조', !mod.googleReturn(`#state=gSt1&id_token=${jwt}`, { ...gs, cb: 'https://evil.example/cb' }).ok);
+r = mod.googleReturn('#error=access_denied&state=gSt1', gs);
+t('google 취소 → 게임에 err', !r.ok && r.cb === 'orunka://auth' && /그만뒀/.test(r.msg));
 console.log('FAILS', fails); process.exit(fails ? 1 : 0);

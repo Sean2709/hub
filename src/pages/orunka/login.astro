@@ -2,7 +2,8 @@
 // /orunka/login/ — 오룬카 게임의 로그인 다리(Apple · Google). 게임(맥·윈도우·iPhone)이 브라우저로 이 페이지를 연다:
 //   ?cb=http://127.0.0.1:<포트>/cb (게임이 잠깐 여는 로컬 수신) 또는 orunka://auth (iPhone 앱 — ASWebAuthenticationSession 시트) · &state=<게임이 만든 값>
 //   &only=apple (Apple 단추만) · &why=delete (서버 저장 지우기 — Apple 토큰 회수용 새 인가 코드)
-// Google: GIS(hub 클라이언트) → Google ID 토큰(1시간)을 cb 로. Apple: appleid.apple.com 리디렉트(scope 없음, fragment) → 이 페이지로 돌아와
+// Google: GIS(hub 클라이언트) → Google ID 토큰(1시간)을 cb 로. 단 iPhone 시트(cb=orunka://auth)는 GIS 팝업이 안 돌아와서
+//   OAuth 리디렉트(response_type=id_token, 이 페이지로 돌아옴 — sean-hub 클라이언트에 리디렉션 URI 등록 필요). Apple: appleid.apple.com 리디렉트(scope 없음, fragment) → 이 페이지로 돌아와
 //   id_token·code·원래 nonce 를 cb 로(prov=apple.com). Firebase 로그인은 게임이 직접 한다.
 // cb 검사가 보안 핵심(토큰을 엉뚱한 곳으로 보내지 않게) — src/lib/orunka-login.ts. 계약 = OrunkaUnity/tools/cloud/README.md
 import Base from '../../layouts/Base.astro';
@@ -19,6 +20,10 @@ import { admin } from '../../data/site';
         <span>Apple로 계속하기</span>
       </button>
       <div id="ol-btn" class="ol-btn"></div>
+      <button type="button" id="ol-google" class="ol-apple ol-google" hidden>
+        <svg viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.97 10.72A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.18.29-1.72V4.95H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58A8.96 8.96 0 0 0 9 0 9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>
+        <span>Google로 계속하기</span>
+      </button>
     </div>
     <p id="ol-msg" class="ol-msg"></p>
     <p class="ol-note"><small>로그인 계정의 고유 번호(Google은 이메일도)는 로그인에만 쓰고, 게임 저장(캐릭터·펫·가방·놀이 시간)은 서버(Google Firebase, 서울)에 보관해요. Apple 로그인은 이름·이메일을 받지 않아요. 광고·판매·분석에는 쓰지 않으며, 게임 제목 화면의 '서버 저장 지우기'나 <a href="mailto:seanson2709@gmail.com">이메일</a>로 언제든 지울 수 있어요.</small></p>
@@ -33,13 +38,15 @@ import { admin } from '../../data/site';
     border: 0; border-radius: 999px; background: #000; color: #fff; font: 600 1rem/1 -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif; cursor: pointer; }
   .ol-apple svg { width: 17px; height: 20px; margin-top: -2px; }
   .ol-apple:disabled { opacity: .5; cursor: default; }
+  .ol-google { background: #fff; color: #1f1f1f; border: 1px solid #747775; }
+  .ol-google svg { width: 18px; height: 18px; margin-top: 0; }
   .ol-msg { font-weight: 600; }
   .ol-msg.err { color: #dc2626; }
   .ol-note { color: var(--muted); margin-top: 2rem; }
 </style>
 
 <script>
-  import { validCb, validState, backUrl, appleAuthUrl, appleReturn, randomHex, sha256hex, APPLE_SS, type AppleSaved } from '../../lib/orunka-login';
+  import { validCb, validState, backUrl, appleAuthUrl, appleReturn, googleAuthUrl, googleReturn, randomHex, sha256hex, APPLE_SS, GOOGLE_SS, type AppleSaved } from '../../lib/orunka-login';
   const $ = (id: string) => document.getElementById(id)!;
   const root = $('ol');
   const msg = $('ol-msg');
@@ -53,12 +60,15 @@ import { admin } from '../../data/site';
     $('ol-lead').textContent = '서버 저장을 지우기 전에 Apple로 한 번 더 로그인해 주세요. 오룬카와 Apple 계정의 연결도 함께 끊어요.';
   };
 
-  // ---- Apple 에서 돌아옴(#code=…&id_token=…&state=…) -----------------------------------------
+  // ---- Apple(또는 iPhone 의 Google 리디렉트)에서 돌아옴(#…id_token=…&state=…) ------------------------
   if (/[#&](id_token|error)=/.test(location.hash)) {
-    let saved: AppleSaved | null = null;
-    try { saved = JSON.parse(sessionStorage.getItem(APPLE_SS) || 'null'); } catch {}
-    sessionStorage.removeItem(APPLE_SS);
-    const r = appleReturn(location.hash, saved);
+    let saved: AppleSaved | null = null, viaGoogle = false;
+    try {
+      const g = sessionStorage.getItem(GOOGLE_SS);
+      if (g) { viaGoogle = true; saved = JSON.parse(g); } else saved = JSON.parse(sessionStorage.getItem(APPLE_SS) || 'null');
+    } catch {}
+    sessionStorage.removeItem(APPLE_SS); sessionStorage.removeItem(GOOGLE_SS);
+    const r = viaGoogle ? googleReturn(location.hash, saved) : appleReturn(location.hash, saved);
     history.replaceState(null, '', location.pathname); // 토큰을 주소창·기록에서 지운다
     deleting(saved?.why);
     if (r.ok) { doneMsg(r.cb); go(r.cb, r.state, r.kv); }
@@ -80,6 +90,7 @@ import { admin } from '../../data/site';
         apple.disabled = true;
         const as = randomHex(16), nonce = randomHex(32);
         const s: AppleSaved = { cb: cb!, state: state!, as, nonce, ...(why ? { why } : {}) };
+        sessionStorage.removeItem(GOOGLE_SS);
         sessionStorage.setItem(APPLE_SS, JSON.stringify(s));
         say('Apple 로그인으로 가는 중…');
         location.assign(appleAuthUrl(as, await sha256hex(nonce)));
@@ -87,6 +98,20 @@ import { admin } from '../../data/site';
       if (only === 'apple') {
         $('ol-btn').hidden = true;
         say('Apple로 로그인해 주세요.');
+      } else if (cb === 'orunka://auth') {
+        // iPhone 앱 시트 — GIS 팝업 대신 Google 리디렉트(이 페이지로 돌아옴)
+        $('ol-btn').hidden = true;
+        const gb = $('ol-google') as HTMLButtonElement;
+        gb.hidden = false;
+        gb.addEventListener('click', () => {
+          gb.disabled = true;
+          const s: AppleSaved = { cb: cb!, state: state!, as: randomHex(16), nonce: randomHex(16) };
+          sessionStorage.removeItem(APPLE_SS);
+          sessionStorage.setItem(GOOGLE_SS, JSON.stringify(s));
+          say('Google 로그인으로 가는 중…');
+          location.assign(googleAuthUrl(root.dataset.clientId!, s.as, s.nonce));
+        });
+        say('로그인하면 앱으로 돌아가요.');
       } else {
         const onCredential = (r: { credential?: string }) => {
           if (!r?.credential) { say('Google 로그인이 끝나지 않았어요 — 다시 눌러 주세요.', true); return; }
