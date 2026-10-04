@@ -10,8 +10,10 @@ const bUse1 = (bStats.reference as Record<string, { coverage_pct: number }>)['us
 const bChecked = new Date(bedrockMeta.checked_at).toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit' });
 
 const fmtMonth = (ym: string) => ym.replace('-', '.');
-// "NEW" badge for posts ≤ 14 days old at build time (the site rebuilds daily via bedrock-refresh)
-const isNew = (d: string) => (Date.now() - new Date(d).getTime()) / 864e5 <= 14;
+// "NEW" badge for posts < 7 days old (KST calendar days) at build time — the site rebuilds daily
+// at ~06:00 KST via bedrock-refresh, so the badge drops on the 7th day after the post date
+const todayKst = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+const isNew = (d: string) => (Date.parse(todayKst) - Date.parse(d)) / 864e5 < 7;
 // short hero chips; the full sentence stays in the tooltip
 const focusShort = ['Network · Landing Zone', 'Bedrock AI Platform', 'Kubernetes'];
 const ext = { target: '_blank', rel: 'noopener' };
