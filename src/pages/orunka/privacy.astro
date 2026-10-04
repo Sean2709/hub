@@ -1,27 +1,36 @@
 ---
 // 오룬카(ORUNKA) 개인정보처리방침 — App Store(iPhone·Mac)·Steam 등록용 URL: https://hub.seanson.com/orunka/privacy/
-// 게임은 완전 오프라인 싱글: 계정·서버·광고·분석 SDK 없음, 저장은 기기 안 파일뿐. 바뀌면 이 문서와 시행일을 같이 고친다.
+// 게임은 오프라인 싱글 — 기본은 기기 안 파일 저장뿐. 2026-10-04부터 선택 기능 '서버 저장'(Apple 또는 Google 로그인 → Firebase orunka-game, 서울)이 생김.
+// 광고·분석 SDK 없음. 바뀌면 이 문서와 시행일을 같이 고친다.
 import Base from '../../layouts/Base.astro';
-const updated = '2026-10-04';
+const updated = '2026-10-05';
 ---
 
-<Base title="오룬카 개인정보처리방침 · ORUNKA Privacy Policy" description="오룬카(ORUNKA) 게임은 개인정보를 수집하지 않습니다.">
+<Base title="오룬카 개인정보처리방침 · ORUNKA Privacy Policy" description="오룬카(ORUNKA) 개인정보처리방침 — 기본은 기기 안 저장, 선택하면 Apple·Google 로그인으로 서버 저장.">
   <article>
     <h1>오룬카 개인정보처리방침</h1>
     <p><small>시행일 {updated} · 대상: 오룬카(ORUNKA) — iPhone·Mac(App Store), Windows(Steam)</small></p>
 
     <h2>1. 수집하는 개인정보</h2>
-    <p><strong>없습니다.</strong> 오룬카는 회원가입·로그인이 없고, 이름·이메일·위치·연락처·기기 식별자·광고 식별자 등 어떤 개인정보도 수집하거나 전송하지 않습니다. 광고, 분석(애널리틱스), 추적 도구를 넣지 않았습니다.</p>
+    <p><strong>기본적으로 없습니다.</strong> 로그인하지 않고 놀면 이름·이메일·위치·연락처·기기 식별자·광고 식별자 등 어떤 개인정보도 수집하거나 전송하지 않습니다. 광고, 분석(애널리틱스), 추적 도구는 넣지 않았습니다.</p>
+    <p><strong>서버 저장(선택)</strong>: 제목 화면에서 '로그인'(Apple 또는 Google)을 고르면 다음을 처리합니다.</p>
+    <ul>
+      <li>로그인 계정의 <strong>고유 번호</strong>(Google 로그인은 <strong>이메일 주소</strong>도) — 로그인과 저장 주인 확인에만 씁니다. Apple 로그인은 이름·이메일을 요청하지 않습니다.</li>
+      <li><strong>게임 저장</strong>(캐릭터 이름, 레벨, 펫, 가방, 퀘스트 진행, 놀이 시간)과 저장한 기기 종류(Mac·Windows·iPhone)·게임 버전·저장 시각 — 다른 기기에서 이어하기와 백업에 씁니다.</li>
+    </ul>
+    <p>이 정보는 Google Firebase(Cloud Firestore·Firebase Authentication, 서울 리전)에 보관되며 개발자 본인과 그 계정 주인만 볼 수 있습니다. 다른 목적(광고·판매·분석)으로 쓰거나 제3자에게 제공하지 않습니다. 처리 위탁: Google LLC(<a href="https://firebase.google.com/support/privacy">Firebase 개인정보 보호</a>).</p>
+    <p><strong>함께 놀기(선택, 로그인한 경우)</strong>: 다른 사람과 같은 세계에서 보이고 말을 주고받도록 게임 서버(game.seanson.com, Amazon Web Services 서울 리전)에 접속합니다. 이때 계정 고유 번호, 캐릭터 이름·레벨·위치·펫 모습, 채팅 내용, 접속 IP 주소·접속 시각·게임 버전·기기 종류를 처리합니다. 위치와 모습은 접속한 동안 다른 사람 화면에 보이고 저장하지 않습니다. 접속 기록과 채팅은 운영(신고·장애 대응)을 위해 서버에 <strong>30일까지</strong> 보관한 뒤 지웁니다. 처리 위탁: Amazon Web Services, Inc.</p>
 
-    <h2>2. 기기에 저장되는 정보</h2>
+    <h2>2. 저장 위치와 보관 기간</h2>
     <p>게임 진행(캐릭터 이름, 펫, 가방, 퀘스트 등)과 설정(소리 크기, 화면 크기)은 <strong>사용자 기기 안의 파일에만</strong> 저장됩니다. 이 정보는 개발자에게 전송되지 않으며, 게임의 '설정 → 저장 위치'에서 위치를 확인하거나 '새로 시작'으로 지울 수 있습니다. 앱을 지우면 함께 지워집니다.</p>
+    <p>서버 저장을 켠 경우, 서버의 저장과 날짜별 백업은 계정 주인이 지워 달라고 할 때까지 보관합니다. 아래 이메일로 요청하면 지체 없이 서버 저장·백업·로그인 기록을 모두 지웁니다. 제목 화면의 '로그아웃'은 그 기기에서 서버 저장만 끄고 서버 데이터는 남깁니다.</p>
     <p>Steam판에서 Steam 클라우드를 켜 두면 저장 파일이 Valve의 Steam 클라우드에 동기화될 수 있으며, 이는 <a href="https://store.steampowered.com/privacy_agreement/">Valve 개인정보처리방침</a>을 따릅니다. iPhone·Mac 판의 기기 백업(iCloud 등)은 Apple 정책을 따릅니다.</p>
 
     <h2>3. 네트워크</h2>
-    <p>게임은 인터넷 연결 없이 동작하며 게임 데이터를 외부 서버로 보내지 않습니다. 앱 설치·업데이트·구매는 App Store·Steam이 처리합니다.</p>
+    <p>게임은 인터넷 연결 없이 동작합니다. 서버 저장을 켠 경우에만 게임 저장을 암호화된 연결(HTTPS)로 Firebase에 올리고 받으며, 로그인한 동안 함께 놀기 서버(game.seanson.com)와 암호화된 연결(WSS)로 주고받습니다. 로그인은 hub.seanson.com의 로그인 페이지를 거쳐 Apple 또는 Google이 처리합니다(비밀번호는 게임·개발자에게 전달되지 않음). Apple 로그인 계정의 서버 저장을 지우면 Apple과의 로그인 연결도 함께 끊습니다. 앱 설치·업데이트·구매는 App Store·Steam이 처리합니다.</p>
 
     <h2>4. 아동</h2>
-    <p>개인정보를 수집하지 않으므로 아동의 개인정보도 수집하지 않습니다.</p>
+    <p>서버 저장은 Apple 또는 Google 계정이 있어야 쓸 수 있으며, 아동의 개인정보를 일부러 수집하지 않습니다. 보호자가 요청하면 해당 서버 저장을 지웁니다.</p>
 
     <h2>5. 문의</h2>
     <p>개발자: 손승우(Sean Son) · 이메일 <a href="mailto:seanson2709@gmail.com">seanson2709@gmail.com</a></p>
@@ -30,9 +39,11 @@ const updated = '2026-10-04';
     <hr />
     <h1>ORUNKA Privacy Policy</h1>
     <p><small>Effective {updated} · Applies to ORUNKA on iPhone and Mac (App Store) and Windows (Steam)</small></p>
-    <p><strong>We do not collect any personal data.</strong> ORUNKA has no accounts, servers, ads, analytics or tracking. Your game progress and settings are stored only in files on your device and are never sent to the developer. You can see the save location in Settings and erase it with “New game”; deleting the app removes it.</p>
+    <p><strong>By default we collect no personal data.</strong> ORUNKA has no ads, analytics or tracking. Your game progress and settings are stored in files on your device. You can see the save location in Settings and erase it with “New game”; deleting the app removes it.</p>
+    <p><strong>Optional cloud save.</strong> If you choose “Sign in” (with Apple or Google) on the title screen, we process your account ID (and, for Google, your email) to sign you in — Sign in with Apple does not request your name or email — and your save data (character name, level, pets, inventory, quest progress, play time), plus device type, game version and save time, so you can continue on other devices. This is stored in Google Firebase (Cloud Firestore and Authentication, Seoul region), is visible only to you and the developer, and is never sold, shared or used for ads. It is kept until you ask us to delete it — email us and we will delete your cloud save, backups and sign-in record. “Log out” turns cloud save off on that device only.</p>
+    <p><strong>Optional multiplayer.</strong> While signed in, the game connects to our game server (game.seanson.com, Amazon Web Services, Seoul region) over an encrypted connection so other players can see you and chat. It processes your account ID, character name, level, position and pet appearance, chat messages, IP address, connection time, game version and device type. Position and appearance are shown to other players only while you are connected and are not stored. Connection logs and chat are kept on the server for up to 30 days for operations (abuse reports, troubleshooting) and then deleted.</p>
     <p>If Steam Cloud is enabled, save files may be synced by Valve under the <a href="https://store.steampowered.com/privacy_agreement/">Valve Privacy Policy</a>. Device backups on iPhone/Mac follow Apple’s policies.</p>
-    <p>The game works offline and does not send game data to any server. Because no personal data is collected, no data from children is collected.</p>
+    <p>The game works offline. Only when cloud save is on does it upload and download your save over HTTPS. Sign-in happens via Apple or Google on hub.seanson.com; your password never reaches the game or the developer. Deleting a cloud save made with Sign in with Apple also revokes the app’s Apple sign-in. We do not knowingly collect children’s data and will delete a cloud save on a guardian’s request.</p>
     <p>Contact: Sean Son · <a href="mailto:seanson2709@gmail.com">seanson2709@gmail.com</a></p>
   </article>
 </Base>
