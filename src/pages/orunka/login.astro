@@ -1,0 +1,60 @@
+---
+// /orunka/login/ — 오룬카 게임의 Google 로그인 다리. 게임(맥·윈도우·iPhone)이 브라우저로 이 페이지를 연다:
+//   ?cb=http://127.0.0.1:<포트>/cb (게임이 잠깐 여는 로컬 수신) 또는 orunka://auth (iPhone 앱) · &state=<게임이 만든 값>
+// Google 로그인(GIS, hub 클라이언트) → Google ID 토큰(1시간)을 cb 로 돌려보낸다. Firebase 로그인은 게임이 직접 한다.
+// cb 검사가 보안 핵심(토큰을 엉뚱한 곳으로 보내지 않게) — src/lib/orunka-login.ts. 계약 = OrunkaUnity/tools/cloud/README.md
+import Base from '../../layouts/Base.astro';
+import { admin } from '../../data/site';
+---
+
+<Base title="오룬카 — Google 로그인" description="오룬카 서버 저장 로그인" noindex>
+  <article id="ol" data-client-id={admin.googleClientId}>
+    <h1>오룬카 — Google 로그인</h1>
+    <p>로그인하면 게임 저장이 서버에도 올라가 <strong>맥·윈도우·아이폰</strong> 어디서든 같은 모험을 이어할 수 있어요.</p>
+    <div id="ol-btn" class="ol-btn"></div>
+    <p id="ol-msg" class="ol-msg"></p>
+    <p class="ol-note"><small>Google 계정의 이메일과 고유 번호는 로그인에만 쓰고, 게임 저장(캐릭터·펫·가방·놀이 시간)은 서버(Google Firebase, 서울)에 보관해요. 광고·판매·분석에는 쓰지 않으며, 게임 제목 화면의 '서버 저장 지우기'나 <a href="mailto:seanson2709@gmail.com">이메일</a>로 언제든 지울 수 있어요.</small></p>
+  </article>
+  <script is:inline src="https://accounts.google.com/gsi/client" async defer></script>
+</Base>
+
+<style>
+  .ol-btn { margin: 1.4rem 0 0.6rem; min-height: 44px; }
+  .ol-msg { font-weight: 600; }
+  .ol-msg.err { color: #dc2626; }
+  .ol-note { color: var(--muted); margin-top: 2rem; }
+</style>
+
+<script>
+  import { validCb, validState, backUrl } from '../../lib/orunka-login';
+  const root = document.getElementById('ol')!;
+  const msg = document.getElementById('ol-msg')!;
+  const say = (t: string, err = false) => { msg.textContent = t; msg.className = 'ol-msg' + (err ? ' err' : ''); };
+  const qs = new URLSearchParams(location.search);
+  const cb = qs.get('cb'), state = qs.get('state');
+  // 주소창·기록에 남는 건 이 페이지 주소뿐(토큰 없음). 돌려보낼 때 토큰은 cb 쪽 주소에만 실린다
+  if (!validCb(cb) || !validState(state)) {
+    say('게임에서 연 주소가 아니에요 — 오룬카 제목 화면의 "Google로 로그인"을 눌러 다시 열어 주세요.', true);
+  } else {
+    let sent = false;
+    const go = (kv: Record<string, string>) => { if (sent) return; sent = true; location.replace(backUrl(cb!, state!, kv)); };
+    const onCredential = (r: { credential?: string }) => {
+      if (!r?.credential) { say('Google 로그인이 끝나지 않았어요 — 다시 눌러 주세요.', true); return; }
+      say('로그인 됐어요 — 게임으로 돌아가세요(이 창은 닫아도 돼요).');
+      go({ idt: r.credential });
+    };
+    let n = 0;
+    const iv = window.setInterval(() => {
+      const g = (window as any).google?.accounts?.id;
+      if (g) {
+        clearInterval(iv);
+        g.initialize({ client_id: root.dataset.clientId, callback: onCredential, auto_select: false, cancel_on_tap_outside: false, itp_support: true, context: 'signin' });
+        g.renderButton(document.getElementById('ol-btn'), { theme: 'outline', size: 'large', text: 'signin_with', shape: 'pill', locale: 'ko' });
+        say(cb === 'orunka://auth' ? '로그인하면 "오룬카에서 열기"를 눌러 앱으로 돌아가요.' : '로그인하면 게임이 알아서 이어받아요.');
+      } else if (++n > 100) {
+        clearInterval(iv);
+        say('Google 로그인 스크립트를 불러오지 못했어요 (차단 확장 프로그램·네트워크 확인).', true);
+      }
+    }, 100);
+  }
+</script>
