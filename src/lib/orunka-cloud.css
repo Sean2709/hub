@@ -1,0 +1,21 @@
+/* 오룬카 서버 저장 패널(lib/orunka-cloud.ts) — 버튼·메시지·입력은 .kt(knowthat-admin.css) 규칙을 같이 쓴다 */
+#admin .oc { --kt: #a0522d; --kt-soft: #f6ece4; }
+#admin .oc .oc-wrap { overflow-x: auto; margin-top: .6rem; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+#admin .oc .oc-table { width: 100%; border-collapse: collapse; font-size: .86rem; font-variant-numeric: tabular-nums; }
+#admin .oc .oc-table th, #admin .oc .oc-table td { padding: .45rem .65rem; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+#admin .oc .oc-table th { font-weight: 600; color: var(--muted); font-size: .78rem; }
+#admin .oc .oc-table tbody tr[data-uid] { cursor: pointer; }
+#admin .oc .oc-table tbody tr[data-uid]:hover { background: var(--kt-soft); }
+#admin .oc .oc-table tbody tr.on { background: var(--kt-soft); box-shadow: inset 3px 0 0 var(--kt); }
+#admin .oc .oc-table tr:last-child td { border-bottom: 0; }
+#admin .oc .oc-detail { margin-top: .8rem; padding: .8rem .9rem; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+#admin .oc .oc-sum { margin: 0 0 .3rem; font-size: .9rem; line-height: 1.5; }
+#admin .oc .tools { align-items: center; margin: .5rem 0; }
+#admin .oc .tools label { font-size: .85rem; display: inline-flex; align-items: center; gap: .35rem; }
+#admin .oc input[type=number] { width: 9rem; font: inherit; font-size: .88rem; padding: .38rem .5rem; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); }
+#admin .oc .oc-json { width: 100%; box-sizing: border-box; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8rem; line-height: 1.4; min-height: 18rem; }
+#admin .oc .oc-days { margin-top: .6rem; font-size: .85rem; }
+#admin .oc .oc-days ul { margin: .4rem 0 0; padding-left: 1.1rem; }
+#admin .oc .oc-days li { margin: .25rem 0; }
+#admin .oc .oc-days button { padding: .2rem .5rem; font-size: .78rem; margin-left: .35rem; }
+#admin .oc .muted { color: var(--muted); }
