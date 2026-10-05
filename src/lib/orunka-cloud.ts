@@ -84,7 +84,9 @@ const when = (iso?: string) => {
   return isNaN(+d) ? iso : d.toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 };
 
-export function mountOrunkaCloud(el: HTMLElement, googleIdToken: () => string | null) {
+/** onPick(uid, jump) = 사용자 줄을 눌렀을 때(jump=false) · '관리 도구에서 고치기'(jump=true) — 아래 로컬 관리 도구 iframe 을
+ *  그 사용자로 맞춘다(펫·아이템·회복 단추가 있는 편집기). 못 하면 안내 글을 돌려준다(빈 글 = 됨) */
+export function mountOrunkaCloud(el: HTMLElement, googleIdToken: () => string | null, onPick?: (uid: string, jump: boolean) => string) {
   let rows: Row[] = [];
   let cur: Full | null = null; // 지금 열린 서버 저장
   let days: Row[] = [];
@@ -233,8 +235,8 @@ export function mountOrunkaCloud(el: HTMLElement, googleIdToken: () => string | 
         <td>${esc(r.client)}</td><td>${when(r.updateTime)}</td><td class="mono" title="${esc(r.id)}">${esc(r.id.slice(0, 8))}…</td></tr>`)
       .join('');
     el.innerHTML = `
-      <div class="kt-bar"><div class="sum"><b>서버 저장</b> — Firebase <span class="mono">orunka-game</span> · Firestore 서울.
-        어느 기기에서나 보고 고칩니다(로컬 관리 도구 없이). 고칠 때마다 덮어쓰기 전 판이 <span class="mono">days/replaced-…</span> 에 남습니다.</div>
+      <div class="kt-bar"><div class="sum"><b>사용자 · 서버 저장</b> — Firebase <span class="mono">orunka-game</span> · Firestore 서울.
+        줄을 누르면 그 사용자의 편집기가 열립니다(어느 기기에서나 — JSON·라이·백업 되돌리기${onPick ? ', 집 Mac 이면 아래 관리 도구도 그 사용자로 맞춰져 펫·아이템 단추로 고침' : ''}). 고칠 때마다 덮어쓰기 전 판이 <span class="mono">days/replaced-…</span> 에 남습니다.</div>
         <button type="button" class="oc-reload">새로고침</button></div>
       <p class="msg oc-msg"></p>
       <div class="oc-wrap"><table class="oc-table"><thead><tr><th>이름</th><th>Lv</th><th>놀이</th><th>기기</th><th>판</th><th>서버에 올린 때</th><th>uid</th></tr></thead>
@@ -245,7 +247,8 @@ export function mountOrunkaCloud(el: HTMLElement, googleIdToken: () => string | 
         <div class="tools"><label>라이 <input type="number" class="oc-money" min="0" step="1" value="${esc(cur.save.money ?? 0)}"></label>
           <button type="button" class="oc-money-set">편집기에 라이 넣기</button>
           <button type="button" class="primary oc-write">서버에 쓰기</button>
-          <button type="button" class="oc-revert">다시 읽기(편집 버림)</button></div>
+          <button type="button" class="oc-revert">다시 읽기(편집 버림)</button>${onPick ? `
+          <button type="button" class="oc-tool" title="아래 오룬카 관리 도구(집 Mac)를 이 사용자로 맞춥니다 — 펫 고치기·데려오기·아이템·회복 단추">관리 도구에서 고치기 ↓</button>` : ''}</div>
         <textarea class="oc-json" spellcheck="false" rows="18"></textarea>
         <details class="oc-days"${days.length ? '' : ' hidden'}><summary>백업 ${days.length}개 (days/)</summary>
           <ul>${days.map((d) => `<li><span class="mono">${esc(d.id)}</span> · Lv${esc(d.lv)} · 놀이 ${hours(d.playTime)} · ${esc(d.device)} <button type="button" class="oc-bk" data-id="${esc(d.id)}">편집기에 올리기</button></li>`).join('')}</ul>
@@ -259,7 +262,14 @@ export function mountOrunkaCloud(el: HTMLElement, googleIdToken: () => string | 
       if (cur) await open(cur.uid);
     }));
     el.querySelectorAll<HTMLTableRowElement>('.oc-table tbody tr[data-uid]').forEach((tr) =>
-      tr.addEventListener('click', () => run(() => open(tr.dataset.uid!))));
+      tr.addEventListener('click', () => {
+        onPick?.(tr.dataset.uid!, false);
+        run(() => open(tr.dataset.uid!));
+      }));
+    el.querySelector('.oc-tool')?.addEventListener('click', () => {
+      const m = cur && onPick ? onPick(cur.uid, true) : '';
+      if (m) say(m, 'err');
+    });
     el.querySelector('.oc-write')?.addEventListener('click', () => run(write));
     el.querySelector('.oc-revert')?.addEventListener('click', () => run(() => open(cur!.uid)));
     el.querySelector('.oc-money-set')?.addEventListener('click', () => {

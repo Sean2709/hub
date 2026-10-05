@@ -712,7 +712,7 @@ import '../../lib/orunka-cloud.css';
   if (['orma', 'dolbaram'].includes(localStorage.getItem(LS_APP) || '')) localStorage.setItem(LS_APP, 'orunka');
   const DB_DEFAULT = 'http://127.0.0.1:7800';
   const SC_NOTE = $('sc-note').textContent || '';
-  const DB_NOTE = '위 「서버 저장」 = 게임에서 Google 로그인한 저장(Firebase orunka-game)을 어느 기기에서나 보고 고칩니다. 아래 = 오룬카 관리 도구(Unity판 — 집 Mac의 launchd 상시 도구, 기본 7800, 위쪽 「저장 대상」으로 서버 저장도 고침)를 띄웁니다. 루프백 주소라 그 Mac에서만 보입니다. 게임 서버 프로그램은 없어서 접속자·공지 대신 내 저장 파일(캐릭터·펫·가방·퀘스트), 저장 고치기(라이·아이템·회복·위치·처음 안내·펫 등급/레벨/능력치 — 등급을 바꾸면 그 등급 평균으로 채운 뒤 직접 조정, 펫 데려오기 — 짐승·등급·레벨을 고르면 평균 능력치로 채운 뒤 조정해서 새 펫으로 추가(빛깔·유니크·최대 5마리), 고치기 전 자동 백업·되돌리기 — 게임이 꺼져 있을 때만), 빌드·레포·PLAN.md 진행, 최근 자동 검증(Shots), 게임 데이터를 보여 줍니다. 꺼져 있으면 OrunkaUnity에서 bash tools/admin/agent.sh install.';
+  const DB_NOTE = '위 「사용자 · 서버 저장」 = 게임에서 로그인한 사용자 목록(Firebase orunka-game) — 줄을 누르면 그 사용자 편집기(JSON·라이·백업)가 열리고, 아래 관리 도구도 그 사용자로 맞춰집니다. 아래 = 오룬카 관리 도구(Unity판 — 집 Mac의 launchd 상시 도구, 기본 7800, 「사용자」 목록에서 이 맥 파일·서버 사용자를 눌러 고름)를 띄웁니다. 루프백 주소라 그 Mac에서만 보입니다. 게임 서버 프로그램은 없어서 접속자·공지 대신 내 저장 파일(캐릭터·펫·가방·퀘스트), 저장 고치기(라이·아이템·회복·위치·처음 안내·펫 등급/레벨/능력치 — 등급을 바꾸면 그 등급 평균으로 채운 뒤 직접 조정, 펫 데려오기 — 짐승·등급·레벨을 고르면 평균 능력치로 채운 뒤 조정해서 새 펫으로 추가(빛깔·유니크·최대 5마리), 원본(JSON) 직접 고치기(이름·레벨·경험치 등), 고치기 전 자동 백업·되돌리기 — 게임이 꺼져 있을 때만), 빌드·레포·PLAN.md 진행, 최근 자동 검증(Shots), 게임 데이터를 보여 줍니다. 꺼져 있으면 OrunkaUnity에서 bash tools/admin/agent.sh install.';
   const isDb = (app: string) => app === 'orunka';
   const scBase = () => (localStorage.getItem(LS_SC) || 'http://127.0.0.1:8500').replace(/\/+$/, '');
   const dbBase = () => (localStorage.getItem(LS_DB) || DB_DEFAULT).replace(/\/+$/, '');
@@ -736,7 +736,14 @@ import '../../lib/orunka-cloud.css';
     ktPanel.hidden = !isKt;
     ocPanel.hidden = !isDb(app);
     if (isDb(app) && !oc) {
-      oc = mountOrunkaCloud(ocPanel, idToken);
+      // 줄을 누르면 아래 로컬 관리 도구(iframe)도 그 사용자로 — 펫·아이템·회복 단추 편집기(집 Mac에서 도구가 켜져 있을 때만)
+      oc = mountOrunkaCloud(ocPanel, idToken, (uid, jump) => {
+        if (frame.hidden || !frame.src) return jump ? '아래 오룬카 관리 도구가 연결돼 있지 않습니다(집 Mac 에서 켜져 있을 때만) — 위 JSON 편집기로 고치세요' : '';
+        const url = `${dbBase()}/admin?target=${encodeURIComponent('cloud:' + uid)}#save`;
+        if (frame.src !== url) frame.src = url;
+        if (jump) frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return '';
+      });
       oc.load();
     }
     $('sc-conn').hidden = isKt;
