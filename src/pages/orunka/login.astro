@@ -2,16 +2,16 @@
 // /orunka/login/ — 오룬카 게임의 로그인 다리(Apple · Google). 게임(맥·윈도우·iPhone)이 브라우저로 이 페이지를 연다:
 //   ?cb=http://127.0.0.1:<포트>/cb (게임이 잠깐 여는 로컬 수신) 또는 orunka://auth (iPhone 앱 — ASWebAuthenticationSession 시트) · &state=<게임이 만든 값>
 //   &only=apple (Apple 단추만) · &why=delete (서버 저장 지우기 — Apple 토큰 회수용 새 인가 코드)
-// Google: GIS(hub 클라이언트) → Google ID 토큰(1시간)을 cb 로. 단 iPhone 시트(cb=orunka://auth)는 GIS 팝업이 안 돌아와서
-//   OAuth 리디렉트(response_type=id_token, 이 페이지로 돌아옴 — sean-hub 클라이언트에 리디렉션 URI 등록 필요). Apple: appleid.apple.com 리디렉트(scope 없음, fragment) → 이 페이지로 돌아와
+// Google: GIS(오룬카 전용 클라이언트 GOOGLE_CLIENT — admin 과 별개) → Google ID 토큰(1시간)을 cb 로. 단 iPhone 시트(cb=orunka://auth)는 GIS 팝업이 안 돌아와서
+//   OAuth 리디렉트(response_type=id_token, 이 페이지로 돌아옴 — GOOGLE_CLIENT 에 리디렉션 URI 등록됨). Apple: appleid.apple.com 리디렉트(scope 없음, fragment) → 이 페이지로 돌아와
 //   id_token·code·원래 nonce 를 cb 로(prov=apple.com). Firebase 로그인은 게임이 직접 한다.
 // cb 검사가 보안 핵심(토큰을 엉뚱한 곳으로 보내지 않게) — src/lib/orunka-login.ts. 계약 = OrunkaUnity/tools/cloud/README.md
 import Base from '../../layouts/Base.astro';
-import { admin } from '../../data/site';
+import { GOOGLE_CLIENT } from '../../lib/orunka-login';
 ---
 
 <Base title="오룬카 — 로그인" description="오룬카 서버 저장 로그인" noindex>
-  <article id="ol" data-client-id={admin.googleClientId}>
+  <article id="ol" data-client-id={GOOGLE_CLIENT}>
     <h1 id="ol-h">오룬카 — 로그인</h1>
     <p id="ol-lead">로그인하면 게임 저장이 서버에도 올라가 <strong>맥·윈도우·아이폰</strong> 어디서든 같은 모험을 이어할 수 있어요.</p>
     <div class="ol-btns">

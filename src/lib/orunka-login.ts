@@ -65,9 +65,14 @@ export function appleReturn(fragment: string, saved: AppleSaved | null):
 // ---- Google 리디렉트(iPhone 앱 시트용) ---------------------------------------------------------
 // iPhone ASWebAuthenticationSession 시트에서는 GIS 팝업이 원래 페이지를 덮어써서 콜백이 안 돌아온다 →
 // cb=orunka://auth 일 때만 OAuth 암시적 흐름(response_type=id_token, fragment)으로 이 페이지에 돌아온다.
-// 전제: hub OAuth 클라이언트(sean-hub)의 '승인된 리디렉션 URI'에 GOOGLE_REDIRECT 가 등록돼 있어야 한다(없으면 Google 이 redirect_uri_mismatch).
+// 전제: GOOGLE_CLIENT 의 '승인된 리디렉션 URI'에 GOOGLE_REDIRECT 가 등록돼 있어야 한다(없으면 Google 이 redirect_uri_mismatch).
 // nonce 는 Google 이 요구해서 보낼 뿐(원래 값 그대로) 게임에는 안 넘긴다 — 게임은 google.com 에 nonce 를 안 붙인다(Cloud.cs).
 export const GOOGLE_REDIRECT = APPLE_REDIRECT;
+// 오룬카 전용 Google 클라이언트(2026-10-05, Sean 'admin 말고 별도 로그인으로') — orunka-game 프로젝트 '오룬카 로그인',
+// 브랜딩 = 오룬카(홈 /orunka/, 개인정보 /orunka/privacy/), 원본 https://hub.seanson.com · 리디렉트 GOOGLE_REDIRECT.
+// Firebase(orunka-game) Google 공급자 웹 클라이언트는 hub 클라이언트 그대로(admin 「서버 저장」 패널이 hub 토큰을 씀) +
+// 이 클라이언트를 '외부 프로젝트 클라이언트 ID 허용 목록'에 넣어 둠 — 빼면 게임 Google 로그인이 INVALID_IDP_RESPONSE(aud)로 막힌다.
+export const GOOGLE_CLIENT = '604275267710-osphbssbca4v37v41ccnnm0kt53ofiia.apps.googleusercontent.com';
 export const GOOGLE_SS = 'orunka.login.google';
 export function googleAuthUrl(clientId: string, gs: string, nonce: string): string {
   const q: Record<string, string> = {
