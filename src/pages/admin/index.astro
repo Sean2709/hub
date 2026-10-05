@@ -144,7 +144,8 @@ import '../../lib/orunka-cloud.css';
           </div>
           <p class="note" id="sc-note">SeanChat 통합 관리자(로컬 8500, 작심·만수르 Firestore 포함)를 아래에 띄웁니다. 공개 EC2에는 관리 화면이 없어서(의도) 로컬 백엔드가 켜진 이 Mac에서만 보입니다. SSM 터널을 쓰면 8600으로 바꾸세요.</p>
         </details>
-        <div id="oc-panel" hidden></div>
+        <div id="og-panel" hidden></div>
+        <details id="oc-old" class="oc-old" hidden><summary>옛 서버 저장(Firestore) — 게임 서버로 옮기기 전 판</summary><div id="oc-panel"></div></details>
         <iframe id="sc-frame" title="SeanChat admin" hidden></iframe>
         <div id="kt-panel" hidden></div>
       </section>
@@ -329,6 +330,7 @@ import '../../lib/orunka-cloud.css';
   import { mountKnowThat } from '../../lib/knowthat-ui';
   import { clearFirebaseToken } from '../../lib/knowthat-core';
   import { mountOrunkaCloud } from '../../lib/orunka-cloud';
+  import { mountOrunkaGameSaves } from '../../lib/orunka-game-saves';
   // ---- helpers -----------------------------------------------------------------
   const $ = (id: string) => document.getElementById(id) as HTMLElement;
   const root = $('admin');
@@ -729,12 +731,21 @@ import '../../lib/orunka-cloud.css';
   // 오룬카 서버 저장(Firebase orunka-game) — 로컬 관리 도구 iframe 위에, 어느 기기에서나 (lib/orunka-cloud.ts)
   const ocPanel = $('oc-panel');
   let oc: ReturnType<typeof mountOrunkaCloud> | null = null;
+  // 게임 서버 저장(정본, D57 — 혼자 하기 없음) — game.seanson.com /admin/api/saves (lib/orunka-game-saves.ts)
+  const ogPanel = $('og-panel');
+  const ocOld = $('oc-old');
+  let og: ReturnType<typeof mountOrunkaGameSaves> | null = null;
   async function showApp(app: string) {
     localStorage.setItem(LS_APP, app);
     document.querySelectorAll<HTMLButtonElement>('#admin .seg .app').forEach((b) => b.classList.toggle('on', b.dataset.app === app));
     const isKt = app === 'knowthat';
     ktPanel.hidden = !isKt;
-    ocPanel.hidden = !isDb(app);
+    ogPanel.hidden = !isDb(app);
+    ocOld.hidden = !isDb(app);
+    if (isDb(app) && !og) {
+      og = mountOrunkaGameSaves(ogPanel, idToken);
+      og.load();
+    }
     if (isDb(app) && !oc) {
       // 줄을 누르면 아래 로컬 관리 도구(iframe)도 그 사용자로 — 펫·아이템·회복 단추 편집기(집 Mac에서 도구가 켜져 있을 때만)
       oc = mountOrunkaCloud(ocPanel, idToken, (uid, jump) => {

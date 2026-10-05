@@ -19,3 +19,8 @@
 #admin .oc .oc-days li { margin: .25rem 0; }
 #admin .oc .oc-days button { padding: .2rem .5rem; font-size: .78rem; margin-left: .35rem; }
 #admin .oc .muted { color: var(--muted); }
+
+/* 게임 서버 저장(orunka-game-saves.ts, D57) — 들어와 있음 표시 · 옛 Firestore 판 접기 */
+.og .og-on { color: #2e9d55; font-size: 0.8em; }
+.oc-old { margin: 0.6rem 0 1rem; }
+.oc-old > summary { cursor: pointer; color: var(--muted, #888); font-size: 0.92em; padding: 0.3rem 0; }
