@@ -743,7 +743,14 @@ import '../../lib/orunka-cloud.css';
     ogPanel.hidden = !isDb(app);
     ocOld.hidden = !isDb(app);
     if (isDb(app) && !og) {
-      og = mountOrunkaGameSaves(ogPanel, idToken);
+      // 줄을 열면 아래 로컬 관리 도구(iframe)도 그 사용자(?target=game:h)로 — 펫·아이템·회복 단추 편집기(집 Mac에서 도구가 켜져 있을 때만)
+      og = mountOrunkaGameSaves(ogPanel, idToken, undefined, (h, jump) => {
+        if (frame.hidden || !frame.src) return jump ? '아래 오룬카 관리 도구가 연결돼 있지 않습니다(집 Mac 에서 켜져 있을 때만) — 위 JSON 편집기로 고치세요' : '';
+        const url = `${dbBase()}/admin?target=${encodeURIComponent('game:' + h)}#save`;
+        if (frame.src !== url) frame.src = url;
+        if (jump) frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return '';
+      });
       og.load();
     }
     if (isDb(app) && !oc) {

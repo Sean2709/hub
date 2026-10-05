@@ -29,7 +29,8 @@ const when = (iso?: string) => {
 };
 const prov = (p?: string) => (p === 'apple.com' ? 'Apple' : p === 'google.com' ? 'Google' : p === 'anonymous' ? '익명' : p || '');
 
-export function mountOrunkaGameSaves(el: HTMLElement, googleIdToken: () => string | null, api = GAME_API) {
+// onPick(h, jump) — 줄을 열면 아래 로컬 관리 도구(iframe)도 그 사용자(?target=game:h)로 맞춘다. 돌려준 글이 있으면 알림으로 보여 줌
+export function mountOrunkaGameSaves(el: HTMLElement, googleIdToken: () => string | null, api = GAME_API, onPick?: (h: string, jump: boolean) => string) {
   let rows: Row[] = [];
   let cur: Cur | null = null;
   let hist: Hist[] = [];
@@ -106,6 +107,7 @@ export function mountOrunkaGameSaves(el: HTMLElement, googleIdToken: () => strin
     from = '';
     hist = (await call(`/${h}/hist`)).rows ?? [];
     render();
+    onPick?.(h, false);
     say(msg || `열었습니다${cur.online ? ' · 지금 들어와 있음(게임 판 그대로 — 쓰면 그 접속은 끊기고 다시 들어오면 고친 판)' : ''}`, msg ? 'ok' : '');
   }
   async function loadBackup(id: string) {
@@ -174,7 +176,7 @@ export function mountOrunkaGameSaves(el: HTMLElement, googleIdToken: () => strin
         <div class="tools"><label>라이 <input type="number" class="og-money" min="0" step="1" value="${esc(cur.save.money ?? 0)}"></label>
           <button type="button" class="og-money-set">편집기에 라이 넣기</button>
           <button type="button" class="primary og-write">서버에 쓰기</button>
-          <button type="button" class="og-revert">다시 읽기(편집 버림)</button></div>
+          <button type="button" class="og-revert">다시 읽기(편집 버림)</button>${onPick ? '\n          <button type="button" class="og-tool" title="펫·아이템·회복 단추 편집기 — 집 Mac 관리 도구가 켜져 있을 때만">관리 도구에서 고치기 ↓</button>' : ''}</div>
         <textarea class="og-json oc-json" spellcheck="false" rows="18"></textarea>
         <details class="oc-days"${hist.length ? '' : ' hidden'}><summary>백업 ${hist.length}개</summary>
           <ul>${hist.map((d) => `<li><span class="mono">${esc(d.id)}</span> · ${d.kind === 'day' ? '그날 첫 판' : '고치기 전'} · Lv${esc(d.lv)} · 놀이 ${hours(d.playTime)} <button type="button" class="og-bk" data-id="${esc(d.id)}">편집기에 올리기</button></li>`).join('')}</ul>
@@ -190,6 +192,10 @@ export function mountOrunkaGameSaves(el: HTMLElement, googleIdToken: () => strin
     el.querySelectorAll<HTMLTableRowElement>('.oc-table tbody tr[data-h]').forEach((tr) => tr.addEventListener('click', () => run(() => open(tr.dataset.h!))));
     el.querySelector('.og-write')?.addEventListener('click', () => run(write));
     el.querySelector('.og-revert')?.addEventListener('click', () => run(() => open(cur!.h)));
+    el.querySelector('.og-tool')?.addEventListener('click', () => {
+      const m = cur && onPick ? onPick(cur.h, true) : '';
+      if (m) say(m, 'err');
+    });
     el.querySelector('.og-money-set')?.addEventListener('click', () => {
       try {
         const s = JSON.parse(editor()!.value);
