@@ -833,7 +833,7 @@
    ]
   },
   "us-east-1": {
-   "count": 120,
+   "count": 121,
    "models": [
     {
      "id": "ai21.jamba-1-5-large-v1:0",
@@ -963,6 +963,28 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-2-5-sonic",
+     "base": "amazon.nova-2-5-sonic",
+     "name": "Nova 2.5 Sonic",
+     "provider": "Amazon",
+     "input": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "output": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-11",
      "eol": null
     },
     {
@@ -3343,7 +3365,7 @@
    ]
   },
   "us-west-2": {
-   "count": 117,
+   "count": 118,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -3386,6 +3408,28 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-2-5-sonic",
+     "base": "amazon.nova-2-5-sonic",
+     "name": "Nova 2.5 Sonic",
+     "provider": "Amazon",
+     "input": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "output": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-30",
      "eol": null
     },
     {
@@ -7717,7 +7761,7 @@
    ]
   },
   "ap-northeast-1": {
-   "count": 75,
+   "count": 76,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -7760,6 +7804,28 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2025-12-02",
+     "eol": null
+    },
+    {
+     "id": "amazon.nova-2-5-sonic",
+     "base": "amazon.nova-2-5-sonic",
+     "name": "Nova 2.5 Sonic",
+     "provider": "Amazon",
+     "input": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "output": [
+      "SPEECH",
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "ON_DEMAND"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-30",
      "eol": null
     },
     {

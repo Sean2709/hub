@@ -1,5 +1,47 @@
 [
  {
+  "date": "2026-10-06",
+  "type": "diff",
+  "region": "us-east-1",
+  "added": [
+   {
+    "id": "amazon.nova-2-5-sonic",
+    "name": "Nova 2.5 Sonic",
+    "provider": "Amazon"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-06",
+  "type": "diff",
+  "region": "us-west-2",
+  "added": [
+   {
+    "id": "amazon.nova-2-5-sonic",
+    "name": "Nova 2.5 Sonic",
+    "provider": "Amazon"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-06",
+  "type": "diff",
+  "region": "ap-northeast-1",
+  "added": [
+   {
+    "id": "amazon.nova-2-5-sonic",
+    "name": "Nova 2.5 Sonic",
+    "provider": "Amazon"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
   "date": "2026-10-01",
   "type": "diff",
   "region": "ap-northeast-2",

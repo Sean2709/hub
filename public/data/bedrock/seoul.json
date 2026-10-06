@@ -6,16 +6,16 @@
   "primary_bases": 38,
   "reference": {
    "us-east-1": {
-    "models": 120,
-    "bases": 109,
+    "models": 121,
+    "bases": 110,
     "shared_bases": 35,
-    "coverage_pct": 32.1
+    "coverage_pct": 31.8
    },
    "us-west-2": {
-    "models": 117,
-    "bases": 111,
+    "models": 118,
+    "bases": 112,
     "shared_bases": 33,
-    "coverage_pct": 29.7
+    "coverage_pct": 29.5
    },
    "us-east-2": {
     "models": 94,
@@ -24,10 +24,10 @@
     "coverage_pct": 35.9
    },
    "ap-northeast-1": {
-    "models": 75,
-    "bases": 74,
+    "models": 76,
+    "bases": 75,
     "shared_bases": 33,
-    "coverage_pct": 44.6
+    "coverage_pct": 44.0
    }
   },
   "on_demand": 7,
@@ -42,7 +42,7 @@
    "TwelveLabs",
    "xAI"
   ],
-  "missing_bases": 83
+  "missing_bases": 84
  },
  "models": [
   {
@@ -1131,6 +1131,16 @@
   {
    "base": "amazon.nova-2-sonic-v1:0",
    "name": "Nova 2 Sonic",
+   "provider": "Amazon",
+   "regions": [
+    "us-east-1",
+    "us-west-2",
+    "ap-northeast-1"
+   ]
+  },
+  {
+   "base": "amazon.nova-2-5-sonic",
+   "name": "Nova 2.5 Sonic",
    "provider": "Amazon",
    "regions": [
     "us-east-1",
