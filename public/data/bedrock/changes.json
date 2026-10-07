@@ -1,5 +1,75 @@
 [
  {
+  "date": "2026-10-07",
+  "type": "diff",
+  "region": "ap-northeast-2",
+  "added": [
+   {
+    "id": "zai.glm-5.3",
+    "name": "GLM 5.3",
+    "provider": "Z.AI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-07",
+  "type": "diff",
+  "region": "us-east-1",
+  "added": [
+   {
+    "id": "zai.glm-5.3",
+    "name": "GLM 5.3",
+    "provider": "Z.AI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-07",
+  "type": "diff",
+  "region": "us-west-2",
+  "added": [
+   {
+    "id": "zai.glm-5.3",
+    "name": "GLM 5.3",
+    "provider": "Z.AI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-07",
+  "type": "diff",
+  "region": "us-east-2",
+  "added": [
+   {
+    "id": "zai.glm-5.3",
+    "name": "GLM 5.3",
+    "provider": "Z.AI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-07",
+  "type": "diff",
+  "region": "ap-northeast-1",
+  "added": [
+   {
+    "id": "zai.glm-5.3",
+    "name": "GLM 5.3",
+    "provider": "Z.AI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
   "date": "2026-10-06",
   "type": "diff",
   "region": "us-east-1",

@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "region": "ap-northeast-2",
- "count": 38,
+ "count": 39,
  "profiles": [
   {
    "id": "apac.amazon.nova-lite-v1:0",
@@ -550,6 +550,19 @@
    "status": "ACTIVE",
    "created": "2026-09-25",
    "updated": "2026-09-25"
+  },
+  {
+   "id": "global.zai.glm-5.3",
+   "name": "Global Z.AI GLM 5.3",
+   "scope": "global",
+   "model": "zai.glm-5.3",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-09-29",
+   "updated": "2026-09-29"
   }
  ]
 }

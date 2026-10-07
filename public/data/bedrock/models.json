@@ -3,7 +3,7 @@
  "primary_region": "ap-northeast-2",
  "regions": {
   "ap-northeast-2": {
-   "count": 39,
+   "count": 40,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -829,11 +829,31 @@
      "status": "ACTIVE",
      "since": "2026-09-28",
      "eol": null
+    },
+    {
+     "id": "zai.glm-5.3",
+     "base": "zai.glm-5.3",
+     "name": "GLM 5.3",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-29",
+     "eol": null
     }
    ]
   },
   "us-east-1": {
-   "count": 121,
+   "count": 122,
    "models": [
     {
      "id": "ai21.jamba-1-5-large-v1:0",
@@ -3361,11 +3381,31 @@
      "status": "ACTIVE",
      "since": "2026-03-18",
      "eol": null
+    },
+    {
+     "id": "zai.glm-5.3",
+     "base": "zai.glm-5.3",
+     "name": "GLM 5.3",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-29",
+     "eol": null
     }
    ]
   },
   "us-west-2": {
-   "count": 118,
+   "count": 119,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -5809,11 +5849,31 @@
      "status": "ACTIVE",
      "since": "2026-03-18",
      "eol": null
+    },
+    {
+     "id": "zai.glm-5.3",
+     "base": "zai.glm-5.3",
+     "name": "GLM 5.3",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-29",
+     "eol": null
     }
    ]
   },
   "us-east-2": {
-   "count": 94,
+   "count": 95,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -7757,11 +7817,31 @@
      "status": "ACTIVE",
      "since": "2026-03-18",
      "eol": null
+    },
+    {
+     "id": "zai.glm-5.3",
+     "base": "zai.glm-5.3",
+     "name": "GLM 5.3",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-29",
+     "eol": null
     }
    ]
   },
   "ap-northeast-1": {
-   "count": 76,
+   "count": 77,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -9331,6 +9411,26 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-03-18",
+     "eol": null
+    },
+    {
+     "id": "zai.glm-5.3",
+     "base": "zai.glm-5.3",
+     "name": "GLM 5.3",
+     "provider": "Z.AI",
+     "input": [
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-29",
      "eol": null
     }
    ]
