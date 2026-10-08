@@ -26,7 +26,7 @@ import { GOOGLE_CLIENT } from '../../lib/orunka-login';
       </button>
     </div>
     <p id="ol-msg" class="ol-msg"></p>
-    <p class="ol-note"><small>로그인 계정의 고유 번호(Google은 이메일도)는 로그인에만 쓰고, 게임 저장(캐릭터·펫·가방·놀이 시간)은 서버(Google Firebase, 서울)에 보관해요. Apple 로그인은 이름·이메일을 받지 않아요. 광고·판매·분석에는 쓰지 않으며, 게임 제목 화면의 '서버 저장 지우기'나 <a href="mailto:seanson2709@gmail.com">이메일</a>로 언제든 지울 수 있어요.</small></p>
+    <p class="ol-note"><small>로그인 계정의 고유 번호(Google은 이메일도)는 로그인에만 쓰고, 게임 저장(캐릭터·펫·가방·놀이 시간)은 오룬카 게임 서버(AWS 서울)에 보관해요. Apple 로그인은 이름·이메일을 받지 않아요. 광고·판매·분석에는 쓰지 않으며, 게임 안 <b>설정 › 계정 › 계정 지우기</b>나 <a href="mailto:orunka@seanson.com">orunka@seanson.com</a>으로 언제든 지울 수 있어요. 자세한 건 <a href="/orunka/privacy/">개인정보처리방침</a>을 보세요.</small></p>
   </article>
   <script is:inline src="https://accounts.google.com/gsi/client" async defer></script>
 </Base>
@@ -56,8 +56,8 @@ import { GOOGLE_CLIENT } from '../../lib/orunka-login';
   const doneMsg = (cb: string) => say(cb === 'orunka://auth' ? '로그인 됐어요 — 앱으로 돌아가요.' : '로그인 됐어요 — 게임으로 돌아가세요(이 창은 닫아도 돼요).');
   const deleting = (why?: string | null) => {
     if (why !== 'delete') return;
-    $('ol-h').textContent = '오룬카 — 서버 저장 지우기';
-    $('ol-lead').textContent = '서버 저장을 지우기 전에 Apple로 한 번 더 로그인해 주세요. 오룬카와 Apple 계정의 연결도 함께 끊어요.';
+    $('ol-h').textContent = '오룬카 — 계정 지우기';
+    $('ol-lead').textContent = '계정과 게임 저장을 지우기 전에 Apple로 한 번 더 로그인해 주세요. 오룬카와 Apple 계정의 연결도 함께 끊어요.';
   };
 
   // ---- Apple(또는 iPhone 의 Google 리디렉트)에서 돌아옴(#…id_token=…&state=…) ------------------------
