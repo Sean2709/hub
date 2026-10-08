@@ -2,36 +2,36 @@
  "schema": 1,
  "region": "ap-northeast-2",
  "stats": {
-  "primary_models": 40,
-  "primary_bases": 39,
+  "primary_models": 41,
+  "primary_bases": 40,
   "reference": {
    "us-east-1": {
-    "models": 122,
-    "bases": 111,
-    "shared_bases": 36,
-    "coverage_pct": 32.4
+    "models": 123,
+    "bases": 112,
+    "shared_bases": 37,
+    "coverage_pct": 33.0
    },
    "us-west-2": {
-    "models": 119,
-    "bases": 113,
-    "shared_bases": 34,
-    "coverage_pct": 30.1
+    "models": 120,
+    "bases": 114,
+    "shared_bases": 35,
+    "coverage_pct": 30.7
    },
    "us-east-2": {
-    "models": 95,
-    "bases": 93,
-    "shared_bases": 34,
-    "coverage_pct": 36.6
+    "models": 96,
+    "bases": 94,
+    "shared_bases": 35,
+    "coverage_pct": 37.2
    },
    "ap-northeast-1": {
-    "models": 77,
-    "bases": 76,
-    "shared_bases": 34,
-    "coverage_pct": 44.7
+    "models": 78,
+    "bases": 77,
+    "shared_bases": 35,
+    "coverage_pct": 45.5
    }
   },
   "on_demand": 7,
-  "cris_only": 32,
+  "cris_only": 33,
   "no_access_path": 1,
   "providers": [
    "Amazon",
@@ -360,6 +360,33 @@
    "eol": null,
    "profiles": [
     "global.anthropic.claude-haiku-4-5-20251001-v1:0"
+   ],
+   "access": [
+    "cris"
+   ]
+  },
+  {
+   "id": "anthropic.claude-haiku-5-5",
+   "base": "anthropic.claude-haiku-5-5",
+   "name": "Claude Haiku 5.5",
+   "provider": "Anthropic",
+   "input": [
+    "IMAGE",
+    "TEXT"
+   ],
+   "output": [
+    "TEXT"
+   ],
+   "streaming": true,
+   "inference": [
+    "INFERENCE_PROFILE"
+   ],
+   "customization": [],
+   "status": "ACTIVE",
+   "since": "2026-10-07",
+   "eol": null,
+   "profiles": [
+    "global.anthropic.claude-haiku-5-5"
    ],
    "access": [
     "cris"

@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "region": "ap-northeast-2",
- "count": 39,
+ "count": 40,
  "profiles": [
   {
    "id": "apac.amazon.nova-lite-v1:0",
@@ -240,6 +240,19 @@
    "updated": "2026-08-29"
   },
   {
+   "id": "global.anthropic.claude-haiku-5-5",
+   "name": "Global Anthropic Claude Haiku 5.5",
+   "scope": "global",
+   "model": "anthropic.claude-haiku-5-5",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-10-06",
+   "updated": "2026-10-07"
+  },
+  {
    "id": "global.anthropic.claude-opus-4-5-20251101-v1:0",
    "name": "GLOBAL Anthropic Claude Opus 4.5",
    "scope": "global",
@@ -393,7 +406,7 @@
    "global_endpoint": true,
    "status": "ACTIVE",
    "created": "2026-09-10",
-   "updated": "2026-09-10"
+   "updated": "2026-10-07"
   },
   {
    "id": "global.openai.gpt-5.4",

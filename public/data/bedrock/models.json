@@ -3,7 +3,7 @@
  "primary_region": "ap-northeast-2",
  "regions": {
   "ap-northeast-2": {
-   "count": 40,
+   "count": 41,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -254,6 +254,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2025-10-15",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-haiku-5-5",
+     "base": "anthropic.claude-haiku-5-5",
+     "name": "Claude Haiku 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-10-07",
      "eol": null
     },
     {
@@ -853,7 +874,7 @@
    ]
   },
   "us-east-1": {
-   "count": 122,
+   "count": 123,
    "models": [
     {
      "id": "ai21.jamba-1-5-large-v1:0",
@@ -1415,6 +1436,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2025-10-15",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-haiku-5-5",
+     "base": "anthropic.claude-haiku-5-5",
+     "name": "Claude Haiku 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-10-07",
      "eol": null
     },
     {
@@ -3405,7 +3447,7 @@
    ]
   },
   "us-west-2": {
-   "count": 119,
+   "count": 120,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -3742,6 +3784,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2025-10-15",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-haiku-5-5",
+     "base": "anthropic.claude-haiku-5-5",
+     "name": "Claude Haiku 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-10-07",
      "eol": null
     },
     {
@@ -5873,7 +5936,7 @@
    ]
   },
   "us-east-2": {
-   "count": 95,
+   "count": 96,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -6043,6 +6106,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2025-10-15",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-haiku-5-5",
+     "base": "anthropic.claude-haiku-5-5",
+     "name": "Claude Haiku 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-10-07",
      "eol": null
     },
     {
@@ -7841,7 +7925,7 @@
    ]
   },
   "ap-northeast-1": {
-   "count": 77,
+   "count": 78,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -8112,6 +8196,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2025-10-15",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-haiku-5-5",
+     "base": "anthropic.claude-haiku-5-5",
+     "name": "Claude Haiku 5.5",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-10-07",
      "eol": null
     },
     {
