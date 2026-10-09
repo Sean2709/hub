@@ -1,5 +1,75 @@
 [
  {
+  "date": "2026-10-09",
+  "type": "diff",
+  "region": "ap-northeast-2",
+  "added": [
+   {
+    "id": "twelvelabs.pegasus-1-5-v1:0",
+    "name": "Pegasus v1.5",
+    "provider": "TwelveLabs"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-09",
+  "type": "diff",
+  "region": "us-east-1",
+  "added": [
+   {
+    "id": "twelvelabs.pegasus-1-5-v1:0",
+    "name": "Pegasus v1.5",
+    "provider": "TwelveLabs"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-09",
+  "type": "diff",
+  "region": "us-west-2",
+  "added": [
+   {
+    "id": "twelvelabs.pegasus-1-5-v1:0",
+    "name": "Pegasus v1.5",
+    "provider": "TwelveLabs"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-09",
+  "type": "diff",
+  "region": "us-east-2",
+  "added": [
+   {
+    "id": "twelvelabs.pegasus-1-5-v1:0",
+    "name": "Pegasus v1.5",
+    "provider": "TwelveLabs"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-09",
+  "type": "diff",
+  "region": "ap-northeast-1",
+  "added": [
+   {
+    "id": "twelvelabs.pegasus-1-5-v1:0",
+    "name": "Pegasus v1.5",
+    "provider": "TwelveLabs"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
   "date": "2026-10-08",
   "type": "diff",
   "region": "ap-northeast-2",

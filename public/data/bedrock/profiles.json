@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "region": "ap-northeast-2",
- "count": 40,
+ "count": 41,
  "profiles": [
   {
    "id": "apac.amazon.nova-lite-v1:0",
@@ -537,6 +537,19 @@
    "status": "ACTIVE",
    "created": "2025-11-20",
    "updated": "2025-11-20"
+  },
+  {
+   "id": "global.twelvelabs.pegasus-1-5-v1:0",
+   "name": "Global TwelveLabs Pegasus v1.5",
+   "scope": "global",
+   "model": "twelvelabs.pegasus-1-5-v1:0",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-09-17",
+   "updated": "2026-09-17"
   },
   {
    "id": "global.xai.grok-4.6",

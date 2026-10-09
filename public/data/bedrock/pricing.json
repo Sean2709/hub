@@ -7,8 +7,8 @@
  "versions": {
   "AmazonBedrock/ap-northeast-2": "20261006144726",
   "AmazonBedrock/us-east-1": "20261006144726",
-  "AmazonBedrockFoundationModels/ap-northeast-2": "20261007183733",
-  "AmazonBedrockFoundationModels/us-east-1": "20261007183733"
+  "AmazonBedrockFoundationModels/ap-northeast-2": "20261008235637",
+  "AmazonBedrockFoundationModels/us-east-1": "20261008235637"
  },
  "regions": {
   "ap-northeast-2": {
@@ -292,7 +292,7 @@
       "global.standard": {
        "in": 0.1,
        "out": 2.5,
-       "cacheWrite": 0.125,
+       "cacheWrite": 0.625,
        "cacheWrite1h": 0.2,
        "cacheRead": 0.01
       }
@@ -509,7 +509,7 @@
      "kind": "text"
     },
     {
-     "name": "Cohere Embed 4",
+     "name": "Embed v4",
      "provider": "Cohere",
      "prices": {
       "region.standard": {
@@ -659,7 +659,7 @@
    ]
   },
   "us-east-1": {
-   "count": 127,
+   "count": 124,
    "models": [
     {
      "name": "Jamba 1.5 Large",
@@ -695,7 +695,7 @@
      "kind": "text"
     },
     {
-     "name": "Jurassic-2 Mid",
+     "name": "Jurassic Mid",
      "provider": "AI21 Labs",
      "prices": {
       "region.standard": {
@@ -706,12 +706,34 @@
      "kind": "text"
     },
     {
-     "name": "Jurassic-2 Ultra",
+     "name": "Jurassic Ultra",
      "provider": "AI21 Labs",
      "prices": {
       "region.standard": {
        "out": 18.8,
        "in": 18.8
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama2-13B",
+     "provider": "Amazon",
+     "prices": {
+      "region.standard": {
+       "in": 0.75,
+       "out": 1.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Llama2-70B",
+     "provider": "Amazon",
+     "prices": {
+      "region.standard": {
+       "out": 2.56,
+       "in": 1.95
       }
      },
      "kind": "text"
@@ -1028,7 +1050,7 @@
      "kind": "text"
     },
     {
-     "name": "Claude",
+     "name": "Claude 2.0",
      "provider": "Anthropic",
      "prices": {
       "region.standard": {
@@ -1037,27 +1059,6 @@
       }
      },
      "kind": "text"
-    },
-    {
-     "name": "Claude (100K)",
-     "provider": "Anthropic",
-     "prices": {
-      "region.standard": {
-       "in": 22.04,
-       "out": 65.36
-      }
-     },
-     "kind": "text"
-    },
-    {
-     "name": "Claude 2.0",
-     "provider": "Anthropic",
-     "prices": {
-      "region.standard": {
-       "in": 8.0
-      }
-     },
-     "kind": "embedding"
     },
     {
      "name": "Claude 2.1",
@@ -1256,17 +1257,17 @@
      "provider": "Anthropic",
      "prices": {
       "region.standard": {
+       "cacheWrite": 0.1375,
        "out": 2.75,
        "cacheRead": 0.011,
        "in": 0.11,
-       "cacheWrite1h": 0.22,
-       "cacheWrite": 0.1375
+       "cacheWrite1h": 1.1
       },
       "global.standard": {
-       "cacheRead": 0.01,
        "cacheWrite": 0.125,
-       "out": 0.5,
+       "cacheRead": 0.01,
        "cacheWrite1h": 0.2,
+       "out": 0.5,
        "in": 0.5
       }
      },
@@ -1277,19 +1278,8 @@
      "provider": "Anthropic",
      "prices": {
       "region.standard": {
-       "in": 0.8,
+       "in": 3.26,
        "out": 2.4
-      }
-     },
-     "kind": "text"
-    },
-    {
-     "name": "Claude Instant (100K)",
-     "provider": "Anthropic",
-     "prices": {
-      "region.standard": {
-       "out": 11.02,
-       "in": 3.26
       }
      },
      "kind": "text"
@@ -1651,59 +1641,7 @@
      "kind": "text"
     },
     {
-     "name": "Cohere Command R",
-     "provider": "Cohere",
-     "prices": {
-      "region.standard": {
-       "out": 1.5,
-       "in": 0.5
-      }
-     },
-     "kind": "text"
-    },
-    {
-     "name": "Cohere Command R+",
-     "provider": "Cohere",
-     "prices": {
-      "region.standard": {
-       "out": 15.0,
-       "in": 3.0
-      }
-     },
-     "kind": "text"
-    },
-    {
-     "name": "Cohere Embed 3 Model - English",
-     "provider": "Cohere",
-     "prices": {
-      "region.standard": {
-       "in": 0.1
-      }
-     },
-     "kind": "embedding"
-    },
-    {
-     "name": "Cohere Embed 4",
-     "provider": "Cohere",
-     "prices": {
-      "region.standard": {
-       "in": 0.12
-      }
-     },
-     "kind": "embedding"
-    },
-    {
-     "name": "Cohere Embed Model 3 - Multilingual",
-     "provider": "Cohere",
-     "prices": {
-      "region.standard": {
-       "in": 0.1
-      }
-     },
-     "kind": "embedding"
-    },
-    {
-     "name": "Cohere Generate Model - Command",
+     "name": "Command",
      "provider": "Cohere",
      "prices": {
       "region.standard": {
@@ -1714,7 +1652,29 @@
      "kind": "text"
     },
     {
-     "name": "Cohere Generate Model - Command-Light",
+     "name": "Command R",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "out": 1.5,
+       "in": 0.5
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Command R+",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "out": 15.0,
+       "in": 3.0
+      }
+     },
+     "kind": "text"
+    },
+    {
+     "name": "Command-Light",
      "provider": "Cohere",
      "prices": {
       "region.standard": {
@@ -1723,6 +1683,36 @@
       }
      },
      "kind": "text"
+    },
+    {
+     "name": "Embed English",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "in": 0.1
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Embed Multilingual",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "in": 0.1
+      }
+     },
+     "kind": "embedding"
+    },
+    {
+     "name": "Embed v4",
+     "provider": "Cohere",
+     "prices": {
+      "region.standard": {
+       "in": 0.12
+      }
+     },
+     "kind": "embedding"
     },
     {
      "name": "DeepSeek V3.1",
@@ -2067,28 +2057,6 @@
       "region.standard": {
        "out": 0.66,
        "in": 0.17
-      }
-     },
-     "kind": "text"
-    },
-    {
-     "name": "Meta Llama 2 Chat 13B",
-     "provider": "Meta",
-     "prices": {
-      "region.standard": {
-       "in": 0.75,
-       "out": 1.0
-      }
-     },
-     "kind": "text"
-    },
-    {
-     "name": "Meta Llama 2 Chat 70B",
-     "provider": "Meta",
-     "prices": {
-      "region.standard": {
-       "out": 2.56,
-       "in": 1.95
       }
      },
      "kind": "text"

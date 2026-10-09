@@ -2,36 +2,36 @@
  "schema": 1,
  "region": "ap-northeast-2",
  "stats": {
-  "primary_models": 41,
-  "primary_bases": 40,
+  "primary_models": 42,
+  "primary_bases": 41,
   "reference": {
    "us-east-1": {
-    "models": 123,
-    "bases": 112,
-    "shared_bases": 37,
-    "coverage_pct": 33.0
+    "models": 124,
+    "bases": 113,
+    "shared_bases": 38,
+    "coverage_pct": 33.6
    },
    "us-west-2": {
-    "models": 120,
-    "bases": 114,
-    "shared_bases": 35,
-    "coverage_pct": 30.7
+    "models": 121,
+    "bases": 115,
+    "shared_bases": 36,
+    "coverage_pct": 31.3
    },
    "us-east-2": {
-    "models": 96,
-    "bases": 94,
-    "shared_bases": 35,
-    "coverage_pct": 37.2
+    "models": 97,
+    "bases": 95,
+    "shared_bases": 36,
+    "coverage_pct": 37.9
    },
    "ap-northeast-1": {
-    "models": 78,
-    "bases": 77,
-    "shared_bases": 35,
-    "coverage_pct": 45.5
+    "models": 79,
+    "bases": 78,
+    "shared_bases": 36,
+    "coverage_pct": 46.2
    }
   },
   "on_demand": 7,
-  "cris_only": 33,
+  "cris_only": 34,
   "no_access_path": 1,
   "providers": [
    "Amazon",
@@ -1073,6 +1073,33 @@
    ],
    "access": [
     "on-demand",
+    "cris"
+   ]
+  },
+  {
+   "id": "twelvelabs.pegasus-1-5-v1:0",
+   "base": "twelvelabs.pegasus-1-5-v1:0",
+   "name": "Pegasus v1.5",
+   "provider": "TwelveLabs",
+   "input": [
+    "TEXT",
+    "VIDEO"
+   ],
+   "output": [
+    "TEXT"
+   ],
+   "streaming": true,
+   "inference": [
+    "INFERENCE_PROFILE"
+   ],
+   "customization": [],
+   "status": "ACTIVE",
+   "since": "2026-09-18",
+   "eol": null,
+   "profiles": [
+    "global.twelvelabs.pegasus-1-5-v1:0"
+   ],
+   "access": [
     "cris"
    ]
   },

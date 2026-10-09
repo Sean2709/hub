@@ -3,7 +3,7 @@
  "primary_region": "ap-northeast-2",
  "regions": {
   "ap-northeast-2": {
-   "count": 41,
+   "count": 42,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -810,6 +810,27 @@
      "eol": null
     },
     {
+     "id": "twelvelabs.pegasus-1-5-v1:0",
+     "base": "twelvelabs.pegasus-1-5-v1:0",
+     "name": "Pegasus v1.5",
+     "provider": "TwelveLabs",
+     "input": [
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-18",
+     "eol": null
+    },
+    {
      "id": "xai.grok-4.6",
      "base": "xai.grok-4.6",
      "name": "Grok 4.6",
@@ -874,7 +895,7 @@
    ]
   },
   "us-east-1": {
-   "count": 123,
+   "count": 124,
    "models": [
     {
      "id": "ai21.jamba-1-5-large-v1:0",
@@ -3262,6 +3283,27 @@
      "eol": null
     },
     {
+     "id": "twelvelabs.pegasus-1-5-v1:0",
+     "base": "twelvelabs.pegasus-1-5-v1:0",
+     "name": "Pegasus v1.5",
+     "provider": "TwelveLabs",
+     "input": [
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-18",
+     "eol": null
+    },
+    {
      "id": "writer.palmyra-x4-v1:0",
      "base": "writer.palmyra-x4-v1:0",
      "name": "Palmyra X4",
@@ -3447,7 +3489,7 @@
    ]
   },
   "us-west-2": {
-   "count": 120,
+   "count": 121,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -5751,6 +5793,27 @@
      "eol": null
     },
     {
+     "id": "twelvelabs.pegasus-1-5-v1:0",
+     "base": "twelvelabs.pegasus-1-5-v1:0",
+     "name": "Pegasus v1.5",
+     "provider": "TwelveLabs",
+     "input": [
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-18",
+     "eol": null
+    },
+    {
      "id": "writer.palmyra-x4-v1:0",
      "base": "writer.palmyra-x4-v1:0",
      "name": "Palmyra X4",
@@ -5936,7 +5999,7 @@
    ]
   },
   "us-east-2": {
-   "count": 96,
+   "count": 97,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -7740,6 +7803,27 @@
      "eol": null
     },
     {
+     "id": "twelvelabs.pegasus-1-5-v1:0",
+     "base": "twelvelabs.pegasus-1-5-v1:0",
+     "name": "Pegasus v1.5",
+     "provider": "TwelveLabs",
+     "input": [
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-18",
+     "eol": null
+    },
+    {
      "id": "writer.palmyra-x4-v1:0",
      "base": "writer.palmyra-x4-v1:0",
      "name": "Palmyra X4",
@@ -7925,7 +8009,7 @@
    ]
   },
   "ap-northeast-1": {
-   "count": 78,
+   "count": 79,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -9414,6 +9498,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2025-10-31",
+     "eol": null
+    },
+    {
+     "id": "twelvelabs.pegasus-1-5-v1:0",
+     "base": "twelvelabs.pegasus-1-5-v1:0",
+     "name": "Pegasus v1.5",
+     "provider": "TwelveLabs",
+     "input": [
+      "TEXT",
+      "VIDEO"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-09-18",
      "eol": null
     },
     {
