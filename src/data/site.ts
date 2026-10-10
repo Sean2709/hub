@@ -96,6 +96,12 @@ export type Post = {
 
 export const posts: Post[] = [
   {
+    title: '쉽게 따라하는 LZA를 활용한 AWS Control Tower 구축 (4) - 보안 Service와 Identity Center, 그리고 시리즈 정리',
+    url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-LZA%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-AWS-Control-Tower-%EA%B5%AC%EC%B6%95-4-%EB%B3%B4%EC%95%88-Service%EC%99%80-Identity-Center-%EA%B7%B8%EB%A6%AC%EA%B3%A0-%EC%8B%9C%EB%A6%AC%EC%A6%88-%EC%A0%95%EB%A6%AC',
+    date: '2026-10-10',
+    tags: ['aws', 'lza', 'control-tower', 'guardduty', 'security-hub'],
+  },
+  {
     title: '쉽게 따라하는 Amazon Bedrock으로 나만의 AI 어시스턴트 만들기 (4) - iPhone App 마무리: 설정 화면, 실기기, Markdown',
     url: 'https://velog.io/@seanson2709/%EC%89%BD%EA%B2%8C-%EB%94%B0%EB%9D%BC%ED%95%98%EB%8A%94-Amazon-Bedrock%EC%9C%BC%EB%A1%9C-%EB%82%98%EB%A7%8C%EC%9D%98-AI-%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8-%EB%A7%8C%EB%93%A4%EA%B8%B0-4-iPhone-App-%EB%A7%88%EB%AC%B4%EB%A6%AC-%EC%84%A4%EC%A0%95-%ED%99%94%EB%A9%B4-%EC%8B%A4%EA%B8%B0%EA%B8%B0-Markdown',
     date: '2026-10-03',
