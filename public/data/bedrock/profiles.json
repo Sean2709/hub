@@ -380,7 +380,7 @@
    "global_endpoint": true,
    "status": "ACTIVE",
    "created": "2026-09-28",
-   "updated": "2026-09-29"
+   "updated": "2026-10-09"
   },
   {
    "id": "global.cohere.embed-v4:0",

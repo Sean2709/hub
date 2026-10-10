@@ -600,9 +600,9 @@
     "INFERENCE_PROFILE"
    ],
    "customization": [],
-   "status": "ACTIVE",
+   "status": "LEGACY",
    "since": "2025-09-29",
-   "eol": null,
+   "eol": "2027-04-08",
    "profiles": [
     "global.anthropic.claude-sonnet-4-5-20250929-v1:0"
    ],
