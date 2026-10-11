@@ -1,7 +1,15 @@
-// node scripts/test-orunka-cloud.mjs — /admin/ 오룬카 「서버 저장」 패널(lib/orunka-cloud.ts) 시험
-//   단위: 필드 8개·검사·백업 id·시각 꼴 / 실측(--live): 익명 시험 계정으로 자기 saves/{uid} 를 만들고
-//   패널과 같은 commit(백업 + updateTime 전제조건)을 실제 Firestore 에 보내 본다 — 끝나면 문서·계정을 지운다.
-//   관리자 목록(다른 사람 저장 읽기)은 관리자 Google 로그인이 필요해 여기선 못 본다(규칙은 tools/cloud/test_cloud.py).
+// node scripts/test-orunka-cloud.mjs [--live [--server https://…]] [--help] — /admin/ 오룬카 저장 패널 시험
+//   단위: lib/orunka-cloud.ts 필드 8개·검사·백업 id·시각 꼴(인터넷 없이)
+//   실측(--live): 게임 서버(기본 https://game.seanson.com)에 QA 시험 신원(tok "qa:<무작위>" + 헤더 x-orunka-qa = QA 열쇠,
+//     게임 레포 tools/server/qa/qaid.py 와 같은 길)으로 /api/me/chars 를 불러 보고, 열쇠 없음·틀림 거절, 그 신원으로 관리 API(/admin/api/saves) 거절을 본 뒤
+//     /api/me/delete 로 치운다(Firebase 계정 안 만듦). 열쇠 = 환경 변수 ORUNKA_QA_KEY, 없으면 ~/.config/orunka/qa.key(서버 env ORUNKA_QA_KEY 와 같아야).
+//   익명 로그인은 없앰(게임 레포 41f8b7a W22 — 서버는 anonymous 토큰을 언제나 거절, Firestore saves 쓰기도 규칙으로 막힘) → 옛 익명 signUp·Firestore commit 실측은 지웠다.
+//   관리자 목록(다른 사람 저장 읽기)은 관리자 Google 로그인이 필요해 여기선 못 본다.
+const HELP = `node scripts/test-orunka-cloud.mjs            단위 시험만
+node scripts/test-orunka-cloud.mjs --live     + 실서버 QA 시험 신원 실측(열쇠: ORUNKA_QA_KEY 또는 ~/.config/orunka/qa.key)
+  --server <https://…>                        실측 대상(기본 https://game.seanson.com)`;
+if (process.argv.includes('--help') || process.argv.includes('-h')) { console.log(HELP); process.exit(0); }
+const arg = (k) => { const i = process.argv.indexOf(k); return i > 0 && process.argv[i + 1] && !process.argv[i + 1].startsWith('--') ? process.argv[i + 1] : ''; };
 const m = await import('../src/lib/orunka-cloud.ts');
 let fails = 0;
 const t = (name, ok, extra = '') => { console.log((ok ? 'PASS ' : 'FAIL ') + name + (ok || !extra ? '' : ' — ' + extra)); if (!ok) fails++; };
@@ -30,40 +38,31 @@ t('검사: 400KB', m.checkSave({ ...save, pad: 'x'.repeat(400000) }).length === 
 t('val()', m.val({ integerValue: '5' }) === 5 && m.val({ doubleValue: 1.5 }) === 1.5 && m.val({ stringValue: 'a' }) === 'a' && m.val(undefined) === undefined);
 
 if (process.argv.includes('--live')) {
-  const KEY = 'AIzaSyC4gjiwEudf6GMBpm1u3vlGEmhk-lBijKs';
-  const FS = m.FS_URL;
+  // QA 시험 신원(게임 레포 tools/server/qa/qaid.py · Auth.cs W22) — 열쇠는 출력하지 않는다
+  const { readFileSync, existsSync } = await import('node:fs');
+  const { homedir } = await import('node:os');
+  const { randomBytes } = await import('node:crypto');
+  const kf = `${homedir()}/.config/orunka/qa.key`;
+  const QA = (process.env.ORUNKA_QA_KEY || (existsSync(kf) ? readFileSync(kf, 'utf8') : '')).trim();
+  if (!QA) { console.log('FAIL QA 열쇠 없음(ORUNKA_QA_KEY · ~/.config/orunka/qa.key) — 서버는 익명 토큰을 받지 않고, 시험 신원은 열쇠가 있어야 만든다'); process.exit(2); }
+  const base = (arg('--server') || 'https://game.seanson.com').replace(/\/+$/, '');
+  const tok = 'qa:' + randomBytes(8).toString('hex');   // = 서버 uid
+  const H = { Authorization: `Bearer ${tok}`, 'x-orunka-qa': QA, 'Content-Type': 'application/json' };
   const js = async (r) => ({ s: r.status, j: await r.json().catch(() => ({})) });
-  const { j: acct } = await js(await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${KEY}`,
-    { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ returnSecureToken: true }) }));
-  const uid = acct.localId, H = { Authorization: `Bearer ${acct.idToken}`, 'Content-Type': 'application/json' };
-  t('익명 시험 계정', !!uid, JSON.stringify(acct).slice(0, 200));
+  const brief = (r) => `${r.s} ${JSON.stringify(r.j).slice(0, 200)}`;
+  console.log(`실측: ${base} · 시험 신원 ${tok}`);
   try {
-    const first = m.saveFields(save, now);
-    let r = await js(await fetch(`${FS}/saves/${uid}?currentDocument.exists=false`, { method: 'PATCH', headers: H, body: JSON.stringify({ fields: first }) }));
-    t('본문 만들기', r.s === 200, JSON.stringify(r.j).slice(0, 200));
-    const prevUpdate = r.j.updateTime, prevFields = r.j.fields;
-    const edited = { ...save, money: 99999 };
-    const later = new Date(now.getTime() + 61000);
-    r = await js(await fetch(`${FS}:commit`, { method: 'POST', headers: H, body: JSON.stringify(m.commitBody(uid, prevFields, prevUpdate, edited, later)) }));
-    t('commit(백업 + 전제조건) 성공', r.s === 200 && r.j.writeResults?.length === 2, JSON.stringify(r.j).slice(0, 300));
-    r = await js(await fetch(`${FS}/saves/${uid}`, { headers: H }));
-    t('본문 = 고친 판', JSON.parse(r.j.fields.json.stringValue).money === 99999 && r.j.fields.device.stringValue === 'admin' && r.j.updateTime !== prevUpdate);
-    r = await js(await fetch(`${FS}/saves/${uid}/days/${m.backupId(later)}`, { headers: H }));
-    t('백업 = 고치기 전 판', r.s === 200 && JSON.parse(r.j.fields.json.stringValue).money === 1234 && r.j.fields.device.stringValue === 'admin');
-    r = await js(await fetch(`${FS}:commit`, { method: 'POST', headers: H, body: JSON.stringify(m.commitBody(uid, prevFields, prevUpdate, { ...save, money: 1 }, new Date(later.getTime() + 5000))) }));
-    t('옛 updateTime 이면 거절(FAILED_PRECONDITION)', r.s === 400 && r.j.error?.status === 'FAILED_PRECONDITION', JSON.stringify(r.j).slice(0, 200));
-    r = await js(await fetch(`${FS}/saves/${uid}`, { headers: H }));
-    t('거절된 commit 은 백업도 안 남김(원자적)', JSON.parse(r.j.fields.json.stringValue).money === 99999);
-    r = await js(await fetch(`${FS}/saves/${uid}/days?pageSize=10&mask.fieldPaths=lv`, { headers: H }));
-    t('백업 목록 1건', (r.j.documents ?? []).length === 1, JSON.stringify(r.j).slice(0, 200));
-    r = await js(await fetch(`${FS}/saves?pageSize=10&mask.fieldPaths=lv`, { headers: H }));
-    t('관리자 아님 → 전체 목록 거절', r.s === 403, String(r.s));
+    let r = await js(await fetch(`${base}/api/me/chars`, { headers: H }));
+    t('QA 시험 신원 → /api/me/chars 200 · 자리 3 · 빈 목록', r.s === 200 && r.j.max === 3 && Array.isArray(r.j.chars) && r.j.chars.length === 0, brief(r));
+    r = await js(await fetch(`${base}/api/me/chars`, { headers: { Authorization: `Bearer ${tok}` } }));
+    t('열쇠 없이 qa 토큰 → 401', r.s === 401, brief(r));
+    r = await js(await fetch(`${base}/api/me/chars`, { headers: { ...H, 'x-orunka-qa': QA + 'x' } }));
+    t('틀린 열쇠 → 401', r.s === 401, brief(r));
+    r = await js(await fetch(`${base}/admin/api/saves`, { headers: H }));
+    t('QA 시험 신원은 관리 API 못 씀(/admin/api/saves → 401)', r.s === 401, brief(r));
   } finally {
-    const r = await js(await fetch(`${FS}/saves/${uid}/days?pageSize=50`, { headers: H }));
-    for (const d of r.j.documents ?? []) await fetch(`https://firestore.googleapis.com/v1/${d.name}`, { method: 'DELETE', headers: H });
-    await fetch(`${FS}/saves/${uid}`, { method: 'DELETE', headers: H });
-    const del = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:delete?key=${KEY}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idToken: acct.idToken }) }); // Bearer 붙이면 401
-    t('정리(문서·시험 계정 지움)', del.ok);
+    const r = await js(await fetch(`${base}/api/me/delete`, { method: 'POST', headers: H, body: '{}' }));
+    t('정리(/api/me/delete — 시험 신원 캐릭터 지움)', r.s === 200 && r.j.ok === true, brief(r));
   }
 }
 console.log(fails ? `FAIL ${fails}` : 'ALL PASS');

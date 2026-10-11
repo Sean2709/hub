@@ -2,11 +2,15 @@
 // 오룬카(ORUNKA) 개인정보처리방침 — App Store(iPhone·Mac)·Steam 등록용 URL: https://hub.seanson.com/orunka/privacy/
 // 온라인판(2026-10-06~): 로그인 필수(Apple·Google → Firebase Authentication) · 서버 세이브 정본 = 게임 서버(AWS Lightsail 서울) · 채팅·신고·차단.
 // 광고·분석·추적 SDK 없음. ASC App Privacy 답 = OrunkaUnity docs/release/app_privacy.md — 하나를 고치면 다른 하나도 같이 고친다(시행일도).
+// 2026-10-11(출시 전): 게임 이용 기록(서버 data/act, 90일)·접속 기록 30→90일·지운 캐릭터 30일 보관·부정 이용 의심 표시 추가.
+//   + secfix(int 81d92e5): L13 계정 지우기 = 직접 로그인 10분 지났으면 saves/deleted/ 7일 보관 뒤 지움(10분 안이면 바로) · L6 말 막기 = 계정 지워도 남은 기간까지 둠.
+//   + W21(int 2ae0876): 잠수 자동 사냥 하루 2시간 = data/afk.json(계정별 그날 초·extra, 한국 0시 Prune) · 행위 기록 ev=afk. W22(41f8b7a) 익명 로그인 없앰 = 방침은 원래 Apple·Google 만이라 그대로.
+//   ⚠ afk.json extra>0 줄은 /api/me/delete 가 안 지움(Afk.Forget 없음) — 방침 "계정 지울 때 함께 지움"에 맞추려면 서버에 한 줄 필요.
 import Base from '../../layouts/Base.astro';
-const updated = '2026-10-08';
+const updated = '2026-10-11';
 ---
 
-<Base title="오룬카 개인정보처리방침 · ORUNKA Privacy Policy" description="오룬카(ORUNKA) 개인정보처리방침 — 로그인 계정, 게임 저장, 채팅, 접속 기록을 어떻게 처리하고 언제 지우는지 안내합니다.">
+<Base title="오룬카 개인정보처리방침 · ORUNKA Privacy Policy" description="오룬카(ORUNKA) 개인정보처리방침 — 로그인 계정, 게임 저장, 채팅, 게임 이용 기록, 접속 기록을 어떻게 처리하고 언제 지우는지 안내합니다.">
   <article>
     <h1>오룬카 개인정보처리방침</h1>
     <p><small>시행일 {updated} · 대상: 오룬카(ORUNKA) — iPhone·Mac(App Store), Windows(Steam)</small></p>
@@ -18,31 +22,40 @@ const updated = '2026-10-08';
       <li><strong>로그인과 계정 확인</strong> — 오룬카는 Apple 또는 Google 계정으로 로그인해야 이용할 수 있습니다.</li>
       <li><strong>게임 제공</strong> — 캐릭터와 진행 상황을 서버에 저장하고, 같은 섬에서 다른 이용자와 만나고, 파티를 맺고, 이야기를 주고받게 합니다.</li>
       <li><strong>안전한 운영</strong> — 신고 처리, 욕설·괴롭힘·부정 이용 막기(말 막기·이용 정지), 장애 원인 찾기.</li>
+      <li><strong>부정 이용 확인과 분쟁 처리</strong> — 게임 이용 기록으로 핵, 매크로, 버그 악용, 현금 거래, 다른 계정으로 몰아주기 같은 부정 이용을 확인하고, 신고·분쟁·이의 제기를 처리하고, 잃어버린 게임 데이터를 되살립니다.</li>
       <li><strong>문의 응대</strong> — 이메일 문의에 답하고 계정 삭제 요청을 처리합니다.</li>
     </ul>
-    <p>광고, 마케팅, 판매, 이용 행태 분석에는 쓰지 않습니다. 앱 안에 광고·분석·추적 도구를 넣지 않았습니다.</p>
+    <p>광고, 마케팅, 판매에는 쓰지 않습니다. 게임 이용 기록은 위 목적(부정 이용 확인, 신고·분쟁 처리, 데이터 되살리기)에만 씁니다. 앱 안에 광고·분석·추적 도구를 넣지 않았습니다.</p>
 
     <h2>2. 처리하는 개인정보 항목</h2>
-    <p>모두 게임 이용에 꼭 필요한 항목이며, 이용약관에 따른 서비스 제공(「개인정보 보호법」 제15조 제1항 제4호)을 근거로 처리합니다.</p>
+    <p>모두 게임 이용에 꼭 필요한 항목이며, 이용약관에 따른 서비스 제공(「개인정보 보호법」 제15조 제1항 제4호)을 근거로 처리합니다. 계정을 지운 뒤에도 게임 이용 기록을 정해진 기간(3절) 남기는 것은 부정 이용(예: 부정하게 얻은 것을 다른 계정으로 넘기고 계정을 지우는 일)을 확인하려는 것으로, 개발자의 정당한 이익(같은 법 제15조 제1항 제6호)을 근거로 합니다. 남이 몰래 지운 계정을 되돌리려고 게임 저장을 7일 두는 것과, 말 막기를 계정을 지운 뒤에도 남은 기간까지 두는 것도 같은 근거입니다.</p>
     <ul>
       <li><strong>계정 정보</strong>: 로그인 계정의 고유 번호(uid), 로그인 방식(Apple·Google), Google 로그인의 이메일 주소. Apple 로그인은 이름·이메일을 요청하지 않습니다. 비밀번호는 Apple·Google이 처리하며 게임과 개발자에게 오지 않습니다.</li>
-      <li><strong>게임 정보</strong>: 캐릭터 이름·생김새, 레벨, 펫, 가방, 퀘스트 진행, 게임 속 위치, 놀이 시간, 파티.</li>
+      <li><strong>게임 정보</strong>: 캐릭터 이름·생김새, 레벨, 펫, 가방, 퀘스트 진행, 게임 속 위치, 놀이 시간, 파티, 캐릭터 자리마다 마지막으로 삭제한 시각, 계정마다 그날 자리를 비운 채 자동 사냥한 시간(하루 상한을 지키려고)과 개발자가 더 준 시간.</li>
       <li><strong>채팅과 신고</strong>: 곁 말·모두 말로 보낸 글(시각·채널·uid·캐릭터 이름 포함), 신고할 때 적은 글과 신고된 이용자의 최근 말.</li>
-      <li><strong>운영 기록</strong>: 접속할 때 남는 기록(접속 시각, IP 주소, 게임 버전, 기기 종류 — Mac·Windows·iPhone 같은 플랫폼 이름), 약관·나이 확인 동의 기록(시각·uid·약관 판·IP), 말 막기·이용 정지 기록.</li>
+      <li><strong>게임 이용 기록</strong>: 게임 안에서 한 일을 시각과 함께 남긴 기록 — 접속·나감(나간 까닭, 접속한 시간), 레벨업, 사냥(1분마다 몬스터 종류별 마리 수, 얻은 경험·라이·물건), 포획(올가미 던짐 포함), 펫 맡기기·놓아주기·이름 바꾸기, 장비 바꾸기, 물건 쓰기, 캐기, 상점에서 사고팔기, 제작, 퀘스트, NPC 선택지로 받은 것, 쓰러짐, 순간이동, 자리 비운 자동 사냥(상한 미리 알림·상한 닿음·자동 전투 꺼짐·개발자가 시간을 바꿈), 교환(상대 캐릭터, 주고받은 물건·펫·라이), 파티, 신고·차단, 캐릭터 이름 만들기(거절 포함)·캐릭터 지우기, 연결이 끊긴 까닭, 개발자가 게임 데이터를 고친 내용, 제재 내용, 주기적으로 비교한 저장 요약의 바뀐 값(레벨·경험·라이·물건 수·펫 목록), 자동 조작을 가려내기 위한 값(1분마다 보낸 명령의 수와 간격, 이동 명령 수, 자동 전투를 켠 비율, 게임에 없는 명령). 줄마다 계정·캐릭터를 가리키는 값(uid로 만든 값)과 캐릭터 이름, 그때 게임 안 자리가 함께 남습니다. 말 막기·이용 정지를 받으면 그 사람의 최근 30일 접속 IP 주소와 기기 종류(각 5개까지)를 함께 남기고(정지를 피해 다시 들어오는지 확인), 정지된 계정이 들어오려 하면 그 시각과 IP 주소를 남깁니다. 채팅 본문은 넣지 않습니다(채팅은 위 채팅 기록으로 따로 보관).</li>
+      <li><strong>부정 이용 의심 표시</strong>: 프로그램이 게임 이용 기록에서 매긴 의심 정도와 그 근거, 개발자가 살펴본 결과.</li>
+      <li><strong>운영 기록</strong>: 접속할 때 남는 기록(접속 시각, IP 주소, 게임 버전, 기기 종류 — Mac·Windows·iPhone 같은 플랫폼 이름, 로그인 방식, 게임 언어), 로그인하기 전에 끊긴 연결의 IP 주소별 1분 동안의 횟수(계정과 묶지 않음 — 서버 공격 확인용), 약관·나이 확인 동의 기록(시각·uid·약관 판·IP), 경고·말 막기·이용 정지 기록(uid·종류·기간·까닭·처리 시각·개발자 메모).</li>
       <li><strong>문의</strong>: 이메일로 문의하면 보낸 이메일 주소와 문의 내용.</li>
     </ul>
     <p>기기 식별자, 광고 식별자, 연락처, 정밀 위치는 수집하지 않습니다. IP 주소로 위치를 알아내지 않습니다.</p>
-    <p>채팅의 금칙어 가리기, 캐릭터 이름 거절, 너무 잦은 명령을 보낸 연결 끊기는 프로그램이 자동으로 합니다. 말 막기와 이용 정지는 개발자가 기록을 보고 직접 정합니다. 「개인정보 보호법」 제37조의2의 '완전히 자동화된 결정'은 하지 않습니다.</p>
+    <p>채팅의 금칙어 가리기, 캐릭터 이름 거절, 너무 잦은 명령이나 게임에서 나올 수 없는 비정상 명령을 보낸 연결 끊기는 프로그램이 자동으로 합니다(연결이 끊겨도 다시 접속할 수 있습니다). 프로그램은 게임 이용 기록을 모아 부정 이용이 의심되는 계정에 의심 정도와 근거를 표시하지만, 이 표시만으로 제재하지 않습니다. 말 막기와 이용 정지는 개발자가 기록을 보고 직접 정합니다. 「개인정보 보호법」 제37조의2의 '완전히 자동화된 결정'은 하지 않습니다.</p>
 
     <h2>3. 보유 기간과 파기</h2>
     <ul>
-      <li>게임 저장(서버 세이브)과 날짜별 백업: 계정을 지울 때까지. 날짜별 백업은 14일치만 둡니다.</li>
+      <li>게임 저장(서버 세이브)과 날짜별 백업: 계정을 지울 때까지. 날짜별 백업은 14일치만 둡니다. 게임 안에서 계정을 지울 때 마지막으로 직접 로그인한 지 10분이 지났으면, 남이 몰래 지운 경우 되돌릴 수 있도록 세이브와 백업(지운 캐릭터 보관본 포함)을 따로 옮겨 7일 둔 뒤 완전히 지웁니다. 로그인한 지 10분 안이면 바로 지웁니다.</li>
+      <li>캐릭터 삭제로 지운 캐릭터: 잘못 지운 경우 되살리려고 30일 보관한 뒤 지웁니다. 계정을 지우면 게임 저장과 함께 지웁니다(위 7일 보관 대상이면 7일 뒤).</li>
       <li>서버 디스크 스냅샷: 7일 뒤 자동으로 지웁니다. 서버 밖 백업을 둘 때도 14일 뒤 지웁니다.</li>
       <li>채팅 기록: 30일 뒤 자동으로 지웁니다.</li>
-      <li>접속 기록: 30일 뒤 지웁니다.</li>
-      <li>신고 기록: 같은 일이 되풀이되는 것을 막고 이의 제기에 답하려고 1년 보관한 뒤 지웁니다.</li>
-      <li>약관 동의 기록, 말 막기 기록: 계정을 지울 때 함께 지웁니다.</li>
-      <li>이용 정지 기록(uid·까닭·시각): 정지가 이어지는 동안 보관하고, 정지가 끝나거나 계정이 지워지면 1년 안에 지웁니다.</li>
+      <li>게임 이용 기록: 90일 뒤 자동으로 지웁니다. 계정을 지워도 부정 이용 확인을 위해 90일이 될 때까지 남깁니다.</li>
+      <li>접속 기록(IP 주소 포함)과 로그인 전 연결 횟수: 90일 뒤 지웁니다.</li>
+      <li>부정 이용 의심 표시: 마지막 근거가 생긴 날부터 90일 뒤 지웁니다. 이용 정지로 이어지면 그 근거는 이용 정지 기록과 같은 기간 보관합니다.</li>
+      <li>신고 기록: 같은 일이 되풀이되는 것을 막고 이의 제기에 답하려고 1년(365일) 보관한 뒤 지웁니다. 계정을 지워도 이 기간까지 남깁니다.</li>
+      <li>약관·나이 확인 동의 기록: 동의했다는 증거로 계정이 있는 동안 보관하고, 계정을 지울 때 함께 지웁니다. 그 안의 IP 주소는 동의한 날부터 1년이 지나면 지웁니다.</li>
+      <li>캐릭터 삭제 시각: 계정을 지울 때 함께 지웁니다.</li>
+      <li>자리를 비운 자동 사냥 시간: 그날 쓴 시간은 한국 시각 0시가 지나면 지웁니다. 개발자가 더 준 시간은 계정이 있는 동안 두고, 계정을 지울 때 함께 지웁니다.</li>
+      <li>지금 걸려 있는 말 막기: 기간이 끝나면 지웁니다. 계정을 지워도 남은 기간까지는 남깁니다(계정을 지우고 다시 들어와 말 막기를 푸는 것을 막기 위해).</li>
+      <li>경고·말 막기·이용 정지 기록: 일시 정지·말 막기·경고는 끝난(풀린) 날부터 1년 뒤 지웁니다. 영구 정지는 계정이 있는 동안 보관하고, 계정을 지우면 그날부터 1년 뒤 지웁니다(정지를 피해 새로 가입하는 것을 막기 위해).</li>
       <li>문의 이메일: 처리가 끝난 뒤 1년 보관한 뒤 지웁니다.</li>
     </ul>
     <p>보유 기간이 지나거나 계정을 지우면 전자 파일은 되살릴 수 없게 지웁니다. 종이로 출력해 두지 않습니다. 다른 법령이 보관을 요구하면 그 기간 동안 따로 보관합니다.</p>
@@ -50,13 +63,13 @@ const updated = '2026-10-08';
     <h2>4. 처리 위탁과 국외 이전</h2>
     <p>개발자는 게임을 운영하려고 아래 회사에 처리를 맡깁니다. 이 회사들은 맡긴 일 밖으로 개인정보를 쓸 수 없습니다.</p>
     <ul>
-      <li><strong>Amazon Web Services, Inc.</strong> — 게임 서버(game.seanson.com, AWS Lightsail <strong>서울 리전</strong>) 운영. 게임 저장·채팅·신고·접속 기록이 여기에 보관되며 국외로 옮기지 않습니다.</li>
+      <li><strong>Amazon Web Services, Inc.</strong> — 게임 서버(game.seanson.com, AWS Lightsail <strong>서울 리전</strong>) 운영. 게임 저장·채팅·신고·접속 기록·게임 이용 기록이 여기에 보관되며 국외로 옮기지 않습니다.</li>
       <li><strong>Google LLC</strong> — 로그인(Firebase Authentication). 아래 국외 이전 표를 보세요.</li>
       <li><strong>Apple Inc.</strong> — Sign in with Apple 로그인. 계정을 지울 때 Apple 로그인 연결을 끊는 요청을 Apple에 보냅니다.</li>
       <li><strong>ImprovMX</strong>(메일 전달)·<strong>Google LLC</strong>(Gmail) — orunka@seanson.com 으로 온 문의 메일을 받아 개발자 메일함으로 전달·보관합니다.</li>
     </ul>
     <p>로그인과 문의 메일은 국외 서버에서 처리되므로 「개인정보 보호법」 제28조의8에 따라 아래 내용을 알립니다. 계약(이용약관) 이행에 필요한 처리 위탁·보관이라 이 방침 공개로 갈음합니다.</p>
-    <table>
+    <div class="tablewrap"><table>
       <thead><tr><th>항목</th><th>Google LLC (Firebase Authentication)</th><th>Apple Inc. (Sign in with Apple)</th><th>ImprovMX · Google LLC (문의 메일)</th></tr></thead>
       <tbody>
         <tr><td>옮기는 항목</td><td>계정 고유 번호, Google 이메일, 로그인 토큰, 로그인할 때의 IP 주소</td><td>Apple 계정 고유 번호, 로그인·연결 끊기 토큰</td><td>보낸 사람 이메일 주소, 메일 내용(이용자가 적은 캐릭터 이름 등)</td></tr>
@@ -66,7 +79,7 @@ const updated = '2026-10-08';
         <tr><td>목적</td><td>로그인, 계정 확인</td><td>로그인, 계정 확인, 계정 삭제 때 연결 끊기</td><td>문의 받기와 답장</td></tr>
         <tr><td>보유 기간</td><td>계정을 지울 때까지. Google은 로그인 IP를 몇 주 보관하고, 지운 계정은 180일 안에 백업에서도 지운다고 밝힙니다</td><td>Apple 방침을 따릅니다</td><td>처리가 끝난 뒤 1년(3절)</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p><strong>거부하는 방법과 결과</strong>: 국외 이전을 원하지 않으면 로그인하지 않으면 됩니다. 다만 오룬카는 로그인해야만 이용할 수 있어 게임을 이용할 수 없습니다. 이미 가입했다면 계정을 지우면 됩니다(6절). 문의 메일의 국외 이전을 원하지 않으면 게임 안 신고·설정 기능만 쓰면 됩니다. 다만 그러면 이메일 답장을 받을 수 없습니다.</p>
 
     <h2>5. 제3자 제공</h2>
@@ -75,9 +88,10 @@ const updated = '2026-10-08';
     <h2>6. 이용자의 권리와 계정 지우기</h2>
     <p>이용자는 언제든 자기 개인정보를 보거나, 고치거나, 지우거나, 처리를 멈추라고 요청할 수 있습니다.</p>
     <ul>
-      <li><strong>게임 안에서 지우기</strong>: <em>설정 › 계정 › 계정 지우기</em>를 누르고 두 번 확인하면 바로 지워집니다. 서버 세이브와 날짜별 백업, 약관 동의·말 막기 기록, Firebase 로그인 계정을 지우고 Apple 로그인 연결을 끊습니다.</li>
+      <li><strong>게임 안에서 지우기</strong>: <em>설정 › 계정 › 계정 지우기</em>를 누르고 두 번 확인하면 지워집니다. 서버 세이브와 날짜별 백업(지운 캐릭터 보관본 포함), 약관·나이 확인 동의 기록, 캐릭터 삭제 시각, Firebase 로그인 계정을 지우고 Apple 로그인 연결을 끊습니다. 마지막으로 직접 로그인한 지 10분이 지난 상태에서 지우면 세이브와 백업은 7일 따로 둔 뒤 완전히 지웁니다(3절). 내가 지우지 않았는데 계정이 지워졌다면 7일 안에 이메일로 알려 주세요. 본인 확인 뒤 다시 로그인한 계정으로 게임 저장을 되옮겨 드립니다.</li>
+      <li><strong>캐릭터만 지우기</strong>: 캐릭터 고르기 화면의 「캐릭터 삭제」로 캐릭터 하나를 지울 수 있습니다(한 자리는 24시간에 한 번). 지운 캐릭터는 30일 보관한 뒤 지워지며, 그 안에 이메일로 요청하면 되살릴 수 있습니다.</li>
       <li><strong>이메일로 요청</strong>: <a href="mailto:orunka@seanson.com">orunka@seanson.com</a>으로 보내 주세요. 본인 확인 뒤 늦어도 10일 안에 처리하고 결과를 알려 드립니다.</li>
-      <li>지운 뒤에도 남는 것: 채팅·접속 기록은 위 보유 기간(30일)이 지나면, 디스크 스냅샷은 7일 뒤 지워집니다. 신고 기록은 1년 보관합니다.</li>
+      <li>지운 뒤에도 남는 것: 채팅 기록은 30일, 접속 기록과 게임 이용 기록은 90일(3절 기간)이 지나면, 디스크 스냅샷은 7일 뒤 지워집니다. 로그인한 지 10분이 지난 상태에서 지웠다면 따로 옮긴 세이브와 백업도 7일 뒤 지워집니다. 지금 걸려 있는 말 막기는 남은 기간까지, 부정 이용 의심 표시는 마지막 근거로부터 90일, 신고 기록은 1년(365일), 경고·말 막기·이용 정지 기록은 끝난 날(영구 정지는 계정을 지운 날)부터 1년 뒤 지웁니다.</li>
       <li>로그아웃은 그 기기에서만 로그인을 끄는 것이고 서버의 데이터는 남습니다.</li>
     </ul>
 
@@ -108,18 +122,19 @@ const updated = '2026-10-08';
 
     <h2>12. 이 방침이 바뀔 때</h2>
     <p>방침을 바꾸면 시행 7일 전에 이 페이지와 게임 안 공지로 알립니다. 이용자에게 불리하게 바뀌거나 수집 항목이 늘면 30일 전에 알리고, 필요하면 다시 동의를 받습니다.</p>
-    <p><small>이전 방침: 2026-10-05 판(오프라인판 기준) → 2026-10-06 판(온라인판) → 이 판(2026-10-08: 이용 나이 만 16세 이상, 문의 메일 국외 이전, 자동 처리 안내 추가). 정식 출시 전이라 이용자가 없어 미리 알리는 기간 없이 바꿨습니다.</small></p>
+    <p><small>이전 방침: 2026-10-05 판(오프라인판 기준) → 2026-10-06 판(온라인판) → 2026-10-08 판(이용 나이 만 16세 이상, 문의 메일 국외 이전, 자동 처리 안내 추가) → 이 판(2026-10-11: 게임 이용 기록과 부정 이용 의심 표시 추가, 접속 기록 보관 30일 → 90일, 캐릭터 삭제로 지운 캐릭터 30일 보관, 캐릭터 삭제 시각 추가, 로그인 전 연결 횟수 추가, 약관 동의 기록의 IP 1년 뒤 삭제와 경고·말 막기·이용 정지 기록 보관 기간을 정함, 계정을 지울 때 직접 로그인한 지 10분이 지났으면 게임 저장을 7일 두고 지움, 지금 걸려 있는 말 막기는 계정을 지워도 남은 기간까지 남김, 자리를 비운 자동 사냥 시간(그날 것은 한국 시각 0시에 지움) 추가). 정식 출시 전이라 이용자가 개발자와 시험·심사 계정뿐이어서 미리 알리는 기간 없이 바꿨습니다.</small></p>
 
     <hr />
     <h1>ORUNKA Privacy Policy (summary in English)</h1>
     <p><small>Effective {updated} · Applies to ORUNKA on iPhone and Mac (App Store) and Windows (Steam). The Korean text above is the official version.</small></p>
     <p>ORUNKA is an online game made and run by an individual developer, Sean Son. Sign-in with Apple or Google is required. There are no ads, no analytics and no tracking.</p>
     <ul>
-      <li><strong>What we process</strong>: your account ID (uid), sign-in provider and, for Google sign-in, your email (Sign in with Apple does not request your name or email); your game data (character name and look, level, pets, inventory, quests, in-game position, play time, party); chat messages and reports; connection logs (time, IP address, game version, platform name); your age and terms confirmation; and emails you send us. We do not collect device IDs, advertising IDs, contacts or precise location, and we do not use IP addresses to find your location.</li>
-      <li><strong>Why</strong>: to sign you in, run the game, keep players safe (reports, mutes, suspensions), fix problems and answer support requests. Never for ads or sale.</li>
+      <li><strong>What we process</strong>: your account ID (uid), sign-in provider and, for Google sign-in, your email (Sign in with Apple does not request your name or email); your game data (character name and look, level, pets, inventory, quests, in-game position, play time, party, when each character slot was last deleted, and per account how long you auto-hunted while away from the keyboard today plus any extra time the developer granted); chat messages and reports; a <strong>gameplay activity log</strong> (time-stamped in-game actions such as connecting and leaving, level-ups, per-minute hunting totals, captures, shop purchases and sales, crafting, quests, trades with the other character and the items, pets and currency exchanged, parties, away-from-keyboard auto-hunt limit warnings and stops, reports and blocks, character creation and deletion, disconnect reasons, admin edits, penalties, periodic save-summary changes, command counts and timing to spot automation, and your in-game position on each line; if you are muted or suspended, your IP addresses and device types from the last 30 days, up to 5 each — chat text is not included); cheat-suspicion flags with their reasons; connection logs (time, IP address, game version, platform name, sign-in method, game language); per-IP counts of connections that never sign in (not linked to any account); your age and terms confirmation; and emails you send us. We do not collect device IDs, advertising IDs, contacts or precise location, and we do not use IP addresses to find your location.</li>
+      <li><strong>Why</strong>: to sign you in, run the game, keep players safe (reports, mutes, suspensions), detect cheating (hacks, macros, bug exploits, real-money trading, funneling from other accounts), handle disputes and appeals, restore lost game data, fix problems and answer support requests. Never for ads or sale.</li>
+      <li><strong>Automated processing</strong>: banned words in chat are hidden, disallowed names are refused, and connections that send too many or impossible commands are cut automatically (you can reconnect). A program flags accounts that look like cheating, but a flag alone never leads to a penalty: the developer reviews the records and decides on every mute or suspension.</li>
       <li><strong>Where</strong>: the game server runs on AWS Lightsail in Seoul, Korea. Sign-in is handled by Google Firebase Authentication (USA) and Apple. Support emails to orunka@seanson.com pass through ImprovMX (email forwarding) to Gmail (Google, USA).</li>
-      <li><strong>How long</strong>: game saves until you delete your account (dated backups: 14 days; disk snapshots: 7 days); chat logs and connection logs: 30 days; reports: 1 year; support emails: 1 year after the request is closed. Google keeps sign-in IP addresses for a few weeks and removes deleted accounts from its backups within 180 days.</li>
-      <li><strong>Delete your account</strong>: in the game, go to <em>Settings › 계정 (Account) › 계정 지우기 (Delete account)</em> and confirm twice. This deletes your server save and backups and your Firebase account, and revokes Sign in with Apple. You can also email us.</li>
+      <li><strong>How long</strong>: game saves until you delete your account (dated backups: 14 days; disk snapshots: 7 days); deleted characters: 30 days, so we can restore one on request; chat logs: 30 days; gameplay activity logs and connection logs: <strong>90 days</strong>, also after you delete your account, to check for cheating; suspicion flags: 90 days after the last finding; reports: 1 year, also after you delete your account; terms consent records: while your account exists (the IP address in them is removed after 1 year); away-from-keyboard auto-hunt time: today's total is cleared after midnight Korea time (extra time granted by the developer: while your account exists); an active mute: until it ends, even if you delete your account; warnings, mutes and suspensions: 1 year after they end (a permanent ban: while the account exists, then 1 year after deletion); support emails: 1 year after the request is closed. Google keeps sign-in IP addresses for a few weeks and removes deleted accounts from its backups within 180 days.</li>
+      <li><strong>Delete your account</strong>: in the game, go to <em>Settings › 계정 (Account) › 계정 지우기 (Delete account)</em> and confirm twice. This deletes your server save and backups (including deleted characters) and your Firebase account, and revokes Sign in with Apple. If you last signed in more than 10 minutes before deleting, your save and backups are set aside for <strong>7 days</strong> and then erased, so we can restore them if someone else deleted your account — email us within 7 days. You can also email us to delete.</li>
       <li><strong>Age</strong>: ORUNKA is for ages 16 and up. If we learn that a child under 16 has signed up, we delete the data.</li>
       <li><strong>Other players</strong> can see your character name, look, level, position and chat in the game. We do not sell or share personal data with third parties, except when the law requires it.</li>
     </ul>
