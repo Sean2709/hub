@@ -1,8 +1,10 @@
 ---
 // 오룬카(ORUNKA) 이용약관 + 운영정책 — 게임 첫 접속 약관·나이 확인 화면(m8-contract 5절)이 여는 URL: https://hub.seanson.com/orunka/terms/
 // 서버 Proto.TERMS_VER = 1 과 짝. 이용자에게 불리하게 고치면 TERMS_VER 를 올려 다시 동의받는다(시행일·판 번호도 같이).
+// ⚠ 클라 TermsUi.TERMS_VER 도 상수(374 = 1)라 서버만 올리면 옛 클라는 동의해도 terms 1 을 보내 err terms 가 되풀이된다 → 판을 올릴 땐 클라 판과 같이(옛 클라는 PROTO_MIN 으로 업데이트 유도).
+// 2026-10-11 고침(출시 전): 캐릭터 3개·캐릭터 삭제 24시간·지운 캐릭터 30일·이름 규칙·게임 이용 기록·부정 이용 판별 — 판 1 그대로(동의한 사람 = 개발자·심사·시험 계정뿐).
 import Base from '../../layouts/Base.astro';
-const updated = '2026-10-08';
+const updated = '2026-10-11';
 const ver = 1;
 ---
 
@@ -24,9 +26,17 @@ const ver = 1;
     <h2>제3조 (이용 자격과 계정)</h2>
     <ol>
       <li>게임은 <strong>만 16세 이상</strong>만 이용할 수 있습니다(16세 미만 가입에 필요한 친권자 동의 기능이 없기 때문입니다 — 「청소년 보호법」 제24조). 만 16세 미만이 거짓으로 확인하고 이용한 것을 알게 되면 개발자는 그 계정을 지울 수 있습니다.</li>
-      <li>이용하려면 Apple 또는 Google 계정으로 로그인해야 합니다. 계정 하나에 캐릭터 하나입니다.</li>
+      <li>이용하려면 Apple 또는 Google 계정으로 로그인해야 합니다. 계정 하나에 캐릭터를 <strong>3개까지</strong> 만들 수 있습니다(캐릭터 자리 3개).</li>
       <li>이용자는 자기 로그인 계정을 스스로 관리해야 하며, 남에게 빌려주거나 팔거나 넘길 수 없습니다.</li>
-      <li>캐릭터 이름은 남이 보기 불쾌하거나, 운영자·다른 사람을 사칭하거나, 금칙어가 들어간 것을 쓸 수 없습니다.</li>
+      <li>캐릭터 이름은 아래를 지켜야 합니다. 이 규칙은 새로 만드는 캐릭터에 적용하며, 이미 쓰고 있는 이름은 그대로 둡니다.
+        <ul>
+          <li>한 글자 이름은 쓸 수 없습니다. 한글 등이 들어간 이름은 2글자 이상, 영문자·숫자로만 된 이름은 3글자 이상이어야 합니다. 숫자로만 된 이름도 쓸 수 없습니다.</li>
+          <li>이름 전체가 흔한 낱말(예: 어둠, 물, 번개, 해골)이거나 게임에 나오는 고유한 이름(펫 종류, NPC, 보스, 지명)과 같으면 쓸 수 없습니다. 「어둠사냥꾼」처럼 다른 말과 이어 붙인 이름은 쓸 수 있습니다.</li>
+          <li>남이 보기 불쾌하거나, 운영자·다른 사람을 사칭하거나, 금칙어가 들어간 이름은 쓸 수 없습니다.</li>
+        </ul>
+      </li>
+      <li><strong>캐릭터 삭제</strong>: 캐릭터 고르기 화면의 「캐릭터 삭제」로 캐릭터를 지울 수 있습니다. 한 자리에서 캐릭터를 지우면 그 자리는 <strong>24시간 동안 다시 지울 수 없습니다</strong>(자리마다 따로 셉니다). 빈 자리에 새 캐릭터를 만드는 것은 언제든 할 수 있습니다.</li>
+      <li>지운 캐릭터는 잘못 지운 경우를 위해 서버에 <strong>30일</strong> 보관한 뒤 지웁니다. 게임 안에서 되살리는 기능은 없지만, 30일 안에 이메일로 요청하면 개발자가 되살려 드릴 수 있습니다(빈 자리가 있어야 하며, 그사이 다른 사람이 그 이름을 쓰고 있으면 이름을 새로 정해야 합니다). 지운 캐릭터의 이름은 바로 풀려 다른 캐릭터가 쓸 수 있습니다.</li>
     </ol>
 
     <h2>제4조 (서비스와 요금)</h2>
@@ -59,12 +69,12 @@ const ver = 1;
     </ol>
 
     <h2>제8조 (이용 제한)</h2>
-    <p>이용자가 이 약관이나 아래 운영정책을 어기면 개발자는 운영정책의 단계에 따라 말하기를 막거나, 이용을 잠시 또는 영구히 멈출 수 있습니다.</p>
+    <p>이용자가 이 약관이나 아래 운영정책을 어기면 개발자는 운영정책의 단계에 따라 말하기를 막거나, 이용을 잠시 또는 영구히 멈출 수 있습니다. 부정 이용을 찾고 신고·이의 제기를 처리하려고 게임 이용 기록을 남기고 살펴봅니다(운영정책 2절, <a href="/orunka/privacy/">개인정보처리방침</a>).</p>
 
     <h2>제9조 (계정 지우기)</h2>
     <ol>
       <li>이용자는 언제든 게임의 <em>설정 › 계정 › 계정 지우기</em>로 계정을 지우고 이용을 끝낼 수 있습니다. 이메일로 요청해도 됩니다.</li>
-      <li>계정을 지우면 서버의 게임 저장과 백업이 지워지고 되살릴 수 없습니다. 남는 기록과 보관 기간은 <a href="/orunka/privacy/">개인정보처리방침</a>을 따릅니다.</li>
+      <li>계정을 지우면 서버의 게임 저장과 백업(지운 캐릭터 보관본 포함)이 지워지고 되살릴 수 없습니다. 게임 이용 기록처럼 정해진 기간 남는 기록과 보관 기간은 <a href="/orunka/privacy/">개인정보처리방침</a>을 따릅니다.</li>
     </ol>
 
     <h2>제10조 (책임의 한계)</h2>
@@ -80,6 +90,7 @@ const ver = 1;
 
     <h2>제12조 (문의)</h2>
     <p>개발자 손승우(Sean Son) · 이메일 <a href="mailto:orunka@seanson.com">orunka@seanson.com</a></p>
+    <p><small>바뀐 내력: 2026-10-08 약관 판 1 시행 → 2026-10-11 고침(캐릭터 3개까지, 캐릭터 삭제와 24시간 제한, 지운 캐릭터 30일 보관, 캐릭터 이름 규칙, 게임 이용 기록과 부정 이용 판별, 일시 정지 안내). 정식 출시 전이라 동의한 이용자가 개발자와 시험·심사 계정뿐이어서 미리 알리는 기간과 다시 동의 없이 바꿨습니다. 출시 뒤에는 제2조를 따릅니다.</small></p>
 
     <hr />
     <h1 id="policy">오룬카 운영정책</h1>
@@ -93,6 +104,7 @@ const ver = 1;
       <li>운영자(개발자)나 다른 이용자를 사칭하기 — 이름에 '운영자'·'GM'·'관리자'·'공지' 같은 말을 쓰기</li>
       <li>같은 말 되풀이(도배), 광고, 다른 사이트·서비스로 끌어내기</li>
       <li>게임 속 데이터를 현금으로 사고팔기, 계정 사고팔기·빌려주기</li>
+      <li>여러 계정을 만들어 한 캐릭터에 게임 속 재화·펫·물건을 몰아주기</li>
       <li>버그를 일부러 쓰기, 게임 프로그램 고치기, 게임 밖 자동 조작 프로그램(매크로), 서버 공격</li>
       <li>법을 어기는 일을 권하거나 돕기</li>
     </ul>
@@ -102,10 +114,11 @@ const ver = 1;
     <p>보통은 아래 순서로 무거워집니다. 일이 심하면(협박, 성적인 괴롭힘, 개인정보 퍼뜨리기, 서버 공격, 현금 거래 등) 앞 단계를 건너뛰고 바로 영구 정지할 수 있습니다.</p>
     <ol>
       <li><strong>말 막기</strong> — 정한 시간(몇 분에서 며칠) 동안 채팅을 할 수 없습니다. 게임은 계속할 수 있습니다.</li>
-      <li><strong>일시 정지</strong> — 정한 기간(며칠) 동안 게임에 들어올 수 없습니다.</li>
-      <li><strong>영구 정지</strong> — 그 계정으로 더는 게임을 할 수 없습니다.</li>
+      <li><strong>일시 정지</strong> — 정한 기간(며칠) 동안 게임에 들어올 수 없습니다. 들어오려고 하면 정지 기간, 까닭, 풀리는 시각이 보입니다.</li>
+      <li><strong>영구 정지</strong> — 그 계정으로 더는 게임을 할 수 없습니다. 들어오려고 하면 까닭이 보입니다.</li>
     </ol>
-    <p>쓸 수 없는 캐릭터 이름은 만들 때 거절되며, 이미 쓰고 있는 이름이 문제가 되면 이름을 바꾸게 할 수 있습니다. 채팅의 금칙어는 자동으로 가려집니다.</p>
+    <p><strong>부정 이용 찾기</strong>: 서버는 이용자마다 게임 안에서 한 일(접속, 사냥, 포획, 교환, 상점, 제작 등)을 게임 이용 기록으로 남깁니다. 프로그램이 이 기록을 모아 부정 이용(핵, 매크로, 버그 악용, 현금 거래, 다른 계정으로 몰아주기)이 의심되는 계정에 의심 정도와 근거를 표시하고, 게임에서 나올 수 없는 비정상 명령을 보낸 연결은 자동으로 끊습니다(다시 접속할 수 있습니다). 의심 표시만으로 제재하지 않습니다. 말 막기, 일시 정지, 영구 정지는 개발자가 기록을 보고 직접 정합니다.</p>
+    <p>쓸 수 없는 캐릭터 이름(이용약관 제3조 4항)은 만들 때 그 까닭과 함께 거절되며, 이미 쓰고 있는 이름이 남을 불쾌하게 하거나, 사칭하거나, 남의 권리를 침해하는 것이면 이름을 바꾸게 할 수 있습니다. 채팅의 금칙어는 자동으로 가려집니다.</p>
 
     <h2>3. 신고와 차단</h2>
     <ul>
@@ -123,11 +136,14 @@ const ver = 1;
     <h1>ORUNKA Terms of Service and Community Rules (summary in English)</h1>
     <p><small>Effective {updated} · Version {ver}. The Korean text above is the official version.</small></p>
     <ul>
-      <li>ORUNKA is a free online game made and run by an individual developer, Sean Son. It is for <strong>ages 16 and up</strong> and requires sign-in with Apple or Google. One account, one character. Do not share, sell or lend your account.</li>
+      <li>ORUNKA is a free online game made and run by an individual developer, Sean Son. It is for <strong>ages 16 and up</strong> and requires sign-in with Apple or Google. One account can have up to <strong>three characters</strong>. Do not share, sell or lend your account.</li>
+      <li><strong>Characters</strong>: you can delete a character on the character select screen. After a deletion, that slot cannot be deleted again for <strong>24 hours</strong> (each slot counts separately); you can create a new character in an empty slot at any time. Deleted characters are kept on the server for <strong>30 days</strong> so we can restore one if you email us, then erased. The name of a deleted character becomes free right away.</li>
+      <li><strong>Character names</strong> (new characters only): no one-letter names (at least 2 letters if the name has Korean or other non-Latin letters, at least 3 if it uses only Latin letters and digits), no names made only of digits, and no names that are exactly a common word (for example 어둠 "darkness", 물 "water") or a name from the game (pet species, NPCs, bosses, places). Offensive names, impersonation and banned words are not allowed.</li>
       <li>There are no ads or purchases now. If paid features are ever added, we will announce the details, prices and refund rules in advance and update these terms.</li>
       <li>We may change game content, pause the game for maintenance, and will announce at least <strong>30 days</strong> before ending the service. In-game items have no cash value and may not be traded for money.</li>
-      <li><strong>Not allowed</strong>: abuse, harassment, hate speech, sexual talk, threats, sharing personal information, pretending to be the developer or someone else, spam and ads, real-money trading, exploiting bugs, cheating tools and attacks on the server.</li>
-      <li><strong>Penalties</strong> usually go: chat mute → temporary suspension → permanent ban. Serious cases can lead to an immediate permanent ban. Banned words are hidden in chat and refused in character names.</li>
+      <li><strong>Not allowed</strong>: abuse, harassment, hate speech, sexual talk, threats, sharing personal information, pretending to be the developer or someone else, spam and ads, real-money trading, funneling items or currency to one character from other accounts, exploiting bugs, cheating tools and attacks on the server.</li>
+      <li><strong>Penalties</strong> usually go: chat mute → temporary suspension → permanent ban. Serious cases can lead to an immediate permanent ban. A suspended player sees the length, reason and end time when trying to connect. Banned words are hidden in chat and refused in character names.</li>
+      <li><strong>Cheat detection</strong>: the server keeps a gameplay activity log for each player. A program uses it to flag accounts that look like cheating, with the reasons, and automatically disconnects connections that send impossible commands (you can reconnect). A flag alone never leads to a penalty: the developer reviews the records and decides on every mute or suspension.</li>
       <li><strong>Report or block</strong>: tap a player's name or chat line. Reports include that player's recent chat and are reviewed within 7 days. Blocks hide that player's chat on your screen and can be undone in Settings › Account.</li>
       <li>If a chat message or character name violates your rights (privacy, defamation), email us with the details: we remove or hide it without delay (temporary hiding for up to 30 days when it is unclear) and tell both sides.</li>
       <li>Appeals: email us within 30 days; we reply within 7 days. You can delete your account at any time in Settings › 계정 (Account) › 계정 지우기 (Delete account).</li>
