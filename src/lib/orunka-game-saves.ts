@@ -27,7 +27,9 @@ const when = (iso?: string) => {
   const d = new Date(iso);
   return isNaN(+d) ? iso : d.toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 };
-const prov = (p?: string) => (p === 'apple.com' ? 'Apple' : p === 'google.com' ? 'Google' : p === 'anonymous' ? '익명' : p || '');
+// provider 표시 — qa = QA 시험 신원(uid "qa:<id>", 게임 레포 41f8b7a W22) · anonymous = 익명 로그인을 없애기 전(10-11) 세이브 meta 에 남은 옛 값
+export const prov = (p?: string) =>
+  p === 'apple.com' ? 'Apple' : p === 'google.com' ? 'Google' : p === 'qa' ? '시험(QA)' : p === 'anonymous' ? '익명(옛)' : p || '';
 
 // onPick(h, jump) — 줄을 열면 아래 로컬 관리 도구(iframe)도 그 사용자(?target=game:h)로 맞춘다. 돌려준 글이 있으면 알림으로 보여 줌
 export function mountOrunkaGameSaves(el: HTMLElement, googleIdToken: () => string | null, api = GAME_API, onPick?: (h: string, jump: boolean) => string) {
