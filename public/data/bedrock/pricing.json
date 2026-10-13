@@ -7,8 +7,8 @@
  "versions": {
   "AmazonBedrock/ap-northeast-2": "20261010182242",
   "AmazonBedrock/us-east-1": "20261010182242",
-  "AmazonBedrockFoundationModels/ap-northeast-2": "20261008235637",
-  "AmazonBedrockFoundationModels/us-east-1": "20261008235637"
+  "AmazonBedrockFoundationModels/ap-northeast-2": "20261012084008",
+  "AmazonBedrockFoundationModels/us-east-1": "20261012084008"
  },
  "regions": {
   "ap-northeast-2": {
