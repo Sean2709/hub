@@ -5,8 +5,8 @@
  "unit": "per 1M tokens",
  "primary_region": "ap-northeast-2",
  "versions": {
-  "AmazonBedrock/ap-northeast-2": "20261010182242",
-  "AmazonBedrock/us-east-1": "20261010182242",
+  "AmazonBedrock/ap-northeast-2": "20261014033016",
+  "AmazonBedrock/us-east-1": "20261014033016",
   "AmazonBedrockFoundationModels/ap-northeast-2": "20261012084008",
   "AmazonBedrockFoundationModels/us-east-1": "20261012084008"
  },

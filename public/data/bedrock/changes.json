@@ -1,5 +1,75 @@
 [
  {
+  "date": "2026-10-14",
+  "type": "diff",
+  "region": "ap-northeast-2",
+  "added": [],
+  "removed": [
+   {
+    "id": "anthropic.claude-sonnet-4-20250514-v1:0",
+    "name": "Claude Sonnet 4",
+    "provider": "Anthropic"
+   }
+  ],
+  "changed": []
+ },
+ {
+  "date": "2026-10-14",
+  "type": "diff",
+  "region": "us-east-1",
+  "added": [],
+  "removed": [
+   {
+    "id": "anthropic.claude-sonnet-4-20250514-v1:0",
+    "name": "Claude Sonnet 4",
+    "provider": "Anthropic"
+   }
+  ],
+  "changed": []
+ },
+ {
+  "date": "2026-10-14",
+  "type": "diff",
+  "region": "us-west-2",
+  "added": [],
+  "removed": [
+   {
+    "id": "anthropic.claude-sonnet-4-20250514-v1:0",
+    "name": "Claude Sonnet 4",
+    "provider": "Anthropic"
+   }
+  ],
+  "changed": []
+ },
+ {
+  "date": "2026-10-14",
+  "type": "diff",
+  "region": "us-east-2",
+  "added": [],
+  "removed": [
+   {
+    "id": "anthropic.claude-sonnet-4-20250514-v1:0",
+    "name": "Claude Sonnet 4",
+    "provider": "Anthropic"
+   }
+  ],
+  "changed": []
+ },
+ {
+  "date": "2026-10-14",
+  "type": "diff",
+  "region": "ap-northeast-1",
+  "added": [],
+  "removed": [
+   {
+    "id": "anthropic.claude-sonnet-4-20250514-v1:0",
+    "name": "Claude Sonnet 4",
+    "provider": "Anthropic"
+   }
+  ],
+  "changed": []
+ },
+ {
   "date": "2026-10-13",
   "type": "diff",
   "region": "ap-northeast-2",

@@ -3,7 +3,7 @@
  "primary_region": "ap-northeast-2",
  "regions": {
   "ap-northeast-2": {
-   "count": 42,
+   "count": 41,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -403,27 +403,6 @@
      "status": "ACTIVE",
      "since": "2026-09-22",
      "eol": null
-    },
-    {
-     "id": "anthropic.claude-sonnet-4-20250514-v1:0",
-     "base": "anthropic.claude-sonnet-4-20250514-v1:0",
-     "name": "Claude Sonnet 4",
-     "provider": "Anthropic",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "TEXT"
-     ],
-     "streaming": true,
-     "inference": [
-      "INFERENCE_PROFILE"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2025-05-22",
-     "eol": "2026-10-14"
     },
     {
      "id": "anthropic.claude-sonnet-4-5-20250929-v1:0",
@@ -895,7 +874,7 @@
    ]
   },
   "us-east-1": {
-   "count": 124,
+   "count": 123,
    "models": [
     {
      "id": "ai21.jamba-1-5-large-v1:0",
@@ -1626,27 +1605,6 @@
      "status": "ACTIVE",
      "since": "2026-09-22",
      "eol": null
-    },
-    {
-     "id": "anthropic.claude-sonnet-4-20250514-v1:0",
-     "base": "anthropic.claude-sonnet-4-20250514-v1:0",
-     "name": "Claude Sonnet 4",
-     "provider": "Anthropic",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "TEXT"
-     ],
-     "streaming": true,
-     "inference": [
-      "INFERENCE_PROFILE"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2025-05-22",
-     "eol": "2026-10-14"
     },
     {
      "id": "anthropic.claude-sonnet-4-5-20250929-v1:0",
@@ -3489,7 +3447,7 @@
    ]
   },
   "us-west-2": {
-   "count": 121,
+   "count": 120,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -3995,27 +3953,6 @@
      "status": "ACTIVE",
      "since": "2026-09-22",
      "eol": null
-    },
-    {
-     "id": "anthropic.claude-sonnet-4-20250514-v1:0",
-     "base": "anthropic.claude-sonnet-4-20250514-v1:0",
-     "name": "Claude Sonnet 4",
-     "provider": "Anthropic",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "TEXT"
-     ],
-     "streaming": true,
-     "inference": [
-      "INFERENCE_PROFILE"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2025-05-22",
-     "eol": "2026-10-14"
     },
     {
      "id": "anthropic.claude-sonnet-4-5-20250929-v1:0",
@@ -5999,7 +5936,7 @@
    ]
   },
   "us-east-2": {
-   "count": 97,
+   "count": 96,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -6338,27 +6275,6 @@
      "status": "ACTIVE",
      "since": "2026-09-22",
      "eol": null
-    },
-    {
-     "id": "anthropic.claude-sonnet-4-20250514-v1:0",
-     "base": "anthropic.claude-sonnet-4-20250514-v1:0",
-     "name": "Claude Sonnet 4",
-     "provider": "Anthropic",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "TEXT"
-     ],
-     "streaming": true,
-     "inference": [
-      "INFERENCE_PROFILE"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2025-05-22",
-     "eol": "2026-10-14"
     },
     {
      "id": "anthropic.claude-sonnet-4-5-20250929-v1:0",
@@ -8009,7 +7925,7 @@
    ]
   },
   "ap-northeast-1": {
-   "count": 79,
+   "count": 78,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -8428,27 +8344,6 @@
      "status": "ACTIVE",
      "since": "2026-09-22",
      "eol": null
-    },
-    {
-     "id": "anthropic.claude-sonnet-4-20250514-v1:0",
-     "base": "anthropic.claude-sonnet-4-20250514-v1:0",
-     "name": "Claude Sonnet 4",
-     "provider": "Anthropic",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "TEXT"
-     ],
-     "streaming": true,
-     "inference": [
-      "INFERENCE_PROFILE"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2025-05-22",
-     "eol": "2026-10-14"
     },
     {
      "id": "anthropic.claude-sonnet-4-5-20250929-v1:0",
