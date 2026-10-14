@@ -128,9 +128,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-03-13",
-     "eol": null
+     "eol": "2026-10-17"
     },
     {
      "id": "anthropic.claude-3-haiku-20240307-v1:0:200k",
@@ -147,9 +147,9 @@
      "streaming": true,
      "inference": [],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-03-13",
-     "eol": null
+     "eol": "2026-10-17"
     },
     {
      "id": "anthropic.claude-3-5-sonnet-20240620-v1:0",
@@ -168,9 +168,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-06-20",
-     "eol": null
+     "eol": "2026-10-17"
     },
     {
      "id": "anthropic.claude-3-5-sonnet-20241022-v2:0",
@@ -189,9 +189,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-10-22",
-     "eol": null
+     "eol": "2026-10-17"
     },
     {
      "id": "anthropic.claude-fable-5",

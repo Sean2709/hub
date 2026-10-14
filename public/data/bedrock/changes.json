@@ -1,5 +1,70 @@
 [
  {
+  "date": "2026-10-13",
+  "type": "diff",
+  "region": "ap-northeast-2",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+    "name": "Claude 3.5 Sonnet",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+    "name": "Claude 3.5 Sonnet",
+    "field": "eol",
+    "from": null,
+    "to": "2026-10-17"
+   },
+   {
+    "id": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+    "name": "Claude 3.5 Sonnet v2",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+    "name": "Claude 3.5 Sonnet v2",
+    "field": "eol",
+    "from": null,
+    "to": "2026-10-17"
+   },
+   {
+    "id": "anthropic.claude-3-haiku-20240307-v1:0",
+    "name": "Claude 3 Haiku",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "anthropic.claude-3-haiku-20240307-v1:0",
+    "name": "Claude 3 Haiku",
+    "field": "eol",
+    "from": null,
+    "to": "2026-10-17"
+   },
+   {
+    "id": "anthropic.claude-3-haiku-20240307-v1:0:200k",
+    "name": "Claude 3 Haiku",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "anthropic.claude-3-haiku-20240307-v1:0:200k",
+    "name": "Claude 3 Haiku",
+    "field": "eol",
+    "from": null,
+    "to": "2026-10-17"
+   }
+  ]
+ },
+ {
   "date": "2026-10-10",
   "type": "diff",
   "region": "ap-northeast-2",
