@@ -982,9 +982,9 @@
     "ON_DEMAND"
    ],
    "customization": [],
-   "status": "ACTIVE",
+   "status": "LEGACY",
    "since": "2025-10-28",
-   "eol": null,
+   "eol": "2027-03-22",
    "profiles": [],
    "access": [
     "on-demand"

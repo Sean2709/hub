@@ -739,9 +739,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-10-28",
-     "eol": null
+     "eol": "2027-03-22"
     },
     {
      "id": "twelvelabs.marengo-embed-2-7-v1:0",
@@ -3277,9 +3277,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-11-21",
-     "eol": null
+     "eol": "2027-03-09"
     },
     {
      "id": "writer.palmyra-x5-v1:0",
@@ -3297,9 +3297,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-11-21",
-     "eol": null
+     "eol": "2027-03-21"
     },
     {
      "id": "writer.palmyra-vision-7b",
@@ -7755,9 +7755,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-11-21",
-     "eol": null
+     "eol": "2027-03-09"
     },
     {
      "id": "writer.palmyra-x5-v1:0",
@@ -7775,9 +7775,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-11-21",
-     "eol": null
+     "eol": "2027-03-21"
     },
     {
      "id": "writer.palmyra-vision-7b",

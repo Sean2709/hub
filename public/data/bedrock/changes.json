@@ -1,5 +1,102 @@
 [
  {
+  "date": "2026-10-15",
+  "type": "diff",
+  "region": "ap-northeast-2",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "twelvelabs.marengo-embed-3-0-v1:0",
+    "name": "Marengo Embed 3.0",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "twelvelabs.marengo-embed-3-0-v1:0",
+    "name": "Marengo Embed 3.0",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-22"
+   }
+  ]
+ },
+ {
+  "date": "2026-10-15",
+  "type": "diff",
+  "region": "us-east-1",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "writer.palmyra-x4-v1:0",
+    "name": "Palmyra X4",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "writer.palmyra-x4-v1:0",
+    "name": "Palmyra X4",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-09"
+   },
+   {
+    "id": "writer.palmyra-x5-v1:0",
+    "name": "Palmyra X5",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "writer.palmyra-x5-v1:0",
+    "name": "Palmyra X5",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-21"
+   }
+  ]
+ },
+ {
+  "date": "2026-10-15",
+  "type": "diff",
+  "region": "us-east-2",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "writer.palmyra-x4-v1:0",
+    "name": "Palmyra X4",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "writer.palmyra-x4-v1:0",
+    "name": "Palmyra X4",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-09"
+   },
+   {
+    "id": "writer.palmyra-x5-v1:0",
+    "name": "Palmyra X5",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "writer.palmyra-x5-v1:0",
+    "name": "Palmyra X5",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-21"
+   }
+  ]
+ },
+ {
   "date": "2026-10-14",
   "type": "diff",
   "region": "ap-northeast-2",
