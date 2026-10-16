@@ -1,5 +1,79 @@
 [
  {
+  "date": "2026-10-16",
+  "type": "diff",
+  "region": "ap-northeast-2",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+    "name": "Claude 3.5 Sonnet",
+    "field": "eol",
+    "from": "2026-10-17",
+    "to": "2026-11-13"
+   },
+   {
+    "id": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+    "name": "Claude 3.5 Sonnet v2",
+    "field": "eol",
+    "from": "2026-10-17",
+    "to": "2026-11-13"
+   },
+   {
+    "id": "anthropic.claude-3-haiku-20240307-v1:0",
+    "name": "Claude 3 Haiku",
+    "field": "eol",
+    "from": "2026-10-17",
+    "to": "2026-11-13"
+   },
+   {
+    "id": "anthropic.claude-3-haiku-20240307-v1:0:200k",
+    "name": "Claude 3 Haiku",
+    "field": "eol",
+    "from": "2026-10-17",
+    "to": "2026-11-13"
+   }
+  ]
+ },
+ {
+  "date": "2026-10-16",
+  "type": "diff",
+  "region": "us-west-2",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "writer.palmyra-x4-v1:0",
+    "name": "Palmyra X4",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "writer.palmyra-x4-v1:0",
+    "name": "Palmyra X4",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-09"
+   },
+   {
+    "id": "writer.palmyra-x5-v1:0",
+    "name": "Palmyra X5",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "writer.palmyra-x5-v1:0",
+    "name": "Palmyra X5",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-21"
+   }
+  ]
+ },
+ {
   "date": "2026-10-15",
   "type": "diff",
   "region": "ap-northeast-2",
