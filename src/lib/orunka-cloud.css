@@ -24,3 +24,46 @@
 .og .og-on { color: #2e9d55; font-size: 0.8em; }
 .oc-old { margin: 0.6rem 0 1rem; }
 .oc-old > summary { cursor: pointer; color: var(--muted, #888); font-size: 0.92em; padding: 0.3rem 0; }
+
+/* 10-16 목록 개선 — 시험 숨김·배지·요약·검색/정렬·계정 묶기·운영 카드 (orunka-admin-extra.ts) */
+@media (prefers-color-scheme: dark) { #admin .oc { --kt-soft: #2c2420; } }
+#admin .og .oc-table tbody tr[data-h] { cursor: pointer; }
+#admin .og .oc-table tbody tr[data-h]:hover { background: var(--kt-soft); }
+#admin .og .og-dim td { opacity: .5; }
+#admin .og tr.og-dim:hover td, #admin .og tr.og-dim.on td { opacity: .85; }
+#admin .og li.og-dim { opacity: .55; }
+#admin .og .og-b { display: inline-block; margin-left: .25rem; padding: 0 .4rem; border-radius: 999px; font-size: .7rem; font-weight: 600; line-height: 1.5; vertical-align: 1px; }
+#admin .og .og-b.me { background: rgba(5, 150, 105, .14); color: var(--brand, #059669); }
+#admin .og .og-b.test { background: rgba(127, 127, 127, .18); color: var(--muted); }
+#admin .og .og-stat { display: flex; flex-wrap: wrap; gap: .3rem .9rem; align-items: baseline; margin: .7rem 0 0; font-size: .86rem; }
+#admin .og .og-stat:empty, #admin .og .og-ops:empty { display: none; }
+#admin .og .og-st-h { font-weight: 600; color: var(--kt); }
+#admin .og .og-st b { font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+#admin .og .og-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: .6rem; margin-top: .7rem; }
+#admin .og .og-card { min-width: 0; padding: .65rem .8rem; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+#admin .og .og-ck { font-size: .78rem; color: var(--muted); font-weight: 600; }
+#admin .og .og-cv { font-size: 1.45rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.25; }
+#admin .og .og-cs { margin: 0; font-size: .78rem; color: var(--muted); }
+#admin .og .og-cs.err { color: var(--bad); }
+#admin .og .og-card ul { margin: .4rem 0 0; padding: 0; list-style: none; font-size: .78rem; line-height: 1.45; }
+#admin .og .og-card li { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-top: 1px dashed var(--line); padding: .2rem 0; }
+#admin .og .og-ops-note { margin: .4rem 0 0; font-size: .78rem; }
+#admin .og .og-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .9rem; margin-top: .8rem; font-size: .85rem; }
+#admin .og .og-ctl label { display: inline-flex; align-items: center; gap: .3rem; cursor: pointer; }
+#admin .og .og-q { flex: 1 1 220px; min-width: 0; font: inherit; font-size: .88rem; padding: .4rem .6rem; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); }
+#admin .og .og-at { font-size: .78rem; margin-left: auto; }
+#admin .og .og-th { padding: 0; border: 0; background: none; color: inherit; font: inherit; font-weight: 600; cursor: pointer; }
+#admin .og .og-th:hover:not(:disabled) { color: var(--kt); }
+#admin .og th[aria-sort=ascending], #admin .og th[aria-sort=descending] { color: var(--fg); }
+#admin .og .og-mark { padding: .15rem .45rem; font-size: .74rem; }
+#admin .og .og-em { max-width: 14rem; overflow: hidden; text-overflow: ellipsis; }
+#admin .og tr.og-acct td { background: color-mix(in srgb, var(--kt-soft) 55%, transparent); font-size: .8rem; color: var(--muted); white-space: normal; }
+#admin .og tr.og-acct .og-mark { margin-left: .4rem; }
+@media (max-width: 560px) {
+  #admin .og .og-sm { display: none; }
+  #admin .og .og-em { max-width: 8rem; }
+  #admin .og .og-cards { grid-template-columns: 1fr 1fr; gap: .45rem; }
+  #admin .og .og-card { padding: .55rem .6rem; }
+  #admin .og .og-q { flex-basis: 100%; }
+  #admin .og .og-at { margin-left: 0; }
+}
