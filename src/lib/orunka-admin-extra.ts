@@ -10,12 +10,14 @@
 //   GET /admin/api/trash → {keep, rows:[{id, at, purgeAt, uid, provider, chars:[{name, lv}]}]}   (Restore.cs)
 //   u = sha256(uid) 앞 12자리(Mod.U)
 
-export const ME_UID = 'CMKCVwJ7HQWVoOGgAwtc0FMhTAS2'; // 관리자 본인(카린·바람) — 시험 아님, 「내 캐릭」
+// 관리자 본인 계정 — 시험 아님, 「내 캐릭」
+const ME_UIDS = [
+  'CMKCVwJ7HQWVoOGgAwtc0FMhTAS2', // 카린·바람(google)
+  'RzbYovMs6IZY2hle6TeDbWDQlXv2', // 빛·올가(apple)
+  'NrBoIyHwr0USo0lYsd2ia6uHCPz1', // 해골(google)
+];
 // 코드 기본 시험 계정 — provider qa·anonymous 와 uid qa:·test- 는 규칙으로 따로 걸림
 const TEST_UIDS = [
-  'oO1WQCZvx2XqfB5lSS7zWgGQ7302', // 단비(apple, 심사 무렵)
-  'RzbYovMs6IZY2hle6TeDbWDQlXv2', // 빛·올가(apple)
-  'NrBoIyHwr0USo0lYsd2ia6uHCPz1', // 해골(google, 다른 메일)
   'laEJ0piDNZSjfK03VvcwLZMkNos1', // 솔이(google, 심사용)
 ];
 const LS_TEST = 'hub.admin.orunka.test';
@@ -38,7 +40,7 @@ export function kindOf(uid?: string, provider?: string): Kind {
   const u = uid || '';
   const m = marks();
   const test = u && m.del.includes(u) ? false : u && m.add.includes(u) ? true : autoTest(u, provider);
-  return test ? 'test' : u === ME_UID ? 'me' : 'user';
+  return test ? 'test' : ME_UIDS.includes(u) ? 'me' : 'user';
 }
 // 계정 하나를 시험으로/해제 — 기본값과 같아지면 덮어쓰기를 지운다
 export function setTest(uid: string, on: boolean, provider?: string) {
