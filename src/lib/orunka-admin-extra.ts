@@ -133,10 +133,17 @@ const KIND: Record<string, string> = { suspend: '정지', ban: '영구 정지', 
 const live = (r: any) => r.lifted == null && (r.kind === 'ban' || (!!r.until && t(r.until) > Date.now()));
 
 // provOf: uid → provider(세이브·보관함에서), nameOf: uid → 캐릭 이름들, us: u → uid
+// 실사용자가 하나도 안 낀 줄(내 캐릭·시험끼리)은 숨김 — 「시험 N개 보기」 켜면 흐리게 + 배지
+type Hk = 'user' | 'me' | 'test';
 export function opsHtml(o: Ops, showTest: boolean, provOf: (uid: string) => string | undefined, nameOf: (uid: string) => string, us: Map<string, string>) {
-  const k = (uid?: string) => kindOf(uid, uid ? provOf(uid) : undefined);
-  const keep = (test: boolean) => showTest || !test;
-  const li = (test: boolean, html: string) => `<li${test ? ' class="og-dim"' : ''}>${test ? '<span class="og-b test">시험</span> ' : ''}${html}</li>`;
+  const k = (uid?: string): Hk => (uid ? kindOf(uid, provOf(uid)) : 'user');
+  // 여러 쪽이 낀 줄: 한 쪽이라도 실사용자(또는 모름)면 user, 아니면 시험이 끼면 test, 그 밖은 me
+  const join = (ks: Hk[]): Hk => (!ks.length || ks.includes('user') ? 'user' : ks.includes('test') ? 'test' : 'me');
+  const li = (h: Hk, html: string) =>
+    `<li${h !== 'user' ? ' class="og-dim"' : ''}>${h === 'test' ? '<span class="og-b test">시험</span> ' : h === 'me' ? '<span class="og-b me">내 캐릭</span> ' : ''}${html}</li>`;
+  // 보이는 것만 남기고 숨긴 수를 같이 돌려준다
+  const split = <T extends { h: Hk }>(xs: T[]) => ({ xs: xs.filter((x) => showTest || x.h === 'user'), hid: showTest ? 0 : xs.filter((x) => x.h !== 'user').length });
+  const hidNote = (n: number) => (n ? ` · 숨김 ${n}` : '');
   const card = (key: string, title: string, count: number | string, sub: string, items: string[]) =>
     `<div class="og-card"><div class="og-ck">${title}</div>` +
     (o.err[key]
@@ -144,39 +151,38 @@ export function opsHtml(o: Ops, showTest: boolean, provOf: (uid: string) => stri
       : `<div class="og-cv">${count}</div>${sub ? `<div class="og-cs">${sub}</div>` : ''}${items.length ? `<ul>${items.slice(0, 3).join('')}</ul>` : ''}`) +
     `</div>`;
 
-  // 신고 — 어느 쪽이든 시험 계정이면 시험(관리자가 시험 계정을 신고한 것 포함)
-  const reps = (Array.isArray(o.reports) ? o.reports : o.reports?.rows ?? [])
-    .map((r: any) => ({ r, test: k(r?.from?.uid) === 'test' || k(r?.to?.uid) === 'test' }))
-    .filter((x: any) => keep(x.test));
+  // 신고 — 보낸 쪽·받은 쪽 둘 다 내 캐릭/시험이면 숨김, 실사용자가 한쪽이라도 끼면 보임
+  const R = split((Array.isArray(o.reports) ? o.reports : o.reports?.rows ?? [])
+    .map((r: any) => ({ r, h: join([k(r?.from?.uid), k(r?.to?.uid)]) })));
+  const reps = R.xs;
   const today = new Date().toDateString();
   const repToday = reps.filter((x: any) => new Date(x.r.at).toDateString() === today).length;
-  const repCard = card('reports', '신고', reps.length, `오늘 ${repToday}`, reps.map((x: any) =>
-    li(x.test, `${when(x.r.at)} · ${esc(x.r.from?.name)} → <b>${esc(x.r.to?.name)}</b> · ${esc(WHY[x.r.why] ?? x.r.why)}${x.r.text ? ` · ${esc(String(x.r.text).slice(0, 60))}` : ''}`)));
+  const repCard = card('reports', '신고', reps.length, `오늘 ${repToday}${hidNote(R.hid)}`, reps.map((x: any) =>
+    li(x.h, `${when(x.r.at)} · ${esc(x.r.from?.name)} → <b>${esc(x.r.to?.name)}</b> · ${esc(WHY[x.r.why] ?? x.r.why)}${x.r.text ? ` · ${esc(String(x.r.text).slice(0, 60))}` : ''}`)));
 
-  // 판별 의심(new·watch·banned — 서버 기본) · IP 묶음 · 오늘 신고 몰림
+  // 판별 의심(new·watch·banned — 서버 기본) · IP 묶음 · 오늘 신고 몰림 — 대상이 내 캐릭/시험이면 숨김
   const sus = o.suspects ?? {};
-  const sRows = (sus.rows ?? []).map((r: any) => ({ r, test: !!r.test || k(r.uid) === 'test' })).filter((x: any) => keep(x.test));
-  // IP 묶음: 아는 계정이 시험·내 계정뿐이면(실사용자 0) 관리자 기기·망으로 보고 시험
-  const ipw = (sus.ipwatch ?? []).map((w: any) => {
-    const ks = (w.us ?? []).map((u: string) => (us.has(u) ? k(us.get(u)) : '?'));
-    return { w, test: ks.some((x: string) => x === 'test' || x === 'me') && !ks.includes('user') };
-  }).filter((x: any) => keep(x.test));
-  const hot = (sus.hot ?? []).filter((h: any) => keep(us.has(h.u) && k(us.get(h.u)) === 'test'));
-  const susCard = card('suspects', '판별 의심', sRows.length,
-    `IP 묶음 ${ipw.length}${hot.length ? ` · 오늘 신고 몰림 <b>${hot.length}</b>` : ''}`,
-    [...sRows.map((x: any) => li(x.test, `<b>${esc(x.r.name || x.r.u)}</b> · ${esc(ST[x.r.st] ?? x.r.st)} · 점수 ${Math.round(+x.r.score || 0)}${x.r.last ? ` · ${when(x.r.last)}` : ''}`)),
-     ...ipw.map((x: any) => li(x.test, `IP <span class="mono">${esc(x.w.ip)}</span> · 계정 ${(x.w.us ?? []).length}개${x.w.last ? ` · ${when(x.w.last)}` : ''}`))]);
+  const S = split((sus.rows ?? []).map((r: any) => ({ r, h: (r.test ? 'test' : k(r.uid)) as Hk })));
+  // IP 묶음: 아는 계정이 내 캐릭/시험뿐이면 숨김(세이브 없는 모르는 u 는 셈에서 뺌 — 같은 망의 지운 옛 계정들)
+  const I = split((sus.ipwatch ?? []).map((w: any) => ({ w, h: join((w.us ?? []).filter((u: string) => us.has(u)).map((u: string) => k(us.get(u)))) })));
+  const hot = (sus.hot ?? []).filter((x: any) => showTest || !us.has(x.u) || k(us.get(x.u)) === 'user');
+  const susCard = card('suspects', '판별 의심', S.xs.length,
+    `IP 묶음 ${I.xs.length}${hot.length ? ` · 오늘 신고 몰림 <b>${hot.length}</b>` : ''}${hidNote(S.hid + I.hid)}`,
+    [...S.xs.map((x: any) => li(x.h, `<b>${esc(x.r.name || x.r.u)}</b> · ${esc(ST[x.r.st] ?? x.r.st)} · 점수 ${Math.round(+x.r.score || 0)}${x.r.last ? ` · ${when(x.r.last)}` : ''}`)),
+     ...I.xs.map((x: any) => li(x.h, `IP <span class="mono">${esc(x.w.ip)}</span> · 계정 ${(x.w.us ?? []).length}개${x.w.last ? ` · ${when(x.w.last)}` : ''}`))]);
 
-  // 제재 — 지금 걸려 있는 것(서버 live=1 과 같은 판정) / 전체
-  const sans = (o.sanctions?.rows ?? []).map((r: any) => ({ r, test: k(r.uid) === 'test' })).filter((x: any) => keep(x.test));
-  const sanCard = card('sanctions', '제재', sans.filter((x: any) => live(x.r)).length, `지금 걸림 · 전체 ${sans.length}`, sans.map((x: any) =>
-    li(x.test, `${esc(KIND[x.r.kind] ?? x.r.kind)} · <b>${esc(nameOf(x.r.uid) || x.r.u)}</b>${x.r.why ? ` · ${esc(String(x.r.why).slice(0, 40))}` : ''} · ${when(x.r.at)}` +
+  // 제재 — 지금 걸려 있는 것(서버 live=1 과 같은 판정) / 전체. 대상이 내 캐릭/시험이면 숨김
+  const N = split((o.sanctions?.rows ?? []).map((r: any) => ({ r, h: k(r.uid) })));
+  const sans = N.xs;
+  const sanCard = card('sanctions', '제재', sans.filter((x: any) => live(x.r)).length, `지금 걸림 · 전체 ${sans.length}${hidNote(N.hid)}`, sans.map((x: any) =>
+    li(x.h, `${esc(KIND[x.r.kind] ?? x.r.kind)} · <b>${esc(nameOf(x.r.uid) || x.r.u)}</b>${x.r.why ? ` · ${esc(String(x.r.why).slice(0, 40))}` : ''} · ${when(x.r.at)}` +
       (x.r.lifted ? ' · 풀림' : x.r.kind === 'ban' ? ' · 영구' : x.r.until ? (live(x.r) ? ` · ~${when(x.r.until)}` : ' · 끝남') : ''))));
 
-  // 지운 계정 보관함(계정 지우기, keep 일)
-  const tr = (o.trash?.rows ?? []).map((r: any) => ({ r, test: kindOf(r.uid, r.provider) === 'test' })).filter((x: any) => keep(x.test));
-  const trCard = card('trash', '지운 계정 보관함', tr.length, o.trash?.keep ? `${esc(o.trash.keep)}일 보관` : '', tr.map((x: any) =>
-    li(x.test, `${when(x.r.at)} · ${(x.r.chars ?? []).map((c: any) => `<b>${esc(c.name)}</b> Lv${esc(c.lv)}`).join(', ') || '캐릭 없음'}${x.r.purgeAt ? ` · ${when(x.r.purgeAt)} 지움` : ''}`)));
+  // 지운 계정 보관함(계정 지우기, keep 일) — 대상이 내 캐릭/시험이면 숨김
+  const T = split((o.trash?.rows ?? []).map((r: any) => ({ r, h: (r.uid ? kindOf(r.uid, r.provider) : 'user') as Hk })));
+  const tr = T.xs;
+  const trCard = card('trash', '지운 계정 보관함', tr.length, `${o.trash?.keep ? `${esc(o.trash.keep)}일 보관` : ''}${T.hid ? `${o.trash?.keep ? ' · ' : ''}숨김 ${T.hid}` : ''}`, tr.map((x: any) =>
+    li(x.h, `${when(x.r.at)} · ${(x.r.chars ?? []).map((c: any) => `<b>${esc(c.name)}</b> Lv${esc(c.lv)}`).join(', ') || '캐릭 없음'}${x.r.purgeAt ? ` · ${when(x.r.purgeAt)} 지움` : ''}`)));
 
   return `<div class="og-cards">${repCard}${susCard}${sanCard}${trCard}</div>` +
     `<p class="note og-ops-note">읽기만 — 제재·해제·의심 상태 바꾸기·되살리기는 아래 오룬카 관리 도구(집 Mac)에서 합니다.</p>`;
