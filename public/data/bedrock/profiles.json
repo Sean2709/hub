@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "region": "ap-northeast-2",
- "count": 41,
+ "count": 40,
  "profiles": [
   {
    "id": "apac.amazon.nova-lite-v1:0",
@@ -125,26 +125,6 @@
    "status": "ACTIVE",
    "created": "2024-11-01",
    "updated": "2024-11-04"
-  },
-  {
-   "id": "apac.anthropic.claude-sonnet-4-20250514-v1:0",
-   "name": "APAC Claude Sonnet 4",
-   "scope": "apac",
-   "model": "anthropic.claude-sonnet-4-20250514-v1:0",
-   "regions": [
-    "ap-northeast-1",
-    "ap-northeast-2",
-    "ap-northeast-3",
-    "ap-south-1",
-    "ap-south-2",
-    "ap-southeast-1",
-    "ap-southeast-2",
-    "ap-southeast-4"
-   ],
-   "global_endpoint": false,
-   "status": "ACTIVE",
-   "created": "2025-05-20",
-   "updated": "2025-08-05"
   },
   {
    "id": "apac.twelvelabs.marengo-embed-2-7-v1:0",

@@ -784,9 +784,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-12-16",
-     "eol": null
+     "eol": "2027-03-22"
     },
     {
      "id": "twelvelabs.pegasus-1-5-v1:0",
@@ -3236,9 +3236,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-12-16",
-     "eol": null
+     "eol": "2027-03-22"
     },
     {
      "id": "twelvelabs.pegasus-1-5-v1:0",
@@ -5725,9 +5725,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-10-31",
-     "eol": null
+     "eol": "2027-03-22"
     },
     {
      "id": "twelvelabs.pegasus-1-5-v1:0",
@@ -7714,9 +7714,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-10-31",
-     "eol": null
+     "eol": "2027-03-22"
     },
     {
      "id": "twelvelabs.pegasus-1-5-v1:0",
@@ -9391,9 +9391,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-10-31",
-     "eol": null
+     "eol": "2027-03-22"
     },
     {
      "id": "twelvelabs.pegasus-1-5-v1:0",

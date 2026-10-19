@@ -1,5 +1,120 @@
 [
  {
+  "date": "2026-10-19",
+  "type": "diff",
+  "region": "ap-northeast-2",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "twelvelabs.pegasus-1-2-v1:0",
+    "name": "Pegasus v1.2",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "twelvelabs.pegasus-1-2-v1:0",
+    "name": "Pegasus v1.2",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-22"
+   }
+  ]
+ },
+ {
+  "date": "2026-10-19",
+  "type": "diff",
+  "region": "us-east-1",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "twelvelabs.pegasus-1-2-v1:0",
+    "name": "Pegasus v1.2",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "twelvelabs.pegasus-1-2-v1:0",
+    "name": "Pegasus v1.2",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-22"
+   }
+  ]
+ },
+ {
+  "date": "2026-10-19",
+  "type": "diff",
+  "region": "us-west-2",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "twelvelabs.pegasus-1-2-v1:0",
+    "name": "Pegasus v1.2",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "twelvelabs.pegasus-1-2-v1:0",
+    "name": "Pegasus v1.2",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-22"
+   }
+  ]
+ },
+ {
+  "date": "2026-10-19",
+  "type": "diff",
+  "region": "us-east-2",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "twelvelabs.pegasus-1-2-v1:0",
+    "name": "Pegasus v1.2",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "twelvelabs.pegasus-1-2-v1:0",
+    "name": "Pegasus v1.2",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-22"
+   }
+  ]
+ },
+ {
+  "date": "2026-10-19",
+  "type": "diff",
+  "region": "ap-northeast-1",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "twelvelabs.pegasus-1-2-v1:0",
+    "name": "Pegasus v1.2",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "twelvelabs.pegasus-1-2-v1:0",
+    "name": "Pegasus v1.2",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-22"
+   }
+  ]
+ },
+ {
   "date": "2026-10-16",
   "type": "diff",
   "region": "ap-northeast-2",

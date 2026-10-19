@@ -1037,9 +1037,9 @@
     "ON_DEMAND"
    ],
    "customization": [],
-   "status": "ACTIVE",
+   "status": "LEGACY",
    "since": "2025-12-16",
-   "eol": null,
+   "eol": "2027-03-22",
    "profiles": [
     "apac.twelvelabs.pegasus-1-2-v1:0",
     "global.twelvelabs.pegasus-1-2-v1:0"
