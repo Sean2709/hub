@@ -48,6 +48,9 @@
 #admin .og .og-card ul { margin: .4rem 0 0; padding: 0; list-style: none; font-size: .78rem; line-height: 1.45; }
 #admin .og .og-card li { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-top: 1px dashed var(--line); padding: .2rem 0; }
 #admin .og .og-ops-note { margin: .4rem 0 0; font-size: .78rem; }
+#admin .og .og-card li .og-wrap { white-space: normal; }
+#admin .og .og-card .og-who { color: var(--muted); }
+#admin .og .og-card .og-foot { margin-top: .35rem; line-height: 1.45; }
 #admin .og .og-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .9rem; margin-top: .8rem; font-size: .85rem; }
 #admin .og .og-ctl label { display: inline-flex; align-items: center; gap: .3rem; cursor: pointer; }
 #admin .og .og-q { flex: 1 1 220px; min-width: 0; font: inherit; font-size: .88rem; padding: .4rem .6rem; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); }

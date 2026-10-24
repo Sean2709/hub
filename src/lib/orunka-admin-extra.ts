@@ -8,6 +8,8 @@
 //   GET /admin/api/suspects → {rows:[{u, uid, test, name, h, score, st, last, n}], ipwatch:[{ip, day, us:[u], last}], hot:[{u, by}]}   (JudgeApi.cs)
 //   GET /admin/api/sanctions → {rows:[{id, uid, u, kind, at, until, why, lifted, ended}]}   (JudgeApi.cs)
 //   GET /admin/api/trash → {keep, rows:[{id, at, purgeAt, uid, provider, chars:[{name, lv}]}]}   (Restore.cs)
+//   GET /admin/api/act?all=1&ev=join,wipe&from=&to= · ?u=&ev=join → {rows:[{t, ev, u, n, d:{ip, prov, dev, keep, del}}]}   (ActApi.cs, 행위 기록)
+//     IP 묶음 u 풀이에 씀: 지운 계정(세이브 없음)도 그날 join 줄의 이름·prov(qa = 시험 신원)·기기로 알고, 내 캐릭 join 줄 IP = 내 쪽 IP
 //   u = sha256(uid) 앞 12자리(Mod.U)
 
 // 관리자 본인 계정 — 시험 아님, 「내 캐릭」
@@ -126,7 +128,44 @@ export function statHtml(rows: SaveRow[], showTest: boolean) {
 }
 
 // ---- 운영 카드 -----------------------------------------------------------------
-export type Ops = { reports?: any; suspects?: any; sanctions?: any; trash?: any; err: Record<string, string> };
+export type Ops = { reports?: any; suspects?: any; sanctions?: any; trash?: any; sx?: SusX | null; err: Record<string, string> };
+
+// ---- 판별 의심 풀이(10-24 「의심이 뜨는데 뭔지 모르겠어」) ----------------------------
+// 서버 IP 묶음·신고 몰림은 u(12자)만 준다. 세이브 목록에 없는 u(지운 QA 시험 신원 등)는 그날 행위 기록 join·wipe 줄로 풀고,
+// 내 캐릭(ME_UIDS)이 최근 7일 접속한 IP 를 내 쪽 IP 로 본다. 5분 기억(1분 자동 새로고침마다 서버 기록을 다시 훑지 않게)
+type Who = { names: string[]; prov: string; dev: string[]; seen: boolean; gone: boolean };
+export type SusX = { who: Map<string, Who>; myIps: Set<string>; at: number; key: string };
+let SX: SusX | null = null;
+export async function susExtra(call: (path: string) => Promise<any>, base: string, sus: any): Promise<SusX | null> {
+  const ipw: any[] = sus?.ipwatch ?? [], hot: any[] = sus?.hot ?? [];
+  if (!ipw.length && !hot.length) return null;
+  const days = [...new Set(ipw.map((w) => String(w?.day ?? '')).filter((d) => /^\d{8}$/.test(d)))].sort().slice(-7);
+  const key = days.join(',');
+  if (SX && SX.key === key && Date.now() - SX.at < 5 * 60e3) return SX;
+  const meU = await uMap(ME_UIDS);
+  const get = async (q: string) => ((await call(`${base}/act?${q}`))?.rows ?? []) as any[];
+  const lists = await Promise.all([
+    ...days.map((d) => get(`all=1&ev=join,wipe&from=${d}&to=${d}&n=1000`)),
+    ...[...meU.keys()].map((u) => get(`u=${u}&ev=join&n=30`)),
+  ]);
+  const who = new Map<string, Who>(), myIps = new Set<string>();
+  for (const rows of lists) for (const e of [...rows].reverse()) {
+    const u = String(e?.u ?? ''), d = e?.d ?? {};
+    if (!u) continue;
+    if (e.ev === 'join' && meU.has(u) && d.ip) myIps.add(String(d.ip));
+    const w = who.get(u) ?? { names: [], prov: '', dev: [], seen: false, gone: false };
+    if (e.ev === 'join') {
+      w.seen = true;
+      if (e.n && !w.names.includes(e.n)) w.names.push(String(e.n));
+      if (d.prov && !w.prov) w.prov = String(d.prov);
+      if (d.dev && !w.dev.includes(d.dev)) w.dev.push(String(d.dev));
+    } else if (e.ev === 'wipe' && d.keep === 0 && !d.del) w.gone = true;
+    who.set(u, w);
+  }
+  SX = { who, myIps, at: Date.now(), key };
+  return SX;
+}
+const SIG: Record<string, string> = { S1: '비정상 명령', S2: '너무 잦은 명령', S3: '경제 이상', S4: '너무 빠른 성장', S5: '자동 조작', S6: '몰아주기', S7: '모르는 클라 판', S8: '정지된 사람과 같은 IP' };
 const WHY: Record<string, string> = { abuse: '욕설·괴롭힘', spam: '도배', name: '이름', cheat: '부정', etc: '기타' };
 const ST: Record<string, string> = { new: '새로', watch: '지켜봄', ok: '문제없음', banned: '정지함', low: '점수만' };
 const KIND: Record<string, string> = { suspend: '정지', ban: '영구 정지', warn: '경고', mute: '말 막기' };
@@ -144,11 +183,11 @@ export function opsHtml(o: Ops, showTest: boolean, provOf: (uid: string) => stri
   // 보이는 것만 남기고 숨긴 수를 같이 돌려준다
   const split = <T extends { h: Hk }>(xs: T[]) => ({ xs: xs.filter((x) => showTest || x.h === 'user'), hid: showTest ? 0 : xs.filter((x) => x.h !== 'user').length });
   const hidNote = (n: number) => (n ? ` · 숨김 ${n}` : '');
-  const card = (key: string, title: string, count: number | string, sub: string, items: string[]) =>
+  const card = (key: string, title: string, count: number | string, sub: string, items: string[], foot = '') =>
     `<div class="og-card"><div class="og-ck">${title}</div>` +
     (o.err[key]
       ? `<p class="og-cs err">못 읽음 — ${esc(o.err[key])}</p>`
-      : `<div class="og-cv">${count}</div>${sub ? `<div class="og-cs">${sub}</div>` : ''}${items.length ? `<ul>${items.slice(0, 3).join('')}</ul>` : ''}`) +
+      : `<div class="og-cv">${count}</div>${sub ? `<div class="og-cs">${sub}</div>` : ''}${items.length ? `<ul>${items.slice(0, 3).join('')}</ul>` : ''}${foot ? `<p class="og-cs og-foot">${foot}</p>` : ''}`) +
     `</div>`;
 
   // 신고 — 보낸 쪽·받은 쪽 둘 다 내 캐릭/시험이면 숨김, 실사용자가 한쪽이라도 끼면 보임
@@ -163,13 +202,38 @@ export function opsHtml(o: Ops, showTest: boolean, provOf: (uid: string) => stri
   // 판별 의심(new·watch·banned — 서버 기본) · IP 묶음 · 오늘 신고 몰림 — 대상이 내 캐릭/시험이면 숨김
   const sus = o.suspects ?? {};
   const S = split((sus.rows ?? []).map((r: any) => ({ r, h: (r.test ? 'test' : k(r.uid)) as Hk })));
-  // IP 묶음: 아는 계정이 내 캐릭/시험뿐이면 숨김(세이브 없는 모르는 u 는 셈에서 뺌 — 같은 망의 지운 옛 계정들)
-  const I = split((sus.ipwatch ?? []).map((w: any) => ({ w, h: join((w.us ?? []).filter((u: string) => us.has(u)).map((u: string) => k(us.get(u)))) })));
-  const hot = (sus.hot ?? []).filter((x: any) => showTest || !us.has(x.u) || k(us.get(x.u)) === 'user');
+  // u → 누구: 세이브 있으면 그 계정 종류, 없으면 행위 기록 join prov(qa·anonymous = 시험), 그래도 모르면 실사용자 쪽으로 셈
+  const sx = o.sx ?? null;
+  const uk = (u: string): Hk => (us.has(u) ? k(us.get(u)) : ['qa', 'anonymous'].includes(sx?.who.get(u)?.prov ?? '') ? 'test' : 'user');
+  const uName = (u: string) => (us.has(u) ? nameOf(us.get(u)!) : '') || sx?.who.get(u)?.names.join('·') || u;
+  const KO: Record<Hk, string> = { user: '실사용자', me: '내 캐릭', test: '시험' };
+  // IP 묶음: 실사용자가 하나도 없고(사람이 모두 내 캐릭·시험) 사람이 있거나 내 쪽 IP(내 캐릭 접속 IP)면 숨김
+  const I = split((sus.ipwatch ?? []).map((w: any) => {
+    const ppl = (w.us ?? []).map((u: string) => ({ u, h: uk(u), name: uName(u), gone: !us.has(u) && !!sx?.who.get(u)?.gone, unk: !us.has(u) && !sx?.who.get(u)?.seen }));
+    const n = (h: Hk) => ppl.filter((p: any) => p.h === h).length, mine = !!sx?.myIps.has(w.ip);
+    const h: Hk = n('user') || (!ppl.length && !mine) ? 'user' : n('test') || !ppl.length ? 'test' : 'me';
+    return { w, h, ppl, n, mine };
+  }));
+  const hotK = (sus.hot ?? []).map((x: any) => ({ x, h: uk(x.u) }));
+  const hot = hotK.filter((y: any) => showTest || y.h === 'user');
+  const ipLine = (x: any) => {
+    const cnt = (['user', 'test', 'me'] as Hk[]).filter((h) => x.n(h)).map((h) => `${KO[h]} ${x.n(h)}`).join(' · ');
+    const why = [x.ppl.length ? `계정 ${x.ppl.length}개${x.ppl.length >= 4 ? '(기준 4)' : ''}${cnt ? `: ${cnt}` : ''}` : '', x.w.nohello ? `로그인 전 연결 ${x.w.nohello}번${x.w.nohello >= 30 ? '(기준 30)' : ''}` : ''].filter(Boolean).join(' · ');
+    const tip = [x.mine ? '내 캐릭이 접속한 IP(내 쪽)' : '', ...x.ppl.map((p: any) => `${p.name}(${p.unk ? '모르는 계정' : KO[p.h as Hk]}${p.gone ? ', 계정 지움' : ''})`)].filter(Boolean).join(', ');
+    const names = x.ppl.slice(0, 6).map((p: any) => esc(p.name) + (p.gone ? '(지움)' : '')).join(', ') + (x.ppl.length > 6 ? ` 외 ${x.ppl.length - 6}` : '');
+    return li(x.h, `<span class="og-wrap" title="${esc(tip)}">IP <span class="mono">${esc(x.w.ip)}</span>${x.mine ? ' 내 쪽' : ''} · ${why}${x.w.last ? ` · ${when(x.w.last)}` : ''}${names ? `<br><span class="og-who">${names}</span>` : ''}</span>`);
+  };
+  const susFoot = [S.xs.length ? '점수는 7일마다 반으로 줄고 30점 넘으면 「새로」. 신호 뜻은 관리 도구 의심 탭 「이 화면 읽는 법」' : '',
+    I.xs.length ? 'IP 묶음은 참고용. 하루 한 IP 에 계정 4개 이상 또는 로그인 전 연결 30번 이상이면 뜸. 같은 집·학교·PC방 와이파이면 보통 괜찮음' : '',
+    I.hid ? `숨긴 IP 묶음 ${I.hid}줄 = 사람이 모두 시험 신원·내 캐릭이거나 내 캐릭이 접속한 IP` : ''].filter(Boolean).join('<br>');
   const susCard = card('suspects', '판별 의심', S.xs.length,
-    `IP 묶음 ${I.xs.length}${hot.length ? ` · 오늘 신고 몰림 <b>${hot.length}</b>` : ''}${hidNote(S.hid + I.hid)}`,
-    [...S.xs.map((x: any) => li(x.h, `<b>${esc(x.r.name || x.r.u)}</b> · ${esc(ST[x.r.st] ?? x.r.st)} · 점수 ${Math.round(+x.r.score || 0)}${x.r.last ? ` · ${when(x.r.last)}` : ''}`)),
-     ...I.xs.map((x: any) => li(x.h, `IP <span class="mono">${esc(x.w.ip)}</span> · 계정 ${(x.w.us ?? []).length}개${x.w.last ? ` · ${when(x.w.last)}` : ''}`))]);
+    `IP 묶음 ${I.xs.length}${hot.length ? ` · 오늘 신고 몰림 <b>${hot.length}</b>` : ''}${hidNote(S.hid + I.hid + (hotK.length - hotK.filter((y: any) => y.h === 'user').length))}`,
+    [...S.xs.map((x: any) => {
+      const top = Object.entries(x.r.sig ?? {}).sort((a: any, b: any) => b[1] - a[1]).slice(0, 2).map(([s]) => `${s} ${SIG[s] ?? ''}`).join(', ');
+      return li(x.h, `<span title="${esc(x.r.top ? `${x.r.top.s} ${x.r.top.why}` : '')}"><b>${esc(x.r.name || x.r.u)}</b> · ${esc(ST[x.r.st] ?? x.r.st)} · 점수 ${Math.round(+x.r.score || 0)}${top ? ` · ${esc(top)}` : ''}${x.r.last ? ` · ${when(x.r.last)}` : ''}</span>`);
+    }),
+     ...[...I.xs].sort((a: any, b: any) => +(a.h !== 'user') - +(b.h !== 'user')).map(ipLine),
+     ...hot.map((y: any) => li(y.h, `신고 몰림 <b>${esc(uName(y.x.u))}</b> · 오늘 서로 다른 ${esc(y.x.by)}명`))], susFoot);
 
   // 제재 — 지금 걸려 있는 것(서버 live=1 과 같은 판정) / 전체. 대상이 내 캐릭/시험이면 숨김
   const N = split((o.sanctions?.rows ?? []).map((r: any) => ({ r, h: k(r.uid) })));

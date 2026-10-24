@@ -8,7 +8,7 @@
 // 인증 = 관리자 Google → orunka-game Firebase ID 토큰(Bearer, email_verified) — orunka-cloud.ts 와 같은 교환·같은 캐시
 // 목록 = 시험 계정 기본 숨김(보기만 — 세이브는 안 건드림) · 실사용자 요약 · 검색·정렬·계정별 묶기 · 운영 카드(읽기만) · 1분 자동 새로고침 (orunka-admin-extra.ts)
 import { checkSave } from './orunka-cloud';
-import { ago, esc, kindOf, lastOf, opsHtml, setTest, statHtml, uMap, when, type Kind, type Ops } from './orunka-admin-extra';
+import { ago, esc, kindOf, lastOf, opsHtml, setTest, statHtml, susExtra, uMap, when, type Kind, type Ops } from './orunka-admin-extra';
 
 const API_KEY = 'AIzaSyC4gjiwEudf6GMBpm1u3vlGEmhk-lBijKs';
 const SS_FB = 'hub.admin.orunka.fbtoken';
@@ -112,6 +112,8 @@ export function mountOrunkaGameSaves(el: HTMLElement, googleIdToken: () => strin
       if (x.status === 'fulfilled') next[k] = x.value;
       else next.err[k] = String(x.reason?.message ?? x.reason);
     });
+    // 판별 의심 IP 묶음·신고 몰림 사람 풀이(행위 기록) — 못 읽어도 카드는 그대로(옛 판정)
+    if (next.suspects) next.sx = await susExtra(call, base, next.suspects).catch(() => null);
     ops = next;
     const rep: any[] = Array.isArray(ops.reports) ? ops.reports : [];
     us = await uMap([
