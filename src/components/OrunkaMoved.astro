@@ -1,0 +1,26 @@
+---
+// 오룬카 페이지를 orunka.com 으로 넘기는 쪽(2026-10-25~). GitHub Pages 라 서버 301 이 없어서
+// canonical + meta refresh(스크립트 꺼진 경우) + location.replace(#policy 같은 앵커 유지) 셋을 같이 쓴다.
+// 나온 앱(App Store·Steam 등록 주소)이 hub.seanson.com/orunka/{,privacy/,terms/} 를 박아 두었으니 이 쪽은 지우지 않는다.
+// /orunka/login/ 은 넘기지 않는다(게임 로그인 다리 — Apple revokeToken redirectUri). global.css 는 안 불러온다(로그인 쪽 CSS 묶음이 바뀌지 않게).
+interface Props { to: string; title: string; en: string }
+const { to, title, en } = Astro.props;
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — orunka.com 으로 옮겼습니다</title>
+    <link rel="canonical" href={to} />
+    <meta http-equiv="refresh" content={`0; url=${to}`} />
+    <script is:inline define:vars={{ to }}>location.replace(to + location.hash);</script>
+    <style is:inline>:root{color-scheme:light dark;font-family:system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif}a{color:#c2410c}@media (prefers-color-scheme:dark){a{color:#fdba74}}</style>
+  </head>
+  <body>
+    <main style="max-width:36rem;margin:18vh auto 0;padding:0 1.25rem;line-height:1.7">
+      <p>오룬카 {title} 페이지를 <a href={to}>{to.replace('https://', '')}</a> 으로 옮겼습니다.</p>
+      <p lang="en"><small>ORUNKA {en} has moved to <a href={to}>{to.replace('https://', '')}</a>.</small></p>
+    </main>
+  </body>
+</html>
