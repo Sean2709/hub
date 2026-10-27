@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "region": "ap-northeast-2",
- "count": 40,
+ "count": 41,
  "profiles": [
   {
    "id": "apac.amazon.nova-lite-v1:0",
@@ -504,6 +504,19 @@
    "status": "ACTIVE",
    "created": "2026-09-29",
    "updated": "2026-09-29"
+  },
+  {
+   "id": "global.openai.gpt-6.1-terra",
+   "name": "Global OpenAI GPT-6.1 Terra",
+   "scope": "global",
+   "model": "openai.gpt-6.1-terra",
+   "regions": [
+    "ap-northeast-2"
+   ],
+   "global_endpoint": true,
+   "status": "ACTIVE",
+   "created": "2026-10-21",
+   "updated": "2026-10-21"
   },
   {
    "id": "global.twelvelabs.pegasus-1-2-v1:0",

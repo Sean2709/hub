@@ -1,5 +1,75 @@
 [
  {
+  "date": "2026-10-27",
+  "type": "diff",
+  "region": "ap-northeast-2",
+  "added": [
+   {
+    "id": "openai.gpt-6.1-terra",
+    "name": "GPT-6.1 Terra",
+    "provider": "OpenAI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-27",
+  "type": "diff",
+  "region": "us-east-1",
+  "added": [
+   {
+    "id": "openai.gpt-6.1-terra",
+    "name": "GPT-6.1 Terra",
+    "provider": "OpenAI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-27",
+  "type": "diff",
+  "region": "us-west-2",
+  "added": [
+   {
+    "id": "openai.gpt-6.1-terra",
+    "name": "GPT-6.1 Terra",
+    "provider": "OpenAI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-27",
+  "type": "diff",
+  "region": "us-east-2",
+  "added": [
+   {
+    "id": "openai.gpt-6.1-terra",
+    "name": "GPT-6.1 Terra",
+    "provider": "OpenAI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-10-27",
+  "type": "diff",
+  "region": "ap-northeast-1",
+  "added": [
+   {
+    "id": "openai.gpt-6.1-terra",
+    "name": "GPT-6.1 Terra",
+    "provider": "OpenAI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
   "date": "2026-10-19",
   "type": "diff",
   "region": "ap-northeast-2",
