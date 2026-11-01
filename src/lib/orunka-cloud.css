@@ -70,3 +70,23 @@
   #admin .og .og-q { flex-basis: 100%; }
   #admin .og .og-at { margin-left: 0; }
 }
+
+/* 게시판 조회 묶음 통계(orunka-board-views.ts, 게시판 API v4) — 표·상세는 .oc 규칙, 막대는 순수 div */
+#admin .ob .ob-days { width: auto; font: inherit; font-size: .85rem; padding: .38rem .5rem; }
+#admin .ob .oc-table tbody tr[data-id] { cursor: pointer; }
+#admin .ob .oc-table tbody tr[data-id]:hover { background: var(--kt-soft); }
+#admin .ob .oc-table .r { text-align: right; }
+#admin .ob .oc-table td.ob-t { white-space: normal; min-width: 12rem; }
+#admin .ob .ob-bars { display: flex; align-items: flex-end; gap: 1px; height: 84px; margin: .6rem 0 .2rem; padding: 0 1px; border-bottom: 1px solid var(--line); }
+#admin .ob .ob-bar { flex: 1 1 0; min-width: 0; background: var(--kt); border-radius: 2px 2px 0 0; }
+#admin .ob .ob-bar.z { background: var(--line); }
+#admin .ob .ob-axis { display: flex; justify-content: space-between; gap: .3rem; font-size: .7rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+#admin .ob .ob-recent { margin: .6rem 0 0; font-size: .8rem; line-height: 1.6; font-variant-numeric: tabular-nums; }
+#admin .ob .ob-recent .dot { margin: 0 .35rem; color: var(--muted); }
+#admin .ob .ob-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .5rem .9rem; margin: .7rem 0 0; }
+#admin .ob .ob-split dt { font-size: .75rem; font-weight: 600; color: var(--muted); margin-bottom: .2rem; }
+#admin .ob .ob-split dd { margin: 0; display: flex; flex-wrap: wrap; gap: .25rem; }
+#admin .ob .ob-chip { display: inline-block; padding: .05rem .5rem; border: 1px solid var(--line); border-radius: 999px; font-size: .78rem; background: var(--bg); }
+#admin .ob .ob-chip b { font-variant-numeric: tabular-nums; }
+#admin .ob .ob-note { margin: .6rem 0 0; font-size: .78rem; line-height: 1.5; }
+#admin .ob .ob-empty { margin: .6rem 0 0; font-size: .85rem; }

@@ -29,6 +29,25 @@ const BADGE: Record<Kind, string> = { user: '', me: ' <span class="og-b me">내 
 export const prov = (p?: string) =>
   p === 'apple.com' ? 'Apple' : p === 'google.com' ? 'Google' : p === 'qa' ? '시험(QA)' : p === 'anonymous' ? '익명(옛)' : p || '';
 
+// 관리자 Google → orunka-game Firebase ID 토큰(sessionStorage 캐시) — 게임 서버 관리 API 와 orunka.com 게시판 관리 API(orunka-board-views.ts)가 같이 씀
+export async function orunkaFbToken(googleIdToken: () => string | null): Promise<string> {
+  try {
+    const c = JSON.parse(sessionStorage.getItem(SS_FB) || 'null');
+    if (c && c.exp - Date.now() > 120e3) return c.idToken;
+  } catch {}
+  const g = googleIdToken();
+  if (!g) throw new Error('Google 로그인이 만료됐습니다 — 페이지를 새로고침해 다시 로그인하세요');
+  const r = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp?key=${API_KEY}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ postBody: `id_token=${g}&providerId=google.com`, requestUri: location.origin, returnSecureToken: true }),
+  });
+  const j = await r.json();
+  if (!r.ok) throw new Error(`Firebase(orunka-game) 로그인 실패: ${j?.error?.message ?? r.status}`);
+  sessionStorage.setItem(SS_FB, JSON.stringify({ idToken: j.idToken, exp: Date.now() + (+j.expiresIn || 3600) * 1000 }));
+  return j.idToken;
+}
+
 // onPick(h, jump) — 줄을 열면 아래 로컬 관리 도구(iframe)도 그 사용자(?target=game:h)로 맞춘다. 돌려준 글이 있으면 알림으로 보여 줌
 export function mountOrunkaGameSaves(el: HTMLElement, googleIdToken: () => string | null, api = GAME_API, onPick?: (h: string, jump: boolean) => string) {
   let rows: Row[] = [];
@@ -49,21 +68,7 @@ export function mountOrunkaGameSaves(el: HTMLElement, googleIdToken: () => strin
   el.className = 'kt oc og';
 
   async function token(): Promise<string> {
-    try {
-      const c = JSON.parse(sessionStorage.getItem(SS_FB) || 'null');
-      if (c && c.exp - Date.now() > 120e3) return c.idToken;
-    } catch {}
-    const g = googleIdToken();
-    if (!g) throw new Error('Google 로그인이 만료됐습니다 — 페이지를 새로고침해 다시 로그인하세요');
-    const r = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithIdp?key=${API_KEY}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ postBody: `id_token=${g}&providerId=google.com`, requestUri: location.origin, returnSecureToken: true }),
-    });
-    const j = await r.json();
-    if (!r.ok) throw new Error(`Firebase(orunka-game) 로그인 실패: ${j?.error?.message ?? r.status}`);
-    sessionStorage.setItem(SS_FB, JSON.stringify({ idToken: j.idToken, exp: Date.now() + (+j.expiresIn || 3600) * 1000 }));
-    return j.idToken;
+    return orunkaFbToken(googleIdToken);
   }
   // path 가 'http' 로 시작하면 그대로(운영 카드 /admin/api/reports 등), 아니면 api(/admin/api/saves) 뒤에 붙임
   async function call(path: string, init: RequestInit = {}) {
