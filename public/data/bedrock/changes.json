@@ -1,5 +1,75 @@
 [
  {
+  "date": "2026-11-07",
+  "type": "diff",
+  "region": "ap-northeast-2",
+  "added": [
+   {
+    "id": "moonshotai.kimi-k3.1",
+    "name": "Kimi K3.1",
+    "provider": "Moonshot AI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-11-07",
+  "type": "diff",
+  "region": "us-east-1",
+  "added": [
+   {
+    "id": "moonshotai.kimi-k3.1",
+    "name": "Kimi K3.1",
+    "provider": "Moonshot AI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-11-07",
+  "type": "diff",
+  "region": "us-west-2",
+  "added": [
+   {
+    "id": "moonshotai.kimi-k3.1",
+    "name": "Kimi K3.1",
+    "provider": "Moonshot AI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-11-07",
+  "type": "diff",
+  "region": "us-east-2",
+  "added": [
+   {
+    "id": "moonshotai.kimi-k3.1",
+    "name": "Kimi K3.1",
+    "provider": "Moonshot AI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
+  "date": "2026-11-07",
+  "type": "diff",
+  "region": "ap-northeast-1",
+  "added": [
+   {
+    "id": "moonshotai.kimi-k3.1",
+    "name": "Kimi K3.1",
+    "provider": "Moonshot AI"
+   }
+  ],
+  "removed": [],
+  "changed": []
+ },
+ {
   "date": "2026-10-27",
   "type": "diff",
   "region": "ap-northeast-2",

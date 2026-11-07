@@ -3,7 +3,7 @@
  "primary_region": "ap-northeast-2",
  "regions": {
   "ap-northeast-2": {
-   "count": 42,
+   "count": 43,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -532,6 +532,27 @@
      "eol": null
     },
     {
+     "id": "moonshotai.kimi-k3.1",
+     "base": "moonshotai.kimi-k3.1",
+     "name": "Kimi K3.1",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-11-06",
+     "eol": null
+    },
+    {
      "id": "openai.gpt-5.4",
      "base": "openai.gpt-5.4",
      "name": "GPT 5.4",
@@ -895,7 +916,7 @@
    ]
   },
   "us-east-1": {
-   "count": 124,
+   "count": 125,
    "models": [
     {
      "id": "ai21.jamba-1-5-large-v1:0",
@@ -2469,6 +2490,27 @@
      "eol": null
     },
     {
+     "id": "moonshotai.kimi-k3.1",
+     "base": "moonshotai.kimi-k3.1",
+     "name": "Kimi K3.1",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-11-06",
+     "eol": null
+    },
+    {
      "id": "nvidia.nemotron-nano-3-30b",
      "base": "nvidia.nemotron-nano-3-30b",
      "name": "Nemotron Nano 3 30B",
@@ -3489,7 +3531,7 @@
    ]
   },
   "us-west-2": {
-   "count": 121,
+   "count": 122,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -4946,6 +4988,27 @@
      "eol": null
     },
     {
+     "id": "moonshotai.kimi-k3.1",
+     "base": "moonshotai.kimi-k3.1",
+     "name": "Kimi K3.1",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-11-06",
+     "eol": null
+    },
+    {
      "id": "nvidia.nemotron-nano-3-30b",
      "base": "nvidia.nemotron-nano-3-30b",
      "name": "Nemotron Nano 3 30B",
@@ -5999,7 +6062,7 @@
    ]
   },
   "us-east-2": {
-   "count": 97,
+   "count": 98,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -7017,6 +7080,27 @@
      "eol": null
     },
     {
+     "id": "moonshotai.kimi-k3.1",
+     "base": "moonshotai.kimi-k3.1",
+     "name": "Kimi K3.1",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-11-06",
+     "eol": null
+    },
+    {
      "id": "nvidia.nemotron-nano-3-30b",
      "base": "nvidia.nemotron-nano-3-30b",
      "name": "Nemotron Nano 3 30B",
@@ -8009,7 +8093,7 @@
    ]
   },
   "ap-northeast-1": {
-   "count": 79,
+   "count": 80,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -8985,6 +9069,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-08-27",
+     "eol": null
+    },
+    {
+     "id": "moonshotai.kimi-k3.1",
+     "base": "moonshotai.kimi-k3.1",
+     "name": "Kimi K3.1",
+     "provider": "Moonshot AI",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-11-06",
      "eol": null
     },
     {
