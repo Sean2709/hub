@@ -256,7 +256,7 @@
    "global_endpoint": true,
    "status": "ACTIVE",
    "created": "2026-02-05",
-   "updated": "2026-04-21"
+   "updated": "2026-11-07"
   },
   {
    "id": "global.anthropic.claude-opus-4-7",
