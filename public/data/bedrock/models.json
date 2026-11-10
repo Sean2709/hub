@@ -3,7 +3,7 @@
  "primary_region": "ap-northeast-2",
  "regions": {
   "ap-northeast-2": {
-   "count": 43,
+   "count": 44,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -233,6 +233,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-08-31",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5-2",
+     "base": "anthropic.claude-fable-5-2",
+     "name": "Claude Fable 5.2",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-10-14",
      "eol": null
     },
     {
@@ -916,7 +937,7 @@
    ]
   },
   "us-east-1": {
-   "count": 125,
+   "count": 126,
    "models": [
     {
      "id": "ai21.jamba-1-5-large-v1:0",
@@ -1457,6 +1478,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-08-31",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5-2",
+     "base": "anthropic.claude-fable-5-2",
+     "name": "Claude Fable 5.2",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-10-14",
      "eol": null
     },
     {
@@ -3531,7 +3573,7 @@
    ]
   },
   "us-west-2": {
-   "count": 122,
+   "count": 123,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -3847,6 +3889,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-08-31",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5-2",
+     "base": "anthropic.claude-fable-5-2",
+     "name": "Claude Fable 5.2",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-10-14",
      "eol": null
     },
     {
@@ -6062,7 +6125,7 @@
    ]
   },
   "us-east-2": {
-   "count": 98,
+   "count": 99,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -6211,6 +6274,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-08-31",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5-2",
+     "base": "anthropic.claude-fable-5-2",
+     "name": "Claude Fable 5.2",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-10-14",
      "eol": null
     },
     {
@@ -8093,7 +8177,7 @@
    ]
   },
   "ap-northeast-1": {
-   "count": 80,
+   "count": 81,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -8343,6 +8427,27 @@
      "customization": [],
      "status": "ACTIVE",
      "since": "2026-08-31",
+     "eol": null
+    },
+    {
+     "id": "anthropic.claude-fable-5-2",
+     "base": "anthropic.claude-fable-5-2",
+     "name": "Claude Fable 5.2",
+     "provider": "Anthropic",
+     "input": [
+      "IMAGE",
+      "TEXT"
+     ],
+     "output": [
+      "TEXT"
+     ],
+     "streaming": true,
+     "inference": [
+      "INFERENCE_PROFILE"
+     ],
+     "customization": [],
+     "status": "ACTIVE",
+     "since": "2026-10-14",
      "eol": null
     },
     {
