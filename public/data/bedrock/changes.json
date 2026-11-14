@@ -1,5 +1,304 @@
 [
  {
+  "date": "2026-11-14",
+  "type": "diff",
+  "region": "ap-northeast-2",
+  "added": [],
+  "removed": [
+   {
+    "id": "anthropic.claude-3-5-sonnet-20240620-v1:0",
+    "name": "Claude 3.5 Sonnet",
+    "provider": "Anthropic"
+   },
+   {
+    "id": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+    "name": "Claude 3.5 Sonnet v2",
+    "provider": "Anthropic"
+   },
+   {
+    "id": "anthropic.claude-3-haiku-20240307-v1:0",
+    "name": "Claude 3 Haiku",
+    "provider": "Anthropic"
+   },
+   {
+    "id": "anthropic.claude-3-haiku-20240307-v1:0:200k",
+    "name": "Claude 3 Haiku",
+    "provider": "Anthropic"
+   }
+  ],
+  "changed": []
+ },
+ {
+  "date": "2026-11-14",
+  "type": "diff",
+  "region": "us-east-1",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "deepseek.r1-v1:0",
+    "name": "DeepSeek-R1",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "deepseek.r1-v1:0",
+    "name": "DeepSeek-R1",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama3-1-70b-instruct-v1:0",
+    "name": "Llama 3.1 70B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama3-1-70b-instruct-v1:0",
+    "name": "Llama 3.1 70B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama3-1-8b-instruct-v1:0",
+    "name": "Llama 3.1 8B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama3-1-8b-instruct-v1:0",
+    "name": "Llama 3.1 8B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama3-3-70b-instruct-v1:0",
+    "name": "Llama 3.3 70B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama3-3-70b-instruct-v1:0",
+    "name": "Llama 3.3 70B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama3-70b-instruct-v1:0",
+    "name": "Llama 3 70B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama3-70b-instruct-v1:0",
+    "name": "Llama 3 70B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama3-8b-instruct-v1:0",
+    "name": "Llama 3 8B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama3-8b-instruct-v1:0",
+    "name": "Llama 3 8B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama4-maverick-17b-instruct-v1:0",
+    "name": "Llama 4 Maverick 17B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama4-maverick-17b-instruct-v1:0",
+    "name": "Llama 4 Maverick 17B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama4-scout-17b-instruct-v1:0",
+    "name": "Llama 4 Scout 17B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama4-scout-17b-instruct-v1:0",
+    "name": "Llama 4 Scout 17B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "mistral.mistral-7b-instruct-v0:2",
+    "name": "Mistral 7B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "mistral.mistral-7b-instruct-v0:2",
+    "name": "Mistral 7B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "mistral.mixtral-8x7b-instruct-v0:1",
+    "name": "Mixtral 8x7B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "mistral.mixtral-8x7b-instruct-v0:1",
+    "name": "Mixtral 8x7B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   }
+  ]
+ },
+ {
+  "date": "2026-11-14",
+  "type": "diff",
+  "region": "us-east-2",
+  "added": [],
+  "removed": [],
+  "changed": [
+   {
+    "id": "deepseek.r1-v1:0",
+    "name": "DeepSeek-R1",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "deepseek.r1-v1:0",
+    "name": "DeepSeek-R1",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama3-1-70b-instruct-v1:0",
+    "name": "Llama 3.1 70B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama3-1-70b-instruct-v1:0",
+    "name": "Llama 3.1 70B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama3-1-70b-instruct-v1:0:128k",
+    "name": "Llama 3.1 70B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama3-1-70b-instruct-v1:0:128k",
+    "name": "Llama 3.1 70B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama3-1-8b-instruct-v1:0",
+    "name": "Llama 3.1 8B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama3-1-8b-instruct-v1:0",
+    "name": "Llama 3.1 8B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama3-1-8b-instruct-v1:0:128k",
+    "name": "Llama 3.1 8B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama3-1-8b-instruct-v1:0:128k",
+    "name": "Llama 3.1 8B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama3-3-70b-instruct-v1:0",
+    "name": "Llama 3.3 70B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama3-3-70b-instruct-v1:0",
+    "name": "Llama 3.3 70B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama4-maverick-17b-instruct-v1:0",
+    "name": "Llama 4 Maverick 17B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama4-maverick-17b-instruct-v1:0",
+    "name": "Llama 4 Maverick 17B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   },
+   {
+    "id": "meta.llama4-scout-17b-instruct-v1:0",
+    "name": "Llama 4 Scout 17B Instruct",
+    "field": "status",
+    "from": "ACTIVE",
+    "to": "LEGACY"
+   },
+   {
+    "id": "meta.llama4-scout-17b-instruct-v1:0",
+    "name": "Llama 4 Scout 17B Instruct",
+    "field": "eol",
+    "from": null,
+    "to": "2027-03-30"
+   }
+  ]
+ },
+ {
   "date": "2026-11-10",
   "type": "diff",
   "region": "ap-northeast-2",

@@ -3,7 +3,7 @@
  "primary_region": "ap-northeast-2",
  "regions": {
   "ap-northeast-2": {
-   "count": 44,
+   "count": 40,
    "models": [
     {
      "id": "amazon.nova-2-lite-v1:0",
@@ -110,88 +110,6 @@
      "status": "ACTIVE",
      "since": "2024-04-30",
      "eol": null
-    },
-    {
-     "id": "anthropic.claude-3-haiku-20240307-v1:0",
-     "base": "anthropic.claude-3-haiku-20240307-v1:0",
-     "name": "Claude 3 Haiku",
-     "provider": "Anthropic",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "TEXT"
-     ],
-     "streaming": true,
-     "inference": [
-      "ON_DEMAND"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2024-03-13",
-     "eol": "2026-11-13"
-    },
-    {
-     "id": "anthropic.claude-3-haiku-20240307-v1:0:200k",
-     "base": "anthropic.claude-3-haiku-20240307-v1:0",
-     "name": "Claude 3 Haiku",
-     "provider": "Anthropic",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "TEXT"
-     ],
-     "streaming": true,
-     "inference": [],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2024-03-13",
-     "eol": "2026-11-13"
-    },
-    {
-     "id": "anthropic.claude-3-5-sonnet-20240620-v1:0",
-     "base": "anthropic.claude-3-5-sonnet-20240620-v1:0",
-     "name": "Claude 3.5 Sonnet",
-     "provider": "Anthropic",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "TEXT"
-     ],
-     "streaming": true,
-     "inference": [
-      "ON_DEMAND"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2024-06-20",
-     "eol": "2026-11-13"
-    },
-    {
-     "id": "anthropic.claude-3-5-sonnet-20241022-v2:0",
-     "base": "anthropic.claude-3-5-sonnet-20241022-v2:0",
-     "name": "Claude 3.5 Sonnet v2",
-     "provider": "Anthropic",
-     "input": [
-      "IMAGE",
-      "TEXT"
-     ],
-     "output": [
-      "TEXT"
-     ],
-     "streaming": true,
-     "inference": [
-      "INFERENCE_PROFILE"
-     ],
-     "customization": [],
-     "status": "LEGACY",
-     "since": "2024-10-22",
-     "eol": "2026-11-13"
     },
     {
      "id": "anthropic.claude-fable-5",
@@ -1932,9 +1850,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-03-10",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "google.gemma-3-12b-it",
@@ -2015,9 +1933,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-04-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-8b-instruct-v1:0",
@@ -2035,9 +1953,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-04-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-1-70b-instruct-v1:0",
@@ -2055,9 +1973,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-07-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-1-8b-instruct-v1:0",
@@ -2075,9 +1993,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-07-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-3-70b-instruct-v1:0",
@@ -2095,9 +2013,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-12-19",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama4-maverick-17b-instruct-v1:0",
@@ -2116,9 +2034,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-04-28",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama4-scout-17b-instruct-v1:0",
@@ -2137,9 +2055,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-04-28",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "minimax.minimax-m2",
@@ -2321,9 +2239,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-03-01",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "mistral.mistral-large-2402-v1:0",
@@ -2402,9 +2320,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-03-01",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "mistral.pixtral-large-2502-v1:0",
@@ -6627,9 +6545,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-03-10",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "deepseek.v3-v1:0",
@@ -6730,9 +6648,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-07-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-1-70b-instruct-v1:0:128k",
@@ -6748,9 +6666,9 @@
      "streaming": true,
      "inference": [],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-07-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-1-8b-instruct-v1:0",
@@ -6768,9 +6686,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-07-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-1-8b-instruct-v1:0:128k",
@@ -6786,9 +6704,9 @@
      "streaming": true,
      "inference": [],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-07-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-3-70b-instruct-v1:0",
@@ -6807,9 +6725,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-12-19",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama4-maverick-17b-instruct-v1:0",
@@ -6828,9 +6746,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-04-28",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama4-scout-17b-instruct-v1:0",
@@ -6849,9 +6767,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-04-28",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "minimax.minimax-m2",

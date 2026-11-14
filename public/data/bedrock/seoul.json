@@ -2,8 +2,8 @@
  "schema": 1,
  "region": "ap-northeast-2",
  "stats": {
-  "primary_models": 44,
-  "primary_bases": 43,
+  "primary_models": 40,
+  "primary_bases": 40,
   "reference": {
    "us-east-1": {
     "models": 126,
@@ -30,9 +30,9 @@
     "coverage_pct": 47.5
    }
   },
-  "on_demand": 7,
-  "cris_only": 36,
-  "no_access_path": 1,
+  "on_demand": 5,
+  "cris_only": 35,
+  "no_access_path": 0,
   "providers": [
    "Amazon",
    "Anthropic",
@@ -178,110 +178,6 @@
    "profiles": [],
    "access": [
     "on-demand"
-   ]
-  },
-  {
-   "id": "anthropic.claude-3-haiku-20240307-v1:0",
-   "base": "anthropic.claude-3-haiku-20240307-v1:0",
-   "name": "Claude 3 Haiku",
-   "provider": "Anthropic",
-   "input": [
-    "IMAGE",
-    "TEXT"
-   ],
-   "output": [
-    "TEXT"
-   ],
-   "streaming": true,
-   "inference": [
-    "ON_DEMAND"
-   ],
-   "customization": [],
-   "status": "LEGACY",
-   "since": "2024-03-13",
-   "eol": "2026-11-13",
-   "profiles": [
-    "apac.anthropic.claude-3-haiku-20240307-v1:0"
-   ],
-   "access": [
-    "on-demand",
-    "cris"
-   ]
-  },
-  {
-   "id": "anthropic.claude-3-haiku-20240307-v1:0:200k",
-   "base": "anthropic.claude-3-haiku-20240307-v1:0",
-   "name": "Claude 3 Haiku",
-   "provider": "Anthropic",
-   "input": [
-    "IMAGE",
-    "TEXT"
-   ],
-   "output": [
-    "TEXT"
-   ],
-   "streaming": true,
-   "inference": [],
-   "customization": [],
-   "status": "LEGACY",
-   "since": "2024-03-13",
-   "eol": "2026-11-13",
-   "profiles": [],
-   "access": []
-  },
-  {
-   "id": "anthropic.claude-3-5-sonnet-20240620-v1:0",
-   "base": "anthropic.claude-3-5-sonnet-20240620-v1:0",
-   "name": "Claude 3.5 Sonnet",
-   "provider": "Anthropic",
-   "input": [
-    "IMAGE",
-    "TEXT"
-   ],
-   "output": [
-    "TEXT"
-   ],
-   "streaming": true,
-   "inference": [
-    "ON_DEMAND"
-   ],
-   "customization": [],
-   "status": "LEGACY",
-   "since": "2024-06-20",
-   "eol": "2026-11-13",
-   "profiles": [
-    "apac.anthropic.claude-3-5-sonnet-20240620-v1:0"
-   ],
-   "access": [
-    "on-demand",
-    "cris"
-   ]
-  },
-  {
-   "id": "anthropic.claude-3-5-sonnet-20241022-v2:0",
-   "base": "anthropic.claude-3-5-sonnet-20241022-v2:0",
-   "name": "Claude 3.5 Sonnet v2",
-   "provider": "Anthropic",
-   "input": [
-    "IMAGE",
-    "TEXT"
-   ],
-   "output": [
-    "TEXT"
-   ],
-   "streaming": true,
-   "inference": [
-    "INFERENCE_PROFILE"
-   ],
-   "customization": [],
-   "status": "LEGACY",
-   "since": "2024-10-22",
-   "eol": "2026-11-13",
-   "profiles": [
-    "apac.anthropic.claude-3-5-sonnet-20241022-v2:0"
-   ],
-   "access": [
-    "cris"
    ]
   },
   {
