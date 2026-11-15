@@ -4260,9 +4260,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-03-10",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "deepseek.v3-v1:0",
@@ -4383,9 +4383,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-04-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-8b-instruct-v1:0",
@@ -4403,9 +4403,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-04-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-1-70b-instruct-v1:0",
@@ -4424,9 +4424,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-07-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-1-70b-instruct-v1:0:128k",
@@ -4447,9 +4447,9 @@
       "DISTILLATION",
       "FINE_TUNING"
      ],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-07-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-1-8b-instruct-v1:0",
@@ -4468,9 +4468,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-07-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-1-8b-instruct-v1:0:128k",
@@ -4491,9 +4491,9 @@
       "DISTILLATION",
       "FINE_TUNING"
      ],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-07-23",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-3-70b-instruct-v1:0",
@@ -4511,9 +4511,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-12-19",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama3-3-70b-instruct-v1:0:128k",
@@ -4532,9 +4532,9 @@
       "DISTILLATION",
       "FINE_TUNING"
      ],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-12-19",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama4-maverick-17b-instruct-v1:0",
@@ -4553,9 +4553,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-04-28",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "meta.llama4-scout-17b-instruct-v1:0",
@@ -4574,9 +4574,9 @@
       "INFERENCE_PROFILE"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2025-04-28",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "minimax.minimax-m2",
@@ -4758,9 +4758,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-03-01",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "mistral.mistral-large-2402-v1:0",
@@ -4839,9 +4839,9 @@
       "ON_DEMAND"
      ],
      "customization": [],
-     "status": "ACTIVE",
+     "status": "LEGACY",
      "since": "2024-03-01",
-     "eol": null
+     "eol": "2027-03-30"
     },
     {
      "id": "mistral.pixtral-large-2502-v1:0",
