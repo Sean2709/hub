@@ -673,17 +673,17 @@ import '../../lib/orunka-cloud.css';
   // ---- other admins (SeanChat unified admin: 션챗 · 작심 · 만수르) ------------------
   const scUrlEl = $('sc-url') as HTMLInputElement;
   const frame = $('sc-frame') as HTMLIFrameElement;
-  // 오룬카(게임)는 2026-10-04부터 Unity판(OrunkaUnity 레포, 오프라인 싱글 맥 앱 — 게임 서버 없음).
-  // 관리 화면 = 같은 Mac의 로컬 관리 도구 OrunkaUnity/tools/admin/serve.py (launchd com.sean.orunka, 127.0.0.1:7800 —
-  // 옛 TS판 Node 서버와 같은 주소라 저장된 orunkaUrl을 그대로 쓴다). 저장 파일 보기·고치기·빌드/PLAN/Shots 현황.
-  // 고치기 POST는 x-orunka-admin 헤더 필요(ORUNKA_ADMIN_KEY를 설정했을 때만 값 검사), 저장 고치기는 게임이 꺼져 있을 때만.
+  // 오룬카(게임) = OrunkaUnity 레포. 온라인 실서버(game.orunka.com, 2026-10-06~)가 저장 정본이고 위 패널이 그 /admin/api 를 씀.
+  // 아래 iframe = 같은 Mac의 로컬 관리 도구 OrunkaUnity/tools/admin/serve.py (launchd com.sean.orunka, 127.0.0.1:7800 —
+  // 옛 TS판 Node 서버와 같은 주소라 저장된 orunkaUrl을 그대로 쓴다). 개요·출시 판·사용자·저장 고치기·자료·매뉴얼.
+  // 고치기 POST는 x-orunka-admin 헤더 필요(ORUNKA_ADMIN_KEY를 설정했을 때만 값 검사).
   const LS_DB = 'hub.admin.orunkaUrl';
   // 옛 게임(오르마·돌바람, StoneAge 레포 7700)은 폐기됨 — 저장된 주소는 7700을 가리키므로 옮기지 않고 지운다
   ['hub.admin.ormaUrl', 'hub.admin.dolbaramUrl'].forEach((k) => localStorage.removeItem(k));
   if (['orma', 'dolbaram'].includes(localStorage.getItem(LS_APP) || '')) localStorage.setItem(LS_APP, 'orunka');
   const DB_DEFAULT = 'http://127.0.0.1:7800';
   const SC_NOTE = $('sc-note').textContent || '';
-  const DB_NOTE = '위 「사용자 · 서버 저장」 = 게임에서 로그인한 사용자 목록(Firebase orunka-game) — 줄을 누르면 그 사용자 편집기(JSON·라이·백업)가 열리고, 아래 관리 도구도 그 사용자로 맞춰집니다. 아래 = 오룬카 관리 도구(Unity판 — 집 Mac의 launchd 상시 도구, 기본 7800, 「사용자」 목록에서 이 맥 파일·서버 사용자를 눌러 고름)를 띄웁니다. 루프백 주소라 그 Mac에서만 보입니다. 게임 서버 프로그램은 없어서 접속자·공지 대신 내 저장 파일(캐릭터·펫·가방·퀘스트), 저장 고치기(라이·아이템·회복·위치·처음 안내·펫 등급/레벨/능력치 — 등급을 바꾸면 그 등급 평균으로 채운 뒤 직접 조정, 펫 데려오기 — 짐승·등급·레벨을 고르면 평균 능력치로 채운 뒤 조정해서 새 펫으로 추가(빛깔·유니크·최대 5마리), 원본(JSON) 직접 고치기(이름·레벨·경험치 등), 고치기 전 자동 백업·되돌리기 — 게임이 꺼져 있을 때만), 빌드·레포·PLAN.md 진행, 최근 자동 검증(Shots), 게임 데이터를 보여 줍니다. 꺼져 있으면 OrunkaUnity에서 bash tools/admin/agent.sh install.';
+  const DB_NOTE = '위 「사용자 · 게임 서버 저장」 = 실서버 저장(정본). 줄을 누르면 그 사용자 편집기(JSON·라이·백업)가 열리고, 아래 관리 도구도 그 사용자로 맞춰집니다. 아래 = 오룬카 관리 도구(집 Mac의 launchd 상시 도구, 기본 7800): 개요, 출시(기기별 지금 판), 사용자와 저장 고치기(라이·아이템·회복·위치·페트, 고치기 전 백업), 게임 자료, 구성, 실서버, 매뉴얼. 루프백 주소라 그 Mac에서만 보입니다. 꺼져 있으면 OrunkaUnity에서 bash tools/admin/agent.sh install.';
   const isDb = (app: string) => app === 'orunka';
   const scBase = () => (localStorage.getItem(LS_SC) || 'http://127.0.0.1:8500').replace(/\/+$/, '');
   const dbBase = () => (localStorage.getItem(LS_DB) || DB_DEFAULT).replace(/\/+$/, '');

@@ -236,7 +236,7 @@ export function mountOrunkaCloud(el: HTMLElement, googleIdToken: () => string | 
       .join('');
     el.innerHTML = `
       <div class="kt-bar"><div class="sum"><b>사용자 · 서버 저장</b> — Firebase <span class="mono">orunka-game</span> · Firestore 서울.
-        줄을 누르면 그 사용자의 편집기가 열립니다(어느 기기에서나 — JSON·라이·백업 되돌리기${onPick ? ', 집 Mac 이면 아래 관리 도구도 그 사용자로 맞춰져 펫·아이템 단추로 고침' : ''}). 고칠 때마다 덮어쓰기 전 판이 <span class="mono">days/replaced-…</span> 에 남습니다.</div>
+        줄을 누르면 그 사용자의 편집기가 열립니다(어느 기기에서나 — JSON·라이·백업 되돌리기${onPick ? ', 집 Mac 이면 아래 관리 도구도 그 사용자로 맞춰져 페트·아이템 버튼으로 고침' : ''}). 고칠 때마다 덮어쓰기 전 판이 <span class="mono">days/replaced-…</span> 에 남습니다.</div>
         <button type="button" class="oc-reload">새로고침</button></div>
       <p class="msg oc-msg"></p>
       <div class="oc-wrap"><table class="oc-table"><thead><tr><th>이름</th><th>Lv</th><th>놀이</th><th>기기</th><th>판</th><th>서버에 올린 때</th><th>uid</th></tr></thead>
@@ -248,7 +248,7 @@ export function mountOrunkaCloud(el: HTMLElement, googleIdToken: () => string | 
           <button type="button" class="oc-money-set">편집기에 라이 넣기</button>
           <button type="button" class="primary oc-write">서버에 쓰기</button>
           <button type="button" class="oc-revert">다시 읽기(편집 버림)</button>${onPick ? `
-          <button type="button" class="oc-tool" title="아래 오룬카 관리 도구(집 Mac)를 이 사용자로 맞춥니다 — 펫 고치기·데려오기·아이템·회복 단추">관리 도구에서 고치기 ↓</button>` : ''}</div>
+          <button type="button" class="oc-tool" title="아래 오룬카 관리 도구(집 Mac)를 이 사용자로 맞춥니다 — 페트 고치기·데려오기·아이템·회복 버튼">관리 도구에서 고치기 ↓</button>` : ''}</div>
         <textarea class="oc-json" spellcheck="false" rows="18"></textarea>
         <details class="oc-days"${days.length ? '' : ' hidden'}><summary>백업 ${days.length}개 (days/)</summary>
           <ul>${days.map((d) => `<li><span class="mono">${esc(d.id)}</span> · Lv${esc(d.lv)} · 놀이 ${hours(d.playTime)} · ${esc(d.device)} <button type="button" class="oc-bk" data-id="${esc(d.id)}">편집기에 올리기</button></li>`).join('')}</ul>

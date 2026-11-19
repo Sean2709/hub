@@ -135,7 +135,7 @@ export function mountOrunkaGameSaves(el: HTMLElement, googleIdToken: () => strin
     rows.forEach((r) => n[kindOf(r.uid, r.provider)]++);
     say(rows.length
       ? `게임 서버 저장 ${rows.length}개 — 실사용자 ${n.user} · 내 캐릭 ${n.me} · 시험 ${n.test} · 들어와 있음 ${rows.filter((r) => r.online).length}명`
-      : '아직 게임 서버에 저장이 없습니다 — 새 판(함께 사냥) 게임으로 들어오면 생깁니다(첫 접속 때 Firestore 저장을 옮겨 옴)', 'ok');
+      : '아직 게임 서버에 저장이 없습니다', 'ok');
   }
   async function open(h: string, msg = '') {
     const j = await call(`/${h}`);
@@ -307,7 +307,7 @@ export function mountOrunkaGameSaves(el: HTMLElement, googleIdToken: () => strin
         <div class="tools"><label>라이 <input type="number" class="og-money" min="0" step="1" value="${esc(cur.save.money ?? 0)}"></label>
           <button type="button" class="og-money-set">편집기에 라이 넣기</button>
           <button type="button" class="primary og-write">서버에 쓰기</button>
-          <button type="button" class="og-revert">다시 읽기(편집 버림)</button>${onPick ? '\n          <button type="button" class="og-tool" title="펫·아이템·회복 단추 편집기 — 집 Mac 관리 도구가 켜져 있을 때만">관리 도구에서 고치기 ↓</button>' : ''}</div>
+          <button type="button" class="og-revert">다시 읽기(편집 버림)</button>${onPick ? '\n          <button type="button" class="og-tool" title="페트·아이템·회복 버튼 편집기 — 집 Mac 관리 도구가 켜져 있을 때만">관리 도구에서 고치기 ↓</button>' : ''}</div>
         <textarea class="og-json oc-json" spellcheck="false" rows="18"></textarea>
         <details class="oc-days"${hist.length ? '' : ' hidden'}><summary>백업 ${hist.length}개</summary>
           <ul>${hist.map((d) => `<li><span class="mono">${esc(d.id)}</span> · ${d.kind === 'day' ? '그날 첫 판' : '고치기 전'} · Lv${esc(d.lv)} · 놀이 ${hours(d.playTime)} <button type="button" class="og-bk" data-id="${esc(d.id)}">편집기에 올리기</button></li>`).join('')}</ul>
