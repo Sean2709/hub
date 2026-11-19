@@ -1,4 +1,4 @@
-/* Shared styles for browser-only calculators (/pension/, /bedrock/cost/).
+/* Shared styles for browser-only calculators (/pension/).
    Global (imported per page) because results are rendered with innerHTML — Astro scoped CSS wouldn't reach them.
    Everything is namespaced under .calc to avoid clashing with global.css (.card, section+section, …). */
 .calc { --ok: #059669; --ok2: #10b981; --warn: #d97706; --bad: #dc2626; }
@@ -74,7 +74,6 @@
 .calc .opts .badge { font-size: 0.7rem; font-weight: 800; color: #fff; background: var(--ok); border-radius: 999px; padding: 0.05rem 0.45rem; margin-left: 0.35rem; vertical-align: 0.1em; }
 
 .calc .tips { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem; font-size: 0.88rem; line-height: 1.5; }
-.calc .tips.empty { list-style: none; padding: 0; color: var(--muted); }
 .calc .tips b { font-weight: 700; }
 .calc .tips .warn { color: var(--warn); }
 
@@ -83,10 +82,6 @@
 .calc td { padding: 0.45rem 0.4rem 0.45rem 0; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; vertical-align: top; }
 .calc tr:last-child td { border-bottom: 0; }
 .calc .r { text-align: right; }
-.calc td.muted, .calc .muted { color: var(--muted); }
-.calc tr.sel td { background: color-mix(in srgb, var(--ok) 9%, transparent); font-weight: 600; }
-.calc .twrap { overflow-x: auto; margin: 0 -0.2rem; padding: 0 0.2rem; }
-.calc .rank-bar { display: block; height: 4px; border-radius: 2px; background: var(--ok2); margin-top: 0.25rem; min-width: 2px; }
 .calc .disclaimer { margin: 0.2rem 0 0; font-size: 0.75rem; color: var(--muted); line-height: 1.55; }
 .calc details.more-info summary { cursor: pointer; font-weight: 700; font-size: 0.95rem; }
 .calc details.more-info[open] summary { margin-bottom: 0.6rem; }

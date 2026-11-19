@@ -3,7 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  workflow_dispatch:   # also dispatched by bedrock-refresh.yml after it commits new data
+  workflow_dispatch:
+  schedule:
+    - cron: '0 21 * * *'   # 06:00 KST daily rebuild so build-time dates (posts' NEW badge) stay fresh
 
 permissions:
   contents: read

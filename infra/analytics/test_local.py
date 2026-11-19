@@ -183,7 +183,7 @@ check(it["r"] == "velog.io" and it["d"] == "d" and it["l"] == "ko-KR" and "b" no
 check("ip" not in it and "203.0.113.7" not in json.dumps(it, default=str), "collect: raw IP never stored")
 check(len(it["v"]) == 16, "collect: visitor hash 16 hex")
 
-post({"t": "pv", "p": "/bedrock/", "r": SITE + "/", "w": 390})
+post({"t": "pv", "p": "/retire/", "r": SITE + "/", "w": 390})
 check(lf._table.items[-1]["r"] == "(internal)" and lf._table.items[-1]["d"] == "m", "collect: internal nav + mobile width")
 post({"t": "click", "p": "/", "h": "https://apps.apple.com/kr/app/id6801016602"})
 check(lf._table.items[-1]["t"] == "click" and lf._table.items[-1]["h"].startswith("https://apps.apple.com"), "collect: outbound click")

@@ -2,16 +2,10 @@
 import Base from '../layouts/Base.astro';
 import '../styles/home.css';
 import { profile, certs, apps, posts, focus } from '../data/site';
-import bedrock from '../../public/data/bedrock/seoul.json';
-import bedrockMeta from '../../public/data/bedrock/meta.json';
-
-const bStats = bedrock.stats;
-const bUse1 = (bStats.reference as Record<string, { coverage_pct: number }>)['us-east-1'];
-const bChecked = new Date(bedrockMeta.checked_at).toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit' });
 
 const fmtMonth = (ym: string) => ym.replace('-', '.');
-// "NEW" badge for posts < 7 days old (KST calendar days) at build time — the site rebuilds daily
-// at ~06:00 KST via bedrock-refresh, so the badge drops on the 7th day after the post date
+// "NEW" badge for posts < 7 days old (KST calendar days) at build time — pages.yml rebuilds daily
+// at ~06:00 KST (schedule), so the badge drops on the 7th day after the post date
 const todayKst = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
 const isNew = (d: string) => (Date.parse(todayKst) - Date.parse(d)) / 864e5 < 7;
 // short hero chips; the full sentence stays in the tooltip
@@ -20,12 +14,11 @@ const ext = { target: '_blank', rel: 'noopener' };
 const me = { target: '_blank', rel: 'noopener me' };
 const [roleTitle, roleOrg] = profile.role.split(' · ');
 const tools = [
-  { href: '/bedrock/cost/', tag: 'AWS', title: 'Bedrock 비용 계산기', sub: '서울 리전 토큰 단가로 월 비용 — 리전 · Global · 배치, us-east-1 비교', icon: 'calc' },
   { href: '/retire/', tag: 'Finance', title: '은퇴 자산 계산기', sub: '은퇴 가능 여부 · 월 가용 금액 · 자산 고갈 시점. 앱 「은퇴하면 만수르」와 같은 엔진', icon: 'trend' },
   { href: '/pension/', tag: 'Finance', title: '연금 절세 계산기', sub: '연금저축 · IRP 세액공제와 연금소득세 과세 방식 비교 (2026 세법)', icon: 'bars' },
 ];
 const glance = [
-  { href: '#tools', n: tools.length + 1, label: 'Tools' },
+  { href: '#tools', n: tools.length, label: 'Tools' },
   { href: '#apps', n: apps.length, label: 'Apps' },
   { href: '#writing', n: posts.length, label: 'Posts' },
   { href: '#certs', n: certs.length, label: 'Certs' },
@@ -53,29 +46,11 @@ const credlyBadge = (id: string) => `https://www.credly.com/badges/${id}/public_
   </section>
 
   <section id="tools">
-    <div class="shead"><h2>Tools</h2><span class="count">{tools.length + 1}</span><span class="hint">브라우저에서만 도는 계산기 · 매일 갱신되는 데이터</span></div>
-    <div class="tile feature">
-      <a class="f-head" href="/bedrock/">
-        <span class="ticon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z" /><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5" /></svg></span>
-        <span class="f-title"><span class="tag">AWS · Data</span><strong>Amazon Bedrock 서울 리전 모델 현황</strong><span class="sub">있는 것 · 없는 것 · 바뀐 것 — 매일 06:00 다시 조회해 JSON · RSS로 공개</span></span>
-        <span class="live"><i></i>LIVE</span>
-      </a>
-      <div class="nums">
-        <div><b>{bStats.primary_models}</b><span>서울 모델</span></div>
-        <div><b>{bStats.on_demand}</b><span>on-demand</span></div>
-        <div><b>{bUse1.coverage_pct}<small>%</small></b><span>us-east-1 대비</span><em style={`--p:${bUse1.coverage_pct}%`}></em></div>
-        <div><b>{bStats.missing_bases}</b><span>서울에 없음</span></div>
-      </div>
-      <div class="f-foot">
-        <span class="meta">확인 {bChecked} · <a href="/data/bedrock/seoul.json">JSON</a> · <a href="/data/bedrock/feed.xml">RSS</a></span>
-        <a class="go" href="/bedrock/">카탈로그 보기 <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
+    <div class="shead"><h2>Tools</h2><span class="count">{tools.length}</span><span class="hint">브라우저에서만 도는 계산기</span></div>
     <ul class="tgrid">
       {tools.map((t) => (
         <li><a class="tile tcard" href={t.href}>
           <span class="ticon" aria-hidden="true">
-            {t.icon === 'calc' && <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2" /><path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2M8 18h8" /></svg>}
             {t.icon === 'trend' && <svg viewBox="0 0 24 24"><path d="M3 20h18" /><path d="M6 16v-4M11 16V9M16 16V6" /><path d="M14 6h4v4" /></svg>}
             {t.icon === 'bars' && <svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /><path d="M14 7l3-3 3 3" /></svg>}
           </span>

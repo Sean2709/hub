@@ -388,10 +388,10 @@ import '../../lib/orunka-cloud.css';
       return { date: d.toISOString().slice(0, 10), pv, uv: Math.max(1, Math.round(pv * (0.45 + Math.random() * 0.4))) };
     });
     const pv = daily.reduce((a, d) => a + d.pv, 0);
-    const pages = ['/', '/bedrock/', '/admin/'].map((k, i) => ({ k, n: Math.round(pv / (i + 1.4)), uv: Math.round(pv / (i + 2.2)) }));
+    const pages = ['/', '/retire/', '/admin/'].map((k, i) => ({ k, n: Math.round(pv / (i + 1.4)), uv: Math.round(pv / (i + 2.2)) }));
     return {
       days, now: now.toISOString(),
-      live: { visitors: 2, pages: [{ k: '/', n: 1 }, { k: '/bedrock/', n: 1 }] },
+      live: { visitors: 2, pages: [{ k: '/', n: 1 }, { k: '/retire/', n: 1 }] },
       today: { pv: daily[days - 1].pv, uv: daily[days - 1].uv },
       range: { pv, uv: daily.reduce((a, d) => a + d.uv, 0), clicks: r(3, 30), bots: r(0, 20) },
       daily, pages,
@@ -636,7 +636,7 @@ import '../../lib/orunka-cloud.css';
       : '<li class="muted">아직 없음</li>';
   }
 
-  // ---- ops: GitHub Actions + data freshness (public repo → unauthenticated API) ----
+  // ---- ops: GitHub Actions (public repo → unauthenticated API) ----
   async function ops() {
     const items: string[] = [];
     // v/sub are pre-escaped HTML
@@ -646,21 +646,7 @@ import '../../lib/orunka-cloud.css';
       const h = (Date.now() - new Date(iso).getTime()) / 36e5;
       return h < 1 ? `${Math.round(h * 60)}분 전` : h < 48 ? `${Math.round(h)}시간 전` : `${Math.round(h / 24)}일 전`;
     };
-    const kst = (iso: string) =>
-      new Date(iso).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false });
-    try {
-      const meta = await (await fetch('/data/bedrock/meta.json', { cache: 'no-store' })).json();
-      const h = (Date.now() - new Date(meta.checked_at).getTime()) / 36e5;
-      let n = '?';
-      try {
-        n = String((await (await fetch('/data/bedrock/seoul.json', { cache: 'no-store' })).json()).stats?.primary_models ?? '?');
-      } catch {}
-      tile('Bedrock 데이터', `서울 ${esc(n)}개 모델`, `확인 ${esc(ago(meta.checked_at))} · ${esc(kst(meta.checked_at))} KST`, h > 30 ? 'bad' : h > 26 ? 'warn' : 'ok');
-    } catch {
-      tile('Bedrock 데이터', 'meta.json 읽기 실패', '', 'bad');
-    }
     for (const [name, wf] of [
-      ['bedrock-refresh', 'bedrock-refresh.yml'],
       ['Pages 배포', 'pages.yml'],
     ]) {
       try {
@@ -681,25 +667,6 @@ import '../../lib/orunka-cloud.css';
         tile(name, '조회 실패', esc((e as Error).message), 'warn');
       }
     }
-    try {
-      const ch = await (await fetch('/data/bedrock/changes.json', { cache: 'no-store' })).json();
-      const list: Record<string, unknown>[] = Array.isArray(ch) ? ch : ch.changes ?? [];
-      const diffs = list.filter((c) => c.type === 'diff');
-      const src = diffs.length ? diffs : list;
-      const latest = src.reduce((m, c) => (String(c.date) > m ? String(c.date) : m), '');
-      const rows = src.filter((c) => String(c.date) === latest);
-      const n = (c: Record<string, unknown>, k: string) => (Array.isArray(c[k]) ? (c[k] as unknown[]).length : 0);
-      tile(
-        '최근 카탈로그 변경',
-        !rows.length ? '기록 없음' : diffs.length ? esc(latest) : '변경 없음',
-        !rows.length
-          ? ''
-          : diffs.length
-            ? rows.map((c) => `${esc(String(c.region ?? ''))} +${n(c, 'added')} −${n(c, 'removed')} ~${n(c, 'changed')}`).join(' · ')
-            : `기준선 ${esc(latest)} · ${rows.length}개 리전`,
-        'ok'
-      );
-    } catch {}
     $('ops-list').innerHTML = items.join('');
   }
 

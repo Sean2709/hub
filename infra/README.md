@@ -1,22 +1,23 @@
-# infra — one-time AWS setup for the Bedrock refresh workflow
+# infra — leftover AWS resources from the retired Bedrock refresh workflow
 
-Account: sean-workload (461839758724). Created 2026-09-22.
+The `/bedrock/` catalog, its daily `bedrock-refresh.yml` workflow, the generator scripts and the
+IAM policy JSON files were removed from this repo on 2026-11-19. The AWS side was intentionally
+left untouched and still exists in account sean-workload (461839758724):
 
 | Resource | Name | Notes |
 |---|---|---|
 | IAM OIDC provider | `token.actions.githubusercontent.com` | audience `sts.amazonaws.com` |
-| IAM role | `hub-bedrock-refresh` | trust: `repo:Sean2709@214588092/hub@1381576445:ref:refs/heads/main` only (GitHub appends owner/repo IDs to `sub` since 2026; exact-match pins the IDs, so a renamed/re-created repo can't assume it) ([trust-policy.json](trust-policy.json)) |
-| Inline policy | `bedrock-catalog-readonly` | `bedrock:ListFoundationModels`, `bedrock:ListInferenceProfiles` ([bedrock-readonly-policy.json](bedrock-readonly-policy.json)) |
+| IAM role | `hub-bedrock-refresh` | trust: `repo:Sean2709@214588092/hub@1381576445:ref:refs/heads/main` only |
+| Inline policy | `bedrock-catalog-readonly` | `bedrock:ListFoundationModels`, `bedrock:ListInferenceProfiles` |
 | GitHub repo variable | `AWS_ROLE_ARN` | `arn:aws:iam::461839758724:role/hub-bedrock-refresh` |
 
-No access keys or secrets anywhere; the Actions runner exchanges its GitHub OIDC token for
-short-lived credentials on every run. Recreate with:
+Nothing in the repo uses them any more. If they are cleaned up later (needs explicit approval):
 
 ```sh
-aws iam create-open-id-connect-provider --url https://token.actions.githubusercontent.com \
-  --client-id-list sts.amazonaws.com --thumbprint-list 6938fd4d98bab03faadb97b34396831e3780aea1
-aws iam create-role --role-name hub-bedrock-refresh --assume-role-policy-document file://trust-policy.json
-aws iam put-role-policy --role-name hub-bedrock-refresh --policy-name bedrock-catalog-readonly \
-  --policy-document file://bedrock-readonly-policy.json
-gh variable set AWS_ROLE_ARN --body arn:aws:iam::461839758724:role/hub-bedrock-refresh
+aws iam delete-role-policy --role-name hub-bedrock-refresh --policy-name bedrock-catalog-readonly
+aws iam delete-role --role-name hub-bedrock-refresh
+gh variable delete AWS_ROLE_ARN
+# OIDC provider: delete only if no other role trusts it
 ```
+
+The analytics backend lives in [`analytics/`](analytics/README.md) and is unrelated.

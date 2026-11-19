@@ -66,28 +66,8 @@
 .home .go span { display: inline-block; transition: transform .18s; }
 .home a:hover .go span, .home .go:hover span { transform: translateX(3px); }
 
-/* Tools: featured data card + grid */
-.home .feature { padding: 1.35rem 1.45rem 1.15rem; background: linear-gradient(140deg, color-mix(in srgb, var(--brand) 8%, var(--card)) 0%, var(--card) 55%); }
-.home .f-head { display: grid; grid-template-columns: auto 1fr auto; gap: 0.95rem; align-items: start; }
-.home .f-head:hover { text-decoration: none; }
-.home .f-head:hover strong { text-decoration: underline; text-underline-offset: 3px; }
-.home .f-title strong { display: block; font-size: 1.1rem; letter-spacing: -0.01em; margin: 0.15rem 0 0.1rem; }
-.home .live { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.1em; color: var(--brand); display: inline-flex; align-items: center; gap: 0.4rem; border: 1px solid color-mix(in srgb, var(--brand) 35%, transparent); border-radius: 999px; padding: 0.2rem 0.55rem; }
-.home .live i { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); animation: home-blink 2.4s ease-in-out infinite; }
-@keyframes home-blink { 50% { opacity: .25; } }
-.home .nums { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--line); }
-.home .nums div { padding: 0 0.2rem; min-width: 0; }
-.home .nums div + div { padding-left: 1.1rem; border-left: 1px solid var(--line); }
-.home .nums b { display: block; font-size: 1.9rem; font-weight: 750; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; line-height: 1.1; }
-.home .nums small { font-size: 0.95rem; font-weight: 600; }
-.home .nums span { font-size: 0.75rem; color: var(--muted); }
-.home .nums em { display: block; height: 4px; border-radius: 2px; margin-top: 0.45rem; background: linear-gradient(90deg, var(--brand) var(--p), var(--line) var(--p)); }
-.home .f-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.5rem; margin-top: 1.1rem; }
-.home .f-foot .meta { color: var(--muted); font-size: 0.8rem; }
-.home .f-foot .meta a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
-
+/* Tools grid */
 .home .tgrid, .home .agrid { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.home .tgrid { margin-top: 0.9rem; }
 .home .tgrid li, .home .agrid li { display: flex; }
 .home .tcard { flex: 1; display: flex; flex-direction: column; gap: 0.3rem; padding: 1.15rem 1.15rem 1rem; }
 .home .tcard .ticon { margin-bottom: 0.55rem; }
@@ -155,11 +135,6 @@
   .home .glance a { flex-direction: column; gap: 0.2rem; padding: 0.8rem 0.3rem 0.8rem 0.75rem; }
   .home .glance b { font-size: 1.3rem; }
   .home .shead .hint:not(.link) { display: none; }
-  .home .feature { padding: 1.1rem 1.1rem 1rem; }
-  .home .f-head { grid-template-columns: auto 1fr; }
-  .home .live { display: none; }
-  .home .nums { grid-template-columns: repeat(2, 1fr); row-gap: 0.9rem; }
-  .home .nums div:nth-child(3) { padding-left: 0.2rem; border-left: 0; }
   .home .plist a { grid-template-columns: 3.1rem 1fr; gap: 0.8rem; padding: 0.9rem 0.3rem; }
   .home .plist .arr { display: none; }
   .home .badges { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.5rem; }
