@@ -4,6 +4,6 @@
     "Sid": "OwnLogGroup",
     "Effect": "Allow",
     "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
-    "Resource": "arn:aws:logs:ap-northeast-2:461839758724:log-group:/aws/lambda/hub-analytics-authorizer:*"
+    "Resource": "arn:aws:logs:ap-northeast-2:081155410611:log-group:/aws/lambda/hub-analytics-authorizer:*"
   }]
 }

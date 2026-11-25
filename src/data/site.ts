@@ -155,8 +155,8 @@ export const focus = [
 // Lambda runs. Reading stats needs a separate admin bearer token that never ships.
 // Infra: infra/analytics/ (API GW HTTP API → Lambda → DynamoDB, ap-northeast-2).
 export const analytics = {
-  endpoint: 'https://zoviv9w83h.execute-api.ap-northeast-2.amazonaws.com',
-  siteKey: 'f6df7409e1891e4b8153c7a1',
+  endpoint: 'https://5m1ffl4pvd.execute-api.ap-northeast-2.amazonaws.com',
+  siteKey: 'd4899100c6236ba54981ba86',
 };
 
 // /admin/ sign-in: Google Identity Services. The OAuth *client ID* is public by design

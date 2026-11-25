@@ -1,6 +1,10 @@
 # infra/analytics — self-hosted, cookie-less visitor analytics for hub.seanson.com
 
-Account: sean-workload (461839758724), region ap-northeast-2. Created 2026-09-22.
+Account: personal `seanson` (081155410611, AWS CLI profile `seanson`), region ap-northeast-2.
+Re-created 2026-11-25 with [`create.sh`](create.sh) (idempotent; same names as before, all tagged
+`project=hub`). The first build (2026-09-22) lived in the old LZA account sean-workload
+(461839758724), which was closed — its data was not migrated, stats start fresh on 2026-11-25.
+Lambdas are python3.13 / arm64; both log groups keep 14 days.
 Dashboard: `/admin/` on the site (static HTML; shows nothing until you sign in with Google as
 the allowlisted admin account — see "Admin sign-in" below).
 
@@ -11,7 +15,7 @@ ended badly. So the rule here is: **nothing is reachable without an authorizer i
 it**, enforced by API Gateway *before* any of our code runs.
 
 ```
-browser ──POST /collect?k=<site key> + Origin──▶ API GW (HTTP API zoviv9w83h)
+browser ──POST /collect?k=<site key> + Origin──▶ API GW (HTTP API 5m1ffl4pvd)
 admin   ──GET  /stats  Authorization: Bearer <Google ID token>──▶ │ every route: Lambda REQUEST authorizer
                                                    │ no $default route, no NONE route
                                                    ▼
@@ -22,11 +26,11 @@ admin   ──GET  /stats  Authorization: Bearer <Google ID token>──▶ │ 
 
 | Resource | Name | Notes |
 |---|---|---|
-| API GW HTTP API | `hub-analytics` (`zoviv9w83h`) | routes `POST /collect`, `GET /stats`, `GET /health` — all `CUSTOM` auth. Stage `$default` throttle 20 rps / burst 50. CORS `AllowOrigins=https://hub.seanson.com` (old origin kept during the domain move) |
-| Authorizer `site-key` | `3luuoy` | identity sources `$request.querystring.k` + `$request.header.origin` → both must be present or API GW returns 401 without invoking anything. Cached 300 s per (k, origin) |
-| Authorizer `admin-bearer` | `enwegx` | identity source `$request.header.authorization` (a Google ID token). Cached 300 s per token; the handler re-checks `exp` so the cache can't extend a token's life |
+| API GW HTTP API | `hub-analytics` (`5m1ffl4pvd`) | routes `POST /collect`, `GET /stats`, `GET /health` — all `CUSTOM` auth. Stage `$default` (auto-deploy) throttle 20 rps / burst 50. CORS `AllowOrigins=https://hub.seanson.com`, methods GET/POST, headers authorization/content-type, max-age 600 |
+| Authorizer `site-key` | `5tllmj` | identity sources `$request.querystring.k` + `$request.header.origin` → both must be present or API GW returns 401 without invoking anything. Cached 300 s per (k, origin) |
+| Authorizer `admin-bearer` | `xbmhov` | identity source `$request.header.authorization` (a Google ID token). Cached 300 s per token; the handler re-checks `exp` so the cache can't extend a token's life |
 | Lambda | `hub-analytics` | handler `lambda_function.lambda_handler`; role `hub-analytics-lambda` ([policy-collector.json](policy-collector.json): `dynamodb:PutItem/Query` on the one table + its own log group). Resource policy: invoke only from `apigateway.amazonaws.com` scoped to this API ARN. **No Function URL** |
-| Lambda | `hub-analytics-authorizer` | handler `lambda_function.authorizer_handler`, 128 MB, 5 s; role `hub-analytics-authorizer` ([policy-authorizer.json](policy-authorizer.json): logs only, no DynamoDB). Resource policy scoped to `…:zoviv9w83h/authorizers/*` |
+| Lambda | `hub-analytics-authorizer` | handler `lambda_function.authorizer_handler`, 128 MB, 5 s; role `hub-analytics-authorizer` ([policy-authorizer.json](policy-authorizer.json): logs only, no DynamoDB). Resource policy scoped to `…:5m1ffl4pvd/authorizers/*` |
 | DynamoDB | `hub-analytics` | `pk = d#<KST date>`, `sk = <ms epoch>#<rand>`, TTL attribute `ttl` (90 d), deletion protection on |
 | Both roles' trust | [lambda-trust.json](lambda-trust.json) | `lambda.amazonaws.com` with `aws:SourceAccount` condition |
 
@@ -139,13 +143,15 @@ GET  /health                       no auth                  401
 GET  / · GET /collect · DELETE /stats                       404  (no $default route)
 OPTIONS /collect from evil origin                           204 with **no** Access-Control-Allow-Origin
 ```
-Verified 2026-09-22 (16/16). Test rows written during checks were deleted from the table by
-hand (`aws dynamodb delete-item`) — the Lambda role deliberately has no delete permission.
+Verified 2026-09-22 (16/16) on the old account and again 2026-11-25 on `seanson` (15/15 curl
+checks; the Google-token 200 case needs a real browser sign-in). Test rows written during checks
+were deleted from the table by hand (`aws dynamodb delete-item`) — the Lambda role deliberately
+has no delete permission.
 
 ## Cost
 
 Well inside the free tier at this traffic: API GW HTTP API ~$1 per million requests,
-Lambda/DynamoDB on-demand fractions of a cent, CloudWatch logs default retention. Nothing
+Lambda/DynamoDB on-demand fractions of a cent, CloudWatch logs kept 14 days. Nothing
 runs when nobody visits.
 
 ## Local development

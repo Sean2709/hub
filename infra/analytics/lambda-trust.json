@@ -4,6 +4,6 @@
     "Effect": "Allow",
     "Principal": {"Service": "lambda.amazonaws.com"},
     "Action": "sts:AssumeRole",
-    "Condition": {"StringEquals": {"aws:SourceAccount": "461839758724"}}
+    "Condition": {"StringEquals": {"aws:SourceAccount": "081155410611"}}
   }]
 }

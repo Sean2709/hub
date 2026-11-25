@@ -5,13 +5,13 @@
       "Sid": "TableOnly",
       "Effect": "Allow",
       "Action": ["dynamodb:PutItem", "dynamodb:Query"],
-      "Resource": "arn:aws:dynamodb:ap-northeast-2:461839758724:table/hub-analytics"
+      "Resource": "arn:aws:dynamodb:ap-northeast-2:081155410611:table/hub-analytics"
     },
     {
       "Sid": "OwnLogGroup",
       "Effect": "Allow",
       "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
-      "Resource": "arn:aws:logs:ap-northeast-2:461839758724:log-group:/aws/lambda/hub-analytics:*"
+      "Resource": "arn:aws:logs:ap-northeast-2:081155410611:log-group:/aws/lambda/hub-analytics:*"
     }
   ]
 }
