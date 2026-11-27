@@ -1,0 +1,125 @@
+/* 에이전트 방 채팅 — /admin/ 「에이전트 방」(lib/agentroom-view.ts). 아이폰 SeanChat 방 화면과 같은 꼴:
+   Sean = 오른쪽 초록 말풍선, 상대 에이전트 = 왼쪽 회색 + 주황 띠, 시스템 = 가운데 작은 글. JS 로 만든 노드라 #admin .ar 접두 전역 규칙. */
+#admin .ar { --ar-sean: var(--brand); --ar-peer: #ea8a1a; --ar-bub: color-mix(in srgb, var(--fg) 6%, var(--card)); }
+#admin .ar {
+  display: flex; flex-direction: column; height: max(480px, calc(100vh - 190px));
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--adm-sh); overflow: hidden;
+}
+
+/* 위 줄: 연결 상태 · 최근 30분 · 접속자 · 종료/재개 */
+#admin .ar .ar-top { display: flex; align-items: center; gap: .4rem .6rem; flex-wrap: wrap; padding: .55rem .75rem; border-bottom: 1px solid var(--line); font-size: .8rem; }
+#admin .ar .ar-state { display: inline-flex; align-items: center; gap: .4rem; color: var(--muted); min-width: 0; }
+#admin .ar .ar-led { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+#admin .ar[data-link="ok"] .ar-led { background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
+#admin .ar[data-link="ok"] .ar-live { color: var(--ok); }
+#admin .ar[data-link="err"] .ar-led { background: var(--bad); }
+#admin .ar[data-link="err"] .ar-live { color: var(--bad); }
+#admin .ar .ar-keep { font-size: .72rem; font-weight: 600; padding: .05rem .5rem; border-radius: 999px; background: color-mix(in srgb, var(--fg) 7%, transparent); color: var(--muted); white-space: nowrap; }
+#admin .ar .ar-api { font-size: .72rem; color: var(--muted); }
+#admin .ar .ar-sp { flex: 1; }
+#admin .ar .ar-whobtn { display: inline-flex; align-items: center; gap: .3rem; font-variant-numeric: tabular-nums; }
+#admin .ar .ar-whobtn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+#admin .ar .ar-whobtn[aria-expanded="true"] { border-color: var(--brand); color: var(--brand); }
+#admin .ar .ghost.danger, #admin .ar-dlg .danger { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 45%, var(--line)); }
+#admin .ar .ghost.danger:hover { background: color-mix(in srgb, var(--bad) 8%, transparent); border-color: var(--bad); }
+#admin .ar button:disabled { opacity: .45; cursor: not-allowed; }
+#admin .ar .ar-stopped { display: flex; align-items: center; gap: .5rem; padding: .45rem .8rem; font-size: .8rem; color: var(--bad); background: color-mix(in srgb, var(--bad) 9%, var(--card)); border-bottom: 1px solid color-mix(in srgb, var(--bad) 25%, var(--line)); }
+#admin .ar .ar-stopped i { width: 10px; height: 10px; border-radius: 2px; background: var(--bad); flex: none; }
+
+/* 본문: 대화 + 접속자 */
+#admin .ar .ar-body { flex: 1; min-height: 0; display: flex; }
+#admin .ar .ar-main { position: relative; flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+#admin .ar .ar-log { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: .8rem .9rem .4rem; scroll-behavior: auto; }
+#admin .ar .ar-log:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+#admin .ar .ar-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .7rem; }
+#admin .ar .ar-empty { display: flex; flex-direction: column; align-items: center; gap: .35rem; text-align: center; padding: 3.2rem 1rem 1rem; color: var(--muted); font-size: .88rem; }
+#admin .ar .ar-empty svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
+#admin .ar .ar-empty b { font-weight: 500; }
+#admin .ar .ar-empty small { font-size: .76rem; opacity: .8; max-width: 34ch; }
+#admin .ar .ar-down { position: absolute; left: 50%; transform: translateX(-50%); bottom: 5.6rem; z-index: 2; border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: .25rem .8rem; font-size: .78rem; box-shadow: 0 2px 8px rgb(0 0 0 / .14); }
+
+/* 글 하나 */
+#admin .ar .ar-m { display: flex; flex-direction: column; max-width: min(78%, 680px); min-width: 0; }
+#admin .ar .ar-m.peer { align-self: flex-start; }
+#admin .ar .ar-m.sean { align-self: flex-end; align-items: flex-end; }
+#admin .ar .ar-h { display: flex; align-items: baseline; gap: .15rem .45rem; flex-wrap: wrap; font-size: .72rem; color: var(--muted); padding: 0 .3rem .2rem; }
+#admin .ar .ar-h b { color: var(--fg); font-weight: 600; font-size: .78rem; }
+#admin .ar .ar-m.sean .ar-h { justify-content: flex-end; }
+#admin .ar .ar-from { min-width: 0; overflow-wrap: anywhere; }
+#admin .ar .ar-id { opacity: .75; }
+#admin .ar .ar-bub { position: relative; padding: .5rem .8rem .55rem; border-radius: 14px; background: var(--ar-bub); min-width: 0; max-width: 100%; }
+#admin .ar .ar-m.peer .ar-bub { border-top-left-radius: 5px; padding-left: .95rem; }
+#admin .ar .ar-m.peer .ar-bub::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; border-radius: 5px 0 0 14px; background: color-mix(in srgb, var(--ar-peer) 65%, transparent); }
+#admin .ar .ar-m.sean .ar-bub { background: color-mix(in srgb, var(--ar-sean) 18%, var(--card)); border-top-right-radius: 5px; }
+#admin .ar .ar-peer { display: flex; align-items: center; gap: .25rem; font-size: .68rem; font-weight: 600; color: var(--ar-peer); margin-bottom: .2rem; }
+#admin .ar .ar-peer svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+#admin .ar .ar-t { font-size: .9rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; user-select: text; }
+#admin .ar .ar-m.sys { align-self: center; max-width: 92%; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: .1rem .45rem; font-size: .76rem; color: var(--muted); text-align: center; opacity: .85; }
+#admin .ar .ar-m.sys .ar-sys-t { white-space: pre-wrap; overflow-wrap: anywhere; }
+#admin .ar .ar-m.sys time { font-size: .7rem; opacity: .8; }
+
+/* 입력칸 */
+#admin .ar .ar-input { display: flex; align-items: flex-end; gap: .5rem; padding: .6rem .75rem .35rem; border-top: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 60%, var(--card)); }
+#admin .ar .ar-input textarea {
+  flex: 1; min-width: 0; resize: none; font: inherit; font-size: .92rem; line-height: 1.45; color: inherit;
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: .5rem .85rem; max-height: 148px; overflow-y: auto;
+}
+#admin .ar .ar-input textarea:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 18%, transparent); }
+#admin .ar .ar-input textarea[readonly] { opacity: .7; }
+#admin .ar .ar-send { flex: none; width: 38px; height: 38px; border-radius: 50%; border: 0; display: grid; place-items: center; background: var(--brand); color: #fff; transition: filter .12s, opacity .12s; }
+#admin .ar .ar-send:hover:not(:disabled) { filter: brightness(1.08); }
+#admin .ar .ar-send svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+#admin .ar.sending .ar-send { opacity: 1; cursor: progress; }
+#admin .ar.sending .ar-send svg { display: none; }
+#admin .ar.sending .ar-send::after { content: ""; width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgb(255 255 255 / .45); border-top-color: #fff; animation: adm-spin .8s linear infinite; }
+#admin .ar .ar-foot { display: flex; align-items: center; gap: .3rem .6rem; flex-wrap: wrap; min-height: 1.7rem; padding: 0 .9rem .45rem; font-size: .74rem; color: var(--muted); background: color-mix(in srgb, var(--bg) 60%, var(--card)); }
+#admin .ar .ar-msg { min-width: 0; overflow-wrap: anywhere; }
+#admin .ar .ar-msg.err { color: var(--bad); }
+#admin .ar .ar-msg.ok { color: var(--ok); }
+#admin .ar .ar-retry { font-size: .74rem; padding: .05rem .6rem; }
+#admin .ar .ar-count { margin-left: auto; }
+#admin .ar .ar-hint { margin-left: auto; opacity: .75; }
+#admin .ar .ar-count:not(:empty) + .ar-hint { margin-left: 0; }
+
+/* 접속자 */
+#admin .ar .ar-who { display: none; width: 250px; flex: none; border-left: 1px solid var(--line); padding: .75rem .85rem; font-size: .83rem; overflow-y: auto; }
+#admin .ar.who-on .ar-who { display: block; }
+#admin .ar .ar-who-h { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; margin-bottom: .45rem; }
+#admin .ar .ar-who-at { font-size: .7rem; color: var(--muted); }
+#admin .ar .ar-who-st { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); padding: .3rem 0 .5rem; border-bottom: 1px solid var(--line); margin-bottom: .5rem; }
+#admin .ar .ar-who-st .ok { color: var(--ok); } #admin .ar .ar-who-st .bad { color: var(--bad); }
+#admin .ar .ar-none { margin: .15rem 0 0; color: var(--muted); font-size: .8rem; }
+#admin .ar .ar-hg + .ar-hg { margin-top: .6rem; padding-top: .55rem; border-top: 1px solid var(--line); }
+#admin .ar .ar-hg-h { display: flex; align-items: baseline; gap: .4rem; overflow-wrap: anywhere; }
+#admin .ar .ar-src { font-size: .7rem; color: var(--muted); }
+#admin .ar .ar-hg ul { list-style: none; margin: .25rem 0 0; padding: 0; }
+#admin .ar .ar-hg li { display: flex; align-items: center; flex-wrap: wrap; gap: .1rem .4rem; padding: .14rem 0; min-width: 0; }
+#admin .ar .ar-dot { width: 8px; height: 8px; border-radius: 50%; background: color-mix(in srgb, var(--muted) 45%, transparent); flex: none; }
+#admin .ar .ar-hg li.on .ar-dot { background: var(--ok); }
+#admin .ar .ar-as { font-weight: 500; overflow-wrap: anywhere; min-width: 0; }
+#admin .ar .ar-k { font-size: .7rem; color: var(--muted); }
+#admin .ar .ar-last { margin-left: auto; font-size: .7rem; color: var(--muted); white-space: nowrap; }
+#admin .ar .ar-hg li.on .ar-last { color: var(--ok); }
+
+/* 확인 창 */
+#admin .ar-dlg { border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--fg); padding: 1.1rem 1.2rem 1rem; width: min(380px, calc(100vw - 2rem)); box-shadow: 0 12px 40px rgb(0 0 0 / .25); }
+#admin .ar-dlg::backdrop { background: rgb(15 17 21 / .45); }
+#admin .ar-dlg:focus { outline: none; }
+#admin .ar-dlg h3 { margin: 0 0 .4rem; font-size: 1rem; }
+#admin .ar-dlg p { margin: 0 0 1rem; font-size: .86rem; color: var(--muted); line-height: 1.5; }
+#admin .ar-dlg-b { display: flex; justify-content: flex-end; gap: .5rem; }
+#admin .ar-dlg-b button { border-radius: 999px; padding: .3rem 1rem; font-size: .85rem; border: 1px solid var(--line); background: transparent; }
+#admin .ar-dlg-b .danger { background: var(--bad); border-color: var(--bad); color: #fff; font-weight: 600; }
+#admin .ar-dlg-b .primary { background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 600; }
+
+@media (max-width: 760px) {
+  #admin .ar { height: max(400px, calc(100dvh - 176px)); border-radius: 12px; }
+  #admin #others:has(#ar-panel:not([hidden])) .view-lead { display: none; }
+  #admin .ar .ar-body { flex-direction: column; }
+  #admin .ar .ar-who { width: auto; max-height: 38%; border-left: 0; border-bottom: 1px solid var(--line); order: -1; }
+  #admin .ar .ar-m { max-width: 88%; }
+  #admin .ar .ar-log { padding: .7rem .65rem .3rem; }
+  #admin .ar .ar-api, #admin .ar .ar-hint { display: none; }
+  #admin .ar .ar-input { padding: .5rem .55rem .3rem; }
+  #admin .ar .ar-input textarea { font-size: 16px; } /* iOS 확대 막기 */
+}

@@ -1,0 +1,109 @@
+/* /admin/ 바탕 틀 — 왼쪽 메뉴 + 한 번에 한 화면 (참고: 오룬카 관리 도구 7800 의 v2 디자인).
+   색·글꼴은 global.css 그대로(--brand 초록, 시스템 글꼴). 사이트 머리(Tools·Apps…)는 관리 화면에서만 숨김. */
+#admin {
+  --side: 232px;
+  --adm-sh: 0 1px 2px rgb(15 23 42 / .05), 0 4px 14px rgb(15 23 42 / .04);
+  --adm-hov: color-mix(in srgb, var(--fg) 5%, transparent);
+  --adm-soft: color-mix(in srgb, var(--brand) 13%, var(--card));
+}
+@media (prefers-color-scheme: dark) {
+  #admin { --adm-sh: 0 1px 2px rgb(0 0 0 / .45), 0 4px 16px rgb(0 0 0 / .25); }
+}
+
+/* 관리 화면만: 사이트 머리 숨김, 본문은 메뉴 오른쪽 전체 폭 */
+body:has(#admin) .site-header { display: none; }
+body:has(#admin) main { width: auto; max-width: none; margin: 0; padding: 0; }
+body:has(#admin #panel:not([hidden])) .site-footer { width: auto; margin: 0 0 0 232px; padding: 1.1rem 32px 2rem; }
+body:has(#admin #gate:not([hidden])) main { padding: 0 1rem 3rem; }
+
+/* 로고 */
+#admin .adm-brand { display: flex; align-items: center; gap: .65rem; color: var(--fg); text-decoration: none; min-width: 0; }
+#admin .adm-brand svg { width: 32px; height: 32px; flex: none; display: block; }
+#admin .adm-brand span { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+#admin .adm-brand b { font-size: 1rem; letter-spacing: -.01em; }
+#admin .adm-brand small { font-size: .72rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#admin .adm-brand:hover { text-decoration: none; }
+#admin .adm-brand:hover svg { filter: brightness(1.06); }
+
+/* 왼쪽 세로 메뉴 */
+#admin .adm-side {
+  position: fixed; top: 0; left: 0; bottom: 0; width: var(--side); z-index: 20;
+  display: flex; flex-direction: column; gap: 4px; padding: 16px 10px 12px; overflow-y: auto;
+  background: var(--card); border-right: 1px solid var(--line);
+}
+#admin .adm-side > .adm-brand { padding: 2px 8px 16px; }
+#admin .adm-nav { display: flex; flex-direction: column; gap: 2px; }
+#admin .adm-nav a {
+  display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 9px;
+  color: var(--fg); font-size: .9rem; text-decoration: none; white-space: nowrap;
+  transition: background-color .12s, color .12s;
+}
+#admin .adm-nav a svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
+#admin .adm-nav a:hover { background: var(--adm-hov); }
+#admin .adm-nav a.on { background: var(--adm-soft); color: var(--brand); font-weight: 600; }
+#admin .adm-nav a.on svg { opacity: 1; }
+#admin .adm-nav-h { font-size: .7rem; font-weight: 600; letter-spacing: .04em; color: var(--muted); padding: 14px 10px 4px; }
+
+/* 메뉴 바닥: 로그인 계정 */
+#admin .adm-side-foot {
+  margin-top: auto; padding: 12px 8px 2px; border-top: 1px solid var(--line);
+  display: flex; align-items: center; gap: 8px; font-size: .78rem; color: var(--muted); min-width: 0;
+}
+#admin .adm-side-foot img { border-radius: 50%; flex: none; }
+#admin .who-email { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#admin .adm-side-foot .ghost { flex: none; font-size: .75rem; padding: .15rem .6rem; }
+
+/* 본문 */
+#admin .adm-main { margin-left: var(--side); padding: 26px 32px 48px; min-width: 0; }
+#admin .adm-view { display: none; max-width: 1240px; margin: 0 auto; }
+#admin .adm-view.cur { display: block; }
+#admin .view-head { display: flex; align-items: baseline; gap: .4rem .75rem; flex-wrap: wrap; margin: 0 0 .35rem; }
+#admin .view-head h2 { margin: 0; padding: 0; border: 0; font-size: 1.3rem; font-weight: 700; letter-spacing: -.01em; }
+#admin .view-head .mono { font-size: .75rem; }
+#admin .view-head .ext { margin-left: auto; }
+#admin .view-head .status { order: 5; flex-basis: 100%; }
+#admin .view-head .status:empty { display: none; }
+#admin .view-lead { margin: 0 0 1rem; color: var(--muted); font-size: .84rem; line-height: 1.55; max-width: 80ch; }
+#admin .view-lead:empty { display: none; }
+
+/* 카드 그림자·hover (오룬카 도구처럼 살짝 뜬 카드) */
+#admin .kpi, #admin .tile { box-shadow: var(--adm-sh); }
+#admin .kt .card, #admin #og-panel > .card, #admin #ob-panel > .card { box-shadow: var(--adm-sh); }
+#admin .ghost { transition: border-color .12s, background-color .12s; }
+#admin .ghost:hover { background: var(--adm-hov); }
+#admin #sc-frame { box-shadow: var(--adm-sh); height: calc(100vh - 170px); min-height: 520px; }
+#admin .conn { margin: 0 0 .8rem; }
+
+/* 좁은 화면: 위에 붙는 줄(로고 + 계정) + 가로로 미는 메뉴 한 줄 */
+@media (max-width: 900px) {
+  body:has(#admin #panel:not([hidden])) .site-footer { margin: 0; padding: 1.1rem 16px 2rem; }
+  #admin .adm-side {
+    position: sticky; bottom: auto; width: auto; flex-direction: row; flex-wrap: wrap; align-items: center;
+    gap: 6px 10px; padding: 10px 14px 0; border-right: 0; border-bottom: 1px solid var(--line); overflow: visible;
+  }
+  #admin .adm-side > .adm-brand { padding: 0; flex: 1; }
+  #admin .adm-brand svg { width: 28px; height: 28px; }
+  #admin .adm-side > .adm-brand small { display: none; }
+  #admin .adm-nav {
+    order: 3; width: calc(100% + 28px); margin: 0 -14px; padding: 6px 14px 8px;
+    flex-direction: row; gap: 4px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth;
+  }
+  #admin .adm-nav::-webkit-scrollbar { display: none; }
+  #admin .adm-nav a { flex: none; padding: 6px 11px; font-size: .84rem; gap: 6px; }
+  #admin .adm-nav a svg { width: 15px; height: 15px; }
+  #admin .adm-nav-h { display: none; }
+  #admin .adm-side-foot { margin: 0; padding: 0; border: 0; flex: none; max-width: 55%; }
+  #admin .adm-side-foot .who-email { font-size: .74rem; }
+  #admin .adm-main { margin-left: 0; padding: 18px 14px 40px; }
+  #admin .view-head h2 { font-size: 1.15rem; }
+  #admin #sc-frame { height: 75vh; min-height: 0; }
+}
+@media (max-width: 480px) {
+  #admin .adm-side-foot img, #admin .adm-side-foot .who-email { display: none; }
+  #admin .toolbar { padding: .5rem; }
+  #admin .toggles { margin-left: 0; width: 100%; gap: .8rem; }
+}
+
+/* 로그인 갱신 중(패널 위에 로그인 칸이 같이 뜰 때): 메뉴 오른쪽에 */
+#admin:has(#panel:not([hidden])) .gate { margin: 18px 32px 0 calc(232px + 32px); max-width: 520px; }
+@media (max-width: 900px) { #admin:has(#panel:not([hidden])) .gate { margin: 12px 14px 0; } }
