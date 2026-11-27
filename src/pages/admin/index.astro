@@ -8,6 +8,7 @@ import Base from '../../layouts/Base.astro';
 import { analytics, admin } from '../../data/site';
 import '../../lib/knowthat-admin.css';
 import '../../lib/orunka-cloud.css';
+import '../../lib/agentroom-view.css';
 ---
 
 <Base title="Admin — hub" description="private" wide noindex>
@@ -133,6 +134,7 @@ import '../../lib/orunka-cloud.css';
             <button type="button" class="app" data-app="mansur">만수르</button>
             <button type="button" class="app" data-app="knowthat">너그거알아</button>
             <button type="button" class="app" data-app="orunka">오룬카</button>
+            <button type="button" class="app" data-app="room">에이전트 방</button>
           </div>
           <span id="sc-status" class="status"></span>
         </div>
@@ -149,6 +151,7 @@ import '../../lib/orunka-cloud.css';
         <details id="oc-old" class="oc-old" hidden><summary>옛 서버 저장(Firestore) — 게임 서버로 옮기기 전 판</summary><div id="oc-panel"></div></details>
         <iframe id="sc-frame" title="SeanChat admin" hidden></iframe>
         <div id="kt-panel" hidden></div>
+        <div id="ar-panel" hidden></div>
       </section>
     </div>
   </div>
@@ -333,6 +336,7 @@ import '../../lib/orunka-cloud.css';
   import { mountOrunkaCloud } from '../../lib/orunka-cloud';
   import { mountOrunkaGameSaves } from '../../lib/orunka-game-saves';
   import { mountOrunkaBoardViews } from '../../lib/orunka-board-views';
+  import { mountAgentRoom } from '../../lib/agentroom-view';
   // ---- helpers -----------------------------------------------------------------
   const $ = (id: string) => document.getElementById(id) as HTMLElement;
   const root = $('admin');
@@ -707,11 +711,27 @@ import '../../lib/orunka-cloud.css';
   // orunka.com 게시판 조회 묶음 통계(게시판 API v4 GET /api/admin/views) — 같은 Firebase 토큰 (lib/orunka-board-views.ts)
   const obPanel = $('ob-panel');
   let ob: ReturnType<typeof mountOrunkaBoardViews> | null = null;
+  // 에이전트 방 대화 보기(읽기 전용) — 관문 mcp.seanson.com /api/room/* long-poll (lib/agentroom-view.ts)
+  const arPanel = $('ar-panel');
+  let ar: ReturnType<typeof mountAgentRoom> | null = null;
   async function showApp(app: string) {
     localStorage.setItem(LS_APP, app);
     document.querySelectorAll<HTMLButtonElement>('#admin .seg .app').forEach((b) => b.classList.toggle('on', b.dataset.app === app));
     const isKt = app === 'knowthat';
+    const isRoom = app === 'room';
     ktPanel.hidden = !isKt;
+    arPanel.hidden = !isRoom;
+    if (isRoom && !ar) {
+      ar = mountAgentRoom(arPanel, {
+        idToken,
+        demo: DEMO,
+        onAuthFail: () => {
+          localStorage.removeItem(LS_ID);
+          showGate('로그인이 만료되어 갱신 중… 안 되면 아래 버튼으로 다시 로그인하세요', false, true);
+        },
+      });
+    }
+    ar?.setActive(isRoom);
     ogPanel.hidden = !isDb(app);
     obPanel.hidden = !isDb(app);
     ocOld.hidden = !isDb(app);
@@ -741,12 +761,12 @@ import '../../lib/orunka-cloud.css';
       });
       oc.load();
     }
-    $('sc-conn').hidden = isKt;
-    $('sc-open').hidden = isKt;
-    if (isKt) {
+    $('sc-conn').hidden = isKt || isRoom;
+    $('sc-open').hidden = isKt || isRoom;
+    if (isKt || isRoom) {
       frame.hidden = true;
       $('sc-status').textContent = '';
-      if (!kt) {
+      if (isKt && !kt) {
         kt = mountKnowThat(ktPanel, idToken);
         kt.load();
       }

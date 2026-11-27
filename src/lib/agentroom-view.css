@@ -1,0 +1,60 @@
+/* 에이전트 방 보기 — /admin/ 앱 관리 탭 「에이전트 방」(lib/agentroom-view.ts). 전부 JS 로 만든 노드라 #admin .ar 접두 전역 규칙. */
+#admin .app-row .seg { flex-wrap: wrap; }
+#admin .ar { margin-top: .9rem; --ar-sean: var(--brand); }
+#admin .ar .ar-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .75rem; padding: .7rem .9rem;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+#admin .ar .ar-bar .sum { flex: 1 1 240px; font-size: .88rem; line-height: 1.45; min-width: 0; overflow-wrap: anywhere; }
+#admin .ar .ar-bar .sum b { font-weight: 600; }
+#admin .ar .ar-api { font-size: .78rem; color: var(--muted); }
+#admin .ar .ar-closed { font-size: .78rem; font-weight: 600; padding: .1rem .55rem; border-radius: 999px;
+  color: var(--bad); border: 1px solid color-mix(in srgb, var(--bad) 45%, var(--line)); background: color-mix(in srgb, var(--bad) 8%, var(--card)); }
+#admin .ar .ar-live { font-size: .78rem; }
+#admin .ar .ar-note { margin: .55rem .1rem 0; font-size: .8rem; color: var(--muted); }
+#admin .ar .ar-note b { color: var(--fg); font-weight: 600; }
+
+#admin .ar .ar-grid { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: .8rem; margin-top: .7rem; align-items: start; }
+#admin .ar .ar-main { position: relative; min-width: 0; }
+#admin .ar .ar-log { height: min(68vh, 680px); overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--line);
+  border-radius: 12px; background: var(--card); padding: .35rem 0; }
+#admin .ar .ar-log:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+#admin .ar .ar-list { list-style: none; margin: 0; padding: 0; }
+#admin .ar .ar-empty { margin: 1rem; color: var(--muted); font-size: .85rem; }
+#admin .ar .ar-m { padding: .45rem .85rem .5rem; border-left: 3px solid transparent; }
+#admin .ar .ar-m + .ar-m { border-top: 1px solid color-mix(in srgb, var(--line) 70%, transparent); }
+#admin .ar .ar-h { display: flex; align-items: baseline; gap: .2rem .55rem; flex-wrap: wrap; font-size: .78rem; color: var(--muted); }
+#admin .ar .ar-from { min-width: 0; overflow-wrap: anywhere; }
+#admin .ar .ar-from b { color: var(--fg); font-weight: 600; font-size: .84rem; }
+#admin .ar .ar-hub { margin-left: .05rem; }
+#admin .ar .ar-id { font-size: .72rem; opacity: .8; }
+#admin .ar .ar-kind { font-size: .7rem; padding: 0 .4rem; border: 1px solid var(--line); border-radius: 999px; }
+#admin .ar .ar-h time { margin-left: auto; font-size: .74rem; }
+#admin .ar .ar-t { margin-top: .15rem; font-size: .9rem; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; }
+#admin .ar .ar-m.sean { border-left-color: var(--ar-sean); background: color-mix(in srgb, var(--ar-sean) 9%, var(--card)); }
+#admin .ar .ar-m.sean .ar-from b { color: var(--ar-sean); }
+#admin .ar .ar-m.sys { opacity: .6; }
+#admin .ar .ar-m.sys .ar-t { font-size: .82rem; font-style: italic; }
+#admin .ar .ar-down { position: absolute; right: .8rem; bottom: .8rem; font-size: .8rem; font-weight: 600; padding: .35rem .8rem;
+  border-radius: 999px; border: 0; background: var(--fg); color: var(--bg); box-shadow: 0 2px 8px rgb(0 0 0 / .2); }
+
+#admin .ar .ar-who { border: 1px solid var(--line); border-radius: 12px; background: var(--card); padding: .65rem .8rem .7rem; font-size: .84rem; min-width: 0; }
+#admin .ar .ar-who-h { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; margin-bottom: .35rem; }
+#admin .ar .ar-who-at { font-size: .72rem; color: var(--muted); }
+#admin .ar .ar-none { margin: .2rem 0 0; color: var(--muted); font-size: .82rem; }
+#admin .ar .ar-hg + .ar-hg { margin-top: .55rem; padding-top: .5rem; border-top: 1px solid var(--line); }
+#admin .ar .ar-hg-h { display: flex; align-items: baseline; gap: .4rem; overflow-wrap: anywhere; }
+#admin .ar .ar-src { font-size: .7rem; color: var(--muted); }
+#admin .ar .ar-hg ul { list-style: none; margin: .25rem 0 0; padding: 0; }
+#admin .ar .ar-hg li { display: flex; align-items: center; flex-wrap: wrap; gap: .1rem .4rem; padding: .12rem 0; min-width: 0; }
+#admin .ar .ar-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); flex: none; }
+#admin .ar .ar-hg li.on .ar-dot { background: var(--ok); }
+#admin .ar .ar-as { font-weight: 500; overflow-wrap: anywhere; min-width: 0; }
+#admin .ar .ar-k { font-size: .7rem; color: var(--muted); }
+#admin .ar .ar-last { margin-left: auto; font-size: .72rem; color: var(--muted); white-space: nowrap; }
+#admin .ar .ar-hg li.on .ar-last { color: var(--ok); }
+
+@media (max-width: 760px) {
+  #admin .ar .ar-grid { grid-template-columns: minmax(0, 1fr); }
+  #admin .ar .ar-who { order: -1; }
+  #admin .ar .ar-log { height: 64vh; }
+  #admin .ar .ar-m { padding: .45rem .65rem .5rem; }
+}
