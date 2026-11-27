@@ -10,90 +10,113 @@ import { analytics, admin } from '../../data/site';
 import '../../lib/knowthat-admin.css';
 import '../../lib/orunka-cloud.css';
 import '../../lib/agentroom-chat.css';
-import '../../lib/admin-shell.css';
+import '../../styles/admin.css';
+
+// 왼쪽 메뉴 — [해시 값, 이름, 아이콘 path]. data-view / data-app 은 스크립트가 쓰는 고리
+const NAV_VIEWS: [string, string, string][] = [
+  ['visitors', '접속자', '<path d="M4 20h16" /><path d="M6.5 16.5v-5M11 16.5V6M15.5 16.5v-8M20 16.5v-3" />'],
+];
+const NAV_APPS: [string, string, string][] = [
+  ['seanchat', 'SeanChat', '<path d="M4 5.5h16v10.5H10l-5 4v-4H4z" />'],
+  ['jaksim', '작심', '<circle cx="12" cy="12" r="8.5" /><path d="M8.2 12.4l2.6 2.6 5-5.4" />'],
+  ['mansur', '만수르', '<rect x="3" y="6" width="18" height="13" rx="2.5" /><path d="M3 10.5h18M15.5 14.5h2" />'],
+  ['knowthat', '너그거알아', '<path d="M9.5 18h5M10.5 21h3" /><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" />'],
+  ['orunka', '오룬카', '<rect x="2.5" y="7" width="19" height="11" rx="4" /><path d="M7 12.5h4M9 10.5v4M15.5 11.5h.01M18 13.5h.01" />'],
+  ['room', '에이전트 방', '<path d="M3 4.5h12v8.5H8l-5 4z" /><path d="M15 8.5h6V17l-3.5-2.5H11V13" />'],
+];
+// 디자인 규칙 한곳: 카드 · 카드 머리 · 메뉴 줄 · 화면 제목/설명
+const card = 'min-w-0 rounded-card border border-line bg-card shadow-card';
+const box = `${card} mt-3.5 px-4 pt-3.5 pb-4`;
+const boxHead = 'mb-2.5 flex items-baseline justify-between gap-2 [&_h3]:m-0 [&_h3]:text-[14.5px] [&_h3]:font-semibold [&>span]:text-xs [&>span]:text-mute';
+const navA =
+  'flex items-center gap-2.5 rounded-[9px] px-2.5 py-2 text-[14px] whitespace-nowrap text-ink transition-colors hover:bg-hov ' +
+  'aria-[current=page]:bg-brand-soft aria-[current=page]:font-semibold aria-[current=page]:text-brand ' +
+  '[&>svg]:size-[18px] [&>svg]:opacity-70 aria-[current=page]:[&>svg]:opacity-100 ' +
+  'narrow:flex-none narrow:gap-1.5 narrow:px-3 narrow:py-1.5 narrow:text-[13px] narrow:[&>svg]:size-[15px]';
+const viewHead = 'mb-1 flex flex-wrap items-baseline gap-x-3 gap-y-1 [&_h2]:m-0 [&_h2]:border-0 [&_h2]:p-0 [&_h2]:text-[20px] [&_h2]:font-bold [&_h2]:tracking-tight narrow:[&_h2]:text-[18px]';
+const viewLead = 'view-lead mt-0 mb-4 max-w-[80ch] text-[13px] leading-relaxed text-mute empty:hidden';
+const kpi = `${card} kpi px-4 pt-3.5 pb-3 phone:px-3.5`;
+const kpiL = 'flex items-center gap-1.5 text-xs font-medium text-mute';
+const kpiN = 'mt-1 text-[28px] leading-tight font-bold tracking-tight tabular-nums phone:text-[24px] [&_small]:ml-1 [&_small]:text-xs [&_small]:font-semibold [&_small]:tracking-normal [&_small]:text-mute';
+const kpiS = 'mt-0.5 truncate text-xs text-mute [&_b]:font-semibold [&_b]:text-ink [&_b]:tabular-nums';
 ---
 
 <Base title="Admin — hub" description="private" wide noindex>
   <div id="admin" data-endpoint={analytics.endpoint} data-client-id={admin.googleClientId} data-email={admin.email}>
-    <div id="gate" class="card gate">
-      <a class="adm-brand" href="/" aria-label="hub 홈"><Mark uid="gate" /><span><b>hub 관리</b><small>hub.seanson.com</small></span></a>
-      <div class="gate-body">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>
+    <div id="gate" class={`${card} mx-auto mt-[9vh] flex max-w-[460px] flex-col gap-5 px-6 py-6`}>
+      <a class="flex min-w-0 items-center gap-2.5 text-ink [&>svg]:size-8" href="/" aria-label="hub 홈"><Mark uid="gate" /><span class="flex flex-col leading-tight"><b class="text-base">hub 관리</b><small class="text-xs text-mute">hub.seanson.com</small></span></a>
+      <div class="flex items-start gap-3.5">
+        <svg class="ico mt-0.5 size-[26px] text-mute" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>
         <div>
-          <strong>관리자 로그인</strong>
-          <p class="note">Google 계정으로 로그인하세요. 허용된 계정만 데이터를 볼 수 있습니다.</p>
-          <div id="g-btn"></div>
+          <strong class="text-[15px]">관리자 로그인</strong>
+          <p class="mt-1 mb-3.5 text-[13px] text-mute">Google 계정으로 로그인하세요. 허용된 계정만 데이터를 볼 수 있어요.</p>
+          <div id="g-btn" class="min-h-11"></div>
           <p id="gate-msg" class="note"></p>
         </div>
       </div>
     </div>
 
     <div id="panel" hidden>
-      <aside class="adm-side">
-        <a class="adm-brand" href="/" aria-label="hub 홈"><Mark uid="side" /><span><b>hub 관리</b><small>접속자 · 운영 · 앱 관리</small></span></a>
-        <nav class="adm-nav" aria-label="메뉴">
-          <a href="#visitors" data-view="visitors"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16" /><path d="M6.5 16.5v-5M11 16.5V6M15.5 16.5v-8M20 16.5v-3" /></svg>접속자</a>
-          <span class="adm-nav-h">앱 관리</span>
-          <a href="#app-seanchat" data-app="seanchat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5h16v10.5H10l-5 4v-4H4z" /></svg>SeanChat</a>
-          <a href="#app-jaksim" data-app="jaksim"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M8.2 12.4l2.6 2.6 5-5.4" /></svg>작심</a>
-          <a href="#app-mansur" data-app="mansur"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2.5" /><path d="M3 10.5h18M15.5 14.5h2" /></svg>만수르</a>
-          <a href="#app-knowthat" data-app="knowthat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 18h5M10.5 21h3" /><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z" /></svg>너그거알아</a>
-          <a href="#app-orunka" data-app="orunka"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="7" width="19" height="11" rx="4" /><path d="M7 12.5h4M9 10.5v4M15.5 11.5h.01M18 13.5h.01" /></svg>오룬카</a>
-          <a href="#app-room" data-app="room"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4.5h12v8.5H8l-5 4z" /><path d="M15 8.5h6V17l-3.5-2.5H11V13" /></svg>에이전트 방</a>
+      <aside class="adm-side fixed inset-y-0 left-0 z-20 flex w-[232px] flex-col gap-1 overflow-y-auto border-r border-line bg-card px-2.5 pt-4 pb-3 narrow:sticky narrow:top-0 narrow:bottom-auto narrow:w-auto narrow:flex-row narrow:flex-wrap narrow:items-center narrow:gap-x-2.5 narrow:gap-y-1 narrow:overflow-visible narrow:border-r-0 narrow:border-b narrow:px-3.5 narrow:pt-2.5 narrow:pb-0">
+        <a class="flex min-w-0 items-center gap-2.5 px-2 pt-0.5 pb-4 text-ink [&>svg]:size-8 narrow:flex-1 narrow:p-0 narrow:[&>svg]:size-7" href="/" aria-label="hub 홈"><Mark uid="side" /><span class="flex min-w-0 flex-col leading-tight"><b class="text-base tracking-tight">hub 관리</b><small class="truncate text-xs text-mute narrow:hidden">접속자 · 운영 · 앱 관리</small></span></a>
+        <nav class="adm-nav flex flex-col gap-0.5 narrow:order-3 narrow:-mx-3.5 narrow:w-[calc(100%+28px)] narrow:flex-row narrow:gap-1 narrow:overflow-x-auto narrow:px-3.5 narrow:pt-1.5 narrow:pb-2 narrow:[scrollbar-width:none]" aria-label="메뉴">
+          {NAV_VIEWS.map(([v, name, d]) => <a href={`#${v}`} data-view={v} class={navA}><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" set:html={d} />{name}</a>)}
+          <span class="px-2.5 pt-3.5 pb-1 text-[11px] font-semibold tracking-wide text-mute narrow:hidden">앱 관리</span>
+          {NAV_APPS.map(([app, name, d]) => <a href={`#app-${app}`} data-app={app} class={navA}><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" set:html={d} />{name}</a>)}
         </nav>
-        <div class="adm-side-foot" id="who" hidden>
-          <img id="who-pic" alt="" width="28" height="28" referrerpolicy="no-referrer" hidden />
-          <span id="who-email" class="who-email"></span>
+        <div class="mt-auto flex min-w-0 items-center gap-2 border-t border-line px-2 pt-3 pb-0.5 text-xs text-mute narrow:m-0 narrow:max-w-[55%] narrow:flex-none narrow:border-0 narrow:p-0" id="who" hidden>
+          <img id="who-pic" class="flex-none rounded-full phone:hidden" alt="" width="28" height="28" referrerpolicy="no-referrer" hidden />
+          <span id="who-email" class="min-w-0 flex-1 truncate phone:hidden"></span>
           <button id="logout" class="ghost" type="button">로그아웃</button>
         </div>
       </aside>
 
-      <div class="adm-main">
+      <div class="adm-main ml-[232px] px-8 pt-[22px] pb-14 narrow:ml-0 narrow:px-3.5 narrow:pt-4 narrow:pb-10"><div class="mx-auto max-w-[1240px]">
       <div class="adm-view" data-view="visitors">
-        <div class="view-head"><h2>접속자</h2><span id="asof" class="mono muted"></span></div>
-        <p class="view-lead">hub.seanson.com 방문 통계입니다. 쿠키 없이 페이지 보기와 외부 링크 누름만 셉니다.</p>
-        <div class="toolbar">
+        <div class={viewHead}><h2>접속자</h2><span id="asof" class="font-mono text-xs text-mute"></span></div>
+        <p class={viewLead}>hub.seanson.com 방문 통계예요. 쿠키 없이 페이지 보기와 외부 링크 누름만 셉니다.</p>
+        <div class={`${card} mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 px-3 py-2`}>
           <div class="seg" id="days" role="group" aria-label="기간">
             <button type="button" data-d="1">오늘</button>
             <button type="button" data-d="7" class="on">7일</button>
             <button type="button" data-d="30">30일</button>
             <button type="button" data-d="90">90일</button>
           </div>
-          <button id="reload" class="icon-btn" type="button" title="새로고침" aria-label="새로고침">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66" /><path d="M20 4v5h-5" /></svg>
+          <button id="reload" class="icon-btn inline-grid size-8 place-items-center rounded-ctl border border-line bg-card text-ink transition-colors hover:bg-hov" type="button" title="새로고침" aria-label="새로고침">
+            <svg class="ico size-4 [stroke-width:2]" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66" /><path d="M20 4v5h-5" /></svg>
           </button>
           <span id="status" class="status"></span>
-          <div class="toggles">
+          <div class="ml-auto flex gap-4 tight:ml-0 tight:w-full">
             <label class="sw"><input id="auto" type="checkbox" checked /><span aria-hidden="true"></span>60초 자동</label>
             <label class="sw"><input id="notrack" type="checkbox" /><span aria-hidden="true"></span>내 방문 제외</label>
           </div>
         </div>
-        <section id="visitors" hidden>
-        <div class="kpis">
-          <div class="kpi live">
-            <div class="l"><span class="pulse" aria-hidden="true"></span>실시간 · 5분</div>
-            <div class="n" id="k-live">–</div>
-            <div class="s" id="live-pages"></div>
+        <section id="vis-body" hidden>
+        <div class="grid grid-cols-4 gap-3 tight:grid-cols-2 phone:gap-2">
+          <div class={`${kpi} live [&.on]:border-ok/40 [&.on]:bg-ok/5`}>
+            <div class={kpiL}><span class="pulse" aria-hidden="true"></span>실시간 · 5분</div>
+            <div class={kpiN} id="k-live">–</div>
+            <div class={kpiS} id="live-pages"></div>
           </div>
-          <div class="kpi">
-            <div class="l">오늘</div>
-            <div class="n"><span id="k-tpv">–</span><small>PV</small></div>
-            <div class="s">방문자 <b id="k-tuv">–</b></div>
+          <div class={kpi}>
+            <div class={kpiL}>오늘</div>
+            <div class={kpiN}><span id="k-tpv">–</span><small>PV</small></div>
+            <div class={kpiS}>방문자 <b id="k-tuv">–</b></div>
           </div>
-          <div class="kpi">
-            <div class="l">최근 <span id="k-rl">7일</span></div>
-            <div class="n"><span id="k-rpv">–</span><small>PV</small></div>
-            <div class="s">방문자 <b id="k-ruv">–</b></div>
+          <div class={kpi}>
+            <div class={kpiL}>최근 <span id="k-rl">7일</span></div>
+            <div class={kpiN}><span id="k-rpv">–</span><small>PV</small></div>
+            <div class={kpiS}>방문자 <b id="k-ruv">–</b></div>
           </div>
-          <div class="kpi">
-            <div class="l">외부 클릭</div>
-            <div class="n"><span id="k-clk">–</span></div>
-            <div class="s">봇 제외 <b id="k-bot">–</b></div>
+          <div class={kpi}>
+            <div class={kpiL}>외부 클릭</div>
+            <div class={kpiN}><span id="k-clk">–</span></div>
+            <div class={kpiS}>봇 제외 <b id="k-bot">–</b></div>
           </div>
         </div>
 
-        <div class="box">
-          <div class="box-head">
+        <div class={box}>
+          <div class={boxHead}>
             <h3>일별 추이</h3>
             <span class="legend"><i class="lg pv"></i>PV <i class="lg uv"></i>방문자</span>
           </div>
@@ -104,59 +127,83 @@ import '../../lib/admin-shell.css';
           <div id="xaxis" class="xaxis mono"></div>
         </div>
 
-        <div class="adm-grid">
-          <div class="box"><div class="box-head"><h3>페이지</h3><span class="muted">PV / 방문자</span></div><ul class="rank" id="pages"></ul></div>
-          <div class="box"><div class="box-head"><h3>유입 경로</h3></div><ul class="rank" id="refs"></ul></div>
-          <div class="box"><div class="box-head"><h3>외부 클릭</h3></div><ul class="rank" id="clicks"></ul></div>
-          <div class="box">
-            <div class="box-head"><h3>디바이스 · 언어</h3></div>
+        <div class="grid grid-cols-2 gap-x-3.5 gap-y-0 tight:grid-cols-1">
+          <div class={box}><div class={boxHead}><h3>페이지</h3><span>PV / 방문자</span></div><ul class="rank" id="pages"></ul></div>
+          <div class={box}><div class={boxHead}><h3>유입 경로</h3></div><ul class="rank" id="refs"></ul></div>
+          <div class={box}><div class={boxHead}><h3>외부 클릭</h3></div><ul class="rank" id="clicks"></ul></div>
+          <div class={box}>
+            <div class={boxHead}><h3>디바이스 · 언어</h3></div>
             <div id="devices" class="split"></div>
             <p id="devices-legend" class="dev-legend"></p>
             <ul class="rank" id="langs"></ul>
           </div>
         </div>
 
-        <div class="box">
-          <div class="box-head"><h3>시간대</h3><span class="muted">KST · 진할수록 많음</span></div>
+        <div class={box}>
+          <div class={boxHead}><h3>시간대</h3><span>KST · 진할수록 많음</span></div>
           <div id="hours" class="heat"></div>
           <div class="heat-x mono"><span>0</span><span>6</span><span>12</span><span>18</span><span>23</span></div>
         </div>
 
-        <div class="box">
-          <div class="box-head"><h3>최근 방문</h3><span class="muted">최대 30건</span></div>
+        <div class={box}>
+          <div class={boxHead}><h3>최근 방문</h3><span>최대 30건</span></div>
           <ul class="recent" id="recent"></ul>
         </div>
       </section>
 
-      <section id="ops">
-        <div class="box-head ops-head"><h3>운영 상태</h3><span class="muted">GitHub Actions 마지막 실행</span></div>
+      <section id="ops" class="mt-7">
+        <div class={boxHead}><h3>운영 상태</h3><span>GitHub Actions 마지막 실행</span></div>
         <div class="tiles" id="ops-list"><div class="tile"><div class="tk">GitHub API 조회 중…</div></div></div>
       </section>
       </div>
 
       <section id="others" class="adm-view" data-view="apps">
-        <div class="view-head">
+        <div class={`apps-head ${viewHead}`}>
           <h2 id="app-title">앱 관리</h2>
           <span id="sc-status" class="status"></span>
-          <a id="sc-open" class="ext" href="#" target="_blank" rel="noopener">새 창에서 열기 ↗</a>
+          <a id="sc-open" class="ml-auto text-[12.5px] whitespace-nowrap text-mute hover:text-ink" href="#" target="_blank" rel="noopener">새 창에서 열기 ↗</a>
         </div>
-        <p class="view-lead" id="app-lead"></p>
-        <details class="conn" id="sc-conn">
-          <summary>연결 설정</summary>
-          <div class="conn-body">
-            <input id="sc-url" type="text" placeholder="http://127.0.0.1:8500" spellcheck="false" aria-label="SeanChat admin URL" />
+        <p class={viewLead} id="app-lead"></p>
+        <!-- 오룬카: 맨 위 막대(되돌아가기 · 관리 도구 | 실서버·게시판 · 새 창) — 막대 아래 화면 전체가 7800 관리 도구 -->
+        <div id="ok-bar" class="fixed inset-x-0 top-0 z-30 flex h-12 items-center gap-2.5 border-b border-line bg-card px-3 shadow-card phone:gap-1.5 phone:px-2" hidden>
+          <button id="ok-back" class="ghost py-1.5! font-medium" type="button"><svg class="ico size-4 [stroke-width:2.2]" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>되돌아가기</button>
+          <b class="flex items-center gap-1.5 text-[14px] narrow:hidden"><svg class="ico size-[18px] text-brand" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="7" width="19" height="11" rx="4" /><path d="M7 12.5h4M9 10.5v4M15.5 11.5h.01M18 13.5h.01" /></svg>오룬카 관리</b>
+          <div class="seg" id="ok-seg" role="group" aria-label="보기">
+            <button type="button" data-s="tool" class="on">관리 도구</button>
+            <button type="button" data-s="hub"><span class="phone:hidden">실서버 저장 · 게시판</span><span class="hidden phone:inline">실서버</span></button>
+          </div>
+          <span class="min-w-0 flex-1 truncate"><span id="ok-st" class="status"></span></span>
+          <a id="ok-open" class="text-[12.5px] whitespace-nowrap text-mute hover:text-ink" href="#" target="_blank" rel="noopener">새 창 ↗</a>
+        </div>
+        <div id="ok-off" class={`${card} mx-auto mt-6 max-w-[560px] px-6 py-6`}>
+          <div class="flex items-start gap-3.5">
+            <svg class="ico mt-0.5 size-[26px] text-mute" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2" /><path d="M8 20h8M12 16v4" /></svg>
+            <div class="min-w-0">
+              <strong class="text-[15px]">오룬카 관리 도구는 이 맥에서만 열려요</strong>
+              <p id="ok-off-msg" class="mt-1 mb-4 text-[13px] break-words text-mute"></p>
+              <div class="flex flex-wrap gap-2">
+                <button id="ok-retry" class="ghost" type="button">다시 시도</button>
+                <button id="ok-tohub" class="ghost" type="button">실서버 저장 · 게시판 보기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <details class="conn mb-3 text-[13px]" id="sc-conn">
+          <summary class="w-fit cursor-pointer text-mute">연결 설정</summary>
+          <div class="mt-2 flex max-w-[520px] gap-2">
+            <input id="sc-url" class="min-w-0 flex-1 rounded-ctl border border-line bg-card px-2.5 py-1.5 font-mono text-[13px] text-ink" type="text" placeholder="http://127.0.0.1:8500" spellcheck="false" aria-label="SeanChat admin URL" />
             <button id="sc-save" class="ghost" type="button">저장</button>
           </div>
-          <p class="note" id="sc-note">SeanChat 통합 관리자(로컬 8500, 작심·만수르 Firestore 포함)를 아래에 띄웁니다. 공개 EC2에는 관리 화면이 없어서(의도) 로컬 백엔드가 켜진 이 Mac에서만 보입니다. SSM 터널을 쓰면 8600으로 바꾸세요.</p>
+          <p class="note mt-2 text-xs" id="sc-note">SeanChat 통합 관리자(로컬 8500, 작심·만수르 Firestore 포함)를 아래에 띄웁니다. 공개 EC2에는 관리 화면이 없어서(의도) 로컬 백엔드가 켜진 이 Mac에서만 보입니다. SSM 터널을 쓰면 8600으로 바꾸세요.</p>
         </details>
         <div id="og-panel" hidden></div>
         <div id="ob-panel" hidden></div>
         <details id="oc-old" class="oc-old" hidden><summary>옛 서버 저장(Firestore) — 게임 서버로 옮기기 전 판</summary><div id="oc-panel"></div></details>
-        <iframe id="sc-frame" title="SeanChat admin" hidden></iframe>
+        <iframe id="sc-frame" title="SeanChat admin" allow="local-network-access; clipboard-write" hidden></iframe>
         <div id="kt-panel" hidden></div>
         <div id="ar-panel" hidden></div>
       </section>
-      </div>
+      </div></div>
     </div>
   </div>
   <script is:inline src="https://accounts.google.com/gsi/client" async defer></script>
@@ -166,75 +213,8 @@ import '../../lib/admin-shell.css';
      and Astro's scoped attributes don't reach injected nodes — that's why the daily bars and
      the heatmap used to render invisible. -->
 <style is:global>
-  #admin { --ok: #16a34a; --warn: #d97706; --bad: #dc2626; --uv: var(--fg); }
-  #admin .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; }
-  #admin .muted { color: var(--muted); }
-  #admin [hidden] { display: none !important; }
-
-  /* gate (shell·side menu = lib/admin-shell.css) */
-  #admin .gate { display: flex; flex-direction: column; gap: 1.1rem; max-width: 460px; border-left-width: 1px; padding: 1.4rem 1.5rem; margin: 9vh auto 0; box-shadow: var(--adm-sh); }
-  #admin .gate-body { display: flex; gap: .9rem; align-items: flex-start; }
-  #admin .gate-body > svg { width: 26px; height: 26px; flex: none; fill: none; stroke: var(--muted); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin-top: .1rem; }
-  #admin .gate .note { margin: .2rem 0 .9rem; }
-  #admin #g-btn { min-height: 44px; }
-  #admin #gate-msg:empty { display: none; }
-  #admin #gate-msg.err { color: var(--bad); }
-
-  /* controls */
-  #admin button { font: inherit; color: inherit; cursor: pointer; }
-  #admin .ghost { background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: .2rem .7rem; font-size: .82rem; }
-  #admin .ghost:hover, #admin .icon-btn:hover { border-color: var(--fg); }
-  #admin .seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--line); border-radius: 10px; }
-  #admin .seg button { border: 0; background: transparent; padding: .3rem .75rem; border-radius: 8px; font-size: .85rem; font-weight: 500; color: var(--muted); white-space: nowrap; }
-  #admin .seg button:hover { color: var(--fg); }
-  #admin .seg button.on { background: var(--card); color: var(--fg); box-shadow: 0 1px 2px rgb(0 0 0 / .12); }
-  #admin .icon-btn { display: inline-grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); }
-  #admin .icon-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  #admin .icon-btn.spin svg { animation: adm-spin .8s linear infinite; }
-  @keyframes adm-spin { to { transform: rotate(360deg); } }
-  #admin .status { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-  #admin .status.ok { color: var(--ok); }
-  #admin .status.err { color: var(--bad); }
-  #admin .sw { display: inline-flex; align-items: center; gap: .45rem; font-size: .82rem; color: var(--muted); cursor: pointer; user-select: none; white-space: nowrap; }
-  #admin .sw input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-  #admin .sw span { position: relative; width: 30px; height: 18px; border-radius: 999px; background: var(--line); transition: background .15s; flex: none; }
-  #admin .sw span::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / .25); transition: transform .15s; }
-  #admin .sw input:checked + span { background: var(--ok); }
-  #admin .sw input:checked + span::after { transform: translateX(12px); }
-  #admin .sw input:focus-visible + span { outline: 2px solid var(--spec); outline-offset: 2px; }
-
-  #admin .toolbar {
-    margin: 0 0 1rem; padding: .55rem .7rem;
-    display: flex; align-items: center; gap: .55rem .7rem; flex-wrap: wrap;
-    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--adm-sh);
-  }
-  #admin .toggles { display: flex; gap: 1rem; margin-left: auto; }
-
-  /* sections */
-  #admin section { margin-top: 0; }
-  #admin #ops { margin-top: 1.4rem; }
-  #admin .ops-head { margin-bottom: .55rem; }
-  #admin .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; margin-bottom: .9rem; border-bottom: 1px solid var(--line); padding-bottom: .45rem; }
-  #admin .sec-head h2 { margin: 0; padding: 0; border: 0; font-size: 1.15rem; }
-  #admin .sec-head .mono { font-size: .78rem; }
-  #admin .box { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: .95rem 1.05rem 1rem; margin-top: .85rem; min-width: 0; box-shadow: var(--adm-sh); }
-  #admin .box-head { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; margin-bottom: .7rem; }
-  #admin .box-head h3 { margin: 0; font-size: .92rem; }
-  #admin .box-head .muted { font-size: .75rem; }
-
-  /* KPIs */
-  #admin .kpis { display: grid; gap: .7rem; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  #admin .kpi { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: .85rem 1rem .8rem; min-width: 0; }
-  #admin .kpi .l { font-size: .78rem; color: var(--muted); font-weight: 500; display: flex; align-items: center; gap: .4rem; }
-  #admin .kpi .n { font-size: 1.9rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.15; margin-top: .25rem; font-variant-numeric: tabular-nums; }
-  #admin .kpi .n small { font-size: .75rem; font-weight: 600; color: var(--muted); margin-left: .3rem; letter-spacing: 0; }
-  #admin .kpi .s { font-size: .78rem; color: var(--muted); margin-top: .2rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  #admin .kpi .s b { color: var(--fg); font-weight: 600; font-variant-numeric: tabular-nums; }
-  #admin .kpi .s code { font-size: .95em; }
-  #admin .kpi.live { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); background: color-mix(in srgb, var(--ok) 6%, var(--card)); }
-  #admin .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
-  #admin .kpi.live.on .pulse { background: var(--ok); box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 60%, transparent); animation: adm-pulse 1.8s infinite; }
-  @keyframes adm-pulse { 70% { box-shadow: 0 0 0 7px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+  /* 판 틀·색·공통 조작부(.ghost .seg .sw .status)·카드 = src/styles/admin.css(Tailwind) — 아래는 innerHTML 로 그리는 것만 */
+  #admin { --uv: var(--fg); }
 
   /* daily chart */
   #admin .legend { font-size: .75rem; color: var(--muted); display: inline-flex; align-items: center; gap: .35rem; }
@@ -302,25 +282,11 @@ import '../../lib/admin-shell.css';
   #admin .tile.bad .tv { color: var(--bad); }
   #admin .tile .ts { font-size: .78rem; color: var(--muted); margin-top: .1rem; overflow-wrap: anywhere; }
 
-  /* other admins */
-  #admin .ext { font-size: .82rem; color: var(--muted); white-space: nowrap; }
-  #admin .app-row { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
-  #admin .conn { margin-top: .7rem; font-size: .85rem; }
-  #admin .conn summary { cursor: pointer; color: var(--muted); width: fit-content; }
-  #admin .conn-body { display: flex; gap: .5rem; margin-top: .5rem; max-width: 520px; }
-  #admin .conn-body input { flex: 1; min-width: 0; font: .85rem ui-monospace, Menlo, monospace; color: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: .4rem .6rem; }
-  #admin .conn .note { color: var(--muted); font-size: .8rem; margin: .5rem 0 0; max-width: 75ch; }
-  #admin #sc-frame { width: 100%; height: 78vh; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); margin-top: .8rem; display: block; }
-
   @media (max-width: 760px) {
-    #admin .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    #admin .adm-grid { grid-template-columns: minmax(0, 1fr); }
-    #admin .toggles { margin-left: 0; width: 100%; }
     #admin .recent li { grid-template-columns: 6rem minmax(0, 1fr) 1.1rem; }
     #admin .recent .r { display: none; }
   }
   @media (max-width: 560px) {
-    #admin .kpi .n { font-size: 1.55rem; }
     #admin .heat div { height: 22px; }
     #admin .heat { gap: 2px; }
   }
@@ -346,7 +312,7 @@ import '../../lib/admin-shell.css';
     jaksim: ['작심', 'SeanChat 통합 관리 화면의 작심 칸(Firestore)을 띄웁니다. 이 Mac 에서만 보여요.'],
     mansur: ['만수르', 'SeanChat 통합 관리 화면의 만수르 칸(Firestore)을 띄웁니다. 이 Mac 에서만 보여요.'],
     knowthat: ['너그거알아', '브라우저에서 바로 Firestore(knowthat-app)를 보고 고칩니다.'],
-    orunka: ['오룬카', '실서버 저장(정본)·게시판 조회 수, 그 아래에 집 Mac 의 오룬카 관리 도구를 띄웁니다.'],
+    orunka: ['오룬카', '집 Mac 의 오룬카 관리 도구(7800)를 화면 전체에 띄웁니다. 실서버 저장·게시판 조회 수는 위 막대에서 바꿔 봐요.'],
     room: ['에이전트 방', '관문 방 대화를 실시간으로 보고 Sean 으로 씁니다. 최근 30분 글만 남아요.'],
   };
   const esc = (s: unknown) =>
@@ -567,7 +533,7 @@ import '../../lib/admin-shell.css';
     }
     if (res.status === 401 || res.status === 403) {
       localStorage.removeItem(LS_ID);
-      $('visitors').hidden = true;
+      $('vis-body').hidden = true;
       return showGate(`서버가 로그인을 거부했습니다 (${res.status}) — 다시 로그인하세요`, true);
     }
     if (!res.ok) return setStatus(`오류 ${res.status}`, 'err');
@@ -578,7 +544,7 @@ import '../../lib/admin-shell.css';
   }
 
   function render(s: any) {
-    $('visitors').hidden = false;
+    $('vis-body').hidden = false;
     $('asof').textContent = `KST ${s.now.slice(0, 16).replace('T', ' ')}`;
     $('k-live').textContent = fmt(s.live.visitors);
     document.querySelector('#admin .kpi.live')!.classList.toggle('on', s.live.visitors > 0);
@@ -692,7 +658,7 @@ import '../../lib/admin-shell.css';
   if (['orma', 'dolbaram'].includes(localStorage.getItem(LS_APP) || '')) localStorage.setItem(LS_APP, 'orunka');
   const DB_DEFAULT = 'http://127.0.0.1:7800';
   const SC_NOTE = $('sc-note').textContent || '';
-  const DB_NOTE = '위 「사용자 · 게임 서버 저장」 = 실서버 저장(정본). 줄을 누르면 그 사용자 편집기(JSON·라이·백업)가 열리고, 아래 관리 도구도 그 사용자로 맞춰집니다. 아래 = 오룬카 관리 도구(집 Mac의 launchd 상시 도구, 기본 7800): 개요, 출시(기기별 지금 판), 사용자와 저장 고치기(라이·아이템·회복·위치·페트, 고치기 전 백업), 게임 자료, 구성, 실서버, 매뉴얼. 루프백 주소라 그 Mac에서만 보입니다. 꺼져 있으면 OrunkaUnity에서 bash tools/admin/agent.sh install.';
+  const DB_NOTE = '「실서버 저장 · 게시판」 = 실서버 저장(정본)과 orunka.com 게시판 조회 수예요. 줄을 누르면 그 사용자 편집기(JSON·라이·백업)가 열리고, 관리 도구도 그 사용자로 맞춰집니다. 「관리 도구」 = 집 Mac 의 launchd 상시 도구(기본 7800): 개요, 출시, 사용자와 저장 고치기, 게임 자료, 구성, 실서버, 매뉴얼. 루프백 주소라 그 Mac 에서만 보여요. 꺼져 있으면 OrunkaUnity 에서 bash tools/admin/agent.sh install.';
   const isDb = (app: string) => app === 'orunka';
   const scBase = () => (localStorage.getItem(LS_SC) || 'http://127.0.0.1:8500').replace(/\/+$/, '');
   const dbBase = () => (localStorage.getItem(LS_DB) || DB_DEFAULT).replace(/\/+$/, '');
@@ -719,8 +685,30 @@ import '../../lib/admin-shell.css';
   // 에이전트 방 대화 보기(읽기 전용) — 관문 mcp.seanson.com /api/room/* long-poll (lib/agentroom-view.ts)
   const arPanel = $('ar-panel');
   let ar: ReturnType<typeof mountAgentRoom> | null = null;
+  // 오룬카 = 화면 전체(#admin.full)에 로컬 관리 도구(7800) + 맨 위 막대. data-seg = tool(관리 도구) | hub(실서버 저장·게시판, 어느 기기에서나)
+  let okSeg: 'tool' | 'hub' = 'tool';
+  let prevView = 'visitors';
+  function setOkSeg(s: 'tool' | 'hub') {
+    okSeg = s;
+    root.dataset.seg = s;
+    $('ok-seg').querySelectorAll<HTMLButtonElement>('button').forEach((b) => b.classList.toggle('on', b.dataset.s === s));
+    const hub = root.classList.contains('full') && s === 'hub';
+    ogPanel.hidden = obPanel.hidden = ocOld.hidden = !hub;
+    window.scrollTo(0, 0);
+  }
+  function setFull(on: boolean) {
+    root.classList.toggle('full', on);
+    $('ok-bar').hidden = !on;
+    if (!on) root.classList.remove('ok-off');
+    root.dataset.seg = okSeg;
+  }
+  $('ok-seg').querySelectorAll<HTMLButtonElement>('button').forEach((b) => b.addEventListener('click', () => setOkSeg(b.dataset.s as 'tool' | 'hub')));
+  $('ok-back').addEventListener('click', () => setView(prevView, true));
+  $('ok-retry').addEventListener('click', () => showApp('orunka'));
+  $('ok-tohub').addEventListener('click', () => setOkSeg('hub'));
   async function showApp(app: string) {
     localStorage.setItem(LS_APP, app);
+    setFull(isDb(app));
     document.querySelectorAll<HTMLElement>('#admin .adm-nav [data-app]').forEach((b) => b.classList.toggle('on', b.dataset.app === app));
     const info = APP_INFO[app];
     if (info) {
@@ -742,31 +730,29 @@ import '../../lib/admin-shell.css';
       });
     }
     ar?.setActive(isRoom);
-    ogPanel.hidden = !isDb(app);
-    obPanel.hidden = !isDb(app);
-    ocOld.hidden = !isDb(app);
+    ogPanel.hidden = obPanel.hidden = ocOld.hidden = !(isDb(app) && okSeg === 'hub');
     if (isDb(app) && !ob) {
       ob = mountOrunkaBoardViews(obPanel, idToken);
       ob.load();
     }
     if (isDb(app) && !og) {
-      // 줄을 열면 아래 로컬 관리 도구(iframe)도 그 사용자(?target=game:h)로 — 펫·아이템·회복 단추 편집기(집 Mac에서 도구가 켜져 있을 때만)
+      // 줄을 열면 관리 도구(iframe)도 그 사용자(?target=game:h)로 — 펫·아이템·회복 단추 편집기(집 Mac에서 도구가 켜져 있을 때만)
       og = mountOrunkaGameSaves(ogPanel, idToken, undefined, (h, jump) => {
-        if (frame.hidden || !frame.src) return jump ? '아래 오룬카 관리 도구가 연결돼 있지 않습니다(집 Mac 에서 켜져 있을 때만) — 위 JSON 편집기로 고치세요' : '';
+        if (frame.hidden || !frame.src) return jump ? '오룬카 관리 도구가 연결돼 있지 않아요(집 Mac 에서 켜져 있을 때만) — 위 JSON 편집기로 고치세요' : '';
         const url = `${dbBase()}/admin?target=${encodeURIComponent('game:' + h)}#save`;
         if (frame.src !== url) frame.src = url;
-        if (jump) frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (jump) setOkSeg('tool');
         return '';
       });
       og.load();
     }
     if (isDb(app) && !oc) {
-      // 줄을 누르면 아래 로컬 관리 도구(iframe)도 그 사용자로 — 펫·아이템·회복 단추 편집기(집 Mac에서 도구가 켜져 있을 때만)
+      // 줄을 누르면 관리 도구(iframe)도 그 사용자로 — 펫·아이템·회복 단추 편집기(집 Mac에서 도구가 켜져 있을 때만)
       oc = mountOrunkaCloud(ocPanel, idToken, (uid, jump) => {
-        if (frame.hidden || !frame.src) return jump ? '아래 오룬카 관리 도구가 연결돼 있지 않습니다(집 Mac 에서 켜져 있을 때만) — 위 JSON 편집기로 고치세요' : '';
+        if (frame.hidden || !frame.src) return jump ? '오룬카 관리 도구가 연결돼 있지 않아요(집 Mac 에서 켜져 있을 때만) — 위 JSON 편집기로 고치세요' : '';
         const url = `${dbBase()}/admin?target=${encodeURIComponent('cloud:' + uid)}#save`;
         if (frame.src !== url) frame.src = url;
-        if (jump) frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (jump) setOkSeg('tool');
         return '';
       });
       oc.load();
@@ -790,7 +776,22 @@ import '../../lib/admin-shell.css';
     frame.title = isDb(app) ? '오룬카 admin' : 'SeanChat admin';
     const url = isDb(app) ? `${base}/admin` : `${base}/admin?app=${app}`;
     ($('sc-open') as HTMLAnchorElement).href = url;
-    const st = $('sc-status');
+    ($('ok-open') as HTMLAnchorElement).href = url;
+    // 오룬카는 막대(#ok-st)에 상태, 못 닿으면 「이 맥에서만 열려요」 칸(#ok-off-msg)에 이유
+    $('sc-status').textContent = $('ok-st').textContent = '';
+    const st = isDb(app) ? $('ok-st') : $('sc-status');
+    const fail = (msg: string) => {
+      frame.hidden = true;
+      frame.removeAttribute('src');
+      if (isDb(app)) {
+        root.classList.add('ok-off');
+        $('ok-off-msg').textContent = msg;
+        st.textContent = '';
+        return;
+      }
+      st.textContent = msg;
+      st.className = 'status err';
+    };
     st.className = 'status';
     st.textContent = '연결 확인 중…';
     // Chrome 138+ "Local Network Access": a public https page reaching 127.0.0.1 needs a
@@ -801,10 +802,7 @@ import '../../lib/admin-shell.css';
       perm = (await navigator.permissions.query({ name: 'local-network-access' as PermissionName })).state;
     } catch {}
     if (perm === 'denied') {
-      frame.hidden = true;
-      frame.removeAttribute('src');
-      st.textContent = '브라우저가 이 사이트의 로컬 네트워크 접근을 차단 중 — 주소창 왼쪽 사이트 설정에서 "로컬 네트워크 액세스"를 허용하세요';
-      st.className = 'status err';
+      fail('브라우저가 이 사이트의 로컬 네트워크 접근을 막고 있어요 — 주소창 왼쪽 사이트 설정에서 "로컬 네트워크 액세스"를 허용하세요');
       return;
     }
     if (perm === 'prompt') st.textContent = '브라우저가 로컬 네트워크 접근 권한을 물어봅니다 → "허용"을 누르세요';
@@ -818,16 +816,15 @@ import '../../lib/admin-shell.css';
         signal: AbortSignal.timeout(perm === 'prompt' ? 60000 : 3000),
       });
       st.textContent = '';
+      if (isDb(app)) root.classList.remove('ok-off');
       frame.hidden = false;
       if (frame.src !== url) frame.src = url;
     } catch {
-      frame.hidden = true;
-      frame.removeAttribute('src');
-      st.textContent =
+      fail(
         perm === 'prompt'
-          ? `${base} 연결 안 됨 — 권한 프롬프트에 응답하지 않았거나 ${label}가 꺼져 있습니다. 앱 버튼을 다시 누르면 재시도합니다`
-          : `${base} 응답 없음 — ${label}가 꺼져 있거나 이 기기가 아닙니다${isDb(app) ? ' (OrunkaUnity: bash tools/admin/agent.sh status)' : ''}`;
-      st.className = 'status err';
+          ? `${base} 연결 안 됨 — 권한 프롬프트에 응답하지 않았거나 ${label}가 꺼져 있습니다. 다시 시도를 누르면 또 확인해요`
+          : `${base} 응답 없음 — ${label}가 꺼져 있거나 이 기기가 아닙니다${isDb(app) ? ' (OrunkaUnity: bash tools/admin/agent.sh status)' : ''}`
+      );
     }
   }
   // ---- views (side menu): 접속자 | 앱 하나씩, 해시 #visitors · #app-<id> 로 기억 ----------------
@@ -841,6 +838,10 @@ import '../../lib/admin-shell.css';
   function setView(v: string, push = false) {
     let app = v.startsWith('app-') ? v.slice(4) : null;
     if (app && !APP_INFO[app]) (app = null), (v = 'visitors');
+    // 오룬카 막대의 「되돌아가기」 = 들어오기 직전 화면(없으면 접속자)
+    const was = localStorage.getItem(LS_VIEW);
+    if (v === 'app-orunka' && was && was !== v) prevView = was;
+    if (app !== 'orunka') setFull(false);
     localStorage.setItem(LS_VIEW, v);
     document.querySelectorAll<HTMLElement>('#admin .adm-view').forEach((s) => s.classList.toggle('cur', s.dataset.view === (app ? 'apps' : v)));
     document.querySelectorAll<HTMLAnchorElement>('#admin .adm-nav a').forEach((a) => {

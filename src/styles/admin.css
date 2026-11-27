@@ -1,0 +1,126 @@
+/* /admin/ 전용 Tailwind v4 — admin/index.astro 에서만 import 하므로 공개 페이지 CSS 에는 안 실린다.
+   - preflight(base 리셋)는 넣지 않는다: global.css 와, innerHTML 로 그리는 앱 패널(너그거알아·오룬카·방)이
+     브라우저 기본값에 기대고 있어서. 유틸리티는 레이어 없이 넣어 global.css 의 요소 규칙(h2 밑줄 등)을 클래스로 이긴다.
+   - 클래스 후보는 admin 페이지 파일에서만 찾는다(source(none) + @source) → 다른 모듈 글자와 우연히 겹치지 않게.
+   디자인 규칙(참고: 오룬카 관리 도구 127.0.0.1:7800 v2): 따뜻한 회색 바탕 · 흰 카드 12px · 옅은 그림자 ·
+   조작부 8px · 알약 999px · 글 13~14px · 화면 제목 20px · 강조 = hub 초록(--brand). */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" source(none);
+@source "../pages/admin/index.astro";
+
+@custom-variant narrow (@media (max-width: 900px));
+@custom-variant tight (@media (max-width: 760px));
+@custom-variant phone (@media (max-width: 560px));
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-ink: var(--fg);
+  --color-mute: var(--muted);
+  --color-line: var(--line);
+  --color-hov: var(--adm-hov);
+  --color-chip: var(--adm-chip);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--adm-soft);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+  --shadow-card: var(--adm-sh);
+  --radius-card: 12px;
+  --radius-ctl: 8px;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* 색 — 관리 화면에서만 따뜻한 회색(7800 과 같은 결), 강조는 hub 초록 그대로 */
+body:has(#admin) {
+  --bg: #faf7f2; --fg: #2b2620; --muted: #857a6c; --line: #e7dfd3; --card: #fff;
+  --adm-hov: #f6efe5; --adm-chip: #f2ebe0;
+  --adm-soft: color-mix(in srgb, var(--brand) 12%, var(--card));
+  --adm-sh: 0 1px 2px rgb(70 45 20 / .06), 0 4px 14px rgb(70 45 20 / .05);
+  --ok: #16a34a; --warn: #c2770e; --bad: #c2412d;
+  --radius: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  body:has(#admin) {
+    --bg: #17150f; --fg: #ece5d8; --muted: #a39886; --line: #3a352b; --card: #221f18;
+    --adm-hov: #2b271f; --adm-chip: #2e2a21;
+    --adm-sh: 0 1px 2px rgb(0 0 0 / .45), 0 4px 16px rgb(0 0 0 / .25);
+    --ok: #4ade80; --warn: #f0a24a; --bad: #ef7a5f;
+  }
+}
+body:has(#admin) { font-size: 14px; line-height: 1.5; }
+
+/* 관리 화면만: 사이트 머리 숨김, 본문은 메뉴 오른쪽 전체 폭 */
+body:has(#admin) .site-header { display: none; }
+body:has(#admin) main { width: auto; max-width: none; margin: 0; padding: 0; }
+body:has(#admin #panel:not([hidden])) .site-footer { width: auto; margin: 0 0 0 232px; padding: 1.1rem 32px 2rem; font-size: 12px; }
+body:has(#admin #gate:not([hidden])) main { padding: 0 1rem 3rem; }
+body:has(#admin.full) .site-footer { display: none; }
+@media (max-width: 900px) {
+  body:has(#admin #panel:not([hidden])) .site-footer { margin: 0; padding: 1.1rem 16px 2rem; }
+}
+
+#admin [hidden] { display: none !important; }
+#admin .ico { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+#admin .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+#admin .muted { color: var(--muted); }
+#admin button { font: inherit; color: inherit; cursor: pointer; }
+#admin a:hover { text-decoration: none; }
+
+/* 한 번에 한 화면 */
+#admin .adm-view:not(.cur) { display: none; }
+
+/* JS 가 className 을 통째로 바꾸는 글(유틸리티를 못 붙임) */
+#admin .status { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+#admin .status.ok { color: var(--ok); }
+#admin .status.err { color: var(--bad); }
+#admin #sc-status { order: 5; flex-basis: 100%; }
+#admin #sc-status:empty, #admin #gate-msg:empty { display: none; }
+#admin #gate-msg { font-size: 13px; color: var(--muted); margin: .6rem 0 0; }
+#admin #gate-msg.err { color: var(--bad); }
+
+/* 공통 조작부: 단추(.ghost)·기간 고르기(.seg)·스위치(.sw) — 앱 패널에서도 같은 꼴 */
+#admin .ghost {
+  display: inline-flex; align-items: center; gap: .35rem; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius-ctl); padding: .28rem .7rem; font-size: 12.5px; line-height: 1.4; color: var(--fg);
+  transition: background-color .12s, border-color .12s;
+}
+#admin .ghost:hover { background: var(--adm-hov); border-color: color-mix(in srgb, var(--fg) 22%, var(--line)); }
+#admin .seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--adm-chip); border-radius: 10px; }
+#admin .seg button { border: 0; background: transparent; padding: .28rem .75rem; border-radius: 7px; font-size: 13px; font-weight: 500; color: var(--muted); white-space: nowrap; }
+#admin .seg button:hover { color: var(--fg); }
+#admin .seg button.on { background: var(--card); color: var(--fg); box-shadow: 0 1px 2px rgb(0 0 0 / .1); }
+#admin .icon-btn.spin svg { animation: adm-spin .8s linear infinite; }
+@keyframes adm-spin { to { transform: rotate(360deg); } }
+#admin .sw { display: inline-flex; align-items: center; gap: .45rem; font-size: 12.5px; color: var(--muted); cursor: pointer; user-select: none; white-space: nowrap; }
+#admin .sw input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+#admin .sw span { position: relative; width: 30px; height: 18px; border-radius: 999px; background: var(--line); transition: background .15s; flex: none; }
+#admin .sw span::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / .25); transition: transform .15s; }
+#admin .sw input:checked + span { background: var(--brand); }
+#admin .sw input:checked + span::after { transform: translateX(12px); }
+#admin .sw input:focus-visible + span { outline: 2px solid var(--brand); outline-offset: 2px; }
+#admin :is(input, select, textarea):focus-visible { outline: 2px solid color-mix(in srgb, var(--brand) 55%, transparent); outline-offset: 1px; }
+
+/* 실시간 칸 */
+#admin .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); flex: none; }
+#admin .kpi.live.on .pulse { background: var(--ok); box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 60%, transparent); animation: adm-pulse 1.8s infinite; }
+@keyframes adm-pulse { 70% { box-shadow: 0 0 0 7px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+/* 앱 패널 카드(innerHTML 로 그림)도 같은 카드 꼴 */
+#admin .kt .card, #admin #og-panel > .card, #admin #ob-panel > .card, #admin .kt .kt-bar { box-shadow: var(--adm-sh); border-radius: var(--radius-card); }
+#admin #sc-frame { width: 100%; height: calc(100vh - 170px); min-height: 520px; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--card); box-shadow: var(--adm-sh); display: block; }
+@media (max-width: 900px) { #admin #sc-frame { height: 75vh; min-height: 0; } }
+
+/* 로그인 갱신 중(패널 위에 로그인 칸이 같이 뜰 때): 메뉴 오른쪽에 */
+#admin:has(#panel:not([hidden])) #gate { margin: 18px 32px 0 calc(232px + 32px); max-width: 520px; }
+@media (max-width: 900px) { #admin:has(#panel:not([hidden])) #gate { margin: 12px 14px 0; } }
+
+/* 오룬카 = 화면 전체에 로컬 관리 도구(7800) + 맨 위 되돌아가기 막대. data-seg = tool(관리 도구) | hub(실서버·게시판) */
+#admin.full .adm-side, #admin.full .apps-head, #admin.full #app-lead { display: none; }
+#admin.full .adm-main { margin-left: 0; padding: 60px 24px 40px; }
+#admin.full #sc-frame { position: fixed; top: 48px; left: 0; right: 0; width: 100%; height: calc(100vh - 48px); height: calc(100dvh - 48px); min-height: 0; border: 0; border-radius: 0; box-shadow: none; z-index: 10; }
+#admin.full[data-seg=hub] #sc-frame { display: none; }
+#admin.full:not(.ok-off)[data-seg=tool] #sc-conn { display: none; }
+#admin #ok-off { display: none; }
+#admin.full.ok-off[data-seg=tool] #ok-off { display: block; }
+@media (max-width: 900px) { #admin.full .adm-main { padding: 60px 14px 32px; } }
