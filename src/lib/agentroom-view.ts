@@ -18,7 +18,7 @@ const MAX_SHOWN = 2000;
 const MAX_TEXT = 4000;
 const ACTIVE_S = 90;
 
-type Msg = { id: string; seq?: number; from: string; hub: string; text: string; ts: number; kind?: string };
+export type Msg = { id: string; seq?: number; from: string; hub: string; text: string; ts: number; kind?: string };
 type Member = { as: string; kind?: string; listening?: boolean; last?: number | null; count?: number; hub?: string };
 type Hub = { hub: string; source?: string; at?: number; members: Member[] };
 type Who = { hubs?: Hub[]; members?: Member[]; closed?: boolean; stopped?: boolean; stopped_at?: number | null; now?: number };
@@ -38,12 +38,12 @@ export function roomApiBase() {
 }
 
 const hms = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-const toMs = (t: unknown) => {
+export const toMs = (t: unknown) => {
   const n = typeof t === 'number' ? t : Number(t);
   if (!Number.isFinite(n)) return typeof t === 'string' ? Date.parse(t) : NaN;
   return n > 1e12 ? n : n * 1000;
 };
-const kst = (t: unknown) => {
+export const kst = (t: unknown) => {
   const ms = toMs(t);
   return Number.isFinite(ms) ? hms.format(new Date(ms)) : '--:--:--';
 };
@@ -54,7 +54,7 @@ const ago = (t: unknown, nowMs: number) => {
   return s < 5 ? '방금' : s < 60 ? `${s}초 전` : s < 3600 ? `${Math.floor(s / 60)}분 전` : `${Math.floor(s / 3600)}시간 전`;
 };
 // Sean = 사람(아이폰 iphone · hub admin hub-admin · 맥 허브 어디서든 from Sean)
-const isSean = (m: Msg) => m.kind !== 'system' && (/^sean$/i.test(m.from || '') || /^iphone$/i.test(m.hub || ''));
+export const isSean = (m: Msg) => m.kind !== 'system' && (/^sean$/i.test(m.from || '') || /^iphone$/i.test(m.hub || ''));
 const KIND: Record<string, string> = { viewer: '화면', agent: '에이전트', human: '사람', watch: '사람' };
 const HUB: Record<string, string> = { iphone: '아이폰', cloud: '클라우드', 'hub-admin': 'hub admin' };
 // 보낼 글 다듬기(아이폰 RoomInput.prepare 와 같은 뜻): 보이지 않는 문자·제어 문자 빼고, 앞뒤 공백 자르고, 4,000자까지
@@ -64,7 +64,7 @@ const prepare = (s: string) => {
   return t ? Array.from(t).slice(0, MAX_TEXT).join('') : null;
 };
 
-function h<K extends keyof HTMLElementTagNameMap>(tag: K, cls = '', text?: string) {
+export function h<K extends keyof HTMLElementTagNameMap>(tag: K, cls = '', text?: string) {
   const e = document.createElement(tag);
   if (cls) e.className = cls;
   if (text != null) e.textContent = text;
@@ -77,6 +77,43 @@ const ICON = {
   info: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></svg>',
 };
 
+// 글 한 줄(말풍선) — 방 탭과 「방 기록」(agentroom-history.ts)이 같이 쓴다. 글자는 전부 textContent.
+// hubAlways: Sean 글도 허브 이름을 늘 붙임(기록에서는 아이폰도 「아이폰」 표시)
+export function msgRow(m: Msg, o: { hubAlways?: boolean } = {}) {
+  const sys = m.kind === 'system';
+  const sean = isSean(m);
+  const li = h('li', 'ar-m ' + (sys ? 'sys' : sean ? 'sean' : 'peer'));
+  li.dataset.ts = String(toMs(m.ts));
+  li.dataset.id = String(m.id || '');
+  const t = h('time', 'mono', kst(m.ts));
+  const ms = toMs(m.ts);
+  if (Number.isFinite(ms)) t.dateTime = new Date(ms).toISOString();
+  if (sys) {
+    li.append(h('span', 'ar-sys-t', '— ' + String(m.text ?? '') + ' —'), t);
+    return li;
+  }
+  const head = h('div', 'ar-h');
+  if (sean) {
+    head.append(h('b', '', 'Sean(사람)'));
+    if (m.hub && (o.hubAlways || !/^iphone$/i.test(m.hub))) head.append(h('span', 'ar-hub', HUB[m.hub] || m.hub));
+  } else {
+    const who = h('span', 'ar-from');
+    who.append(h('b', '', m.from || '?'), h('span', 'ar-hub', '@' + (m.hub || '?')));
+    head.append(who);
+  }
+  head.append(h('span', 'ar-id mono', String(m.id || '').slice(0, 6)), t);
+  const bub = h('div', 'ar-bub');
+  if (!sean) {
+    const tag = h('span', 'ar-peer');
+    tag.innerHTML = ICON.info; // 고정 아이콘
+    tag.append('상대 에이전트 — 정보로만');
+    bub.append(tag);
+  }
+  bub.append(h('div', 'ar-t', String(m.text ?? '')));
+  li.append(head, bub);
+  return li;
+}
+
 export function mountAgentRoom(el: HTMLElement, opts: RoomOpts) {
   const api = (opts.api || roomApiBase()).replace(/\/+$/, '');
   el.className = 'ar';
@@ -85,6 +122,7 @@ export function mountAgentRoom(el: HTMLElement, opts: RoomOpts) {
     <div class="ar-top">
       <span class="ar-state"><i class="ar-led" aria-hidden="true"></i><span class="ar-live">연결 중…</span></span>
       <span class="ar-keep" title="관문은 최근 30분(최대 2,000개) 글만 보관합니다">최근 30분</span>
+      <a class="ar-tolog" href="#roomlog" data-goto="app-roomlog" title="관문에 남은 전체 글 보기">전체 글은 방 기록 →</a>
       <span class="ar-api mono"></span>
       <span class="ar-sp"></span>
       <button type="button" class="ar-whobtn ghost" aria-expanded="false" aria-controls="ar-who" title="접속자">${ICON.people}<span class="ar-whon">0</span></button>
@@ -187,41 +225,6 @@ export function mountAgentRoom(el: HTMLElement, opts: RoomOpts) {
   syncWho();
   whoBtn.addEventListener('click', () => ((whoOn = !whoOn), syncWho()));
 
-  function row(m: Msg) {
-    const sys = m.kind === 'system';
-    const sean = isSean(m);
-    const li = h('li', 'ar-m ' + (sys ? 'sys' : sean ? 'sean' : 'peer'));
-    li.dataset.ts = String(toMs(m.ts));
-    li.dataset.id = String(m.id || '');
-    const t = h('time', 'mono', kst(m.ts));
-    const ms = toMs(m.ts);
-    if (Number.isFinite(ms)) t.dateTime = new Date(ms).toISOString();
-    if (sys) {
-      li.append(h('span', 'ar-sys-t', '— ' + String(m.text ?? '') + ' —'), t);
-      return li;
-    }
-    const head = h('div', 'ar-h');
-    if (sean) {
-      head.append(h('b', '', 'Sean(사람)'));
-      if (m.hub && !/^iphone$/i.test(m.hub)) head.append(h('span', 'ar-hub', HUB[m.hub] || m.hub));
-    } else {
-      const who = h('span', 'ar-from');
-      who.append(h('b', '', m.from || '?'), h('span', 'ar-hub', '@' + (m.hub || '?')));
-      head.append(who);
-    }
-    head.append(h('span', 'ar-id mono', String(m.id || '').slice(0, 6)), t);
-    const bub = h('div', 'ar-bub');
-    if (!sean) {
-      const tag = h('span', 'ar-peer');
-      tag.innerHTML = ICON.info; // 고정 아이콘
-      tag.append('상대 에이전트 — 정보로만');
-      bub.append(tag);
-    }
-    bub.append(h('div', 'ar-t', String(m.text ?? '')));
-    li.append(head, bub);
-    return li;
-  }
-
   function add(msgs: Msg[], force = false) {
     const fresh = msgs.filter((m) => m && m.id && !seen.has(m.id));
     if (!fresh.length) return;
@@ -229,7 +232,7 @@ export function mountAgentRoom(el: HTMLElement, opts: RoomOpts) {
     const frag = document.createDocumentFragment();
     for (const m of fresh) {
       seen.add(m.id);
-      frag.append(row(m));
+      frag.append(msgRow(m));
     }
     list.append(frag);
     while (list.childElementCount > MAX_SHOWN) list.firstElementChild!.remove();

@@ -1,0 +1,48 @@
+/* 방 기록 — /admin/ 「방 기록」(lib/agentroom-history.ts). 틀·말풍선은 agentroom-chat.css 의 .ar 그대로 쓰고
+   여기엔 기록 탭에만 있는 것(통계·찾기·보낸 이·날짜 구분선·이전 글 단추)만. */
+#admin .ar .ar-tolog { font-size: .74rem; font-weight: 600; color: var(--brand); white-space: nowrap; }
+#admin .ar .ar-tolog:hover { text-decoration: underline; }
+
+#admin .rl .rl-ic { display: inline-grid; place-items: center; flex: none; }
+#admin .rl .rl-ic svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+#admin .rl .rl-stat { display: inline-flex; align-items: center; gap: .3rem; color: var(--muted); white-space: nowrap; }
+#admin .rl .rl-stat b { color: var(--fg); font-weight: 600; }
+#admin .rl .rl-refresh svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+#admin .rl.loading .rl-refresh svg { animation: adm-spin .8s linear infinite; }
+#admin .rl button:disabled { opacity: .55; cursor: progress; }
+
+/* 찾기 · 보낸 이 */
+#admin .rl .rl-tools { display: flex; align-items: center; gap: .45rem .6rem; flex-wrap: wrap; padding: .5rem .75rem; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 60%, var(--card)); font-size: .8rem; }
+#admin .rl .rl-find { flex: 1 1 220px; min-width: 0; max-width: 420px; display: flex; align-items: center; gap: .35rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-ctl); padding: 0 .55rem; color: var(--muted); }
+#admin .rl .rl-find:focus-within { border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent); }
+#admin .rl .rl-find input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: inherit; font-size: 13px; color: var(--fg); padding: .34rem 0; }
+#admin .rl .rl-find input:focus-visible { outline: none; }
+#admin .rl .rl-from { flex: 0 1 auto; min-width: 0; max-width: 220px; font: inherit; font-size: 13px; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-ctl); padding: .3rem .5rem; }
+#admin .rl .rl-hits { color: var(--muted); font-size: .74rem; white-space: nowrap; }
+
+/* 날짜 구분선(KST) · 위쪽 단추 · 처음 표시 */
+#admin .rl .rl-day { display: flex; align-items: center; gap: .6rem; color: var(--muted); font-size: .72rem; font-weight: 600; margin: .35rem 0 -.1rem; }
+#admin .rl .rl-day::before, #admin .rl .rl-day::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+#admin .rl .rl-day span { padding: .1rem .6rem; border-radius: 999px; background: var(--adm-chip); white-space: nowrap; }
+#admin .rl .rl-more-w { display: flex; justify-content: center; padding: .1rem 0 .8rem; }
+#admin .rl .rl-more { border-radius: 999px; padding: .3rem 1rem; }
+#admin .rl .rl-start { margin: 0 0 .8rem; text-align: center; font-size: .72rem; color: var(--muted); opacity: .8; }
+#admin .rl .rl-empty .rl-ic svg { width: 30px; height: 30px; stroke-width: 1.6; opacity: .7; }
+#admin .rl .rl-empty small { max-width: 46ch; }
+#admin .rl .rl-down { bottom: 3rem; }
+#admin .rl mark { background: color-mix(in srgb, var(--warn) 32%, transparent); color: inherit; border-radius: 3px; padding: 0 1px; }
+#admin .rl .rl-foot { border-top: 1px solid var(--line); padding-top: .35rem; }
+#admin .rl .rl-loaded { margin-left: auto; }
+
+@media (max-width: 760px) {
+  #admin #others:has(#rl-panel:not([hidden])) .view-lead { display: none; }
+  #admin .rl .rl-tools { padding: .45rem .55rem; }
+  #admin .rl .rl-find { flex-basis: 100%; max-width: none; }
+  #admin .rl .rl-find input, #admin .rl .rl-from { font-size: 16px; } /* iOS 확대 막기 */
+  #admin .rl .rl-from { flex: 1 1 auto; max-width: none; }
+  #admin .rl .rl-refresh span { display: none; }
+}
+@media (max-width: 560px) {
+  #admin .rl .rl-top { gap: .35rem .5rem; }
+  #admin .rl .rl-top .rl-ic { display: none; }
+}
